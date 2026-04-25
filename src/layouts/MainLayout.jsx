@@ -1,29 +1,25 @@
 import { Outlet } from "react-router-dom";
+import { useState } from "react";
+import Navbar from "../components/Navbar/Navbar";
+import Footer from "../components/Footer/Footer";
+import styles from "./MainLayout.module.css";
 
-// MainLayout est la structure visuelle partagée par toutes les pages.
-// <Outlet /> est l'emplacement réservé où React Router affichera
-// le composant de la page correspondant à l'URL actuelle.
 function MainLayout() {
-  return (
-    <div>
-      <header
-        style={{ background: "#1a1a2e", color: "white", padding: "1rem 2rem" }}>
-        <h1>Fennec Arts</h1>
-      </header>
+  // Données mockées — remplacées par le Context API au Day 12
+  const [utilisateur, setUtilisateur] = useState(null);
 
-      <main style={{ minHeight: "80vh", padding: "2rem" }}>
+  const handleDeconnexion = () => {
+    setUtilisateur(null);
+    localStorage.removeItem("token");
+  };
+
+  return (
+    <div className={styles.wrapper}>
+      <Navbar utilisateur={utilisateur} onDeconnexion={handleDeconnexion} />
+      <main className={styles.main}>
         <Outlet />
       </main>
-
-      <footer
-        style={{
-          background: "#1a1a2e",
-          color: "white",
-          padding: "1rem 2rem",
-          textAlign: "center",
-        }}>
-        <p>© 2024 Fennec Arts Platform</p>
-      </footer>
+      <Footer />
     </div>
   );
 }

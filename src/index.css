@@ -1,3 +1,4 @@
+/* ── Reset ── */
 *,
 *::before,
 *::after {
@@ -6,11 +7,39 @@
   padding: 0;
 }
 
+/* ── Variables globales ── */
+:root {
+  --couleur-primaire: #e63946;
+  --couleur-sombre: #1a1a2e;
+  --couleur-sombre-2: #16213e;
+  --couleur-accent: #f4a261;
+  --couleur-texte: #2d2d2d;
+  --couleur-texte-clair: #6c757d;
+  --couleur-fond: #f8f9fa;
+  --couleur-blanc: #ffffff;
+  --couleur-bordure: #dee2e6;
+  --font-principale: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --border-radius-sm: 4px;
+  --border-radius: 8px;
+  --border-radius-lg: 16px;
+  --ombre-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --ombre: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --ombre-lg: 0 4px 20px rgba(0, 0, 0, 0.2);
+  --transition: all 0.2s ease;
+  --max-width: 1200px;
+}
+
+/* ── Base ── */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f5f5;
-  color: #333;
+  font-family: var(--font-principale);
+  color: var(--couleur-texte);
+  background: var(--couleur-fond);
   line-height: 1.6;
+  min-height: 100vh;
 }
 
 a {
@@ -20,4 +49,56 @@ a {
 
 img {
   max-width: 100%;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  outline: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ── Utilitaires globaux ── */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.btn-primaire {
+  background: var(--couleur-primaire);
+  color: var(--couleur-blanc);
+}
+
+.btn-primaire:hover {
+  background: #c1121f;
+  transform: translateY(-1px);
+  box-shadow: var(--ombre);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--couleur-primaire);
+  border: 1.5px solid var(--couleur-primaire);
+}
+
+.btn-outline:hover {
+  background: var(--couleur-primaire);
+  color: var(--couleur-blanc);
 }

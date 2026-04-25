@@ -1,0 +1,122 @@
+.navbar {
+  background: var(--couleur-sombre);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--ombre);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+/* ── Logo ── */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--couleur-blanc);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transition: var(--transition);
+}
+
+.logo:hover {
+  color: var(--couleur-accent);
+}
+
+.logoPoint {
+  width: 8px;
+  height: 8px;
+  background: var(--couleur-primaire);
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 2px;
+}
+
+/* ── Navigation centrale ── */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.navLink {
+  color: rgba(255, 255, 255, 0.75);
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--border-radius);
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.navLink:hover {
+  color: var(--couleur-blanc);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.navLink.active {
+  color: var(--couleur-blanc);
+  background: rgba(230, 57, 70, 0.3);
+}
+
+/* ── Actions droite ── */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nomUtilisateur {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.9rem;
+}
+
+.btnConnexion {
+  background: var(--couleur-primaire);
+  color: var(--couleur-blanc);
+  padding: 0.5rem 1.2rem;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.btnConnexion:hover {
+  background: #c1121f;
+  transform: translateY(-1px);
+}
+
+.btnDeconnexion {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btnDeconnexion:hover {
+  color: var(--couleur-blanc);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.btnDashboard {
+  background: rgba(244, 162, 97, 0.2);
+  color: var(--couleur-accent);
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: var(--transition);
+  border: 1px solid rgba(244, 162, 97, 0.3);
+}
+
+.btnDashboard:hover {
+  background: rgba(244, 162, 97, 0.35);
+}
