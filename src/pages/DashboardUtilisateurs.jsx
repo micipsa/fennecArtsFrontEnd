@@ -38,7 +38,7 @@ function DashboardUtilisateurs() {
   const handleChangerRole = async (id, nouveauRole) => {
     setEnCoursDeModif(id);
     try {
-      await api.put(`/api/users/${id}`, { role: nouveauRole });
+      await api.patch(`/api/users/${id}/role`, { role: nouveauRole });
       setUtilisateurs((prev) =>
         prev.map((u) => (u._id === id ? { ...u, role: nouveauRole } : u)),
       );
