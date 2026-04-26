@@ -49,6 +49,13 @@ function DashboardLayout() {
             }>
             Utilisateurs
           </NavLink>
+          <NavLink
+            to="/dashboard/tournois"
+            className={({ isActive }) =>
+              `${styles.navLien} ${isActive ? styles.actif : ""}`
+            }>
+            Tournois
+          </NavLink>
         </nav>
 
         <div className={styles.sidebarPied}>

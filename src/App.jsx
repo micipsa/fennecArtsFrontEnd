@@ -11,10 +11,13 @@ import EvenementDetailPage from "./pages/EvenementDetailPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilPage from "./pages/ProfilPage";
+import TournamentsPage from "./pages/TournamentsPage";
+import TournamentDetail from "./pages/TournamentDetail";
 import DashboardAccueil from "./pages/DashboardAccueil";
 import DashboardArticles from "./pages/DashboardArticles";
 import DashboardEvenements from "./pages/DashboardEvenements";
 import DashboardUtilisateurs from "./pages/DashboardUtilisateurs";
+import DashboardTournois from "./pages/DashboardTournois";
 import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
@@ -27,6 +30,8 @@ function App() {
           <Route path="articles/:id" element={<ArticleDetailPage />} />
           <Route path="events" element={<EventsPage />} />
           <Route path="events/:id" element={<EvenementDetailPage />} />
+          <Route path="tournaments" element={<TournamentsPage />} />
+          <Route path="tournaments/:id" element={<TournamentDetail />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route
@@ -50,6 +55,7 @@ function App() {
           <Route path="articles" element={<DashboardArticles />} />
           <Route path="evenements" element={<DashboardEvenements />} />
           <Route path="utilisateurs" element={<DashboardUtilisateurs />} />
+          <Route path="tournois" element={<DashboardTournois />} />
         </Route>
 
         <Route path="*" element={<NotFoundPage />} />

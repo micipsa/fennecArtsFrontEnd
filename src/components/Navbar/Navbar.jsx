@@ -79,6 +79,15 @@ function Navbar() {
                 Événements
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/tournaments"
+                className={({ isActive }) =>
+                  `${styles.navLink} ${isActive ? styles.active : ""}`
+                }>
+                Tournois
+              </NavLink>
+            </li>
           </ul>
 
           <div className={styles.actions}>

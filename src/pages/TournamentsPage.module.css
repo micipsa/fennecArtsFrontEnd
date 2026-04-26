@@ -13,8 +13,8 @@
   height: 3px;
   background: linear-gradient(
     90deg,
-    var(--couleur-accent),
-    var(--couleur-primaire)
+    var(--couleur-primaire),
+    var(--couleur-accent)
   );
   border-radius: 999px;
 }
@@ -62,7 +62,6 @@
 .filtreBouton:hover {
   border-color: var(--couleur-primaire);
   color: var(--couleur-primaire);
-  background: rgba(230, 57, 70, 0.04);
 }
 
 .filtreActif {
@@ -93,7 +92,7 @@
 }
 
 .vide::before {
-  content: "📅";
+  content: "🏆";
   display: block;
   font-size: 2.5rem;
   margin-bottom: 1rem;
@@ -107,7 +106,6 @@
   .filtres {
     overflow-x: auto;
     flex-wrap: nowrap;
-    padding-bottom: 0.75rem;
   }
 
   .titre {
