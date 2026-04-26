@@ -1,46 +1,51 @@
+import { useState, useEffect, useMemo } from "react";
+import api from "../services/api";
 import CarteEvenement from "../components/Cards/CarteEvenement";
+import Spinner from "../components/UI/Spinner";
+import MessageErreur from "../components/UI/MessageErreur";
 import styles from "./EventsPage.module.css";
 
-const EVENEMENTS_FICTIFS = [
-  {
-    _id: "1",
-    titre: "Exposition nationale de calligraphie",
-    description:
-      "Une exposition réunissant les plus grands calligraphes algériens contemporains autour de l'art de l'écriture arabe et amazighe.",
-    categorie: "Exposition",
-    lieu: "Musée des Beaux-Arts, Alger",
-    dateDebut: "2025-07-15T09:00:00.000Z",
-    dateFin: "2025-07-20T18:00:00.000Z",
-    organisateur: { nom: "Société des Arts" },
-    adherents: ["id1", "id2", "id3"],
-  },
-  {
-    _id: "2",
-    titre: "Concert de musique andalouse",
-    description:
-      "Une soirée exceptionnelle dédiée à la musique andalouse algérienne, patrimoine immatériel de l'humanité reconnu par l'UNESCO.",
-    categorie: "Concert",
-    lieu: "Salle Ibn Khaldoun, Alger",
-    dateDebut: "2025-08-05T20:00:00.000Z",
-    dateFin: "2025-08-05T23:00:00.000Z",
-    organisateur: { nom: "Office National de la Culture" },
-    adherents: ["id1", "id2", "id3", "id4", "id5"],
-  },
-  {
-    _id: "3",
-    titre: "Atelier de poterie traditionnelle",
-    description:
-      "Venez apprendre les techniques ancestrales de la poterie kabyle avec des artisans locaux dans une ambiance chaleureuse et conviviale.",
-    categorie: "Atelier",
-    lieu: "Maison de la Culture, Tizi Ouzou",
-    dateDebut: "2024-03-10T10:00:00.000Z",
-    dateFin: "2024-03-10T17:00:00.000Z",
-    organisateur: { nom: "Association Izuran" },
-    adherents: ["id1"],
-  },
+const STATUTS = [
+  { valeur: "tous", label: "Tous" },
+  { valeur: "avenir", label: "À venir" },
+  { valeur: "passes", label: "Passés" },
 ];
 
 function EventsPage() {
+  const [evenements, setEvenements] = useState([]);
+  const [chargement, setChargement] = useState(true);
+  const [erreur, setErreur] = useState(null);
+  const [statut, setStatut] = useState("tous");
+
+  useEffect(() => {
+    const chargerEvenements = async () => {
+      try {
+        setChargement(true);
+        setErreur(null);
+        const res = await api.get("/api/events");
+        setEvenements(res.data.data);
+      } catch (err) {
+        setErreur(
+          err.response?.data?.message ||
+            "Impossible de charger les événements.",
+        );
+      } finally {
+        setChargement(false);
+      }
+    };
+
+    chargerEvenements();
+  }, []);
+
+  const evenementsFiltres = useMemo(() => {
+    const maintenant = new Date();
+    return evenements.filter((ev) => {
+      if (statut === "avenir") return new Date(ev.dateDebut) > maintenant;
+      if (statut === "passes") return new Date(ev.dateDebut) <= maintenant;
+      return true;
+    });
+  }, [evenements, statut]);
+
   return (
     <div className="container">
       <div className={styles.entete}>
@@ -50,11 +55,40 @@ function EventsPage() {
         </p>
       </div>
 
-      <div className={styles.grille}>
-        {EVENEMENTS_FICTIFS.map((evenement) => (
-          <CarteEvenement key={evenement._id} evenement={evenement} />
+      <div className={styles.filtres}>
+        {STATUTS.map((s) => (
+          <button
+            key={s.valeur}
+            className={`${styles.filtreBouton} ${statut === s.valeur ? styles.filtreActif : ""}`}
+            onClick={() => setStatut(s.valeur)}>
+            {s.label}
+          </button>
         ))}
       </div>
+
+      {chargement && <Spinner />}
+
+      {erreur && (
+        <MessageErreur
+          message={erreur}
+          onReessayer={() => {
+            setErreur(null);
+            setChargement(true);
+          }}
+        />
+      )}
+
+      {!chargement && !erreur && evenementsFiltres.length === 0 && (
+        <p className={styles.vide}>Aucun événement trouvé.</p>
+      )}
+
+      {!chargement && !erreur && evenementsFiltres.length > 0 && (
+        <div className={styles.grille}>
+          {evenementsFiltres.map((evenement) => (
+            <CarteEvenement key={evenement._id} evenement={evenement} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

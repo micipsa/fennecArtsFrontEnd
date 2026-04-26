@@ -58,7 +58,9 @@ function Navbar() {
                   Dashboard
                 </Link>
               )}
-              <span className={styles.nomUtilisateur}>{utilisateur.nom}</span>
+              <Link to="/profil" className={styles.nomUtilisateur}>
+                {utilisateur.nom}
+              </Link>
               <button
                 className={styles.btnDeconnexion}
                 onClick={handleDeconnexion}>
