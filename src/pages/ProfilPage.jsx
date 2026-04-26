@@ -21,7 +21,6 @@ function ProfilPage() {
         setChargement(false);
       }
     };
-
     chargerProfil();
   }, [utilisateur]);
 
@@ -33,6 +32,10 @@ function ProfilPage() {
   };
 
   if (chargement) return <Spinner />;
+
+  const nom = profil?.nom ?? utilisateur?.nom ?? "?";
+  const email = profil?.email ?? utilisateur?.email;
+  const role = profil?.role ?? utilisateur?.role;
 
   const dateInscription = profil?.createdAt
     ? new Date(profil.createdAt).toLocaleDateString("fr-FR", {
@@ -51,35 +54,29 @@ function ProfilPage() {
         </div>
 
         <div className={styles.carte}>
-          <div className={styles.avatar}>
-            {(profil?.nom || utilisateur?.nom || "?")[0].toUpperCase()}
-          </div>
+          <div className={styles.carteBandeau} />
 
-          <div className={styles.infos}>
-            <div className={styles.infoLigne}>
-              <span className={styles.infoLabel}>Nom</span>
-              <span className={styles.infoValeur}>
-                {profil?.nom ?? utilisateur?.nom}
-              </span>
+          <div className={styles.carteCorps}>
+            <div className={styles.avatarWrapper}>
+              <div className={styles.avatar}>{nom[0].toUpperCase()}</div>
             </div>
-            <div className={styles.infoLigne}>
-              <span className={styles.infoLabel}>Email</span>
-              <span className={styles.infoValeur}>
-                {profil?.email ?? utilisateur?.email}
-              </span>
-            </div>
-            <div className={styles.infoLigne}>
-              <span className={styles.infoLabel}>Rôle</span>
-              <Badge
-                texte={profil?.role ?? utilisateur?.role}
-                variante={
-                  varianteRole[profil?.role ?? utilisateur?.role] ?? "defaut"
-                }
-              />
-            </div>
-            <div className={styles.infoLigne}>
-              <span className={styles.infoLabel}>Membre depuis</span>
-              <span className={styles.infoValeur}>{dateInscription}</span>
+
+            <p className={styles.nomPrincipal}>{nom}</p>
+            <Badge texte={role} variante={varianteRole[role] ?? "defaut"} />
+
+            <div className={styles.infos}>
+              <div className={styles.infoLigne}>
+                <span className={styles.infoLabel}>Email</span>
+                <span className={styles.infoValeur}>{email}</span>
+              </div>
+              <div className={styles.infoLigne}>
+                <span className={styles.infoLabel}>Rôle</span>
+                <Badge texte={role} variante={varianteRole[role] ?? "defaut"} />
+              </div>
+              <div className={styles.infoLigne}>
+                <span className={styles.infoLabel}>Membre depuis</span>
+                <span className={styles.infoValeur}>{dateInscription}</span>
+              </div>
             </div>
           </div>
         </div>

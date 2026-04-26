@@ -25,7 +25,6 @@ function ArticleDetailPage() {
         setChargement(false);
       }
     };
-
     chargerArticle();
   }, [id]);
 
@@ -51,6 +50,8 @@ function ArticleDetailPage() {
     year: "numeric",
   });
 
+  const initialeAuteur = (article.auteur?.nom ?? "A")[0].toUpperCase();
+
   return (
     <div className="container">
       <div className={styles.page}>
@@ -63,10 +64,20 @@ function ArticleDetailPage() {
             <Badge texte={article.categorie} variante="primaire" />
             <span className={styles.date}>{dateFormatee}</span>
           </div>
+
           <h1 className={styles.titre}>{article.titre}</h1>
-          <p className={styles.auteur}>
-            Par <strong>{article.auteur?.nom ?? "Auteur inconnu"}</strong>
-          </p>
+
+          <div className={styles.separateur} />
+
+          <div className={styles.auteurBloc}>
+            <div className={styles.auteurAvatar}>{initialeAuteur}</div>
+            <div className={styles.auteurInfo}>
+              <span className={styles.auteurNom}>
+                {article.auteur?.nom ?? "Auteur inconnu"}
+              </span>
+              <span className={styles.auteurRole}>Rédacteur Fennec Arts</span>
+            </div>
+          </div>
         </div>
 
         <div className={styles.contenu}>

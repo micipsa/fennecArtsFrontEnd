@@ -1,19 +1,24 @@
 .page {
   max-width: 780px;
   margin: 0 auto;
-  padding: 2rem 0 4rem;
+  padding: 2rem 1.5rem 4rem;
 }
 
 .retour {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   color: var(--couleur-texte-clair);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   margin-bottom: 2rem;
   transition: var(--transition);
+  font-family: var(--font-titre);
+  letter-spacing: 0.02em;
 }
 
 .retour:hover {
   color: var(--couleur-primaire);
+  gap: 0.6rem;
 }
 
 .entete {
@@ -26,39 +31,88 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .titre {
-  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 800;
-  line-height: 1.25;
+  line-height: 1.2;
   color: var(--couleur-texte);
   margin-bottom: 1.5rem;
+  font-family: var(--font-titre);
 }
 
 .infos {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  background: var(--couleur-fond);
-  padding: 1.25rem;
-  border-radius: var(--border-radius-lg);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
 }
 
-.infoLigne {
+.infoCard {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-size: 0.9rem;
+  background: var(--couleur-fond);
+  padding: 0.85rem 1rem;
+  border-radius: var(--border-radius);
+  border-left: 3px solid var(--couleur-primaire);
+  transition: var(--transition);
+}
+
+.infoCard:hover {
+  background: rgba(230, 57, 70, 0.04);
+  border-left-color: var(--couleur-accent);
+}
+
+.infoIcone {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.infoTexte {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.infoLabel {
+  font-size: 0.72rem;
   color: var(--couleur-texte-clair);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--font-titre);
+}
+
+.infoValeur {
+  font-size: 0.88rem;
+  color: var(--couleur-texte);
+  font-weight: 500;
+}
+
+.separateur {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--couleur-primaire),
+    var(--couleur-accent)
+  );
+  border-radius: 999px;
+  margin: 1.5rem 0;
 }
 
 .contenu {
-  font-size: 1rem;
+  font-size: 1.05rem;
   line-height: 1.9;
   color: var(--couleur-texte);
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .infos {
+    grid-template-columns: 1fr;
+  }
 }

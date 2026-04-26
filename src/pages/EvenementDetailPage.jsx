@@ -25,7 +25,6 @@ function EvenementDetailPage() {
         setChargement(false);
       }
     };
-
     chargerEvenement();
   }, [id]);
 
@@ -75,31 +74,59 @@ function EvenementDetailPage() {
           <h1 className={styles.titre}>{evenement.titre}</h1>
 
           <div className={styles.infos}>
-            <div className={styles.infoLigne}>
-              <span>📍</span>
-              <span>{evenement.lieu}</span>
+            <div className={styles.infoCard}>
+              <span className={styles.infoIcone}>📍</span>
+              <div className={styles.infoTexte}>
+                <span className={styles.infoLabel}>Lieu</span>
+                <span className={styles.infoValeur}>{evenement.lieu}</span>
+              </div>
             </div>
-            <div className={styles.infoLigne}>
-              <span>📅</span>
-              <span>
-                Du {formatDate(evenement.dateDebut)} au{" "}
-                {formatDate(evenement.dateFin)}
-              </span>
-            </div>
-            <div className={styles.infoLigne}>
-              <span>👥</span>
-              <span>{evenement.adherents?.length ?? 0} participant(s)</span>
-            </div>
-            {evenement.organisateur && (
-              <div className={styles.infoLigne}>
-                <span>🎭</span>
-                <span>
-                  Organisé par <strong>{evenement.organisateur.nom}</strong>
+
+            <div className={styles.infoCard}>
+              <span className={styles.infoIcone}>👥</span>
+              <div className={styles.infoTexte}>
+                <span className={styles.infoLabel}>Participants</span>
+                <span className={styles.infoValeur}>
+                  {evenement.adherents?.length ?? 0} inscrit(s)
                 </span>
+              </div>
+            </div>
+
+            <div className={styles.infoCard}>
+              <span className={styles.infoIcone}>📅</span>
+              <div className={styles.infoTexte}>
+                <span className={styles.infoLabel}>Début</span>
+                <span className={styles.infoValeur}>
+                  {formatDate(evenement.dateDebut)}
+                </span>
+              </div>
+            </div>
+
+            <div className={styles.infoCard}>
+              <span className={styles.infoIcone}>🏁</span>
+              <div className={styles.infoTexte}>
+                <span className={styles.infoLabel}>Fin</span>
+                <span className={styles.infoValeur}>
+                  {formatDate(evenement.dateFin)}
+                </span>
+              </div>
+            </div>
+
+            {evenement.organisateur && (
+              <div className={styles.infoCard}>
+                <span className={styles.infoIcone}>🎭</span>
+                <div className={styles.infoTexte}>
+                  <span className={styles.infoLabel}>Organisateur</span>
+                  <span className={styles.infoValeur}>
+                    {evenement.organisateur.nom}
+                  </span>
+                </div>
               </div>
             )}
           </div>
         </div>
+
+        <div className={styles.separateur} />
 
         <div className={styles.contenu}>
           {evenement.description
