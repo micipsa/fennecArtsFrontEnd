@@ -1,57 +1,82 @@
-/**
- * DashboardAccueil — page d'accueil du panneau d'administration.
- *
- * Affiche une vue d'ensemble avec des cartes statistiques.
- *
- * ⚠️  Note : les valeurs affichées sont actuellement en dur (hardcoded).
- *     Dans une version future, elles devraient être chargées dynamiquement
- *     depuis l'API (ex: GET /api/stats).
- *
- * Structure :
- * - En-tête : titre "Vue d'ensemble" + sous-titre
- * - Grille de 4 cartes colorées avec icône, valeur et label :
- *   - Articles publiés (bleu)
- *   - Événements actifs (vert)
- *   - Utilisateurs inscrits (orange)
- *   - Adhérents (rouge)
- */
+import { useState, useEffect } from "react";
+import api from "../services/api";
+import Spinner from "../components/UI/Spinner";
 import styles from "./DashboardAccueil.module.css";
 
-// Données statiques des cartes de statistiques
-// Chaque objet contient : label, valeur, couleur (classe CSS), icône (emoji)
-const STATS = [
-  { label: "Articles publiés", valeur: 24, couleur: "bleu", icone: "📝" },
-  { label: "Événements actifs", valeur: 8, couleur: "vert", icone: "🎮" },
-  {
-    label: "Utilisateurs inscrits",
-    valeur: 137,
-    couleur: "orange",
-    icone: "👥",
-  },
-  { label: "Adhérents", valeur: 42, couleur: "rouge", icone: "🏆" },
-];
-
 function DashboardAccueil() {
+  const [stats, setStats] = useState(null);
+  const [chargement, setChargement] = useState(true);
+
+  useEffect(() => {
+    const charger = async () => {
+      try {
+        const [resArticles, resEvents, resUsers, resTournois] =
+          await Promise.all([
+            api.get("/api/articles?limit=1"),
+            api.get("/api/events?limit=1"),
+            api.get("/api/users"),
+            api.get("/api/tournaments?limit=1"),
+          ]);
+
+        setStats({
+          articles: resArticles.data.total ?? 0,
+          events: resEvents.data.total ?? resEvents.data.count ?? 0,
+          users: resUsers.data.data?.length ?? 0,
+          tournois: resTournois.data.total ?? resTournois.data.count ?? 0,
+        });
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setChargement(false);
+      }
+    };
+    charger();
+  }, []);
+
+  if (chargement) return <Spinner />;
+
+  const CARDS = [
+    {
+      label: "Articles publiés",
+      valeur: stats?.articles ?? 0,
+      couleur: "bleu",
+      icone: "📝",
+    },
+    {
+      label: "Événements",
+      valeur: stats?.events ?? 0,
+      couleur: "vert",
+      icone: "🎮",
+    },
+    {
+      label: "Utilisateurs inscrits",
+      valeur: stats?.users ?? 0,
+      couleur: "orange",
+      icone: "👥",
+    },
+    {
+      label: "Tournois",
+      valeur: stats?.tournois ?? 0,
+      couleur: "rouge",
+      icone: "🏆",
+    },
+  ];
+
   return (
     <div>
-      {/* ── En-tête ── */}
       <div className={styles.entete}>
         <h1 className={styles.titre}>Vue d'ensemble</h1>
-        <p className={styles.sousTitre}>
-          Bienvenue dans le panneau d'administration
-        </p>
+        <p className={styles.sousTitre}>Statistiques en temps réel</p>
       </div>
 
-      {/* ── Grille de cartes statistiques ── */}
       <div className={styles.grille}>
-        {STATS.map((stat) => (
+        {CARDS.map((card) => (
           <div
-            key={stat.label}
-            // La classe de couleur est ajoutée dynamiquement (ex: styles.bleu)
-            className={`${styles.carte} ${styles[stat.couleur]}`}>
-            <span className={styles.carteIcone}>{stat.icone}</span>
-            <p className={styles.carteValeur}>{stat.valeur}</p>
-            <p className={styles.carteLabel}>{stat.label}</p>
+            key={card.label}
+            className={`${styles.carte} ${styles[card.couleur]}`}>
+            <span className={styles.carteIcone}>{card.icone}</span>
+            <p className={styles.carteValeur}>{card.valeur}</p>
+            <p className={styles.carteLabel}>{card.label}</p>
           </div>
         ))}
       </div>
