@@ -1,3 +1,20 @@
+/**
+ * ProfilPage — page de profil de l'utilisateur connecté.
+ *
+ * Cette page (protégée par RouteProtegee) affiche :
+ * 1. Les informations du profil : nom, email, rôle, date d'inscription.
+ *    - Un avatar avec l'initiale du nom.
+ *    - Un Badge coloré selon le rôle (admin, redacteur, adherent, utilisateur).
+ * 2. Un formulaire de changement de mot de passe :
+ *    - Ancien mot de passe
+ *    - Nouveau mot de passe (minimum 6 caractères)
+ *    - Confirmation du nouveau mot de passe
+ *
+ * Flux de données :
+ * - Au montage, appel GET /api/auth/me pour récupérer le profil complet.
+ * - En cas d'erreur, on utilise les données du Context comme fallback.
+ * - Le changement de mot de passe utilise PUT /api/auth/password.
+ */
 import { useState, useEffect } from "react";
 import api from "../services/api";
 import useAuth from "../hooks/useAuth";
@@ -6,9 +23,14 @@ import Spinner from "../components/UI/Spinner";
 import styles from "./ProfilPage.module.css";
 
 function ProfilPage() {
+  // Données de l'utilisateur depuis le Context (utilisées comme fallback)
   const { utilisateur } = useAuth();
+
+  // State du profil chargé depuis l'API
   const [profil, setProfil] = useState(null);
   const [chargement, setChargement] = useState(true);
+
+  // States pour le formulaire de changement de mot de passe
   const [formMdp, setFormMdp] = useState({
     ancien: "",
     nouveau: "",
@@ -18,12 +40,14 @@ function ProfilPage() {
   const [successMdp, setSuccessMdp] = useState(null);
   const [envoiEnCours, setEnvoiEnCours] = useState(false);
 
+  // ── Chargement du profil au montage ──
   useEffect(() => {
     const chargerProfil = async () => {
       try {
         const res = await api.get("/api/auth/me");
         setProfil(res.data.user);
       } catch (err) {
+        // En cas d'erreur, on utilise les données du Context comme fallback
         setProfil(utilisateur);
       } finally {
         setChargement(false);
@@ -32,6 +56,7 @@ function ProfilPage() {
     chargerProfil();
   }, [utilisateur]);
 
+  // Mapping rôle → variante de couleur du Badge
   const varianteRole = {
     admin: "primaire",
     redacteur: "info",
@@ -39,20 +64,31 @@ function ProfilPage() {
     utilisateur: "defaut",
   };
 
+  /**
+   * Gestionnaire de changement des champs du formulaire mot de passe.
+   */
   const handleChangeMdp = (e) => {
     setFormMdp({ ...formMdp, [e.target.name]: e.target.value });
   };
 
+  /**
+   * Gestionnaire de soumission du formulaire de changement de mot de passe.
+   * Effectue des validations côté client avant l'envoi :
+   * - Vérification que les deux nouveaux mots de passe correspondent
+   * - Vérification de la longueur minimale (6 caractères)
+   */
   const handleSoumettreNewMdp = async (e) => {
     e.preventDefault();
     setErreurMdp(null);
     setSuccessMdp(null);
 
+    // Validation : les deux mots de passe doivent correspondre
     if (formMdp.nouveau !== formMdp.confirmation) {
       setErreurMdp("Les deux nouveaux mots de passe ne correspondent pas.");
       return;
     }
 
+    // Validation : longueur minimale de 6 caractères
     if (formMdp.nouveau.length < 6) {
       setErreurMdp("Le nouveau mot de passe doit faire au moins 6 caractères.");
       return;
@@ -60,11 +96,13 @@ function ProfilPage() {
 
     setEnvoiEnCours(true);
     try {
+      // Envoi de la requête PUT pour changer le mot de passe
       await api.put("/api/auth/password", {
         ancienMotDePasse: formMdp.ancien,
         nouveauMotDePasse: formMdp.nouveau,
       });
       setSuccessMdp("Mot de passe modifié avec succès !");
+      // Reset du formulaire après succès
       setFormMdp({ ancien: "", nouveau: "", confirmation: "" });
     } catch (err) {
       setErreurMdp(err.response?.data?.message || "Erreur lors du changement.");
@@ -73,12 +111,15 @@ function ProfilPage() {
     }
   };
 
+  // Affichage du spinner pendant le chargement des données
   if (chargement) return <Spinner />;
 
+  // Extraction des données avec fallback sur le Context
   const nom = profil?.nom ?? utilisateur?.nom ?? "?";
   const email = profil?.email ?? utilisateur?.email;
   const role = profil?.role ?? utilisateur?.role;
 
+  // Formatage de la date d'inscription en français
   const dateInscription = profil?.createdAt
     ? new Date(profil.createdAt).toLocaleDateString("fr-FR", {
         day: "numeric",
@@ -90,21 +131,27 @@ function ProfilPage() {
   return (
     <div className="container">
       <div className={styles.page}>
+        {/* ── En-tête de la page ── */}
         <div className={styles.entete}>
           <h1 className={styles.titre}>Mon profil</h1>
           <p className={styles.sousTitre}>Informations de votre compte</p>
         </div>
 
+        {/* ── Carte de profil ── */}
         <div className={styles.carte}>
+          {/* Bandeau coloré en haut de la carte */}
           <div className={styles.carteBandeau} />
           <div className={styles.carteCorps}>
+            {/* Avatar avec l'initiale du nom */}
             <div className={styles.avatarWrapper}>
               <div className={styles.avatar}>{nom[0].toUpperCase()}</div>
             </div>
 
+            {/* Nom et rôle */}
             <p className={styles.nomPrincipal}>{nom}</p>
             <Badge texte={role} variante={varianteRole[role] ?? "defaut"} />
 
+            {/* Informations détaillées */}
             <div className={styles.infos}>
               <div className={styles.infoLigne}>
                 <span className={styles.infoLabel}>Email</span>
@@ -122,15 +169,20 @@ function ProfilPage() {
           </div>
         </div>
 
+        {/* ══════════════════════════════════════════════
+            Section : Changement de mot de passe
+            ══════════════════════════════════════════════ */}
         <div className={styles.sectionMdp}>
           <h2 className={styles.sectionMdpTitre}>Changer le mot de passe</h2>
 
+          {/* Messages d'erreur ou de succès */}
           {erreurMdp && <div className={styles.erreur}>{erreurMdp}</div>}
           {successMdp && <div className={styles.succes}>{successMdp}</div>}
 
           <form
             className={styles.formulaireMdp}
             onSubmit={handleSoumettreNewMdp}>
+            {/* Champ : ancien mot de passe */}
             <div className={styles.champ}>
               <label className={styles.label}>Ancien mot de passe</label>
               <input
@@ -143,6 +195,7 @@ function ProfilPage() {
                 required
               />
             </div>
+            {/* Champ : nouveau mot de passe */}
             <div className={styles.champ}>
               <label className={styles.label}>Nouveau mot de passe</label>
               <input
@@ -155,6 +208,7 @@ function ProfilPage() {
                 required
               />
             </div>
+            {/* Champ : confirmation du nouveau mot de passe */}
             <div className={styles.champ}>
               <label className={styles.label}>
                 Confirmer le nouveau mot de passe
@@ -169,6 +223,7 @@ function ProfilPage() {
                 required
               />
             </div>
+            {/* Bouton de soumission */}
             <button
               type="submit"
               className={styles.btnMdp}

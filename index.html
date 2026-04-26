@@ -3,18 +3,30 @@
 
 <head>
   <meta charset="UTF-8" />
+  <!-- Favicon de l'application -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <!-- Configuration responsive : adapte le viewport à la largeur de l'appareil -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ── Chargement des polices Google Fonts ──
+       - Oxanium : police gaming utilisée pour les titres et le logo
+       - Inter   : police moderne utilisée pour le texte courant
+       `preconnect` accélère la connexion au serveur de polices -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet">
+
   <title>fennec-arts-frontend</title>
 </head>
 
 <body>
+  <!-- Point de montage de React : tout le contenu de l'application
+       est injecté dans cette div par React (voir src/main.jsx) -->
   <div id="root"></div>
+
+  <!-- Script principal de l'application (module ESM chargé par Vite) -->
   <script type="module" src="/src/main.jsx"></script>
 </body>
 

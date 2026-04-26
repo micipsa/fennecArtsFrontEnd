@@ -1,11 +1,30 @@
+/**
+ * DashboardLayout — layout de l'espace d'administration.
+ *
+ * Ce composant structure la partie admin du site avec :
+ * - Une sidebar (barre latérale) contenant :
+ *   - Le titre de l'application et le sous-titre "Administration"
+ *   - Les liens de navigation vers les sections CRUD (articles, événements, etc.)
+ *   - Le nom de l'admin connecté et un bouton de déconnexion
+ * - Une zone de contenu principale (<Outlet />) qui rend la page dashboard active.
+ *
+ * Chaque lien utilise <NavLink> de React Router, qui ajoute automatiquement
+ * la classe CSS "actif" quand le lien correspond à la route courante.
+ * Le prop `end` sur le premier NavLink empêche qu'il soit actif pour les sous-routes.
+ */
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import styles from "./DashboardLayout.module.css";
 
 function DashboardLayout() {
+  // Récupération de l'utilisateur connecté et de la fonction de déconnexion
   const { utilisateur, deconnecter } = useAuth();
   const navigate = useNavigate();
 
+  /**
+   * Gestionnaire de déconnexion : supprime le token, remet l'état auth à null,
+   * puis redirige vers la page d'accueil.
+   */
   const handleDeconnexion = () => {
     deconnecter();
     navigate("/");
@@ -13,13 +32,17 @@ function DashboardLayout() {
 
   return (
     <div className={styles.wrapper}>
+      {/* ── Sidebar (barre latérale) ── */}
       <aside className={styles.sidebar}>
+        {/* En-tête de la sidebar */}
         <div className={styles.sidebarEntete}>
           <p className={styles.sidebarTitre}>Fennec Arts</p>
           <p className={styles.sidebarSousTitre}>Administration</p>
         </div>
 
+        {/* Navigation entre les sections du dashboard */}
         <nav className={styles.nav}>
+          {/* `end` = le lien n'est actif QUE pour /dashboard exact, pas /dashboard/articles */}
           <NavLink
             to="/dashboard"
             end
@@ -58,7 +81,9 @@ function DashboardLayout() {
           </NavLink>
         </nav>
 
+        {/* Pied de la sidebar : nom de l'admin + bouton déconnexion */}
         <div className={styles.sidebarPied}>
+          {/* Optional chaining (?.) au cas où utilisateur n'est pas encore chargé */}
           <p className={styles.nomAdmin}>{utilisateur?.nom}</p>
           <button className={styles.btnDeconnexion} onClick={handleDeconnexion}>
             Déconnexion
@@ -66,7 +91,9 @@ function DashboardLayout() {
         </div>
       </aside>
 
+      {/* ── Zone de contenu principal du dashboard ── */}
       <main className={styles.contenu}>
+        {/* Outlet rend la page correspondant à la sous-route active */}
         <Outlet />
       </main>
     </div>

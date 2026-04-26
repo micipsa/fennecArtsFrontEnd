@@ -1,24 +1,43 @@
+/**
+ * Hero — section d'en-tête visuelle de la page d'accueil.
+ *
+ * C'est la première chose que voit le visiteur. Elle contient :
+ * - Un badge textuel présentant les thématiques (Gaming, Esport, Culture Geek)
+ * - Un titre principal (<h1>) avec le mot "culturelle" accentué visuellement
+ * - Une description courte de la plateforme
+ * - Deux boutons d'action (CTA) : "Explorer les articles" et "Voir les événements"
+ * - Des statistiques visuelles (nombre d'articles, événements, membres)
+ * - Le logo de Fennec Arts avec un effet de glow (luminosité) en arrière-plan
+ *
+ * Ce composant n'a pas de state, c'est un composant purement présentationnel.
+ */
 import { Link } from "react-router-dom";
 import styles from "./Hero.module.css";
 
 function Hero() {
   return (
     <section className={styles.hero}>
+      {/* Grille à deux colonnes : contenu textuel + logo */}
       <div className={styles.grille}>
+        {/* ── Colonne gauche : texte et CTA ── */}
         <div className={`container ${styles.contenu}`}>
+          {/* Badge décoratif des thématiques */}
           <div className={styles.badge}>🎮 Gaming · Esport · Culture Geek</div>
 
+          {/* Titre principal de la page d'accueil */}
           <h1 className={styles.titre}>
             La plateforme <br />
             <span className={styles.accentue}>culturelle</span> de la <br />
             scène algérienne
           </h1>
 
+          {/* Description courte */}
           <p className={styles.description}>
             Articles, événements, tournois et actualités — tout ce qui fait
             vivre la culture numérique, le gaming et l'esport en Algérie.
           </p>
 
+          {/* Boutons d'action (Call-to-Action) */}
           <div className={styles.actions}>
             <Link to="/articles" className={styles.btnPrimaire}>
               Explorer les articles
@@ -28,6 +47,7 @@ function Hero() {
             </Link>
           </div>
 
+          {/* Compteurs statistiques décoratifs */}
           <div className={styles.stats}>
             <div className={styles.statItem}>
               <span className={styles.statNombre}>100+</span>
@@ -46,6 +66,7 @@ function Hero() {
           </div>
         </div>
 
+        {/* ── Colonne droite : logo avec effet glow ── */}
         <div className={styles.logoSection}>
           <div className={styles.logoWrapper}>
             <img
@@ -53,6 +74,7 @@ function Hero() {
               alt="Fennec Arts"
               className={styles.logoImage}
             />
+            {/* Div vide qui crée l'effet de luminosité derrière le logo (CSS) */}
             <div className={styles.logoGlow} />
           </div>
         </div>

@@ -1,3 +1,14 @@
+/**
+ * ArticlesPage — page listant tous les articles avec filtres et pagination.
+ *
+ * Fonctionnalités :
+ * - Filtrage par catégorie (boutons : Toutes, Peinture, Musique, etc.)
+ * - Pagination côté serveur (9 articles par page, paramètre `limit`)
+ * - Gestion des états : chargement, erreur, liste vide
+ *
+ * Le useEffect se déclenche à chaque changement de `page` ou `categorie`,
+ * ce qui relance automatiquement la requête API avec les nouveaux paramètres.
+ */
 import { useState, useEffect } from "react";
 import api from "../services/api";
 import CarteArticle from "../components/Cards/CarteArticle";
@@ -6,36 +17,53 @@ import MessageErreur from "../components/UI/MessageErreur";
 import Pagination from "../components/UI/Pagination";
 import styles from "./ArticlesPage.module.css";
 
+// Liste des catégories disponibles pour le filtrage
 const CATEGORIES = [
   "Toutes",
-  "Peinture",
-  "Musique",
-  "Théâtre",
+  "High-tech",
+  "Manga",
+  "Gaming",
+  "Graphisme",
+  "Esport",
+  "Geekerie",
+  "Bon Plan",
+  "Photographie",
+
+  "DIY",
+  "Programmation",
+  "TCG/JCC",
   "Littérature",
+  "Chroniques",
   "Cinéma",
-  "Danse",
 ];
+
+// Nombre d'articles affichés par page
 const LIMITE = 9;
 
 function ArticlesPage() {
-  const [articles, setArticles] = useState([]);
-  const [chargement, setChargement] = useState(true);
-  const [erreur, setErreur] = useState(null);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [categorie, setCategorie] = useState("Toutes");
+  // ── States ──
+  const [articles, setArticles] = useState([]); // Liste des articles
+  const [chargement, setChargement] = useState(true); // Indicateur de chargement
+  const [erreur, setErreur] = useState(null); // Message d'erreur
+  const [page, setPage] = useState(1); // Numéro de page courante
+  const [totalPages, setTotalPages] = useState(1); // Nombre total de pages
+  const [categorie, setCategorie] = useState("Toutes"); // Filtre de catégorie actif
 
+  // ── Chargement des articles quand la page ou la catégorie change ──
   useEffect(() => {
     const chargerArticles = async () => {
       try {
         setChargement(true);
         setErreur(null);
 
+        // Construction des paramètres de requête (query string)
         const params = new URLSearchParams();
         params.append("page", page);
         params.append("limit", LIMITE);
+        // On n'ajoute le filtre catégorie que si ce n'est pas "Toutes"
         if (categorie !== "Toutes") params.append("categorie", categorie);
 
+        // Requête GET avec les paramètres de pagination et filtrage
         const res = await api.get(`/api/articles?${params.toString()}`);
         setArticles(res.data.data);
         setTotalPages(res.data.pagination?.totalPages || 1);
@@ -49,15 +77,19 @@ function ArticlesPage() {
     };
 
     chargerArticles();
-  }, [page, categorie]);
+  }, [page, categorie]); // Dépendances : relance à chaque changement
 
+  /**
+   * Changement de catégorie : met à jour le filtre et remet la page à 1.
+   */
   const handleCategorie = (nouvelleCategorie) => {
     setCategorie(nouvelleCategorie);
-    setPage(1);
+    setPage(1); // On revient à la page 1 quand on change de catégorie
   };
 
   return (
     <div className="container">
+      {/* ── En-tête de la page ── */}
       <div className={styles.entete}>
         <h1 className={styles.titre}>Articles</h1>
         <p className={styles.sousTitre}>
@@ -65,6 +97,7 @@ function ArticlesPage() {
         </p>
       </div>
 
+      {/* ── Boutons de filtre par catégorie ── */}
       <div className={styles.filtres}>
         {CATEGORIES.map((cat) => (
           <button
@@ -76,6 +109,7 @@ function ArticlesPage() {
         ))}
       </div>
 
+      {/* ── États conditionnels : chargement, erreur, liste vide ── */}
       {chargement && <Spinner />}
 
       {erreur && (
@@ -88,6 +122,7 @@ function ArticlesPage() {
         </p>
       )}
 
+      {/* ── Grille d'articles + pagination ── */}
       {!chargement && !erreur && articles.length > 0 && (
         <>
           <div className={styles.grille}>
@@ -95,6 +130,7 @@ function ArticlesPage() {
               <CarteArticle key={article._id} article={article} />
             ))}
           </div>
+          {/* Composant de pagination */}
           <Pagination
             page={page}
             totalPages={totalPages}

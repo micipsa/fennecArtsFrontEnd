@@ -1,3 +1,22 @@
+/**
+ * DashboardEvenements — page CRUD de gestion des événements (admin).
+ *
+ * Structure et fonctionnement identiques à DashboardArticles, mais pour les événements.
+ *
+ * Fonctionnalités :
+ * - Tableau listant tous les événements (titre, catégorie, lieu, date début, actions)
+ * - Modale de création avec champs spécifiques aux événements :
+ *   - Titre, catégorie, lieu, date de début, date de fin, description
+ * - Suppression avec confirmation
+ *
+ * Endpoints API utilisés :
+ * - GET    /api/events        → charger la liste
+ * - POST   /api/events        → créer un événement
+ * - DELETE /api/events/:id    → supprimer un événement
+ *
+ * Le formulaire utilise des champs `datetime-local` pour les dates,
+ * permettant à l'utilisateur de sélectionner une date ET une heure.
+ */
 import { useState, useEffect } from "react";
 import api from "../services/api";
 import Spinner from "../components/UI/Spinner";
@@ -5,6 +24,7 @@ import MessageErreur from "../components/UI/MessageErreur";
 import Badge from "../components/UI/Badge";
 import styles from "./DashboardEvenements.module.css";
 
+// Valeurs initiales du formulaire de création d'événement
 const FORM_INITIAL = {
   titre: "",
   description: "",
@@ -14,6 +34,7 @@ const FORM_INITIAL = {
   dateFin: "",
 };
 
+// Catégories disponibles pour les événements
 const CATEGORIES = [
   "Exposition",
   "Concert",
@@ -24,6 +45,7 @@ const CATEGORIES = [
 ];
 
 function DashboardEvenements() {
+  // ── States ──
   const [evenements, setEvenements] = useState([]);
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState(null);
@@ -32,6 +54,7 @@ function DashboardEvenements() {
   const [envoiEnCours, setEnvoiEnCours] = useState(false);
   const [erreurForm, setErreurForm] = useState(null);
 
+  // ── Chargement des événements au montage ──
   useEffect(() => {
     const charger = async () => {
       try {
@@ -47,10 +70,15 @@ function DashboardEvenements() {
     charger();
   }, []);
 
+  /** Mise à jour dynamique des champs du formulaire */
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  /**
+   * Création d'un nouvel événement via POST.
+   * L'événement créé est ajouté en tête de la liste.
+   */
   const handleCreer = async (e) => {
     e.preventDefault();
     setErreurForm(null);
@@ -69,6 +97,10 @@ function DashboardEvenements() {
     }
   };
 
+  /**
+   * Suppression d'un événement après confirmation.
+   * L'événement est retiré de la liste côté client.
+   */
   const handleSupprimer = async (id) => {
     if (!window.confirm("Confirmer la suppression de cet événement ?")) return;
     try {
@@ -84,6 +116,7 @@ function DashboardEvenements() {
 
   return (
     <div>
+      {/* ── En-tête ── */}
       <div className={styles.entete}>
         <div>
           <h1 className={styles.titre}>Gestion des événements</h1>
@@ -98,6 +131,7 @@ function DashboardEvenements() {
         </button>
       </div>
 
+      {/* ── Tableau des événements ── */}
       <div className={styles.tableau}>
         <div className={styles.tableauEntete}>
           <span>Titre</span>
@@ -130,6 +164,7 @@ function DashboardEvenements() {
         ))}
       </div>
 
+      {/* ── Modale de création d'événement ── */}
       {modaleOuverte && (
         <div className={styles.overlay} onClick={() => setModaleOuverte(false)}>
           <div className={styles.modale} onClick={(e) => e.stopPropagation()}>
@@ -147,6 +182,7 @@ function DashboardEvenements() {
             )}
 
             <form className={styles.formulaire} onSubmit={handleCreer}>
+              {/* Titre */}
               <div className={styles.champ}>
                 <label className={styles.label}>Titre</label>
                 <input
@@ -160,6 +196,7 @@ function DashboardEvenements() {
                 />
               </div>
 
+              {/* Catégorie (select) */}
               <div className={styles.champ}>
                 <label className={styles.label}>Catégorie</label>
                 <select
@@ -175,6 +212,7 @@ function DashboardEvenements() {
                 </select>
               </div>
 
+              {/* Lieu */}
               <div className={styles.champ}>
                 <label className={styles.label}>Lieu</label>
                 <input
@@ -188,6 +226,7 @@ function DashboardEvenements() {
                 />
               </div>
 
+              {/* Dates de début et fin (inputs datetime-local sur 2 colonnes) */}
               <div className={styles.grilleDates}>
                 <div className={styles.champ}>
                   <label className={styles.label}>Date de début</label>
@@ -213,6 +252,7 @@ function DashboardEvenements() {
                 </div>
               </div>
 
+              {/* Description (textarea) */}
               <div className={styles.champ}>
                 <label className={styles.label}>Description</label>
                 <textarea
@@ -226,6 +266,7 @@ function DashboardEvenements() {
                 />
               </div>
 
+              {/* Boutons d'action */}
               <div className={styles.modaleActions}>
                 <button
                   type="button"

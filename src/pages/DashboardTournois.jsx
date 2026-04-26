@@ -1,3 +1,26 @@
+/**
+ * DashboardTournois — page CRUD de gestion des tournois (admin).
+ *
+ * La page la plus riche du dashboard. Elle permet à l'admin de :
+ * - Voir tous les tournois dans un tableau scrollable
+ *   (titre, jeu, format, participants, statut, actions)
+ * - Créer un nouveau tournoi via une modale complète
+ * - Changer le statut d'un tournoi (ouvert, complet, en_cours, terminé)
+ *   via un select dans la ligne du tableau
+ * - Supprimer un tournoi avec confirmation
+ *
+ * Endpoints API utilisés :
+ * - GET    /api/tournaments        → charger la liste
+ * - POST   /api/tournaments        → créer un tournoi
+ * - PUT    /api/tournaments/:id    → modifier le statut
+ * - DELETE /api/tournaments/:id    → supprimer un tournoi
+ *
+ * Le formulaire de création contient des champs spécifiques :
+ * - Titre, jeu, format (select), lieu, max participants (number),
+ *   dates début/fin (datetime-local), récompense (optionnel), description
+ *
+ * Les champs sont organisés en grilles de 2 colonnes via CSS.
+ */
 import { useState, useEffect } from "react";
 import api from "../services/api";
 import Spinner from "../components/UI/Spinner";
@@ -5,6 +28,7 @@ import MessageErreur from "../components/UI/MessageErreur";
 import Badge from "../components/UI/Badge";
 import styles from "./DashboardTournois.module.css";
 
+// Valeurs initiales du formulaire de création de tournoi
 const FORM_INITIAL = {
   titre: "",
   description: "",
@@ -17,9 +41,11 @@ const FORM_INITIAL = {
   prize: "",
 };
 
+// Formats de tournoi disponibles
 const FORMATS = ["1v1", "2v2", "4v4", "équipes", "battle-royale"];
 
 function DashboardTournois() {
+  // ── States ──
   const [tournois, setTournois] = useState([]);
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState(null);
@@ -28,6 +54,7 @@ function DashboardTournois() {
   const [envoiEnCours, setEnvoiEnCours] = useState(false);
   const [erreurForm, setErreurForm] = useState(null);
 
+  // ── Chargement des tournois au montage ──
   useEffect(() => {
     const charger = async () => {
       try {
@@ -43,10 +70,15 @@ function DashboardTournois() {
     charger();
   }, []);
 
+  /** Mise à jour dynamique des champs du formulaire */
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  /**
+   * Création d'un nouveau tournoi via POST.
+   * Le tournoi créé est ajouté en tête de la liste.
+   */
   const handleCreer = async (e) => {
     e.preventDefault();
     setErreurForm(null);
@@ -65,6 +97,9 @@ function DashboardTournois() {
     }
   };
 
+  /**
+   * Suppression d'un tournoi après confirmation.
+   */
   const handleSupprimer = async (id) => {
     if (!window.confirm("Confirmer la suppression de ce tournoi ?")) return;
     try {
@@ -75,6 +110,10 @@ function DashboardTournois() {
     }
   };
 
+  /**
+   * Changement de statut d'un tournoi via PUT.
+   * Met à jour le statut dans la liste côté client (state optimiste).
+   */
   const handleChangerStatut = async (id, nouveauStatut) => {
     try {
       await api.put(`/api/tournaments/${id}`, { statut: nouveauStatut });
@@ -89,6 +128,7 @@ function DashboardTournois() {
   if (chargement) return <Spinner />;
   if (erreur) return <MessageErreur message={erreur} />;
 
+  // Mapping statut → variante de couleur du Badge
   const varianteStatut = {
     ouvert: "succes",
     complet: "avertissement",
@@ -98,6 +138,7 @@ function DashboardTournois() {
 
   return (
     <div>
+      {/* ── En-tête ── */}
       <div className={styles.entete}>
         <div>
           <h1 className={styles.titre}>Gestion des tournois</h1>
@@ -112,6 +153,9 @@ function DashboardTournois() {
         </button>
       </div>
 
+      {/* ══════════════════════════════════════════════
+          Tableau des tournois (avec scroll horizontal)
+          ══════════════════════════════════════════════ */}
       <div className={styles.tableau}>
         <div className={styles.tableauScroll}>
           <div className={styles.tableauEntete}>
@@ -132,6 +176,7 @@ function DashboardTournois() {
               <span className={styles.titreLigne}>{t.titre}</span>
               <span>{t.jeu}</span>
               <span>{t.format}</span>
+              {/* Affichage du ratio participants / max */}
               <span>
                 {t.participants?.length ?? 0} / {t.nombreMaxParticipants}
               </span>
@@ -142,6 +187,7 @@ function DashboardTournois() {
                 />
               </span>
               <span className={styles.actions}>
+                {/* Select pour changer le statut */}
                 <select
                   className={styles.selectStatut}
                   value={t.statut}
@@ -151,6 +197,7 @@ function DashboardTournois() {
                   <option value="en_cours">en_cours</option>
                   <option value="terminé">terminé</option>
                 </select>
+                {/* Bouton de suppression */}
                 <button
                   className={styles.btnSupprimer}
                   onClick={() => handleSupprimer(t._id)}>
@@ -162,6 +209,9 @@ function DashboardTournois() {
         </div>
       </div>
 
+      {/* ══════════════════════════════════════════════
+          Modale de création de tournoi
+          ══════════════════════════════════════════════ */}
       {modaleOuverte && (
         <div className={styles.overlay} onClick={() => setModaleOuverte(false)}>
           <div className={styles.modale} onClick={(e) => e.stopPropagation()}>
@@ -179,6 +229,7 @@ function DashboardTournois() {
             )}
 
             <form className={styles.formulaire} onSubmit={handleCreer}>
+              {/* Titre */}
               <div className={styles.champ}>
                 <label className={styles.label}>Titre</label>
                 <input
@@ -192,6 +243,7 @@ function DashboardTournois() {
                 />
               </div>
 
+              {/* ── Grille 2 colonnes : Jeu + Format ── */}
               <div className={styles.grilleDeuxColonnes}>
                 <div className={styles.champ}>
                   <label className={styles.label}>Jeu</label>
@@ -221,6 +273,7 @@ function DashboardTournois() {
                 </div>
               </div>
 
+              {/* ── Grille 2 colonnes : Lieu + Max participants ── */}
               <div className={styles.grilleDeuxColonnes}>
                 <div className={styles.champ}>
                   <label className={styles.label}>Lieu</label>
@@ -248,6 +301,7 @@ function DashboardTournois() {
                 </div>
               </div>
 
+              {/* ── Grille 2 colonnes : Dates début + fin ── */}
               <div className={styles.grilleDeuxColonnes}>
                 <div className={styles.champ}>
                   <label className={styles.label}>Date de début</label>
@@ -273,6 +327,7 @@ function DashboardTournois() {
                 </div>
               </div>
 
+              {/* Récompense (optionnel) */}
               <div className={styles.champ}>
                 <label className={styles.label}>Récompense</label>
                 <input
@@ -285,6 +340,7 @@ function DashboardTournois() {
                 />
               </div>
 
+              {/* Description */}
               <div className={styles.champ}>
                 <label className={styles.label}>Description</label>
                 <textarea
@@ -298,6 +354,7 @@ function DashboardTournois() {
                 />
               </div>
 
+              {/* Boutons d'action de la modale */}
               <div className={styles.modaleActions}>
                 <button
                   type="button"

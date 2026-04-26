@@ -1,4 +1,18 @@
-/* ── Reset ── */
+/* ═══════════════════════════════════════════════════════════════════════════
+   index.css — Styles globaux de l'application Fennec Arts
+   ═══════════════════════════════════════════════════════════════════════════
+   Ce fichier contient :
+   1. Le reset CSS (suppression des marges/paddings par défaut)
+   2. Les variables CSS (custom properties) utilisées dans tout le projet
+   3. Les styles de base (body, liens, images, boutons)
+   4. Les classes utilitaires globales (.container, .btn, .spinner)
+   5. Les règles de typographie (police des titres)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Reset CSS ──
+   Supprime les styles par défaut du navigateur pour garantir
+   un rendu cohérent sur tous les navigateurs.
+   box-sizing: border-box = les paddings/borders sont inclus dans la largeur. */
 *,
 *::before,
 *::after {
@@ -7,34 +21,50 @@
   padding: 0;
 }
 
-/* ── Variables globales ── */
+/* ── Variables CSS (Design Tokens) ──
+   Centralisent toutes les valeurs de design pour faciliter la maintenance.
+   Pour changer une couleur ou un espacement, il suffit de modifier ici. */
 :root {
-  --couleur-primaire: #e63946;
-  --couleur-sombre: #1a1a2e;
-  --couleur-sombre-2: #16213e;
-  --couleur-accent: #f4a261;
-  --couleur-texte: #2d2d2d;
-  --couleur-texte-clair: #6c757d;
-  --couleur-fond: #f8f9fa;
-  --couleur-blanc: #ffffff;
-  --couleur-bordure: #dee2e6;
-  --font-principale: "Inter", "Segoe UI", sans-serif;
-  --font-titre: "Oxanium", sans-serif;
-  --border-radius-sm: 4px;
-  --border-radius: 8px;
-  --border-radius-lg: 16px;
-  --ombre-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
-  --ombre: 0 2px 8px rgba(0, 0, 0, 0.15);
-  --ombre-lg: 0 4px 20px rgba(0, 0, 0, 0.2);
+  /* Couleurs principales */
+  --couleur-primaire: #e63946;       /* Rouge — couleur d'accentuation principale */
+  --couleur-sombre: #1a1a2e;         /* Bleu très foncé — arrière-plans sombres */
+  --couleur-sombre-2: #16213e;       /* Bleu foncé — variante sombre */
+  --couleur-accent: #f4a261;         /* Orange — couleur d'accent secondaire */
+  --couleur-texte: #2d2d2d;          /* Gris foncé — texte principal */
+  --couleur-texte-clair: #6c757d;    /* Gris moyen — texte secondaire */
+  --couleur-fond: #f8f9fa;           /* Gris très clair — fond de page */
+  --couleur-blanc: #ffffff;          /* Blanc pur */
+  --couleur-bordure: #dee2e6;        /* Gris clair — bordures */
+
+  /* Typographie */
+  --font-principale: "Inter", "Segoe UI", sans-serif;  /* Police pour le texte */
+  --font-titre: "Oxanium", sans-serif;                 /* Police pour les titres (gaming style) */
+
+  /* Espacements et arrondis */
+  --border-radius-sm: 4px;     /* Arrondi petit */
+  --border-radius: 8px;        /* Arrondi standard */
+  --border-radius-lg: 16px;    /* Arrondi large */
+
+  /* Ombres portées (box-shadow) */
+  --ombre-sm: 0 1px 3px rgba(0, 0, 0, 0.12);   /* Ombre légère */
+  --ombre: 0 2px 8px rgba(0, 0, 0, 0.15);       /* Ombre standard */
+  --ombre-lg: 0 4px 20px rgba(0, 0, 0, 0.2);    /* Ombre prononcée */
+
+  /* Transition par défaut pour les animations */
   --transition: all 0.2s ease;
+
+  /* Largeur maximale du conteneur */
   --max-width: 1200px;
 }
 
-/* ── Base ── */
+/* ── Styles de base ── */
+
+/* Défilement fluide lors des clics sur les ancres */
 html {
   scroll-behavior: smooth;
 }
 
+/* Corps de la page : police, couleur, fond, hauteur minimale */
 body {
   font-family: var(--font-principale);
   color: var(--couleur-texte);
@@ -43,16 +73,19 @@ body {
   min-height: 100vh;
 }
 
+/* Liens : suppression du soulignement et héritage de la couleur */
 a {
   text-decoration: none;
   color: inherit;
 }
 
+/* Images : responsive par défaut (max-width: 100%) */
 img {
   max-width: 100%;
   display: block;
 }
 
+/* Boutons : curseur pointer + héritage de la police */
 button {
   cursor: pointer;
   font-family: inherit;
@@ -60,17 +93,23 @@ button {
   outline: none;
 }
 
+/* Listes : suppression des puces par défaut */
 ul {
   list-style: none;
 }
 
-/* ── Utilitaires globaux ── */
+/* ═══════════════════════════════════════════════════════════════════════════
+   Classes utilitaires globales
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Container : centre le contenu avec une largeur max et du padding latéral */
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
+/* Bouton de base : styles communs à tous les boutons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -82,29 +121,37 @@ ul {
   transition: var(--transition);
 }
 
+/* Bouton primaire : fond rouge, texte blanc */
 .btn-primaire {
   background: var(--couleur-primaire);
   color: var(--couleur-blanc);
 }
 
+/* Effet hover du bouton primaire : fond plus foncé + légère élévation */
 .btn-primaire:hover {
   background: #c1121f;
   transform: translateY(-1px);
   box-shadow: var(--ombre);
 }
 
+/* Bouton outline : fond transparent, bordure rouge */
 .btn-outline {
   background: transparent;
   color: var(--couleur-primaire);
   border: 1.5px solid var(--couleur-primaire);
 }
 
+/* Effet hover du bouton outline : remplissage rouge */
 .btn-outline:hover {
   background: var(--couleur-primaire);
   color: var(--couleur-blanc);
 }
 
-/* === Spinner === */
+/* ═══════════════════════════════════════════════════════════════════════════
+   Spinner (indicateur de chargement)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Conteneur du spinner : centrage horizontal et vertical */
 .spinner-conteneur {
   display: flex;
   justify-content: center;
@@ -112,20 +159,29 @@ ul {
   padding: 3rem 0;
 }
 
+/* Le spinner lui-même : un cercle avec une bordure partiellement colorée
+   qui tourne infiniment grâce à l'animation @keyframes */
 .spinner {
   width: 40px;
   height: 40px;
-  border: 3px solid var(--couleur-bordure);
-  border-top-color: var(--couleur-primaire);
+  border: 3px solid var(--couleur-bordure);      /* Cercle gris */
+  border-top-color: var(--couleur-primaire);      /* Portion rouge (visible en rotation) */
   border-radius: 50%;
-  animation: tourner 0.7s linear infinite;
+  animation: tourner 0.7s linear infinite;        /* Rotation infinie */
 }
 
+/* Animation de rotation pour le spinner */
 @keyframes tourner {
   to {
     transform: rotate(360deg);
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Typographie — Police spéciale pour les titres et le logo
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Tous les niveaux de titres utilisent la police "Oxanium" (style gaming) */
 h1,
 h2,
 h3,
@@ -135,6 +191,7 @@ h6 {
   font-family: var(--font-titre);
 }
 
+/* Le logo et le texte du logo utilisent aussi la police gaming */
 .logo,
 .logoTexte {
   font-family: var(--font-titre);
