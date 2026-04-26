@@ -1,24 +1,24 @@
 import { NavLink, Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import styles from "./Navbar.module.css";
 
-function Navbar({ utilisateur, onDeconnexion }) {
+function Navbar() {
   const navigate = useNavigate();
+  const { utilisateur, deconnecter } = useAuth();
 
   const handleDeconnexion = () => {
-    onDeconnexion();
+    deconnecter();
     navigate("/");
   };
 
   return (
     <nav className={styles.navbar}>
       <div className={`container ${styles.inner}`}>
-        {/* Logo */}
         <Link to="/" className={styles.logo}>
           Fennec Arts
           <span className={styles.logoPoint} />
         </Link>
 
-        {/* Liens de navigation */}
         <ul className={styles.nav}>
           <li>
             <NavLink
@@ -50,7 +50,6 @@ function Navbar({ utilisateur, onDeconnexion }) {
           </li>
         </ul>
 
-        {/* Actions droite */}
         <div className={styles.actions}>
           {utilisateur ? (
             <>

@@ -4,11 +4,15 @@ import useAuth from "../hooks/useAuth";
 import api from "../services/api";
 import styles from "./AuthPage.module.css";
 
-function LoginPage() {
+function RegisterPage() {
   const navigate = useNavigate();
   const { connecter } = useAuth();
 
-  const [formData, setFormData] = useState({ email: "", motDePasse: "" });
+  const [formData, setFormData] = useState({
+    nom: "",
+    email: "",
+    motDePasse: "",
+  });
   const [erreur, setErreur] = useState(null);
   const [chargement, setChargement] = useState(false);
 
@@ -22,14 +26,15 @@ function LoginPage() {
     setChargement(true);
 
     try {
-      const res = await api.post("/api/auth/login", {
+      const res = await api.post("/api/auth/register", {
+        nom: formData.nom,
         email: formData.email,
         password: formData.motDePasse,
       });
       connecter(res.data.token, res.data.user);
       navigate("/");
     } catch (err) {
-      setErreur(err.response?.data?.message || "Identifiants incorrects.");
+      setErreur(err.response?.data?.message || "Une erreur est survenue.");
     } finally {
       setChargement(false);
     }
@@ -39,13 +44,31 @@ function LoginPage() {
     <div className={styles.page}>
       <div className={styles.carte}>
         <div className={styles.entete}>
-          <h1 className={styles.titre}>Connexion</h1>
-          <p className={styles.sousTitre}>Accédez à votre espace Fennec Arts</p>
+          <h1 className={styles.titre}>Créer un compte</h1>
+          <p className={styles.sousTitre}>
+            Rejoignez la communauté Fennec Arts
+          </p>
         </div>
 
         {erreur && <div className={styles.erreur}>{erreur}</div>}
 
         <form className={styles.formulaire} onSubmit={handleSubmit}>
+          <div className={styles.champ}>
+            <label className={styles.label} htmlFor="nom">
+              Nom complet
+            </label>
+            <input
+              className={styles.input}
+              type="text"
+              id="nom"
+              name="nom"
+              value={formData.nom}
+              onChange={handleChange}
+              placeholder="Votre nom"
+              required
+            />
+          </div>
+
           <div className={styles.champ}>
             <label className={styles.label} htmlFor="email">
               Adresse email
@@ -75,6 +98,7 @@ function LoginPage() {
               onChange={handleChange}
               placeholder="••••••••"
               required
+              minLength={6}
             />
           </div>
 
@@ -82,16 +106,16 @@ function LoginPage() {
             type="submit"
             className={styles.boutonSoumettre}
             disabled={chargement}>
-            {chargement ? "Connexion..." : "Se connecter"}
+            {chargement ? "Création..." : "Créer mon compte"}
           </button>
         </form>
 
         <p className={styles.lienAlternatif}>
-          Pas encore de compte ? <Link to="/register">Créer un compte</Link>
+          Déjà un compte ? <Link to="/login">Se connecter</Link>
         </p>
       </div>
     </div>
   );
 }
 
-export default LoginPage;
+export default RegisterPage;

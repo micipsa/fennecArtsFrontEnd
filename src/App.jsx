@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import ArticlesPage from "./pages/ArticlesPage";
 import EventsPage from "./pages/EventsPage";
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
@@ -16,10 +17,12 @@ function App() {
           <Route path="articles/:id" element={<ArticlesPage />} />
           <Route path="events" element={<EventsPage />} />
           <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
 }
+
 export default App;

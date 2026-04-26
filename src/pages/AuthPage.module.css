@@ -1,0 +1,119 @@
+.page {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+}
+
+.carte {
+  background: var(--couleur-blanc);
+  border-radius: var(--border-radius-lg);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: var(--ombre-lg);
+  border: 1px solid var(--couleur-bordure);
+}
+
+.entete {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.titre {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--couleur-texte);
+}
+
+.sousTitre {
+  color: var(--couleur-texte-clair);
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
+}
+
+.erreur {
+  background: rgba(230, 57, 70, 0.08);
+  color: var(--couleur-primaire);
+  border: 1px solid rgba(230, 57, 70, 0.2);
+  border-radius: var(--border-radius);
+  padding: 0.75rem 1rem;
+  font-size: 0.88rem;
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.formulaire {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--couleur-texte);
+}
+
+.input {
+  padding: 0.65rem 1rem;
+  border: 1.5px solid var(--couleur-bordure);
+  border-radius: var(--border-radius);
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--couleur-texte);
+  background: var(--couleur-fond);
+  transition: var(--transition);
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--couleur-primaire);
+  background: var(--couleur-blanc);
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+}
+
+.boutonSoumettre {
+  background: var(--couleur-primaire);
+  color: var(--couleur-blanc);
+  padding: 0.75rem;
+  border-radius: var(--border-radius);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: var(--transition);
+  margin-top: 0.5rem;
+}
+
+.boutonSoumettre:hover:not(:disabled) {
+  background: #c1121f;
+  transform: translateY(-1px);
+  box-shadow: var(--ombre);
+}
+
+.boutonSoumettre:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.lienAlternatif {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.88rem;
+  color: var(--couleur-texte-clair);
+}
+
+.lienAlternatif a {
+  color: var(--couleur-primaire);
+  font-weight: 600;
+}
+
+.lienAlternatif a:hover {
+  text-decoration: underline;
+}
