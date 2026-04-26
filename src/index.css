@@ -18,7 +18,8 @@
   --couleur-fond: #f8f9fa;
   --couleur-blanc: #ffffff;
   --couleur-bordure: #dee2e6;
-  --font-principale: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --font-principale: "Inter", "Segoe UI", sans-serif;
+  --font-titre: "Oxanium", sans-serif;
   --border-radius-sm: 4px;
   --border-radius: 8px;
   --border-radius-lg: 16px;
@@ -124,4 +125,17 @@ ul {
   to {
     transform: rotate(360deg);
   }
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-titre);
+}
+
+.logo,
+.logoTexte {
+  font-family: var(--font-titre);
 }

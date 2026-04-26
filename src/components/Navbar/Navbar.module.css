@@ -31,6 +31,27 @@
   color: var(--couleur-accent);
 }
 
+.logoImg {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--couleur-primaire);
+}
+
+.logoTexte {
+  color: var(--couleur-blanc);
+  transition: var(--transition);
+}
+
+.logo:hover .logoTexte {
+  color: var(--couleur-accent);
+}
+
+.logo:hover {
+  color: var(--couleur-accent);
+}
+
 .logoPoint {
   width: 8px;
   height: 8px;
@@ -93,6 +114,8 @@
   font-size: 0.95rem;
   font-weight: 500;
   transition: var(--transition);
+  font-family: var(--font-titre);
+  letter-spacing: 0.03em;
 }
 
 .navLink:hover {
@@ -114,6 +137,8 @@
 .nomUtilisateur {
   color: rgba(255, 255, 255, 0.75);
   font-size: 0.9rem;
+  font-family: var(--font-titre);
+  letter-spacing: 0.03em;
 }
 
 .btnConnexion {
@@ -124,6 +149,8 @@
   font-size: 0.9rem;
   font-weight: 500;
   transition: var(--transition);
+  font-family: var(--font-titre);
+  letter-spacing: 0.03em;
 }
 
 .btnConnexion:hover {
@@ -141,11 +168,17 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.btnDeconnexion:hover {
-  color: var(--couleur-blanc);
-  border-color: rgba(255, 255, 255, 0.5);
+.btnDeconnexion {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-family: var(--font-titre);
+  letter-spacing: 0.03em;
 }
-
 .btnDashboard {
   background: rgba(244, 162, 97, 0.2);
   color: var(--couleur-accent);
@@ -155,6 +188,8 @@
   font-weight: 500;
   transition: var(--transition);
   border: 1px solid rgba(244, 162, 97, 0.3);
+  font-family: var(--font-titre);
+  letter-spacing: 0.03em;
 }
 
 .btnDashboard:hover {

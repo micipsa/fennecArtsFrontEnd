@@ -20,7 +20,6 @@ function LoginPage() {
     e.preventDefault();
     setErreur(null);
     setChargement(true);
-
     try {
       const res = await api.post("/api/auth/login", {
         email: formData.email,
@@ -39,6 +38,11 @@ function LoginPage() {
     <div className={styles.page}>
       <div className={styles.carte}>
         <div className={styles.entete}>
+          <img
+            src="/FennecArts_eSports_Logo.png"
+            alt="Fennec Arts"
+            className={styles.logo}
+          />
           <h1 className={styles.titre}>Connexion</h1>
           <p className={styles.sousTitre}>Accédez à votre espace Fennec Arts</p>
         </div>
@@ -82,7 +86,7 @@ function LoginPage() {
             type="submit"
             className={styles.boutonSoumettre}
             disabled={chargement}>
-            {chargement ? "Connexion..." : "Se connecter"}
+            {chargement ? "Connexion..." : "SE CONNECTER"}
           </button>
         </form>
 

@@ -24,7 +24,6 @@ function RegisterPage() {
     e.preventDefault();
     setErreur(null);
     setChargement(true);
-
     try {
       const res = await api.post("/api/auth/register", {
         nom: formData.nom,
@@ -44,6 +43,11 @@ function RegisterPage() {
     <div className={styles.page}>
       <div className={styles.carte}>
         <div className={styles.entete}>
+          <img
+            src="/FennecArts_eSports_Logo.png"
+            alt="Fennec Arts"
+            className={styles.logo}
+          />
           <h1 className={styles.titre}>Créer un compte</h1>
           <p className={styles.sousTitre}>
             Rejoignez la communauté Fennec Arts
@@ -106,7 +110,7 @@ function RegisterPage() {
             type="submit"
             className={styles.boutonSoumettre}
             disabled={chargement}>
-            {chargement ? "Création..." : "Créer mon compte"}
+            {chargement ? "Création..." : "CRÉER MON COMPTE"}
           </button>
         </form>
 

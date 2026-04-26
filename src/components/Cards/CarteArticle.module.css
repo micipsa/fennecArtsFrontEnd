@@ -4,15 +4,40 @@
   padding: 1.5rem;
   box-shadow: var(--ombre-sm);
   border: 1px solid var(--couleur-bordure);
+  border-top: 3px solid transparent;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.carte::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--couleur-primaire),
+    var(--couleur-accent)
+  );
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.carte:hover::before {
+  transform: scaleX(1);
 }
 
 .carte:hover {
-  box-shadow: var(--ombre);
-  transform: translateY(-3px);
+  box-shadow: var(--ombre-lg);
+  transform: translateY(-4px);
+  border-color: rgba(230, 57, 70, 0.15);
 }
 
 .entete {
@@ -24,13 +49,15 @@
 .date {
   font-size: 0.82rem;
   color: var(--couleur-texte-clair);
+  font-family: var(--font-titre);
 }
 
 .titre {
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--couleur-texte);
   line-height: 1.4;
+  font-family: var(--font-titre);
 }
 
 .extrait {
@@ -56,12 +83,13 @@
 
 .lien {
   font-size: 0.88rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--couleur-primaire);
   transition: var(--transition);
+  font-family: var(--font-titre);
+  letter-spacing: 0.02em;
 }
 
 .lien:hover {
-  gap: 0.4rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.05em;
 }

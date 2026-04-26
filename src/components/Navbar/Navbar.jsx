@@ -20,8 +20,12 @@ function Navbar() {
     <nav className={styles.navbar}>
       <div className={`container ${styles.inner}`}>
         <Link to="/" className={styles.logo} onClick={fermerMenu}>
-          Fennec Arts
-          <span className={styles.logoPoint} />
+          <img
+            src="/FennecArts_eSports_Logo.png"
+            alt="Fennec Arts"
+            className={styles.logoImg}
+          />
+          <span className={styles.logoTexte}>Fennec Arts</span>
         </Link>
 
         {/* Bouton burger — visible uniquement sur mobile */}
