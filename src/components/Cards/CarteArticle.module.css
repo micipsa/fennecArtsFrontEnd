@@ -1,0 +1,67 @@
+.carte {
+  background: var(--couleur-blanc);
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--ombre-sm);
+  border: 1px solid var(--couleur-bordure);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: var(--transition);
+}
+
+.carte:hover {
+  box-shadow: var(--ombre);
+  transform: translateY(-3px);
+}
+
+.entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.date {
+  font-size: 0.82rem;
+  color: var(--couleur-texte-clair);
+}
+
+.titre {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--couleur-texte);
+  line-height: 1.4;
+}
+
+.extrait {
+  font-size: 0.9rem;
+  color: var(--couleur-texte-clair);
+  line-height: 1.7;
+  flex: 1;
+}
+
+.pied {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--couleur-bordure);
+  margin-top: auto;
+}
+
+.auteur {
+  font-size: 0.85rem;
+  color: var(--couleur-texte-clair);
+}
+
+.lien {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--couleur-primaire);
+  transition: var(--transition);
+}
+
+.lien:hover {
+  gap: 0.4rem;
+  letter-spacing: 0.02em;
+}

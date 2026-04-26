@@ -1,0 +1,24 @@
+.entete {
+  padding: 2rem 0 1.5rem;
+  border-bottom: 1px solid var(--couleur-bordure);
+  margin-bottom: 2rem;
+}
+
+.titre {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--couleur-texte);
+}
+
+.sousTitre {
+  color: var(--couleur-texte-clair);
+  margin-top: 0.25rem;
+  font-size: 0.95rem;
+}
+
+.grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding-bottom: 3rem;
+}

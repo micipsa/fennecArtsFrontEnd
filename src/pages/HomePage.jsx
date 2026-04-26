@@ -1,13 +1,25 @@
+import Hero from "../components/UI/Hero";
+
 function HomePage() {
   return (
-    <div className="container">
-      <h2 style={{ marginBottom: "1rem", fontSize: "2rem" }}>
-        Bienvenue sur Fennec Arts
-      </h2>
-      <p style={{ color: "var(--couleur-texte-clair)", fontSize: "1.1rem" }}>
-        Plateforme culturelle dédiée à la promotion des arts en Algérie.
-      </p>
-    </div>
+    <>
+      <Hero />
+      <div className="container" style={{ padding: "3rem 1.5rem" }}>
+        <h2
+          style={{
+            fontSize: "1.5rem",
+            fontWeight: "700",
+            marginBottom: "0.5rem",
+          }}>
+          À propos de la plateforme
+        </h2>
+        <p style={{ color: "var(--couleur-texte-clair)", lineHeight: "1.8" }}>
+          Fennec Arts rassemble artistes, amateurs et curieux autour d'une même
+          passion : la culture algérienne sous toutes ses formes.
+        </p>
+      </div>
+    </>
   );
 }
+
 export default HomePage;

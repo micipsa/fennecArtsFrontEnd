@@ -102,3 +102,26 @@ ul {
   background: var(--couleur-primaire);
   color: var(--couleur-blanc);
 }
+
+/* === Spinner === */
+.spinner-conteneur {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--couleur-bordure);
+  border-top-color: var(--couleur-primaire);
+  border-radius: 50%;
+  animation: tourner 0.7s linear infinite;
+}
+
+@keyframes tourner {
+  to {
+    transform: rotate(360deg);
+  }
+}
