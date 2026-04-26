@@ -1,0 +1,97 @@
+.wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  background: var(--couleur-sombre);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.sidebarEntete {
+  padding: 0 1.5rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 1rem;
+}
+
+.sidebarTitre {
+  color: var(--couleur-blanc);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.sidebarSousTitre {
+  color: var(--couleur-primaire);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.2rem;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0 0.75rem;
+  flex: 1;
+}
+
+.navLien {
+  color: rgba(255, 255, 255, 0.6);
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.navLien:hover {
+  color: var(--couleur-blanc);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.navLien.actif {
+  color: var(--couleur-blanc);
+  background: rgba(230, 57, 70, 0.25);
+}
+
+.sidebarPied {
+  padding: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nomAdmin {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.btnDeconnexion {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: var(--transition);
+  width: 100%;
+}
+
+.btnDeconnexion:hover {
+  color: var(--couleur-blanc);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.contenu {
+  flex: 1;
+  padding: 2rem;
+  background: var(--couleur-fond);
+  overflow-y: auto;
+}
