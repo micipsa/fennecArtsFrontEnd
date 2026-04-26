@@ -16,37 +16,46 @@
   font-size: 0.9rem;
   margin-top: 0.25rem;
 }
-
+.tableauLigne span:last-child {
+  text-align: center;
+}
 .tableau {
-  background: var(--couleur-blanc);
   border-radius: var(--border-radius-lg);
   border: 1px solid var(--couleur-bordure);
-  overflow: hidden;
+  background: var(--couleur-blanc);
 }
 
+.tableauScroll {
+  width: 100%;
+  border-radius: var(--border-radius-lg);
+  overflow-x: auto;
+}
 .tableauEntete {
   display: grid;
-  grid-template-columns: 1.5fr 2fr 1fr 1.5fr 1fr;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
   padding: 0.75rem 1.25rem;
   background: var(--couleur-fond);
   border-bottom: 1px solid var(--couleur-bordure);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: var(--couleur-texte-clair);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  /* min-width supprimé */
 }
-
+.tableauEntete span:last-child {
+  text-align: center;
+}
 .tableauLigne {
   display: grid;
-  grid-template-columns: 1.5fr 2fr 1fr 1.5fr 1fr;
-  padding: 1rem 1.25rem;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
+  padding: 0.85rem 1.25rem;
   border-bottom: 1px solid var(--couleur-bordure);
   align-items: center;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   transition: var(--transition);
+  /* min-width supprimé */
 }
-
 .tableauLigne:last-child {
   border-bottom: none;
 }
@@ -57,11 +66,15 @@
 .nom {
   font-weight: 600;
   color: var(--couleur-texte);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 0.5rem;
 }
 
 .email {
   color: var(--couleur-texte-clair);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -69,16 +82,17 @@
 }
 
 .selectRole {
-  padding: 0.35rem 0.6rem;
+  padding: 0.3rem 0.5rem;
   border: 1.5px solid var(--couleur-bordure);
   border-radius: var(--border-radius-sm);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-family: inherit;
   color: var(--couleur-texte);
   background: var(--couleur-fond);
   cursor: pointer;
   transition: var(--transition);
   outline: none;
+  width: 100%;
 }
 
 .selectRole:focus {
@@ -93,9 +107,9 @@
 .btnSupprimer {
   background: rgba(230, 57, 70, 0.08);
   color: var(--couleur-primaire);
-  padding: 0.35rem 0.75rem;
+  padding: 0.3rem 0.6rem;
   border-radius: var(--border-radius-sm);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 500;
   transition: var(--transition);
   border: 1px solid rgba(230, 57, 70, 0.2);
@@ -111,4 +125,24 @@
   text-align: center;
   color: var(--couleur-texte-clair);
   font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .tableauEntete {
+    display: none !important;
+  }
+
+  .tableauLigne {
+    display: flex !important;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--couleur-bordure);
+    min-width: unset !important;
+    width: 100%;
+  }
+
+  .email {
+    white-space: normal;
+  }
 }

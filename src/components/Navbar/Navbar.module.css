@@ -11,9 +11,9 @@
   align-items: center;
   justify-content: space-between;
   height: 64px;
+  position: relative;
 }
 
-/* ── Logo ── */
 .logo {
   display: flex;
   align-items: center;
@@ -23,6 +23,8 @@
   font-weight: 700;
   letter-spacing: 0.5px;
   transition: var(--transition);
+  white-space: nowrap;
+  z-index: 101;
 }
 
 .logo:hover {
@@ -38,7 +40,46 @@
   margin-left: 2px;
 }
 
-/* ── Navigation centrale ── */
+/* ===== BURGER ===== */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: transparent;
+  padding: 0.5rem;
+  z-index: 101;
+  border-radius: var(--border-radius-sm);
+}
+
+.burgerLigne {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--couleur-blanc);
+  border-radius: 2px;
+  transition: var(--transition);
+  transform-origin: center;
+}
+
+.burgerLigne1Ouvert {
+  transform: translateY(7px) rotate(45deg);
+}
+.burgerLigne2Ouvert {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.burgerLigne3Ouvert {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ===== MENU DESKTOP ===== */
+.menuWrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .nav {
   display: flex;
   align-items: center;
@@ -64,7 +105,6 @@
   background: rgba(230, 57, 70, 0.3);
 }
 
-/* ── Actions droite ── */
 .actions {
   display: flex;
   align-items: center;
@@ -119,4 +159,71 @@
 
 .btnDashboard:hover {
   background: rgba(244, 162, 97, 0.35);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  .burger {
+    display: flex;
+  }
+
+  .menuWrapper {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--couleur-sombre);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 2rem 1.5rem;
+    gap: 2rem;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 99;
+  }
+
+  .menuOuvert {
+    transform: translateX(0);
+  }
+
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .nav li {
+    width: 100%;
+  }
+
+  .navLink {
+    display: block;
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  .btnConnexion {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+
+  .btnDeconnexion {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
 }

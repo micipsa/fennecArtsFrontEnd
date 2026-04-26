@@ -32,39 +32,42 @@
 }
 
 .tableau {
-  background: var(--couleur-blanc);
   border-radius: var(--border-radius-lg);
   border: 1px solid var(--couleur-bordure);
-  overflow: hidden;
+  background: var(--couleur-blanc);
 }
 
+.tableauScroll {
+  width: 100%;
+  border-radius: var(--border-radius-lg);
+}
 .tableauEntete {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
   padding: 0.75rem 1.25rem;
   background: var(--couleur-fond);
   border-bottom: 1px solid var(--couleur-bordure);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: var(--couleur-texte-clair);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  /* min-width supprimé */
 }
 
 .tableauLigne {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-  padding: 1rem 1.25rem;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
+  padding: 0.85rem 1.25rem;
   border-bottom: 1px solid var(--couleur-bordure);
   align-items: center;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   transition: var(--transition);
+  /* min-width supprimé */
 }
-
 .tableauLigne:last-child {
   border-bottom: none;
 }
-
 .tableauLigne:hover {
   background: var(--couleur-fond);
 }
@@ -101,7 +104,6 @@
   font-size: 0.9rem;
 }
 
-/* Modale */
 .overlay {
   position: fixed;
   inset: 0;
@@ -250,8 +252,45 @@
 .btnSoumettre:hover:not(:disabled) {
   background: #c1121f;
 }
+.tableauEntete span:last-child {
+  text-align: center;
+}
 
+.tableauLigne span:last-child {
+  text-align: center;
+}
 .btnSoumettre:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+@media (max-width: 768px) {
+  .entete {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .btnCreer {
+    width: 100%;
+    text-align: center;
+  }
+
+  .tableauEntete {
+    display: none !important;
+  }
+
+  .tableauLigne {
+    display: flex !important;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--couleur-bordure);
+    min-width: unset !important;
+    width: 100%;
+  }
+
+  .titreLigne {
+    font-size: 0.95rem;
+    white-space: normal;
+    padding-right: 0;
+  }
 }

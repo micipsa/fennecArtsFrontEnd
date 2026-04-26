@@ -65,3 +65,23 @@
 .rouge .carteValeur {
   color: var(--couleur-primaire);
 }
+@media (max-width: 768px) {
+  .entete {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .btnCreer {
+    width: 100%;
+    text-align: center;
+  }
+
+  .tableau {
+    overflow-x: auto;
+  }
+
+  .tableauEntete,
+  .tableauLigne {
+    min-width: 600px;
+  }
+}

@@ -64,3 +64,14 @@
   padding: 3rem 0;
   font-size: 0.95rem;
 }
+@media (max-width: 768px) {
+  .grille {
+    grid-template-columns: 1fr;
+  }
+
+  .filtres {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 0.5rem;
+  }
+}
