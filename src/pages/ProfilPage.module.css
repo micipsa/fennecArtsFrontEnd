@@ -129,3 +129,98 @@
   color: var(--couleur-texte);
   font-weight: 500;
 }
+.sectionMdp {
+  margin-top: 2rem;
+  background: var(--couleur-blanc);
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  border: 1px solid var(--couleur-bordure);
+  box-shadow: var(--ombre-sm);
+}
+
+.sectionMdpTitre {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--couleur-texte);
+  font-family: var(--font-titre);
+  margin-bottom: 1.5rem;
+}
+
+.erreur {
+  background: rgba(230, 57, 70, 0.08);
+  color: var(--couleur-primaire);
+  border: 1px solid rgba(230, 57, 70, 0.2);
+  border-radius: var(--border-radius);
+  padding: 0.75rem 1rem;
+  font-size: 0.88rem;
+  margin-bottom: 1.25rem;
+}
+
+.succes {
+  background: rgba(40, 167, 69, 0.08);
+  color: #28a745;
+  border: 1px solid rgba(40, 167, 69, 0.2);
+  border-radius: var(--border-radius);
+  padding: 0.75rem 1rem;
+  font-size: 0.88rem;
+  margin-bottom: 1.25rem;
+}
+
+.formulaireMdp {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--couleur-texte);
+  font-family: var(--font-titre);
+}
+
+.input {
+  padding: 0.65rem 1rem;
+  border: 1.5px solid var(--couleur-bordure);
+  border-radius: var(--border-radius);
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--couleur-texte);
+  background: var(--couleur-fond);
+  transition: var(--transition);
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--couleur-primaire);
+  background: var(--couleur-blanc);
+}
+
+.btnMdp {
+  background: var(--couleur-primaire);
+  color: var(--couleur-blanc);
+  padding: 0.75rem;
+  border-radius: var(--border-radius);
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: var(--font-titre);
+  letter-spacing: 0.03em;
+  transition: var(--transition);
+}
+
+.btnMdp:hover:not(:disabled) {
+  background: #c1121f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+}
+
+.btnMdp:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
