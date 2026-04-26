@@ -13,6 +13,7 @@ import DashboardArticles from "./pages/DashboardArticles";
 import DashboardEvenements from "./pages/DashboardEvenements";
 import DashboardUtilisateurs from "./pages/DashboardUtilisateurs";
 import NotFoundPage from "./pages/NotFoundPage";
+import ArticleDetailPage from "./pages/ArticleDetailPage";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
           <Route path="articles" element={<ArticlesPage />} />
-          <Route path="articles/:id" element={<ArticlesPage />} />
+          <Route path="articles/:id" element={<ArticleDetailPage />} />
           <Route path="events" element={<EventsPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />

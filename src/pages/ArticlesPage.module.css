@@ -1,7 +1,7 @@
 .entete {
   padding: 2rem 0 1.5rem;
   border-bottom: 1px solid var(--couleur-bordure);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .titre {
@@ -16,9 +16,51 @@
   font-size: 0.95rem;
 }
 
+.filtres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.filtreBouton {
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1.5px solid var(--couleur-bordure);
+  background: var(--couleur-blanc);
+  color: var(--couleur-texte-clair);
+  transition: var(--transition);
+}
+
+.filtreBouton:hover {
+  border-color: var(--couleur-primaire);
+  color: var(--couleur-primaire);
+}
+
+.filtreActif {
+  background: var(--couleur-primaire);
+  border-color: var(--couleur-primaire);
+  color: var(--couleur-blanc);
+}
+
+.filtreActif:hover {
+  background: #c1121f;
+  border-color: #c1121f;
+  color: var(--couleur-blanc);
+}
+
 .grille {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
-  padding-bottom: 3rem;
+  margin-bottom: 2rem;
+}
+
+.vide {
+  text-align: center;
+  color: var(--couleur-texte-clair);
+  padding: 3rem 0;
+  font-size: 0.95rem;
 }

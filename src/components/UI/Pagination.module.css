@@ -1,0 +1,33 @@
+.conteneur {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem 0 3rem;
+}
+
+.bouton {
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--border-radius);
+  border: 1.5px solid var(--couleur-bordure);
+  background: var(--couleur-blanc);
+  color: var(--couleur-texte);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.bouton:hover:not(:disabled) {
+  border-color: var(--couleur-primaire);
+  color: var(--couleur-primaire);
+}
+
+.bouton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.info {
+  font-size: 0.9rem;
+  color: var(--couleur-texte-clair);
+}
