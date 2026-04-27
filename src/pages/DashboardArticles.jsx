@@ -11,6 +11,7 @@ const FORM_INITIAL = {
   categorie: "High-tech",
   published: true,
   videoUrl: "",
+  imageUrl: "",
 };
 const CATEGORIES = [
   "High-tech",
@@ -219,6 +220,29 @@ function DashboardArticles() {
                   rows={6}
                   required
                 />
+              </div>
+              <div className={styles.champ}>
+                <label className={styles.label}>
+                  Image de couverture (optionnel)
+                </label>
+                <input
+                  className={styles.input}
+                  type="text"
+                  name="imageUrl"
+                  value={formData.imageUrl}
+                  onChange={handleChange}
+                  placeholder="https://exemple.com/image.jpg"
+                />
+                <span
+                  style={{
+                    fontSize: "0.78rem",
+                    color: "var(--couleur-texte-clair)",
+                    marginTop: "4px",
+                    display: "block",
+                  }}>
+                  Colle l'URL directe de ton image (imgur, cloudinary, discord
+                  CDN...)
+                </span>
               </div>
               <div className={styles.champ}>
                 <label className={styles.label}>

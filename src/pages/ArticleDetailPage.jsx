@@ -107,7 +107,16 @@ function ArticleDetailPage() {
             </div>
           </div>
         </div>
-
+        {/* Image de couverture */}
+        {article.imageUrl && (
+          <div className={styles.imageWrapper}>
+            <img
+              src={article.imageUrl}
+              alt={article.titre}
+              className={styles.imageCouverture}
+            />
+          </div>
+        )}
         {/* ── Contenu complet de l'article ── */}
         <div className={styles.contenu}>
           {/* Découpage du contenu par \n pour créer des paragraphes séparés */}
