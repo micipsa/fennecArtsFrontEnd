@@ -294,3 +294,56 @@
     padding-right: 0;
   }
 }
+.btnPublie {
+  background: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.82rem;
+  font-weight: 500;
+  border: 1px solid rgba(40, 167, 69, 0.25);
+  transition: var(--transition);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btnPublie:hover {
+  background: rgba(40, 167, 69, 0.2);
+}
+
+.btnBrouillon {
+  background: rgba(108, 117, 125, 0.1);
+  color: var(--couleur-texte-clair);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.82rem;
+  font-weight: 500;
+  border: 1px solid var(--couleur-bordure);
+  transition: var(--transition);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btnBrouillon:hover {
+  background: rgba(108, 117, 125, 0.2);
+}
+
+.champCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--couleur-primaire);
+}
+
+.labelCheckbox {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--couleur-texte);
+  cursor: pointer;
+}
