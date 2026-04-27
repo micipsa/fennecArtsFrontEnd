@@ -10,6 +10,7 @@ const FORM_INITIAL = {
   contenu: "",
   categorie: "High-tech",
   published: true,
+  videoUrl: "",
 };
 const CATEGORIES = [
   "High-tech",
@@ -219,7 +220,28 @@ function DashboardArticles() {
                   required
                 />
               </div>
-
+              <div className={styles.champ}>
+                <label className={styles.label}>
+                  URL vidéo YouTube (optionnel)
+                </label>
+                <input
+                  className={styles.input}
+                  type="text"
+                  name="videoUrl"
+                  value={formData.videoUrl}
+                  onChange={handleChange}
+                  placeholder="https://www.youtube.com/embed/XXXXXXXXX"
+                />
+                <span
+                  style={{
+                    fontSize: "0.78rem",
+                    color: "var(--couleur-texte-clair)",
+                    marginTop: "4px",
+                    display: "block",
+                  }}>
+                  Colle uniquement l'URL src= de l'iframe YouTube
+                </span>
+              </div>
               <div className={styles.champCheckbox}>
                 <input
                   type="checkbox"
