@@ -58,6 +58,11 @@ import DashboardTournois from "./pages/DashboardTournois";
 // ── Page 404 ──
 import NotFoundPage from "./pages/NotFoundPage";
 
+// ── Routes redacteur ──
+import RouteRedacteur from "./components/RoutesProtegees/RouteRedacteur";
+import RedacteurLayout from "./layouts/RedacteurLayout";
+import RedacteurArticles from "./pages/RedacteurArticles";
+
 function App() {
   return (
     // BrowserRouter utilise l'API History du navigateur pour gérer les URL.
@@ -106,6 +111,20 @@ function App() {
           <Route path="evenements" element={<DashboardEvenements />} />
           <Route path="utilisateurs" element={<DashboardUtilisateurs />} />
           <Route path="tournois" element={<DashboardTournois />} />
+        </Route>
+
+        {/* ════════════════════════════════════════════
+            ROUTES REDACTEUR — RedacteurLayout (sidebar)
+            Protégé par <RouteRedacteur> : redirige si non redacteur.
+            ════════════════════════════════════════════ */}
+        <Route
+          path="/redacteur"
+          element={
+            <RouteRedacteur>
+              <RedacteurLayout />
+            </RouteRedacteur>
+          }>
+          <Route index element={<RedacteurArticles />} />
         </Route>
 
         {/* Route catch-all : affiche 404 pour toute URL non définie */}

@@ -131,6 +131,15 @@ function Navbar() {
                     Dashboard
                   </Link>
                 )}
+                {/* Lien Dashboard visible seulement pour les redacteurs */}
+                {utilisateur.role === "redacteur" && (
+                  <Link
+                    to="/redacteur"
+                    className={styles.btnDashboard}
+                    onClick={fermerMenu}>
+                    Mes articles
+                  </Link>
+                )}
                 {/* Nom de l'utilisateur cliquable → page profil */}
                 <Link
                   to="/profil"
