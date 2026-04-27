@@ -38,10 +38,10 @@ const FORM_INITIAL = {
 // Catégories disponibles pour les événements
 const CATEGORIES = [
   "Exposition",
-  "Concert",
-  "Atelier",
-  "Conférence",
-  "Festival",
+  "Tournois",
+  "Master Class",
+  "FreeToPlay",
+  "Streaming",
   "Autre",
 ];
 

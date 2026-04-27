@@ -12,7 +12,7 @@ const FORM_INITIAL = {
   published: true,
   videoUrl: "",
   imageUrl: "",
-};  
+};
 const CATEGORIES = [
   "High-tech",
   "Manga",
@@ -28,6 +28,7 @@ const CATEGORIES = [
   "Littérature",
   "Chroniques",
   "Cinéma",
+  "Let's Play",
 ];
 
 function RedacteurArticles() {

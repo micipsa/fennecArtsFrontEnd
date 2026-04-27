@@ -22,19 +22,19 @@ const CATEGORIES = [
   "Toutes",
   "High-tech",
   "Manga",
-  "Gaming",
   "Graphisme",
   "Esport",
   "Geekerie",
   "Bon Plan",
   "Photographie",
-
+  "Gaming",
   "DIY",
   "Programmation",
   "TCG/JCC",
   "Littérature",
   "Chroniques",
   "Cinéma",
+  "Let's Play",
 ];
 
 // Nombre d'articles affichés par page
