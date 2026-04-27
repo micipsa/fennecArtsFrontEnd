@@ -32,6 +32,7 @@ const FORM_INITIAL = {
   lieu: "",
   dateDebut: "",
   dateFin: "",
+  imageUrl: "",
 };
 
 // Catégories disponibles pour les événements
@@ -250,6 +251,28 @@ function DashboardEvenements() {
                     required
                   />
                 </div>
+              </div>
+              <div className={styles.champ}>
+                <label className={styles.label}>
+                  Affiche de l'événement (optionnel)
+                </label>
+                <input
+                  className={styles.input}
+                  type="text"
+                  name="imageUrl"
+                  value={formData.imageUrl}
+                  onChange={handleChange}
+                  placeholder="https://exemple.com/affiche.jpg"
+                />
+                <span
+                  style={{
+                    fontSize: "0.78rem",
+                    color: "var(--couleur-texte-clair)",
+                    marginTop: "4px",
+                    display: "block",
+                  }}>
+                  Colle l'URL directe de l'affiche
+                </span>
               </div>
 
               {/* Description (textarea) */}

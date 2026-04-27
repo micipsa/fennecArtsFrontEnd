@@ -116,3 +116,15 @@
     grid-template-columns: 1fr;
   }
 }
+.imageWrapper {
+  margin: 1.5rem 0;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+}
+
+.imageCouverture {
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  display: block;
+}

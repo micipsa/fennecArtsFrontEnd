@@ -97,6 +97,15 @@ function EvenementDetailPage() {
           </div>
 
           <h1 className={styles.titre}>{evenement.titre}</h1>
+          {evenement.imageUrl && (
+            <div className={styles.imageWrapper}>
+              <img
+                src={evenement.imageUrl}
+                alt={evenement.titre}
+                className={styles.imageCouverture}
+              />
+            </div>
+          )}
 
           {/* ── Cartes d'informations pratiques ── */}
           <div className={styles.infos}>
