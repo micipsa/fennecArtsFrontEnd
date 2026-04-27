@@ -118,18 +118,17 @@ function ArticleDetailPage() {
                 paragraphe.trim() && <p key={index}>{paragraphe}</p>,
             )}
         </div>
-       {article.videoUrl && (
-  <div className={styles.videoWrapper}>
-    <iframe
-      src={getEmbedUrl(article.videoUrl)}
-      title="Vidéo YouTube"
-      frameBorder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerPolicy="strict-origin-when-cross-origin"
-      allowFullScreen
-    />
-  </div>
-)}
+        {article.videoUrl && (
+          <div className={styles.videoWrapper}>
+            <iframe
+              src={getEmbedUrl(article.videoUrl)}
+              title="Vidéo YouTube"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          </div>
         )}
       </div>
     </div>
