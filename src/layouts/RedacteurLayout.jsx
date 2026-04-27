@@ -1,6 +1,7 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import styles from "./RedacteurLayout.module.css";
+import { Link } from "react-router-dom";
 
 function RedacteurLayout() {
   const { utilisateur, deconnecter } = useAuth();
@@ -29,6 +30,9 @@ function RedacteurLayout() {
             Mes articles
           </NavLink>
         </nav>
+        <Link to="/" className={styles.navLien}>
+          ← Retour au site
+        </Link>
 
         <div className={styles.sidebarPied}>
           <p className={styles.nomRedacteur}>{utilisateur?.nom}</p>

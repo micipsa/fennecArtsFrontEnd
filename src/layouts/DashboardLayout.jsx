@@ -15,6 +15,7 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import styles from "./DashboardLayout.module.css";
+import { Link } from "react-router-dom";
 
 function DashboardLayout() {
   // Récupération de l'utilisateur connecté et de la fonction de déconnexion
@@ -79,6 +80,9 @@ function DashboardLayout() {
             }>
             Tournois
           </NavLink>
+          <Link to="/" className={styles.navLien}>
+            ← Retour au site
+          </Link>
         </nav>
 
         {/* Pied de la sidebar : nom de l'admin + bouton déconnexion */}
