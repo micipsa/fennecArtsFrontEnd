@@ -313,3 +313,14 @@
     grid-template-columns: 1fr;
   }
 }
+.grilleDates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .grilleDates {
+    grid-template-columns: 1fr;
+  }
+}
