@@ -118,21 +118,33 @@ function ArticleDetailPage() {
                 paragraphe.trim() && <p key={index}>{paragraphe}</p>,
             )}
         </div>
-        {article.videoUrl && (
-          <div className={styles.videoWrapper}>
-            <iframe
-              src={article.videoUrl}
-              title="Vidéo YouTube"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            />
-          </div>
+       {article.videoUrl && (
+  <div className={styles.videoWrapper}>
+    <iframe
+      src={getEmbedUrl(article.videoUrl)}
+      title="Vidéo YouTube"
+      frameBorder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerPolicy="strict-origin-when-cross-origin"
+      allowFullScreen
+    />
+  </div>
+)}
         )}
       </div>
     </div>
   );
 }
-
+const getEmbedUrl = (url) => {
+  if (!url) return null;
+  // Déjà au format embed
+  if (url.includes("youtube.com/embed/")) return url;
+  // Format watch
+  const watchMatch = url.match(/youtube\.com\/watch\?v=([^&]+)/);
+  if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`;
+  // Format youtu.be
+  const shortMatch = url.match(/youtu\.be\/([^?]+)/);
+  if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`;
+  return url;
+};
 export default ArticleDetailPage;
