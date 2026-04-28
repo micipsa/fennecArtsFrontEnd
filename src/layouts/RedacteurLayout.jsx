@@ -29,10 +29,11 @@ function RedacteurLayout() {
             }>
             Mes articles
           </NavLink>
+
+          <Link to="/" className={styles.navLien}>
+            ← Accueil
+          </Link>
         </nav>
-        <Link to="/" className={styles.navLien}>
-          ← Retour au site
-        </Link>
 
         <div className={styles.sidebarPied}>
           <p className={styles.nomRedacteur}>{utilisateur?.nom}</p>
