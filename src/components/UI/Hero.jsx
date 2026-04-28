@@ -13,7 +13,6 @@
  */
 import { Link } from "react-router-dom";
 import styles from "./Hero.module.css";
-
 function Hero() {
   return (
     <section className={styles.hero}>
@@ -23,21 +22,18 @@ function Hero() {
         <div className={`container ${styles.contenu}`}>
           {/* Badge décoratif des thématiques */}
           <div className={styles.badge}>🎮 Gaming · Esport · Culture Geek</div>
-
           {/* Titre principal de la page d'accueil */}
           <h1 className={styles.titre}>
-            La plateforme de <br />
-            <span className={styles.accentue}>la culture Geek</span>
+            Fennec Arts —<br />
+            là où la culture geek
             <br />
-            en Algérie <br />
+            <span className={styles.accentue}>prend vie en Algérie.</span>
           </h1>
-
           {/* Description courte */}
           <p className={styles.description}>
-            Articles, événements, tournois ,webTv et actualités — tout ce qui
-            fait vivre la culture numérique, le gaming et l'esport en Algérie.
+            Articles, événements, tournois et WebTV —<br />
+            tout ce qui fait vivre la scène geek algérienne.
           </p>
-
           {/* Boutons d'action (Call-to-Action) */}
           <div className={styles.actions}>
             <Link to="/articles" className={styles.btnPrimaire}>
@@ -47,7 +43,6 @@ function Hero() {
               Voir les événements
             </Link>
           </div>
-
           {/* Compteurs statistiques décoratifs */}
           <div className={styles.stats}>
             <div className={styles.statItem}>
@@ -66,7 +61,6 @@ function Hero() {
             </div>
           </div>
         </div>
-
         {/* ── Colonne droite : logo avec effet glow ── */}
         <div className={styles.logoSection}>
           <div className={styles.logoWrapper}>
@@ -83,5 +77,4 @@ function Hero() {
     </section>
   );
 }
-
 export default Hero;
