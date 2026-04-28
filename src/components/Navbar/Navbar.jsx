@@ -109,13 +109,13 @@ function Navbar() {
             </li>
             <li>
               <NavLink
-  to="/tournaments"
-  onClick={fermerMenu}   {/* ← ligne à ajouter */}
-  className={({ isActive }) =>
-    `${styles.navLink} ${isActive ? styles.active : ""}`
-  }>
-  Tournois
-</NavLink>
+                to="/tournaments"
+                onClick={fermerMenu}
+                className={({ isActive }) =>
+                  `${styles.navLink} ${isActive ? styles.active : ""}`
+                }>
+                Tournois
+              </NavLink>
             </li>
           </ul>
 
