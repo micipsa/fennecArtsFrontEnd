@@ -25,9 +25,9 @@ function Hero() {
           {/* Titre principal de la page d'accueil */}
           <h1 className={styles.titre}>
             Fennec Arts —<br />
-            pour ceux qui revendiquent
+            pour ceux qui
             <br />
-            <span className={styles.accentue}>leur culture geek.</span>
+            <span className={styles.accentue}>se revendiquent geek.</span>
           </h1>
           {/* Description courte */}
           <p className={styles.description}>
