@@ -26,9 +26,10 @@ function Hero() {
 
           {/* Titre principal de la page d'accueil */}
           <h1 className={styles.titre}>
-            La plateforme <br />
-            <span className={styles.accentue}>de la culture Geek</span> en
-            Algérie <br />
+            La plateforme de <br />
+            <span className={styles.accentue}>la culture Geek</span>
+            <br />
+            en Algérie <br />
           </h1>
 
           {/* Description courte */}
