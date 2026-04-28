@@ -13,6 +13,7 @@ const FORM_INITIAL = {
   videoUrl: "",
   imageUrl: "",
 };
+
 const CATEGORIES = [
   "High-tech",
   "Manga",
@@ -36,6 +37,8 @@ function RedacteurArticles() {
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState(null);
   const [modaleOuverte, setModaleOuverte] = useState(false);
+  const [modaleEditionOuverte, setModaleEditionOuverte] = useState(false);
+  const [articleEnEdition, setArticleEnEdition] = useState(null);
   const [formData, setFormData] = useState(FORM_INITIAL);
   const [envoiEnCours, setEnvoiEnCours] = useState(false);
   const [erreurForm, setErreurForm] = useState(null);
@@ -73,6 +76,40 @@ function RedacteurArticles() {
     } catch (err) {
       setErreurForm(
         err.response?.data?.message || "Erreur lors de la création.",
+      );
+    } finally {
+      setEnvoiEnCours(false);
+    }
+  };
+
+  const handleOuvrirEdition = (article) => {
+    setArticleEnEdition(article._id);
+    setFormData({
+      titre: article.titre,
+      contenu: article.contenu,
+      categorie: article.categorie,
+      published: article.published,
+      videoUrl: article.videoUrl || "",
+      imageUrl: article.imageUrl || "",
+    });
+    setModaleEditionOuverte(true);
+  };
+
+  const handleModifier = async (e) => {
+    e.preventDefault();
+    setErreurForm(null);
+    setEnvoiEnCours(true);
+    try {
+      const res = await api.put(`/api/articles/${articleEnEdition}`, formData);
+      setArticles((prev) =>
+        prev.map((a) => (a._id === articleEnEdition ? res.data.data : a)),
+      );
+      setModaleEditionOuverte(false);
+      setArticleEnEdition(null);
+      setFormData(FORM_INITIAL);
+    } catch (err) {
+      setErreurForm(
+        err.response?.data?.message || "Erreur lors de la modification.",
       );
     } finally {
       setEnvoiEnCours(false);
@@ -159,7 +196,17 @@ function RedacteurArticles() {
               <span>
                 {new Date(article.createdAt).toLocaleDateString("fr-FR")}
               </span>
-              <span>
+              <span
+                style={{
+                  display: "flex",
+                  gap: "0.5rem",
+                  alignItems: "center",
+                }}>
+                <button
+                  className={styles.btnModifier}
+                  onClick={() => handleOuvrirEdition(article)}>
+                  Modifier
+                </button>
                 <button
                   className={styles.btnSupprimer}
                   onClick={() => handleSupprimer(article._id)}>
@@ -171,6 +218,7 @@ function RedacteurArticles() {
         </div>
       </div>
 
+      {/* Modale création */}
       {modaleOuverte && (
         <div className={styles.overlay} onClick={() => setModaleOuverte(false)}>
           <div className={styles.modale} onClick={(e) => e.stopPropagation()}>
@@ -182,11 +230,9 @@ function RedacteurArticles() {
                 ✕
               </button>
             </div>
-
             {erreurForm && (
               <div className={styles.erreurForm}>{erreurForm}</div>
             )}
-
             <form className={styles.formulaire} onSubmit={handleCreer}>
               <div className={styles.champ}>
                 <label className={styles.label}>Titre</label>
@@ -238,16 +284,6 @@ function RedacteurArticles() {
                   onChange={handleChange}
                   placeholder="https://exemple.com/image.jpg"
                 />
-                <span
-                  style={{
-                    fontSize: "0.78rem",
-                    color: "var(--couleur-texte-clair)",
-                    marginTop: "4px",
-                    display: "block",
-                  }}>
-                  Colle l'URL directe de ton image (imgur, cloudinary, discord
-                  CDN...)
-                </span>
               </div>
               <div className={styles.champ}>
                 <label className={styles.label}>
@@ -287,6 +323,118 @@ function RedacteurArticles() {
                   className={styles.btnSoumettre}
                   disabled={envoiEnCours}>
                   {envoiEnCours ? "Création..." : "Créer l'article"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Modale édition */}
+      {modaleEditionOuverte && (
+        <div
+          className={styles.overlay}
+          onClick={() => setModaleEditionOuverte(false)}>
+          <div className={styles.modale} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modaleEntete}>
+              <h2 className={styles.modaleTitre}>Modifier l'article</h2>
+              <button
+                className={styles.modaleFermer}
+                onClick={() => setModaleEditionOuverte(false)}>
+                ✕
+              </button>
+            </div>
+            {erreurForm && (
+              <div className={styles.erreurForm}>{erreurForm}</div>
+            )}
+            <form className={styles.formulaire} onSubmit={handleModifier}>
+              <div className={styles.champ}>
+                <label className={styles.label}>Titre</label>
+                <input
+                  className={styles.input}
+                  type="text"
+                  name="titre"
+                  value={formData.titre}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className={styles.champ}>
+                <label className={styles.label}>Catégorie</label>
+                <select
+                  className={styles.input}
+                  name="categorie"
+                  value={formData.categorie}
+                  onChange={handleChange}>
+                  {CATEGORIES.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className={styles.champ}>
+                <label className={styles.label}>Contenu</label>
+                <textarea
+                  className={styles.textarea}
+                  name="contenu"
+                  value={formData.contenu}
+                  onChange={handleChange}
+                  rows={6}
+                  required
+                />
+              </div>
+              <div className={styles.champ}>
+                <label className={styles.label}>
+                  Image de couverture (optionnel)
+                </label>
+                <input
+                  className={styles.input}
+                  type="text"
+                  name="imageUrl"
+                  value={formData.imageUrl}
+                  onChange={handleChange}
+                  placeholder="https://exemple.com/image.jpg"
+                />
+              </div>
+              <div className={styles.champ}>
+                <label className={styles.label}>
+                  URL vidéo YouTube (optionnel)
+                </label>
+                <input
+                  className={styles.input}
+                  type="text"
+                  name="videoUrl"
+                  value={formData.videoUrl}
+                  onChange={handleChange}
+                  placeholder="https://www.youtube.com/embed/XXXXXXXXX"
+                />
+              </div>
+              <div className={styles.champCheckbox}>
+                <input
+                  type="checkbox"
+                  id="publishedEdit"
+                  name="published"
+                  checked={formData.published}
+                  onChange={handleChange}
+                  className={styles.checkbox}
+                />
+                <label htmlFor="publishedEdit" className={styles.labelCheckbox}>
+                  Publié
+                </label>
+              </div>
+              <div className={styles.modaleActions}>
+                <button
+                  type="button"
+                  className={styles.btnAnnuler}
+                  onClick={() => setModaleEditionOuverte(false)}>
+                  Annuler
+                </button>
+                <button
+                  type="submit"
+                  className={styles.btnSoumettre}
+                  disabled={envoiEnCours}>
+                  {envoiEnCours ? "Modification..." : "Enregistrer"}
                 </button>
               </div>
             </form>
