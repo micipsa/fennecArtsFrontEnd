@@ -25,9 +25,9 @@ function Hero() {
           {/* Titre principal de la page d'accueil */}
           <h1 className={styles.titre}>
             Fennec Arts —<br />
-            là où la culture geek
+            pour ceux qui revendiquent
             <br />
-            <span className={styles.accentue}>prend vie en Algérie.</span>
+            <span className={styles.accentue}>leur culture geek.</span>
           </h1>
           {/* Description courte */}
           <p className={styles.description}>
@@ -51,12 +51,12 @@ function Hero() {
             </div>
             <div className={styles.separateur} />
             <div className={styles.statItem}>
-              <span className={styles.statNombre}>50+</span>
+              <span className={styles.statNombre}>100+</span>
               <span className={styles.statLabel}>Événements</span>
             </div>
             <div className={styles.separateur} />
             <div className={styles.statItem}>
-              <span className={styles.statNombre}>500+</span>
+              <span className={styles.statNombre}>200+</span>
               <span className={styles.statLabel}>Membres</span>
             </div>
           </div>
