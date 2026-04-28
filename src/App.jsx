@@ -62,6 +62,8 @@ import NotFoundPage from "./pages/NotFoundPage";
 import RouteRedacteur from "./components/RoutesProtegees/RouteRedacteur";
 import RedacteurLayout from "./layouts/RedacteurLayout";
 import RedacteurArticles from "./pages/RedacteurArticles";
+// ── Route WebTV ──
+import WebTVPage from "./pages/WebTVPage/WebTVPage";
 
 function App() {
   return (
@@ -83,7 +85,7 @@ function App() {
           <Route path="tournaments/:id" element={<TournamentDetail />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
-
+          <Route path="/webtv" element={<WebTVPage />} />
           {/* Route protégée : redirige vers /login si non connecté */}
           <Route
             path="profil"

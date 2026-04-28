@@ -99,6 +99,16 @@ function Navbar() {
             </li>
             <li>
               <NavLink
+                to="/webtv"
+                onClick={fermerMenu}
+                className={({ isActive }) =>
+                  `${styles.navLink} ${isActive ? styles.active : ""}`
+                }>
+                WebTV
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
                 to="/events"
                 onClick={fermerMenu}
                 className={({ isActive }) =>
