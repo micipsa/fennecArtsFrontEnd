@@ -30,9 +30,6 @@ const CATEGORIES = [
   "Cinéma",
   "Let's Play",
 ];
-const [articleEnEdition, setArticleEnEdition] = useState(null);
-const [modaleEditionOuverte, setModaleEditionOuverte] = useState(false);
-
 function DashboardArticles() {
   const [articles, setArticles] = useState([]);
   const [chargement, setChargement] = useState(true);
@@ -41,6 +38,8 @@ function DashboardArticles() {
   const [formData, setFormData] = useState(FORM_INITIAL);
   const [envoiEnCours, setEnvoiEnCours] = useState(false);
   const [erreurForm, setErreurForm] = useState(null);
+  const [articleEnEdition, setArticleEnEdition] = useState(null);
+  const [modaleEditionOuverte, setModaleEditionOuverte] = useState(false);
 
   useEffect(() => {
     const charger = async () => {
@@ -345,14 +344,22 @@ function DashboardArticles() {
       )}
 
       {modaleEditionOuverte && (
-        <div className={styles.overlay} onClick={() => setModaleEditionOuverte(false)}>
+        <div
+          className={styles.overlay}
+          onClick={() => setModaleEditionOuverte(false)}>
           <div className={styles.modale} onClick={(e) => e.stopPropagation()}>
             <div className={styles.modaleEntete}>
               <h2 className={styles.modaleTitre}>Modifier l'article</h2>
-              <button className={styles.modaleFermer} onClick={() => setModaleEditionOuverte(false)}>✕</button>
+              <button
+                className={styles.modaleFermer}
+                onClick={() => setModaleEditionOuverte(false)}>
+                ✕
+              </button>
             </div>
 
-            {erreurForm && <div className={styles.erreurForm}>{erreurForm}</div>}
+            {erreurForm && (
+              <div className={styles.erreurForm}>{erreurForm}</div>
+            )}
 
             <form className={styles.formulaire} onSubmit={handleModifier}>
               <div className={styles.champ}>
@@ -372,10 +379,11 @@ function DashboardArticles() {
                   className={styles.input}
                   name="categorie"
                   value={formData.categorie}
-                  onChange={handleChange}
-                >
+                  onChange={handleChange}>
                   {CATEGORIES.map((cat) => (
-                    <option key={cat} value={cat}>{cat}</option>
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -391,7 +399,9 @@ function DashboardArticles() {
                 />
               </div>
               <div className={styles.champ}>
-                <label className={styles.label}>Image de couverture (optionnel)</label>
+                <label className={styles.label}>
+                  Image de couverture (optionnel)
+                </label>
                 <input
                   className={styles.input}
                   type="text"
@@ -402,7 +412,9 @@ function DashboardArticles() {
                 />
               </div>
               <div className={styles.champ}>
-                <label className={styles.label}>URL vidéo YouTube (optionnel)</label>
+                <label className={styles.label}>
+                  URL vidéo YouTube (optionnel)
+                </label>
                 <input
                   className={styles.input}
                   type="text"
@@ -426,11 +438,17 @@ function DashboardArticles() {
                 </label>
               </div>
               <div className={styles.modaleActions}>
-                <button type="button" className={styles.btnAnnuler} onClick={() => setModaleEditionOuverte(false)}>
+                <button
+                  type="button"
+                  className={styles.btnAnnuler}
+                  onClick={() => setModaleEditionOuverte(false)}>
                   Annuler
                 </button>
-                <button type="submit" className={styles.btnSoumettre} disabled={envoiEnCours}>
-                  {envoiEnCours ? 'Modification...' : 'Enregistrer'}
+                <button
+                  type="submit"
+                  className={styles.btnSoumettre}
+                  disabled={envoiEnCours}>
+                  {envoiEnCours ? "Modification..." : "Enregistrer"}
                 </button>
               </div>
             </form>
