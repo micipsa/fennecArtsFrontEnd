@@ -27,14 +27,14 @@ function Hero() {
           {/* Titre principal de la page d'accueil */}
           <h1 className={styles.titre}>
             La plateforme <br />
-            <span className={styles.accentue}>culturelle</span> de la <br />
-            scène algérienne
+            <span className={styles.accentue}>de la culture Geek</span> en
+            Algérie <br />
           </h1>
 
           {/* Description courte */}
           <p className={styles.description}>
-            Articles, événements, tournois et actualités — tout ce qui fait
-            vivre la culture numérique, le gaming et l'esport en Algérie.
+            Articles, événements, tournois ,webTv et actualités — tout ce qui
+            fait vivre la culture numérique, le gaming et l'esport en Algérie.
           </p>
 
           {/* Boutons d'action (Call-to-Action) */}
