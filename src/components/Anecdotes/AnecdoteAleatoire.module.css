@@ -1,0 +1,128 @@
+.bande {
+  width: 100%;
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+  background: transparent;
+}
+
+.carte {
+  position: relative;
+  max-width: 750px;
+  width: 100%;
+  background: var(--couleur-sombre-2);
+  padding: 2.5rem 3rem;
+  text-align: left;
+  transition: opacity 0.5s ease;
+  clip-path: polygon(20px 0%, 100% 0%, calc(100% - 20px) 100%, 0% 100%);
+}
+
+.carte::before {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: 15%;
+  height: 70%;
+  width: 4px;
+  background: var(--couleur-accent);
+  box-shadow: 0 0 12px var(--couleur-accent);
+}
+
+.carte::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--couleur-accent),
+    transparent
+  );
+  box-shadow: 0 0 8px var(--couleur-accent);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+
+.tag {
+  font-family: var(--font-titre);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--couleur-accent);
+  border: 1px solid var(--couleur-accent);
+  padding: 0.15rem 0.6rem;
+}
+
+.categorie {
+  font-family: var(--font-titre);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #555;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--couleur-accent);
+  box-shadow: 0 0 6px var(--couleur-accent);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.texte {
+  font-family: var(--font-principale);
+  font-size: 1rem;
+  color: #d0d0d0;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ligne {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sujet {
+  font-family: var(--font-titre);
+  font-size: 0.8rem;
+  color: var(--couleur-accent);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.visible {
+  opacity: 1;
+}
+.cache {
+  opacity: 0;
+}

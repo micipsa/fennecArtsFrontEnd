@@ -20,31 +20,27 @@ import CarteArticle from "../components/Cards/CarteArticle";
 import CarteEvenement from "../components/Cards/CarteEvenement";
 import CarteTournoi from "../components/Cards/CarteTournoi";
 import Spinner from "../components/UI/Spinner";
+import AnecdoteAleatoire from "../components/Anecdotes/AnecdoteAleatoire";
+import CitationAleatoire from "../components/Citations/CitationAleatoire";
 import styles from "./HomePage.module.css";
 
 function HomePage() {
-  // States pour les données de chaque section
   const [articles, setArticles] = useState([]);
   const [evenements, setEvenements] = useState([]);
   const [tournois, setTournois] = useState([]);
   const [chargement, setChargement] = useState(true);
 
-  // Chargement des données au montage du composant
   useEffect(() => {
     const charger = async () => {
       try {
-        // Requêtes en parallèle : articles, événements et tournois
         const [resArticles, resEvents, resTournois] = await Promise.all([
-          api.get("/api/articles?limit=3&page=1"), // 3 articles les plus récents
-          api.get("/api/events"),                   // Tous les événements
-          api.get("/api/tournaments"),              // Tous les tournois
+          api.get("/api/articles?limit=3&page=1"),
+          api.get("/api/events"),
+          api.get("/api/tournaments"),
         ]);
 
-        // Articles : on utilise directement les 3 renvoyés par l'API
         setArticles(resArticles.data.data);
 
-        // Événements : on filtre côté client pour ne garder que ceux à venir
-        // puis on prend les 3 premiers
         const maintenant = new Date();
         setEvenements(
           resEvents.data.data
@@ -52,8 +48,6 @@ function HomePage() {
             .slice(0, 3),
         );
 
-        // Tournois : on filtre pour ne garder que les tournois ouverts
-        // puis on prend les 3 premiers
         setTournois(
           resTournois.data.data
             .filter((t) => t.statut === "ouvert")
@@ -66,16 +60,13 @@ function HomePage() {
       }
     };
     charger();
-  }, []); // [] = exécuté une seule fois au montage
+  }, []);
 
   return (
     <>
-      {/* ── Section Hero (bannière d'introduction) ── */}
       <Hero />
 
-      {/* ══════════════════════════════════════════════
-          Section 1 : Articles récents
-          ══════════════════════════════════════════════ */}
+      {/* Section 1 : Articles récents */}
       <section className={styles.section}>
         <div className="container">
           <div className={styles.sectionEntete}>
@@ -101,9 +92,9 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════
-          Section 2 : Tournois ouverts
-          ══════════════════════════════════════════════ */}
+      <AnecdoteAleatoire />
+
+      {/* Section 2 : Tournois ouverts */}
       <section className={`${styles.section} ${styles.sectionSombre}`}>
         <div className="container">
           <div className={styles.sectionEntete}>
@@ -131,9 +122,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════
-          Section 3 : Événements à venir
-          ══════════════════════════════════════════════ */}
+      {/* Section 3 : Événements à venir */}
       <section className={styles.section}>
         <div className="container">
           <div className={styles.sectionEntete}>
@@ -162,6 +151,8 @@ function HomePage() {
           )}
         </div>
       </section>
+
+      <CitationAleatoire />
     </>
   );
 }

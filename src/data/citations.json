@@ -1,0 +1,1054 @@
+{
+  "citations": [
+    {
+      "id": 1,
+      "texte": "Je ne recule jamais sur ma parole.",
+      "auteur": "Naruto Uzumaki",
+      "oeuvre": "Naruto",
+      "categorie": "anime"
+    },
+    {
+      "id": 2,
+      "texte": "Je ne vais pas abandonner mes rêves.",
+      "auteur": "Naruto Uzumaki",
+      "oeuvre": "Naruto",
+      "categorie": "anime"
+    },
+    {
+      "id": 3,
+      "texte": "Le véritable courage, c'est de continuer malgré la peur.",
+      "auteur": "Erza Scarlet",
+      "oeuvre": "Fairy Tail",
+      "categorie": "anime"
+    },
+    {
+      "id": 4,
+      "texte": "Un pas à la fois suffit pour avancer.",
+      "auteur": "Miyazaki Hayao",
+      "oeuvre": "Le Château ambulant",
+      "categorie": "anime"
+    },
+    {
+      "id": 5,
+      "texte": "La force grandit quand on protège ce qui compte.",
+      "auteur": "Naruto Uzumaki",
+      "oeuvre": "Naruto",
+      "categorie": "anime"
+    },
+    {
+      "id": 6,
+      "texte": "Je veux devenir quelqu'un d'important pour les autres.",
+      "auteur": "Naruto Uzumaki",
+      "oeuvre": "Naruto",
+      "categorie": "anime"
+    },
+    {
+      "id": 7,
+      "texte": "Les rêves ne meurent que si on cesse d'y croire.",
+      "auteur": "Monkey D. Luffy",
+      "oeuvre": "One Piece",
+      "categorie": "anime"
+    },
+    {
+      "id": 8,
+      "texte": "Être seul est parfois plus douloureux que de tomber.",
+      "auteur": "Monkey D. Luffy",
+      "oeuvre": "One Piece",
+      "categorie": "anime"
+    },
+    {
+      "id": 9,
+      "texte": "Le premier pas est souvent le plus difficile.",
+      "auteur": "Ash Ketchum",
+      "oeuvre": "Pokémon",
+      "categorie": "anime"
+    },
+    {
+      "id": 10,
+      "texte": "On devient plus fort en affrontant ses limites.",
+      "auteur": "Goku",
+      "oeuvre": "Dragon Ball Z",
+      "categorie": "anime"
+    },
+    {
+      "id": 11,
+      "texte": "L'effort d'aujourd'hui construit la victoire de demain.",
+      "auteur": "All Might",
+      "oeuvre": "My Hero Academia",
+      "categorie": "anime"
+    },
+    {
+      "id": 12,
+      "texte": "Même un petit progrès mérite d'être célébré.",
+      "auteur": "Izuku Midoriya",
+      "oeuvre": "My Hero Academia",
+      "categorie": "anime"
+    },
+    {
+      "id": 13,
+      "texte": "Le chemin est plus important que la vitesse.",
+      "auteur": "Miyazaki Hayao",
+      "oeuvre": "Le Voyage de Chihiro",
+      "categorie": "anime"
+    },
+    {
+      "id": 14,
+      "texte": "La persévérance transforme l'impossible en possible.",
+      "auteur": "Roronoa Zoro",
+      "oeuvre": "One Piece",
+      "categorie": "anime"
+    },
+    {
+      "id": 15,
+      "texte": "Un vrai héros se relève toujours.",
+      "auteur": "All Might",
+      "oeuvre": "My Hero Academia",
+      "categorie": "anime"
+    },
+    {
+      "id": 16,
+      "texte": "Les amis rendent chaque défi plus léger.",
+      "auteur": "Natsu Dragneel",
+      "oeuvre": "Fairy Tail",
+      "categorie": "anime"
+    },
+    {
+      "id": 17,
+      "texte": "Il suffit parfois d'un rêve pour changer le monde.",
+      "auteur": "Edward Elric",
+      "oeuvre": "Fullmetal Alchemist",
+      "categorie": "anime"
+    },
+    {
+      "id": 18,
+      "texte": "Ce qui compte, c'est de continuer à chercher.",
+      "auteur": "Nobita Nobi",
+      "oeuvre": "Doraemon",
+      "categorie": "anime"
+    },
+    {
+      "id": 19,
+      "texte": "La gentillesse est une force discrète.",
+      "auteur": "Tanjiro Kamado",
+      "oeuvre": "Demon Slayer",
+      "categorie": "anime"
+    },
+    {
+      "id": 20,
+      "texte": "Chaque échec enseigne quelque chose d'utile.",
+      "auteur": "Edward Elric",
+      "oeuvre": "Fullmetal Alchemist",
+      "categorie": "anime"
+    },
+    {
+      "id": 21,
+      "texte": "Croire en soi change déjà le combat.",
+      "auteur": "Sailor Moon",
+      "oeuvre": "Sailor Moon",
+      "categorie": "anime"
+    },
+    {
+      "id": 22,
+      "texte": "On avance mieux quand on garde espoir.",
+      "auteur": "Naruto Uzumaki",
+      "oeuvre": "Naruto",
+      "categorie": "anime"
+    },
+    {
+      "id": 23,
+      "texte": "La détermination est un muscle à entraîner.",
+      "auteur": "Vegeta",
+      "oeuvre": "Dragon Ball Z",
+      "categorie": "anime"
+    },
+    {
+      "id": 24,
+      "texte": "Le bonheur se trouve souvent dans les choses simples.",
+      "auteur": "Totoro",
+      "oeuvre": "Mon voisin Totoro",
+      "categorie": "anime"
+    },
+    {
+      "id": 25,
+      "texte": "Chaque jour offre une nouvelle chance.",
+      "auteur": "Miyazaki Hayao",
+      "oeuvre": "Ponyo",
+      "categorie": "anime"
+    },
+    {
+      "id": 26,
+      "texte": "Le courage ne fait pas de bruit, il agit.",
+      "auteur": "Mikasa Ackerman",
+      "oeuvre": "Attack on Titan",
+      "categorie": "anime"
+    },
+    {
+      "id": 27,
+      "texte": "Une équipe solide peut déplacer des montagnes.",
+      "auteur": "Ash Ketchum",
+      "oeuvre": "Pokémon",
+      "categorie": "anime"
+    },
+    {
+      "id": 28,
+      "texte": "Le plus beau trésor, ce sont les liens créés.",
+      "auteur": "Monkey D. Luffy",
+      "oeuvre": "One Piece",
+      "categorie": "anime"
+    },
+    {
+      "id": 29,
+      "texte": "La patience finit toujours par payer.",
+      "auteur": "Kakashi Hatake",
+      "oeuvre": "Naruto",
+      "categorie": "anime"
+    },
+    {
+      "id": 30,
+      "texte": "Apprends, essaye, recommence.",
+      "auteur": "Izuku Midoriya",
+      "oeuvre": "My Hero Academia",
+      "categorie": "anime"
+    },
+    {
+      "id": 31,
+      "texte": "Les petites victoires construisent les grandes.",
+      "auteur": "Edward Elric",
+      "oeuvre": "Fullmetal Alchemist",
+      "categorie": "anime"
+    },
+    {
+      "id": 32,
+      "texte": "Le vrai pouvoir, c'est de ne pas abandonner.",
+      "auteur": "Goku",
+      "oeuvre": "Dragon Ball Z",
+      "categorie": "anime"
+    },
+    {
+      "id": 33,
+      "texte": "L'honneur commence par la sincérité.",
+      "auteur": "Roronoa Zoro",
+      "oeuvre": "One Piece",
+      "categorie": "anime"
+    },
+    {
+      "id": 34,
+      "texte": "Même dans le doute, avance encore un peu.",
+      "auteur": "Tanjiro Kamado",
+      "oeuvre": "Demon Slayer",
+      "categorie": "anime"
+    },
+    {
+      "id": 35,
+      "texte": "On ne grandit jamais sans effort.",
+      "auteur": "Kenshin Himura",
+      "oeuvre": "Rurouni Kenshin",
+      "categorie": "anime"
+    },
+    {
+      "id": 36,
+      "texte": "Le respect se gagne par les actes.",
+      "auteur": "All Might",
+      "oeuvre": "My Hero Academia",
+      "categorie": "anime"
+    },
+    {
+      "id": 37,
+      "texte": "La route paraît longue, mais elle commence ici.",
+      "auteur": "Miyazaki Hayao",
+      "oeuvre": "Le Château dans le ciel",
+      "categorie": "anime"
+    },
+    {
+      "id": 38,
+      "texte": "Même les cœurs fatigués peuvent recommencer.",
+      "auteur": "Frieren",
+      "oeuvre": "Frieren",
+      "categorie": "anime"
+    },
+    {
+      "id": 39,
+      "texte": "Aider les autres donne du sens à l'effort.",
+      "auteur": "Tanjiro Kamado",
+      "oeuvre": "Demon Slayer",
+      "categorie": "anime"
+    },
+    {
+      "id": 40,
+      "texte": "Le sourire est parfois la meilleure réponse.",
+      "auteur": "Sakura Haruno",
+      "oeuvre": "Naruto",
+      "categorie": "anime"
+    },
+    {
+      "id": 41,
+      "texte": "Le voyage façonne autant que la destination.",
+      "auteur": "Sora",
+      "oeuvre": "Kingdom Hearts",
+      "categorie": "gaming"
+    },
+    {
+      "id": 42,
+      "texte": "Un héros se définit par ses choix.",
+      "auteur": "Batman",
+      "oeuvre": "Batman",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 43,
+      "texte": "Avec du courage, tout commence.",
+      "auteur": "Link",
+      "oeuvre": "The Legend of Zelda",
+      "categorie": "gaming"
+    },
+    {
+      "id": 44,
+      "texte": "Rester calme permet de mieux avancer.",
+      "auteur": "Princess Peach",
+      "oeuvre": "Super Mario",
+      "categorie": "gaming"
+    },
+    {
+      "id": 45,
+      "texte": "Chaque niveau franchi prouve que tu progresses.",
+      "auteur": "Mario",
+      "oeuvre": "Super Mario",
+      "categorie": "gaming"
+    },
+    {
+      "id": 46,
+      "texte": "Le monde devient plus grand quand on ose explorer.",
+      "auteur": "Link",
+      "oeuvre": "The Legend of Zelda",
+      "categorie": "gaming"
+    },
+    {
+      "id": 47,
+      "texte": "Construire patiemment mène loin.",
+      "auteur": "Steve",
+      "oeuvre": "Minecraft",
+      "categorie": "gaming"
+    },
+    {
+      "id": 48,
+      "texte": "La créativité est une aventure sans fin.",
+      "auteur": "Steve",
+      "oeuvre": "Minecraft",
+      "categorie": "gaming"
+    },
+    {
+      "id": 49,
+      "texte": "Même un petit groupe peut faire la différence.",
+      "auteur": "Lulu",
+      "oeuvre": "League of Legends",
+      "categorie": "gaming"
+    },
+    {
+      "id": 50,
+      "texte": "La stratégie naît d'un esprit clair.",
+      "auteur": "Jinx",
+      "oeuvre": "League of Legends",
+      "categorie": "gaming"
+    },
+    {
+      "id": 51,
+      "texte": "Le travail d'équipe bat l'orgueil solitaire.",
+      "auteur": "Reinhardt",
+      "oeuvre": "Overwatch",
+      "categorie": "gaming"
+    },
+    {
+      "id": 52,
+      "texte": "Chaque départ contient une nouvelle chance.",
+      "auteur": "Kratos",
+      "oeuvre": "God of War",
+      "categorie": "gaming"
+    },
+    {
+      "id": 53,
+      "texte": "L'endurance finit par ouvrir la voie.",
+      "auteur": "Tarnished",
+      "oeuvre": "Elden Ring",
+      "categorie": "gaming"
+    },
+    {
+      "id": 54,
+      "texte": "La ténacité est une forme de sagesse.",
+      "auteur": "Solaire d'Astora",
+      "oeuvre": "Dark Souls",
+      "categorie": "gaming"
+    },
+    {
+      "id": 55,
+      "texte": "Même les grands obstacles peuvent être franchis.",
+      "auteur": "Master Chief",
+      "oeuvre": "Halo",
+      "categorie": "gaming"
+    },
+    {
+      "id": 56,
+      "texte": "Le destin se forge en avançant.",
+      "auteur": "Cloud Strife",
+      "oeuvre": "Final Fantasy VII",
+      "categorie": "gaming"
+    },
+    {
+      "id": 57,
+      "texte": "L'amitié rend chaque quête plus forte.",
+      "auteur": "Sora",
+      "oeuvre": "Kingdom Hearts",
+      "categorie": "gaming"
+    },
+    {
+      "id": 58,
+      "texte": "Rater fait partie de l'apprentissage.",
+      "auteur": "GLaDOS",
+      "oeuvre": "Portal",
+      "categorie": "gaming"
+    },
+    {
+      "id": 59,
+      "texte": "La curiosité ouvre les meilleurs chemins.",
+      "auteur": "Lara Croft",
+      "oeuvre": "Tomb Raider",
+      "categorie": "gaming"
+    },
+    {
+      "id": 60,
+      "texte": "Être précis commence par être patient.",
+      "auteur": "Agent 47",
+      "oeuvre": "Hitman",
+      "categorie": "gaming"
+    },
+    {
+      "id": 61,
+      "texte": "Un bon plan vaut mieux qu'une impulsion.",
+      "auteur": "Cortana",
+      "oeuvre": "Halo",
+      "categorie": "gaming"
+    },
+    {
+      "id": 62,
+      "texte": "L'adaptation est la clé de la survie.",
+      "auteur": "Joel",
+      "oeuvre": "The Last of Us",
+      "categorie": "gaming"
+    },
+    {
+      "id": 63,
+      "texte": "La rigueur paie toujours à long terme.",
+      "auteur": "Solid Snake",
+      "oeuvre": "Metal Gear Solid",
+      "categorie": "gaming"
+    },
+    {
+      "id": 64,
+      "texte": "Le courage, c'est agir malgré la peur.",
+      "auteur": "Altaïr Ibn-La'Ahad",
+      "oeuvre": "Assassin's Creed",
+      "categorie": "gaming"
+    },
+    {
+      "id": 65,
+      "texte": "Même la nuit la plus longue finit par se lever.",
+      "auteur": "Noctis",
+      "oeuvre": "Final Fantasy XV",
+      "categorie": "gaming"
+    },
+    {
+      "id": 66,
+      "texte": "La sagesse s'acquiert avec le temps et les épreuves.",
+      "auteur": "Gandalf",
+      "oeuvre": "Le Seigneur des Anneaux",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 67,
+      "texte": "Tout ce que tu cherches est déjà en toi.",
+      "auteur": "Simba",
+      "oeuvre": "Le Roi Lion",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 68,
+      "texte": "L'espoir est plus fort que la peur.",
+      "auteur": "Frodo",
+      "oeuvre": "Le Seigneur des Anneaux",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 69,
+      "texte": "La connaissance est une lumière que rien n'éteint.",
+      "auteur": "Hermione Granger",
+      "oeuvre": "Harry Potter",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 70,
+      "texte": "Être différent, c'est parfois une force.",
+      "auteur": "Shrek",
+      "oeuvre": "Shrek",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 71,
+      "texte": "Il n'y a pas de hasard, seulement des rencontres.",
+      "auteur": "Le Petit Prince",
+      "oeuvre": "Le Petit Prince",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 72,
+      "texte": "Chaque rêve mérite d'être poursuivi.",
+      "auteur": "Woody",
+      "oeuvre": "Toy Story",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 73,
+      "texte": "La grandeur naît de la persévérance.",
+      "auteur": "Aragorn",
+      "oeuvre": "Le Seigneur des Anneaux",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 74,
+      "texte": "Croire en l'impossible, c'est le premier pas vers le réel.",
+      "auteur": "Alice",
+      "oeuvre": "Alice au Pays des Merveilles",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 75,
+      "texte": "On ne voit bien qu'avec le cœur.",
+      "auteur": "Le Renard",
+      "oeuvre": "Le Petit Prince",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 76,
+      "texte": "Le vrai trésor, c'est ce qu'on partage.",
+      "auteur": "Buzz l'Éclair",
+      "oeuvre": "Toy Story",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 77,
+      "texte": "L'imagination est plus grande que la réalité.",
+      "auteur": "Willy Wonka",
+      "oeuvre": "Charlie et la Chocolaterie",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 78,
+      "texte": "La bonté est la forme de courage la plus rare.",
+      "auteur": "Atticus Finch",
+      "oeuvre": "Ne tirez pas sur l'oiseau moqueur",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 79,
+      "texte": "Ce qui ne nous détruit pas nous rend plus forts.",
+      "auteur": "Nietzsche",
+      "oeuvre": "Culture générale",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 80,
+      "texte": "Un grand pouvoir implique de grandes responsabilités.",
+      "auteur": "Spider-Man",
+      "oeuvre": "Spider-Man",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 81,
+      "texte": "L'essentiel est invisible pour les yeux.",
+      "auteur": "Le Petit Prince",
+      "oeuvre": "Le Petit Prince",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 82,
+      "texte": "Ensemble, on va plus loin.",
+      "auteur": "Timon et Pumbaa",
+      "oeuvre": "Le Roi Lion",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 83,
+      "texte": "Chaque jour est une page nouvelle.",
+      "auteur": "Anne Frank",
+      "oeuvre": "Journal d'Anne Frank",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 84,
+      "texte": "Douter, c'est commencer à penser.",
+      "auteur": "Sherlock Holmes",
+      "oeuvre": "Sherlock Holmes",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 85,
+      "texte": "La foi déplace les montagnes.",
+      "auteur": "Gandalf",
+      "oeuvre": "Le Hobbit",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 86,
+      "texte": "L'avenir appartient à ceux qui apprennent.",
+      "auteur": "Malcolm X",
+      "oeuvre": "Culture générale",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 87,
+      "texte": "Chaque histoire mérite d'être racontée.",
+      "auteur": "Bilbo Baggins",
+      "oeuvre": "Le Hobbit",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 88,
+      "texte": "Le silence dit parfois ce que les mots ne peuvent pas.",
+      "auteur": "Wall-E",
+      "oeuvre": "Wall-E",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 89,
+      "texte": "Grandir, c'est apprendre à voir autrement.",
+      "auteur": "Mulan",
+      "oeuvre": "Mulan",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 90,
+      "texte": "Le vrai chef inspire, il ne commande pas.",
+      "auteur": "Simba",
+      "oeuvre": "Le Roi Lion",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 91,
+      "texte": "La technologie sans sagesse mène à l'erreur.",
+      "auteur": "Tony Stark",
+      "oeuvre": "Iron Man",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 92,
+      "texte": "L'intelligence, c'est la capacité à s'adapter.",
+      "auteur": "Darwin",
+      "oeuvre": "Culture générale",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 93,
+      "texte": "Le doute est le père de toute découverte.",
+      "auteur": "Sherlock Holmes",
+      "oeuvre": "Sherlock Holmes",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 94,
+      "texte": "Toujours aller de l'avant, jamais reculer.",
+      "auteur": "Nemo",
+      "oeuvre": "Le Monde de Nemo",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 95,
+      "texte": "L'audace récompense ceux qui osent.",
+      "auteur": "Indiana Jones",
+      "oeuvre": "Indiana Jones",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 96,
+      "texte": "Ce qu'on protège nous définit.",
+      "auteur": "Mulan",
+      "oeuvre": "Mulan",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 97,
+      "texte": "Le monde a besoin de bâtisseurs, pas de spectateurs.",
+      "auteur": "Hermione Granger",
+      "oeuvre": "Harry Potter",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 98,
+      "texte": "Le passé forme, le présent construit.",
+      "auteur": "Rafiki",
+      "oeuvre": "Le Roi Lion",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 99,
+      "texte": "Chaque talent mérite d'être cultivé.",
+      "auteur": "Remy",
+      "oeuvre": "Ratatouille",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 100,
+      "texte": "La discipline précède la liberté.",
+      "auteur": "Jocko Willink",
+      "oeuvre": "Culture générale",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 101,
+      "texte": "Le vrai courage est de continuer sans certitude.",
+      "auteur": "Link",
+      "oeuvre": "The Legend of Zelda",
+      "categorie": "gaming"
+    },
+    {
+      "id": 102,
+      "texte": "La maîtrise naît de la répétition.",
+      "auteur": "Solid Snake",
+      "oeuvre": "Metal Gear Solid",
+      "categorie": "gaming"
+    },
+    {
+      "id": 103,
+      "texte": "Chaque partie est une leçon.",
+      "auteur": "Kirby",
+      "oeuvre": "Kirby",
+      "categorie": "gaming"
+    },
+    {
+      "id": 104,
+      "texte": "La créativité résout ce que la force ne peut pas.",
+      "auteur": "Yoshi",
+      "oeuvre": "Super Mario",
+      "categorie": "gaming"
+    },
+    {
+      "id": 105,
+      "texte": "Même les plus petits peuvent accomplir de grandes choses.",
+      "auteur": "Kirby",
+      "oeuvre": "Kirby",
+      "categorie": "gaming"
+    },
+    {
+      "id": 106,
+      "texte": "Un esprit ouvert apprend plus vite.",
+      "auteur": "Sora",
+      "oeuvre": "Kingdom Hearts",
+      "categorie": "gaming"
+    },
+    {
+      "id": 107,
+      "texte": "La prudence est mère de la victoire.",
+      "auteur": "Geralt de Riv",
+      "oeuvre": "The Witcher",
+      "categorie": "gaming"
+    },
+    {
+      "id": 108,
+      "texte": "Le terrain change, l'objectif reste.",
+      "auteur": "Commander Shepard",
+      "oeuvre": "Mass Effect",
+      "categorie": "gaming"
+    },
+    {
+      "id": 109,
+      "texte": "Chaque mission forge le caractère.",
+      "auteur": "Master Chief",
+      "oeuvre": "Halo",
+      "categorie": "gaming"
+    },
+    {
+      "id": 110,
+      "texte": "La puissance sans direction ne sert à rien.",
+      "auteur": "Kratos",
+      "oeuvre": "God of War",
+      "categorie": "gaming"
+    },
+    {
+      "id": 111,
+      "texte": "On forge son destin à chaque choix.",
+      "auteur": "Aloy",
+      "oeuvre": "Horizon Zero Dawn",
+      "categorie": "gaming"
+    },
+    {
+      "id": 112,
+      "texte": "Le courage n'attend pas les conditions parfaites.",
+      "auteur": "Aloy",
+      "oeuvre": "Horizon Zero Dawn",
+      "categorie": "gaming"
+    },
+    {
+      "id": 113,
+      "texte": "Un bon chef écoute son équipe.",
+      "auteur": "Commander Shepard",
+      "oeuvre": "Mass Effect",
+      "categorie": "gaming"
+    },
+    {
+      "id": 114,
+      "texte": "La confiance se mérite par la constance.",
+      "auteur": "Geralt de Riv",
+      "oeuvre": "The Witcher",
+      "categorie": "gaming"
+    },
+    {
+      "id": 115,
+      "texte": "Le monde est vaste pour qui ose voyager.",
+      "auteur": "Nathan Drake",
+      "oeuvre": "Uncharted",
+      "categorie": "gaming"
+    },
+    {
+      "id": 116,
+      "texte": "Chaque énigme a une solution.",
+      "auteur": "Professor Layton",
+      "oeuvre": "Professor Layton",
+      "categorie": "gaming"
+    },
+    {
+      "id": 117,
+      "texte": "La créativité peut transformer le moindre bloc.",
+      "auteur": "Steve",
+      "oeuvre": "Minecraft",
+      "categorie": "gaming"
+    },
+    {
+      "id": 118,
+      "texte": "Le respect du groupe vaut plus que la gloire individuelle.",
+      "auteur": "Diana",
+      "oeuvre": "League of Legends",
+      "categorie": "gaming"
+    },
+    {
+      "id": 119,
+      "texte": "Viser juste demande de la pratique.",
+      "auteur": "Ashe",
+      "oeuvre": "League of Legends",
+      "categorie": "gaming"
+    },
+    {
+      "id": 120,
+      "texte": "La stratégie commence par une vision claire.",
+      "auteur": "Commander Shepard",
+      "oeuvre": "Mass Effect",
+      "categorie": "gaming"
+    },
+    {
+      "id": 121,
+      "texte": "Même un petit monde peut inspirer un grand rêve.",
+      "auteur": "Pikachu",
+      "oeuvre": "Pokémon",
+      "categorie": "anime"
+    },
+    {
+      "id": 122,
+      "texte": "La volonté ouvre des portes que le doute ferme.",
+      "auteur": "Cloud Strife",
+      "oeuvre": "Final Fantasy VII",
+      "categorie": "gaming"
+    },
+    {
+      "id": 123,
+      "texte": "Le temps donné à l'apprentissage n'est jamais perdu.",
+      "auteur": "Zelda",
+      "oeuvre": "The Legend of Zelda",
+      "categorie": "gaming"
+    },
+    {
+      "id": 124,
+      "texte": "Il faut parfois traverser l'inconnu pour grandir.",
+      "auteur": "Kratos",
+      "oeuvre": "God of War",
+      "categorie": "gaming"
+    },
+    {
+      "id": 125,
+      "texte": "Les grands bâtisseurs commencent avec une idée simple.",
+      "auteur": "Alex",
+      "oeuvre": "Minecraft",
+      "categorie": "gaming"
+    },
+    {
+      "id": 126,
+      "texte": "La patience rend les mains plus habiles.",
+      "auteur": "Ellie",
+      "oeuvre": "The Last of Us",
+      "categorie": "gaming"
+    },
+    {
+      "id": 127,
+      "texte": "Le meilleur score, c'est de progresser encore.",
+      "auteur": "Pac-Man",
+      "oeuvre": "Pac-Man",
+      "categorie": "gaming"
+    },
+    {
+      "id": 128,
+      "texte": "Le jeu devient plus beau quand chacun trouve sa place.",
+      "auteur": "Mario",
+      "oeuvre": "Super Mario",
+      "categorie": "gaming"
+    },
+    {
+      "id": 129,
+      "texte": "La bravoure, c'est avancer malgré les incertitudes.",
+      "auteur": "Batman",
+      "oeuvre": "Batman",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 130,
+      "texte": "L'espoir est une habitude à cultiver.",
+      "auteur": "Superman",
+      "oeuvre": "Superman",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 131,
+      "texte": "La vérité finit par éclairer le chemin.",
+      "auteur": "Wonder Woman",
+      "oeuvre": "Wonder Woman",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 132,
+      "texte": "L'entraide rend les défis moins lourds.",
+      "auteur": "Spider-Man",
+      "oeuvre": "Spider-Man",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 133,
+      "texte": "On devient plus grand en aidant les autres à grandir.",
+      "auteur": "Mr. Rogers",
+      "oeuvre": "Mr. Rogers' Neighborhood",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 134,
+      "texte": "Un bon mot peut changer une journée.",
+      "auteur": "Charlie Brown",
+      "oeuvre": "Peanuts",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 135,
+      "texte": "La curiosité est un moteur bien plus fort que la peur.",
+      "auteur": "Dora l'exploratrice",
+      "oeuvre": "Dora l'exploratrice",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 136,
+      "texte": "La créativité aime les esprits ouverts.",
+      "auteur": "Mister Rogers",
+      "oeuvre": "Mr. Rogers' Neighborhood",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 137,
+      "texte": "Le travail bien fait devient une fierté tranquille.",
+      "auteur": "Bob le bricoleur",
+      "oeuvre": "Bob le bricoleur",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 138,
+      "texte": "La confiance pousse quand on fait preuve de bienveillance.",
+      "auteur": "Harry Potter",
+      "oeuvre": "Harry Potter",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 139,
+      "texte": "Le savoir peut être partagé sans s'épuiser.",
+      "auteur": "Hermione Granger",
+      "oeuvre": "Harry Potter",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 140,
+      "texte": "La mission la plus importante est souvent humaine.",
+      "auteur": "Captain America",
+      "oeuvre": "Captain America",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 141,
+      "texte": "La persistance finit par ouvrir la bonne porte.",
+      "auteur": "Lara Croft",
+      "oeuvre": "Tomb Raider",
+      "categorie": "gaming"
+    },
+    {
+      "id": 142,
+      "texte": "Chaque détour peut mener à une découverte utile.",
+      "auteur": "Nathan Drake",
+      "oeuvre": "Uncharted",
+      "categorie": "gaming"
+    },
+    {
+      "id": 143,
+      "texte": "La volonté dépasse souvent la force brute.",
+      "auteur": "Geralt de Riv",
+      "oeuvre": "The Witcher",
+      "categorie": "gaming"
+    },
+    {
+      "id": 144,
+      "texte": "Un esprit clair fait de meilleurs choix.",
+      "auteur": "Cortana",
+      "oeuvre": "Halo",
+      "categorie": "gaming"
+    },
+    {
+      "id": 145,
+      "texte": "L'horizon s'agrandit quand on ose regarder plus loin.",
+      "auteur": "Aloy",
+      "oeuvre": "Horizon Zero Dawn",
+      "categorie": "gaming"
+    },
+    {
+      "id": 146,
+      "texte": "Le calme et la précision font avancer.",
+      "auteur": "Agent 47",
+      "oeuvre": "Hitman",
+      "categorie": "gaming"
+    },
+    {
+      "id": 147,
+      "texte": "La coopération est une stratégie gagnante.",
+      "auteur": "Reinhardt",
+      "oeuvre": "Overwatch",
+      "categorie": "gaming"
+    },
+    {
+      "id": 148,
+      "texte": "Chaque tentative te rapproche de la maîtrise.",
+      "auteur": "Kirby",
+      "oeuvre": "Kirby",
+      "categorie": "gaming"
+    },
+    {
+      "id": 149,
+      "texte": "L'impossible devient moins grand quand on le travaille.",
+      "auteur": "Cloud Strife",
+      "oeuvre": "Final Fantasy VII",
+      "categorie": "gaming"
+    },
+    {
+      "id": 150,
+      "texte": "Le vrai progrès se mesure à la constance.",
+      "auteur": "Master Chief",
+      "oeuvre": "Halo",
+      "categorie": "gaming"
+    }
+  ]
+}

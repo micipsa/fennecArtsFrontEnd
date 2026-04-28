@@ -1,0 +1,364 @@
+{
+  "anecdotes": [
+    {
+      "id": 1,
+      "texte": "Le savais-tu ? Nintendo a été fondée le 23 septembre 1889 à Kyoto pour fabriquer des cartes à jouer hanafuda, bien avant de devenir un géant du jeu vidéo.",
+      "sujet": "Nintendo",
+      "categorie": "gaming"
+    },
+    {
+      "id": 2,
+      "texte": "Le savais-tu ? Le tout premier jeu vidéo appelé \"Tennis for Two\" a été développé en 1958 par le physicien William Higinbotham sur un oscilloscope, bien avant Pong.",
+      "sujet": "Tennis for Two",
+      "categorie": "gaming"
+    },
+    {
+      "id": 3,
+      "texte": "Le savais-tu ? Le jeu \"Spacewar!\", conçu en 1961-1962, est l'un des premiers jeux distribués entre ordinateurs et a inspiré toute une génération de créateurs de jeux vidéo.",
+      "sujet": "Spacewar!",
+      "categorie": "gaming"
+    },
+    {
+      "id": 4,
+      "texte": "Le savais-tu ? \"Computer Space\", sorti en 1971 et créé par Nolan Bushnell et Ted Dabney, est considéré comme le premier jeu vidéo d'arcade payant de l'histoire.",
+      "sujet": "Computer Space",
+      "categorie": "gaming"
+    },
+    {
+      "id": 5,
+      "texte": "Le savais-tu ? En 1972, Atari a révolutionné le divertissement avec \"Pong\", un simple jeu de tennis de table qui est devenu un immense succès dans les salles d'arcade.",
+      "sujet": "Pong",
+      "categorie": "gaming"
+    },
+    {
+      "id": 6,
+      "texte": "Le savais-tu ? On parle de \"Golden Age\" des jeux d'arcade pour désigner la fin des années 1970 et le début des années 1980, période où ont été créés des classiques comme Space Invaders, Pac-Man et Donkey Kong.",
+      "sujet": "Golden Age des arcades",
+      "categorie": "gaming"
+    },
+    {
+      "id": 7,
+      "texte": "Le savais-tu ? Le jeu d'arcade \"Starship 1\" de 1977 est l'un des plus anciens jeux connus à contenir un easter egg caché par le programmeur, bien avant que le terme ne soit populaire.",
+      "sujet": "Starship 1",
+      "categorie": "gaming"
+    },
+    {
+      "id": 8,
+      "texte": "Le savais-tu ? En 1979, le jeu Atari \"Adventure\" cachait le nom du développeur Warren Robinett dans une salle secrète, considéré comme l'un des tout premiers easter eggs célèbres du jeu vidéo.",
+      "sujet": "Adventure (Atari)",
+      "categorie": "gaming"
+    },
+    {
+      "id": 9,
+      "texte": "Le savais-tu ? Le fameux \"Konami Code\" (haut, haut, bas, bas, gauche, droite, gauche, droite, B, A) a été inventé par le développeur Kazuhisa Hashimoto pour l'aider à tester la version Famicom de \"Gradius\" en 1986.",
+      "sujet": "Konami Code",
+      "categorie": "gaming"
+    },
+    {
+      "id": 10,
+      "texte": "Le savais-tu ? Dans la version NES de \"Contra\" sortie en 1988, le Konami Code donnait 30 vies supplémentaires, ce qui a contribué à populariser ce code de triche dans le monde entier.",
+      "sujet": "Contra (NES)",
+      "categorie": "gaming"
+    },
+    {
+      "id": 11,
+      "texte": "Le savais-tu ? Le crash du jeu vidéo de 1983, causé par une avalanche de jeux de mauvaise qualité, a failli tuer l'industrie avant que Nintendo ne la relance quelques années plus tard.",
+      "sujet": "Crash du jeu vidéo de 1983",
+      "categorie": "gaming"
+    },
+    {
+      "id": 12,
+      "texte": "Le savais-tu ? La Nintendo Entertainment System (NES), lancée en 1985, est créditée pour avoir relancé l'industrie après le crash de 1983 et a introduit des séries comme Super Mario Bros., The Legend of Zelda et Metroid.",
+      "sujet": "Nintendo Entertainment System",
+      "categorie": "gaming"
+    },
+    {
+      "id": 13,
+      "texte": "Le savais-tu ? Sega a lancé sa console 16-bits Mega Drive au Japon en octobre 1988, puis sous le nom de Sega Genesis en Amérique du Nord en août 1989 pour concurrencer la NES.",
+      "sujet": "Sega Genesis",
+      "categorie": "gaming"
+    },
+    {
+      "id": 14,
+      "texte": "Le savais-tu ? La Sega Genesis utilisait un processeur Motorola 68000 à 7,6 MHz et pouvait afficher jusqu'à 61 couleurs simultanément à l'écran.",
+      "sujet": "Hardware de la Sega Genesis",
+      "categorie": "gaming"
+    },
+    {
+      "id": 15,
+      "texte": "Le savais-tu ? Le design iconique de Pac-Man a été inspiré par une pizza à laquelle il manquait une part, idée qui est venue à son créateur Toru Iwatani en regardant sa boîte de pizza.",
+      "sujet": "Pac-Man",
+      "categorie": "gaming"
+    },
+    {
+      "id": 16,
+      "texte": "Le savais-tu ? Avant de devenir célèbre comme plombier, Mario était à l'origine charpentier dans le jeu Donkey Kong de 1981, sous le nom de Jumpman.",
+      "sujet": "Mario (origines)",
+      "categorie": "gaming"
+    },
+    {
+      "id": 17,
+      "texte": "Le savais-tu ? Capcom est à l'origine de séries à succès comme Resident Evil, Monster Hunter, Street Fighter, Mega Man et Devil May Cry, qui se sont vendues à plusieurs millions d'exemplaires.",
+      "sujet": "Capcom",
+      "categorie": "gaming"
+    },
+    {
+      "id": 18,
+      "texte": "Le savais-tu ? L'artiste Akira Toriyama a conçu les personnages et monstres du tout premier \"Dragon Quest\", sorti en 1986, donnant au JRPG son style visuel emblématique.",
+      "sujet": "Dragon Quest (character design)",
+      "categorie": "gaming"
+    },
+    {
+      "id": 19,
+      "texte": "Le savais-tu ? Akira Toriyama a aussi participé au design de personnages pour des jeux comme \"Chrono Trigger\" et \"Blue Dragon\", en plus de son travail sur Dragon Quest.",
+      "sujet": "Akira Toriyama (jeux vidéo)",
+      "categorie": "gaming"
+    },
+    {
+      "id": 20,
+      "texte": "Le savais-tu ? Le code Konami est tellement célèbre qu'il est apparu dans plus de 200 jeux et même dans des sites web et des applications en dehors du jeu vidéo.",
+      "sujet": "Konami Code (culture)",
+      "categorie": "gaming"
+    },
+    {
+      "id": 21,
+      "texte": "Le savais-tu ? La pratique de cacher des références ou messages secrets appelés \"easter eggs\" dans les jeux vidéo s'est popularisée après la découverte de celui d'\"Adventure\" sur Atari.",
+      "sujet": "Easter eggs vidéoludiques",
+      "categorie": "gaming"
+    },
+    {
+      "id": 22,
+      "texte": "Le savais-tu ? L'habitude d'appeler ces secrets des \"easter eggs\" vient d'un tournage du film \"The Rocky Horror Picture Show\" en 1975, où de vrais œufs de Pâques cachés sur le plateau sont restés visibles à l'écran.",
+      "sujet": "Origine du terme Easter egg",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 23,
+      "texte": "Le savais-tu ? Le jeu \"Space Invaders\" a été tellement populaire à la fin des années 1970 qu'il a provoqué une pénurie de pièces de monnaie de 100 yens au Japon.",
+      "sujet": "Space Invaders",
+      "categorie": "gaming"
+    },
+    {
+      "id": 24,
+      "texte": "Le savais-tu ? L'un des premiers easter eggs célèbres consistait en un écran secret créditant le programmeur Warren Robinett dans \"Adventure\", alors que les crédits développeurs n'étaient pas encore une norme.",
+      "sujet": "Crédit caché de Warren Robinett",
+      "categorie": "gaming"
+    },
+    {
+      "id": 25,
+      "texte": "Le savais-tu ? L'anime est né au début du XXe siècle au Japon, et l'un des premiers courts métrages connus, \"The Dull Sword\", est sorti le 30 juin 1917.",
+      "sujet": "The Dull Sword",
+      "categorie": "anime"
+    },
+    {
+      "id": 26,
+      "texte": "Le savais-tu ? La série \"Sazae-san\", diffusée depuis 1969, détient un record Guinness comme plus longue série télévisée d'animation au monde avec plus de 7 500 épisodes.",
+      "sujet": "Sazae-san",
+      "categorie": "anime"
+    },
+    {
+      "id": 27,
+      "texte": "Le savais-tu ? En 2022, le marché mondial de l'anime était estimé à 26,13 milliards de dollars américains et pourrait atteindre plus de 50 milliards d'ici 2030.",
+      "sujet": "Marché de l'anime",
+      "categorie": "anime"
+    },
+    {
+      "id": 28,
+      "texte": "Le savais-tu ? Studio Ghibli a été fondé le 15 juin 1985 par Hayao Miyazaki, Isao Takahata et le producteur Toshio Suzuki à Koganei, Tokyo, après le succès de \"Nausicaä de la vallée du vent\".",
+      "sujet": "Studio Ghibli",
+      "categorie": "anime"
+    },
+    {
+      "id": 29,
+      "texte": "Le savais-tu ? La plupart des films Ghibli restent majoritairement dessinés à la main, le studio limitant l'usage de la 3D et des images de synthèse à environ 10% par film.",
+      "sujet": "Technique d'animation Ghibli",
+      "categorie": "anime"
+    },
+    {
+      "id": 30,
+      "texte": "Le savais-tu ? \"Earwig and the Witch\", sorti en 2020, est le premier film entièrement en 3D CGI de Studio Ghibli, réalisé par Gorō Miyazaki.",
+      "sujet": "Earwig and the Witch",
+      "categorie": "anime"
+    },
+    {
+      "id": 31,
+      "texte": "Le savais-tu ? \"Le Voyage de Chihiro\" de Hayao Miyazaki a remporté l'Oscar du meilleur film d'animation en 2002, une première pour un long métrage japonais.",
+      "sujet": "Spirited Away",
+      "categorie": "anime"
+    },
+    {
+      "id": 32,
+      "texte": "Le savais-tu ? Weekly Shonen Jump, lancé le 2 juillet 1968, est devenu le magazine de manga le plus vendu au Japon et a fêté ses 50 ans d'existence en 2018.",
+      "sujet": "Weekly Shonen Jump",
+      "categorie": "manga"
+    },
+    {
+      "id": 33,
+      "texte": "Le savais-tu ? Weekly Shonen Jump tirait à plus de 6 millions d'exemplaires à son apogée, chaque numéro étant attendu chaque lundi par les jeunes lecteurs japonais.",
+      "sujet": "Tirage de Weekly Shonen Jump",
+      "categorie": "manga"
+    },
+    {
+      "id": 34,
+      "texte": "Le savais-tu ? Le manga \"One Piece\" est sérialisé dans Weekly Shonen Jump depuis juillet 1997 et comptait déjà 114 volumes reliés en mars 2026.",
+      "sujet": "One Piece",
+      "categorie": "manga"
+    },
+    {
+      "id": 35,
+      "texte": "Le savais-tu ? Akira Toriyama a d'abord connu le succès avec \"Dr. Slump\" dans Weekly Shonen Jump avant de créer \"Dragon Ball\", considéré comme l'une des séries les plus influentes de l'histoire du manga.",
+      "sujet": "Dr. Slump",
+      "categorie": "manga"
+    },
+    {
+      "id": 36,
+      "texte": "Le savais-tu ? Akira Toriyama a reçu en 1981 le prix Shogakukan du meilleur shonen pour \"Dr. Slump\", bien avant que Dragon Ball ne devienne un phénomène mondial.",
+      "sujet": "Prix Shogakukan de Toriyama",
+      "categorie": "manga"
+    },
+    {
+      "id": 37,
+      "texte": "Le savais-tu ? Un one-shot spécial intitulé \"Cross Epoch\" a été publié en 2006 comme crossover officiel entre les univers de Dragon Ball et One Piece, co-créé par Toriyama et Oda.",
+      "sujet": "Cross Epoch",
+      "categorie": "manga"
+    },
+    {
+      "id": 38,
+      "texte": "Le savais-tu ? Eiichiro Oda a reconnu que le succès de Dragon Ball dans les années 1990 a ouvert la voie pour des séries comme One Piece et Naruto au sein de Weekly Shonen Jump.",
+      "sujet": "Influence de Dragon Ball",
+      "categorie": "manga"
+    },
+    {
+      "id": 39,
+      "texte": "Le savais-tu ? Shonen Jump a lancé une édition nord-américaine en 2002, publiée par Viz Media, pour proposer légalement des mangas populaires au public occidental.",
+      "sujet": "Shonen Jump (édition US)",
+      "categorie": "manga"
+    },
+    {
+      "id": 40,
+      "texte": "Le savais-tu ? Pixar a réalisé \"Luxo Jr.\" en 1986, souvent cité comme le premier court métrage entièrement animé en images de synthèse, mettant en scène une lampe de bureau devenue mascotte du studio.",
+      "sujet": "Luxo Jr.",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 41,
+      "texte": "Le savais-tu ? Sorti en 1995, \"Toy Story\" est le premier long métrage entièrement animé en CGI à sortir en salle, prouvant qu'un film de 77 minutes pouvait être réalisé uniquement par ordinateur.",
+      "sujet": "Toy Story",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 42,
+      "texte": "Le savais-tu ? Pour \"Toy Story\", les équipes ont produit environ 114 240 images d'animation, chaque quelques secondes de film demandant des semaines de travail.",
+      "sujet": "Nombre d'images de Toy Story",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 43,
+      "texte": "Le savais-tu ? L'univers Marvel Cinematic Universe a officiellement débuté en 2008 avec le film \"Iron Man\", ouvrant une saga de plusieurs phases interconnectées.",
+      "sujet": "Iron Man (2008)",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 44,
+      "texte": "Le savais-tu ? Selon des estimations, les films du MCU ont rapporté près de 30 milliards de dollars au box-office mondial, en faisant la franchise cinématographique la plus rentable de l'histoire.",
+      "sujet": "Recettes du MCU",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 45,
+      "texte": "Le savais-tu ? Le premier film Star Wars, sorti en 1977, n'a été projeté au départ que dans environ 50 cinémas aux États-Unis avant de devenir un phénomène mondial.",
+      "sujet": "Sortie initiale de Star Wars",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 46,
+      "texte": "Le savais-tu ? Dans le premier Star Wars, les yeux de C-3PO étaient recouverts d'or véritable pour éviter la corrosion malgré la chaleur extrême du costume.",
+      "sujet": "C-3PO (détails du costume)",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 47,
+      "texte": "Le savais-tu ? Le nom original de Pac-Man était \"Puck-Man\", mais il a été changé à l'international pour éviter des modifications malveillantes sur les bornes d'arcade.",
+      "sujet": "Puck-Man",
+      "categorie": "gaming"
+    },
+    {
+      "id": 48,
+      "texte": "Le savais-tu ? Nintendo a été l'une des premières entreprises japonaises à fabriquer des cartes à jouer occidentales plastifiées et à obtenir une licence Disney pour imprimer des personnages sur ses cartes.",
+      "sujet": "Cartes Disney de Nintendo",
+      "categorie": "gaming"
+    },
+    {
+      "id": 49,
+      "texte": "Le savais-tu ? Studio Ghibli a été fondé avec le soutien de l'éditeur Tokuma Shoten, qui a aidé à financer les premiers longs métrages du studio.",
+      "sujet": "Tokuma Shoten et Ghibli",
+      "categorie": "anime"
+    },
+    {
+      "id": 50,
+      "texte": "Le savais-tu ? L'article de Time de 1977 qualifiait déjà Star Wars de \"meilleur film de l'année\" quelques jours seulement après sa sortie, preuve de son impact immédiat.",
+      "sujet": "Réception critique de Star Wars en 1977",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 51,
+      "texte": "Le savais-tu ? Le studio Fortiche, derrière la série \"Arcane\" inspirée de League of Legends, a travaillé plusieurs années avec Riot Games pour peaufiner l'animation et l'univers visuel.",
+      "sujet": "Arcane (Fortiche)",
+      "categorie": "anime"
+    },
+    {
+      "id": 52,
+      "texte": "Le savais-tu ? Les genres les plus populaires de l'anime sont l'action et l'aventure, suivis de la science-fiction et du fantastique, ce qui correspond bien aux attentes du public shonen.",
+      "sujet": "Genres d'anime les plus populaires",
+      "categorie": "anime"
+    },
+    {
+      "id": 53,
+      "texte": "Le savais-tu ? Minecraft n'a pas toujours porté ce nom — le jeu n'était au départ qu'un projet expérimental vendu en accès anticipé avant de devenir un phénomène mondial.",
+      "sujet": "Prototype de Minecraft",
+      "categorie": "gaming"
+    },
+    {
+      "id": 54,
+      "texte": "Le savais-tu ? 35% des joueurs s'intéressent aussi aux jeux de plateau et 33% aux comics, confirmant les ponts entre jeu vidéo et autres passions geek.",
+      "sujet": "Centres d'intérêt des gamers",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 55,
+      "texte": "Le savais-tu ? \"Le Château ambulant\" a été le second film de Studio Ghibli à recevoir une nomination aux Oscars dans la catégorie meilleur film d'animation.",
+      "sujet": "Howl's Moving Castle",
+      "categorie": "anime"
+    },
+    {
+      "id": 56,
+      "texte": "Le savais-tu ? Hayao Miyazaki et Toshio Suzuki ont intégré \"Nausicaä de la vallée du vent\" au canon Ghibli même si le film est antérieur à la fondation officielle du studio.",
+      "sujet": "Nausicaä de la vallée du vent",
+      "categorie": "anime"
+    },
+    {
+      "id": 57,
+      "texte": "Le savais-tu ? Studio Ghibli compte 23 longs métrages d'animation, à partir de \"Castle in the Sky\" en 1986, qui a inauguré la filmographie officielle du studio.",
+      "sujet": "Filmographie de Studio Ghibli",
+      "categorie": "anime"
+    },
+    {
+      "id": 58,
+      "texte": "Le savais-tu ? La durée totale de tous les films et séries du MCU atteint environ 130 heures de visionnage, soit plus de cinq jours continus de marathon super-héroïque.",
+      "sujet": "Durée totale du MCU",
+      "categorie": "pop-culture"
+    },
+    {
+      "id": 59,
+      "texte": "Le savais-tu ? Environ 36% des spectateurs dans le monde déclaraient regarder de l'anime en 2021, preuve que ce format est devenu un phénomène culturel global.",
+      "sujet": "Public mondial de l'anime",
+      "categorie": "anime"
+    },
+    {
+      "id": 60,
+      "texte": "Le savais-tu ? Le jeu de cartes Hanafuda, produit par Nintendo dès 1889, reste un symbole des racines traditionnelles de la marque avant sa transition vers l'électronique.",
+      "sujet": "Hanafuda chez Nintendo",
+      "categorie": "gaming"
+    }
+  ]
+}
