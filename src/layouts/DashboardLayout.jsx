@@ -80,6 +80,13 @@ function DashboardLayout() {
             }>
             Tournois
           </NavLink>
+          <NavLink
+            to="/dashboard/chaines"
+            className={({ isActive }) =>
+              `${styles.navLien} ${isActive ? styles.actif : ""}`
+            }>
+            Chaînes WebTV
+          </NavLink>
           <Link to="/" className={styles.navLien}>
             ← Retour au site
           </Link>
