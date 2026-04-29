@@ -54,6 +54,7 @@ import DashboardArticles from "./pages/DashboardArticles";
 import DashboardEvenements from "./pages/DashboardEvenements";
 import DashboardUtilisateurs from "./pages/DashboardUtilisateurs";
 import DashboardTournois from "./pages/DashboardTournois";
+import DashboardChaines from "./pages/DashboardChaines";
 
 // ── Page 404 ──
 import NotFoundPage from "./pages/NotFoundPage";
@@ -113,6 +114,7 @@ function App() {
           <Route path="evenements" element={<DashboardEvenements />} />
           <Route path="utilisateurs" element={<DashboardUtilisateurs />} />
           <Route path="tournois" element={<DashboardTournois />} />
+          <Route path="chaines" element={<DashboardChaines />} />
         </Route>
 
         {/* ════════════════════════════════════════════
