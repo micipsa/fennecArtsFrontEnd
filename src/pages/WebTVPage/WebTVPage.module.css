@@ -1,7 +1,10 @@
 .page {
   padding: 2.5rem 0 4rem;
   min-height: 60vh;
+  background: var(--couleur-sombre);
+  color: rgba(255, 255, 255, 0.85);
 }
+
 .centrer {
   display: flex;
   justify-content: center;
@@ -9,6 +12,8 @@
   min-height: 40vh;
   color: rgba(255, 255, 255, 0.5);
 }
+
+/* ── En-tête ── */
 .entete {
   margin-bottom: 2.5rem;
 }
@@ -97,13 +102,73 @@
   font-size: 1.5rem;
 }
 
-/* ── Grille VOD ── */
+/* ── Player intégré ── */
+.zonePlayer {
+  margin-bottom: 3rem;
+}
+.playerEntete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.btnFermer {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--border-radius);
+  font-size: 0.85rem;
+  padding: 0.4rem 0.9rem;
+  transition: var(--transition);
+  font-family: var(--font-titre);
+}
+.btnFermer:hover {
+  color: var(--couleur-blanc);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Filtres chaînes ── */
+.filtresEntete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
 .titreSection {
   font-family: var(--font-titre);
   font-size: 1.2rem;
   color: var(--couleur-blanc);
-  margin-bottom: 1.5rem;
+  margin: 0;
 }
+.filtres {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.filtreBouton {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-family: var(--font-titre);
+  padding: 0.35rem 1rem;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.filtreBouton:hover {
+  color: var(--couleur-blanc);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+.filtreActif {
+  background: rgba(230, 57, 70, 0.2);
+  color: var(--couleur-blanc);
+  border-color: rgba(230, 57, 70, 0.45);
+}
+
+/* ── Grille VOD ── */
 .grille {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -117,6 +182,9 @@
   transition: var(--transition);
   display: flex;
   flex-direction: column;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
 }
 .carte:hover {
   border-color: rgba(230, 57, 70, 0.3);
@@ -169,13 +237,11 @@
 }
 
 @media (max-width: 768px) {
+  .filtresEntete {
+    flex-direction: column;
+    align-items: flex-start;
+  }
   .grille {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
-}
-.page {
-  padding: 2.5rem 0 4rem;
-  min-height: 60vh;
-  background: var(--couleur-sombre);
-  color: rgba(255, 255, 255, 0.85);
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import styles from "./WebTVPage.module.css";
 
@@ -6,6 +6,8 @@ function WebTVPage() {
   const [data, setData] = useState(null);
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState(null);
+  const [videoSelectionnee, setVideoSelectionnee] = useState(null);
+  const [chaineSelectionnee, setChaineSelectionnee] = useState("toutes");
 
   const charger = async () => {
     try {
@@ -23,6 +25,22 @@ function WebTVPage() {
     const intervalle = setInterval(charger, 5 * 60 * 1000);
     return () => clearInterval(intervalle);
   }, []);
+
+  // Extrait les noms de chaînes uniques depuis les vidéos
+  const chaines = useMemo(() => {
+    if (!data?.videos) return [];
+    const noms = [...new Set(data.videos.map((v) => v.snippet.channelTitle))];
+    return noms;
+  }, [data]);
+
+  // Filtre les vidéos selon la chaîne sélectionnée
+  const videosFiltrees = useMemo(() => {
+    if (!data?.videos) return [];
+    if (chaineSelectionnee === "toutes") return data.videos;
+    return data.videos.filter(
+      (v) => v.snippet.channelTitle === chaineSelectionnee,
+    );
+  }, [data, chaineSelectionnee]);
 
   if (chargement) {
     return (
@@ -43,6 +61,7 @@ function WebTVPage() {
   return (
     <div className={styles.page}>
       <div className="container">
+        {/* ── En-tête ── */}
         <div className={styles.entete}>
           <h1 className={styles.titre}>
             📺 Web<span className={styles.accent}>TV</span>
@@ -52,6 +71,7 @@ function WebTVPage() {
           </p>
         </div>
 
+        {/* ── Zone live ── */}
         {data.estEnLive ? (
           <div className={styles.zoneLive}>
             <div className={styles.badgeLive}>
@@ -74,15 +94,58 @@ function WebTVPage() {
           </div>
         )}
 
-        <h2 className={styles.titreSection}>Dernières vidéos</h2>
+        {/* ── Player intégré ── */}
+        {videoSelectionnee && (
+          <div className={styles.zonePlayer}>
+            <div className={styles.playerEntete}>
+              <h2 className={styles.titreSection}>▶ En lecture</h2>
+              <button
+                className={styles.btnFermer}
+                onClick={() => setVideoSelectionnee(null)}>
+                ✕ Fermer
+              </button>
+            </div>
+            <div className={styles.iframeWrapper}>
+              <iframe
+                src={`https://www.youtube.com/embed/${videoSelectionnee}?autoplay=1`}
+                title="Lecture vidéo"
+                allowFullScreen
+                allow="autoplay"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* ── Barre de filtres chaînes ── */}
+        <div className={styles.filtresEntete}>
+          <h2 className={styles.titreSection}>Dernières vidéos</h2>
+          <div className={styles.filtres}>
+            <button
+              className={`${styles.filtreBouton} ${chaineSelectionnee === "toutes" ? styles.filtreActif : ""}`}
+              onClick={() => setChaineSelectionnee("toutes")}>
+              Toutes
+            </button>
+            {chaines.map((nom) => (
+              <button
+                key={nom}
+                className={`${styles.filtreBouton} ${chaineSelectionnee === nom ? styles.filtreActif : ""}`}
+                onClick={() => setChaineSelectionnee(nom)}>
+                {nom}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Grille vidéos ── */}
         <div className={styles.grille}>
-          {data.videos.map((video) => (
-            <a
+          {videosFiltrees.map((video) => (
+            <button
               key={video.id.videoId}
-              href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.carte}>
+              className={styles.carte}
+              onClick={() => {
+                setVideoSelectionnee(video.id.videoId);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}>
               <div className={styles.thumbWrapper}>
                 <img
                   src={video.snippet.thumbnails.medium.url}
@@ -99,7 +162,7 @@ function WebTVPage() {
                   {video.snippet.channelTitle}
                 </span>
               </div>
-            </a>
+            </button>
           ))}
         </div>
       </div>
