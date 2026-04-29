@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import api from "../services/api";
 import Spinner from "../components/UI/Spinner";
 import MessageErreur from "../components/UI/MessageErreur";
@@ -13,6 +15,7 @@ const FORM_INITIAL = {
   videoUrl: "",
   imageUrl: "",
 };
+
 const CATEGORIES = [
   "High-tech",
   "Manga",
@@ -30,6 +33,34 @@ const CATEGORIES = [
   "Cinéma",
   "Let's Play",
 ];
+
+const QUILL_MODULES = {
+  toolbar: [
+    [{ header: [1, 2, 3, false] }],
+    ["bold", "italic", "underline", "strike"],
+    [{ color: [] }, { background: [] }],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["blockquote", "code-block"],
+    ["link"],
+    ["clean"],
+  ],
+};
+
+const QUILL_FORMATS = [
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "color",
+  "background",
+  "list",
+  "bullet",
+  "blockquote",
+  "code-block",
+  "link",
+];
+
 function DashboardArticles() {
   const [articles, setArticles] = useState([]);
   const [chargement, setChargement] = useState(true);
@@ -62,6 +93,11 @@ function DashboardArticles() {
     setFormData({ ...formData, [e.target.name]: value });
   };
 
+  // Quill passe la valeur directement, pas un event
+  const handleContenuChange = (valeur) => {
+    setFormData((prev) => ({ ...prev, contenu: valeur }));
+  };
+
   const handleCreer = async (e) => {
     e.preventDefault();
     setErreurForm(null);
@@ -79,6 +115,7 @@ function DashboardArticles() {
       setEnvoiEnCours(false);
     }
   };
+
   const handleOuvrirEdition = (article) => {
     setArticleEnEdition(article._id);
     setFormData({
@@ -112,6 +149,7 @@ function DashboardArticles() {
       setEnvoiEnCours(false);
     }
   };
+
   const handleSupprimer = async (id) => {
     if (!window.confirm("Confirmer la suppression de cet article ?")) return;
     try {
@@ -139,6 +177,78 @@ function DashboardArticles() {
 
   if (chargement) return <Spinner />;
   if (erreur) return <MessageErreur message={erreur} />;
+
+  const formulaireContenu = (
+    <>
+      <div className={styles.champ}>
+        <label className={styles.label}>Titre</label>
+        <input
+          className={styles.input}
+          type="text"
+          name="titre"
+          value={formData.titre}
+          onChange={handleChange}
+          placeholder="Titre de l'article"
+          required
+        />
+      </div>
+      <div className={styles.champ}>
+        <label className={styles.label}>Catégorie</label>
+        <select
+          className={styles.input}
+          name="categorie"
+          value={formData.categorie}
+          onChange={handleChange}>
+          {CATEGORIES.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className={styles.champ}>
+        <label className={styles.label}>Contenu</label>
+        <div className={styles.quillWrapper}>
+          <ReactQuill
+            theme="snow"
+            value={formData.contenu}
+            onChange={handleContenuChange}
+            modules={QUILL_MODULES}
+            formats={QUILL_FORMATS}
+            placeholder="Rédigez votre article ici..."
+          />
+        </div>
+      </div>
+      <div className={styles.champ}>
+        <label className={styles.label}>Image de couverture (optionnel)</label>
+        <input
+          className={styles.input}
+          type="text"
+          name="imageUrl"
+          value={formData.imageUrl}
+          onChange={handleChange}
+          placeholder="https://exemple.com/image.jpg"
+        />
+        <span className={styles.aide}>
+          Colle l'URL directe de ton image (imgur, cloudinary, discord CDN...)
+        </span>
+      </div>
+      <div className={styles.champ}>
+        <label className={styles.label}>URL vidéo YouTube (optionnel)</label>
+        <input
+          className={styles.input}
+          type="text"
+          name="videoUrl"
+          value={formData.videoUrl}
+          onChange={handleChange}
+          placeholder="https://www.youtube.com/embed/XXXXXXXXX"
+        />
+        <span className={styles.aide}>
+          Colle uniquement l'URL src= de l'iframe YouTube
+        </span>
+      </div>
+    </>
+  );
 
   return (
     <div>
@@ -210,6 +320,7 @@ function DashboardArticles() {
         </div>
       </div>
 
+      {/* ── Modale création ── */}
       {modaleOuverte && (
         <div className={styles.overlay} onClick={() => setModaleOuverte(false)}>
           <div className={styles.modale} onClick={(e) => e.stopPropagation()}>
@@ -221,95 +332,11 @@ function DashboardArticles() {
                 ✕
               </button>
             </div>
-
             {erreurForm && (
               <div className={styles.erreurForm}>{erreurForm}</div>
             )}
-
             <form className={styles.formulaire} onSubmit={handleCreer}>
-              <div className={styles.champ}>
-                <label className={styles.label}>Titre</label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  name="titre"
-                  value={formData.titre}
-                  onChange={handleChange}
-                  placeholder="Titre de l'article"
-                  required
-                />
-              </div>
-              <div className={styles.champ}>
-                <label className={styles.label}>Catégorie</label>
-                <select
-                  className={styles.input}
-                  name="categorie"
-                  value={formData.categorie}
-                  onChange={handleChange}>
-                  {CATEGORIES.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className={styles.champ}>
-                <label className={styles.label}>Contenu</label>
-                <textarea
-                  className={styles.textarea}
-                  name="contenu"
-                  value={formData.contenu}
-                  onChange={handleChange}
-                  placeholder="Contenu de l'article..."
-                  rows={6}
-                  required
-                />
-              </div>
-              <div className={styles.champ}>
-                <label className={styles.label}>
-                  Image de couverture (optionnel)
-                </label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  name="imageUrl"
-                  value={formData.imageUrl}
-                  onChange={handleChange}
-                  placeholder="https://exemple.com/image.jpg"
-                />
-                <span
-                  style={{
-                    fontSize: "0.78rem",
-                    color: "var(--couleur-texte-clair)",
-                    marginTop: "4px",
-                    display: "block",
-                  }}>
-                  Colle l'URL directe de ton image (imgur, cloudinary, discord
-                  CDN...)
-                </span>
-              </div>
-              <div className={styles.champ}>
-                <label className={styles.label}>
-                  URL vidéo YouTube (optionnel)
-                </label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  name="videoUrl"
-                  value={formData.videoUrl}
-                  onChange={handleChange}
-                  placeholder="https://www.youtube.com/embed/XXXXXXXXX"
-                />
-                <span
-                  style={{
-                    fontSize: "0.78rem",
-                    color: "var(--couleur-texte-clair)",
-                    marginTop: "4px",
-                    display: "block",
-                  }}>
-                  Colle uniquement l'URL src= de l'iframe YouTube
-                </span>
-              </div>
+              {formulaireContenu}
               <div className={styles.champCheckbox}>
                 <input
                   type="checkbox"
@@ -323,7 +350,6 @@ function DashboardArticles() {
                   Publier immédiatement
                 </label>
               </div>
-
               <div className={styles.modaleActions}>
                 <button
                   type="button"
@@ -343,6 +369,7 @@ function DashboardArticles() {
         </div>
       )}
 
+      {/* ── Modale édition ── */}
       {modaleEditionOuverte && (
         <div
           className={styles.overlay}
@@ -356,74 +383,11 @@ function DashboardArticles() {
                 ✕
               </button>
             </div>
-
             {erreurForm && (
               <div className={styles.erreurForm}>{erreurForm}</div>
             )}
-
             <form className={styles.formulaire} onSubmit={handleModifier}>
-              <div className={styles.champ}>
-                <label className={styles.label}>Titre</label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  name="titre"
-                  value={formData.titre}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className={styles.champ}>
-                <label className={styles.label}>Catégorie</label>
-                <select
-                  className={styles.input}
-                  name="categorie"
-                  value={formData.categorie}
-                  onChange={handleChange}>
-                  {CATEGORIES.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className={styles.champ}>
-                <label className={styles.label}>Contenu</label>
-                <textarea
-                  className={styles.textarea}
-                  name="contenu"
-                  value={formData.contenu}
-                  onChange={handleChange}
-                  rows={6}
-                  required
-                />
-              </div>
-              <div className={styles.champ}>
-                <label className={styles.label}>
-                  Image de couverture (optionnel)
-                </label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  name="imageUrl"
-                  value={formData.imageUrl}
-                  onChange={handleChange}
-                  placeholder="https://exemple.com/image.jpg"
-                />
-              </div>
-              <div className={styles.champ}>
-                <label className={styles.label}>
-                  URL vidéo YouTube (optionnel)
-                </label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  name="videoUrl"
-                  value={formData.videoUrl}
-                  onChange={handleChange}
-                  placeholder="https://www.youtube.com/embed/XXXXXXXXX"
-                />
-              </div>
+              {formulaireContenu}
               <div className={styles.champCheckbox}>
                 <input
                   type="checkbox"
