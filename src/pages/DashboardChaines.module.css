@@ -1,0 +1,432 @@
+.entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.titre {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--couleur-texte);
+  font-family: var(--font-titre);
+  letter-spacing: 0.02em;
+}
+
+.sousTitre {
+  color: var(--couleur-texte-clair);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.btnCreer {
+  background: var(--couleur-primaire);
+  color: white;
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: var(--font-titre);
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.btnCreer:hover {
+  background: #c1121f;
+  transform: translateY(-1px);
+}
+
+/* ── Liste ── */
+.liste {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.vide {
+  color: var(--couleur-texte-clair);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+.carte {
+  background: var(--couleur-blanc);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--couleur-bordure);
+  box-shadow: var(--ombre-sm);
+  padding: 1.25rem 1.5rem;
+  transition: var(--transition);
+}
+
+.carte:hover {
+  box-shadow: var(--ombre);
+}
+
+.carteEntete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.carteInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.carteNomLigne {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.carteNom {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--couleur-texte);
+  font-family: var(--font-titre);
+}
+
+.carteId {
+  font-size: 0.78rem;
+  color: var(--couleur-texte-clair);
+  font-family: monospace;
+}
+
+.carteHandle {
+  font-size: 0.82rem;
+  color: var(--couleur-primaire);
+}
+
+.blacklistCount {
+  font-size: 0.78rem;
+  color: var(--couleur-texte-clair);
+}
+
+/* ── Badges ── */
+.badgeType,
+.badgeActif {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-family: var(--font-titre);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.officiel {
+  background: rgba(13, 110, 253, 0.1);
+  color: #0d6efd;
+  border: 1px solid rgba(13, 110, 253, 0.25);
+}
+
+.adherent {
+  background: rgba(244, 162, 97, 0.1);
+  color: var(--couleur-accent);
+  border: 1px solid rgba(244, 162, 97, 0.25);
+}
+
+.actif {
+  background: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+  border: 1px solid rgba(40, 167, 69, 0.25);
+}
+
+.inactif {
+  background: rgba(108, 117, 125, 0.1);
+  color: #6c757d;
+  border: 1px solid rgba(108, 117, 125, 0.25);
+}
+
+/* ── Actions ── */
+.carteActions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btnBlacklist {
+  background: rgba(108, 117, 125, 0.1);
+  color: #6c757d;
+  border: 1px solid rgba(108, 117, 125, 0.25);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--border-radius);
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.btnBlacklist:hover {
+  background: rgba(108, 117, 125, 0.2);
+}
+
+.btnModifier {
+  background: rgba(13, 110, 253, 0.1);
+  color: #0d6efd;
+  border: 1px solid rgba(13, 110, 253, 0.25);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--border-radius);
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.btnModifier:hover {
+  background: rgba(13, 110, 253, 0.2);
+}
+
+.btnSupprimer {
+  background: rgba(230, 57, 70, 0.1);
+  color: var(--couleur-primaire);
+  border: 1px solid rgba(230, 57, 70, 0.25);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--border-radius);
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.btnSupprimer:hover {
+  background: rgba(230, 57, 70, 0.2);
+}
+
+/* ── Modale ── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 1rem;
+}
+
+.modale {
+  background: var(--couleur-blanc);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--ombre-lg);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+.modaleEntete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.modaleTitre {
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: var(--font-titre);
+  color: var(--couleur-texte);
+}
+
+.modaleFermer {
+  background: transparent;
+  color: var(--couleur-texte-clair);
+  font-size: 1.1rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.modaleFermer:hover {
+  background: var(--couleur-fond);
+  color: var(--couleur-texte);
+}
+
+.erreurForm {
+  background: rgba(230, 57, 70, 0.08);
+  border: 1px solid rgba(230, 57, 70, 0.25);
+  color: var(--couleur-primaire);
+  border-radius: var(--border-radius);
+  padding: 0.75rem 1rem;
+  font-size: 0.88rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ── Formulaire ── */
+.formulaire {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--couleur-texte);
+  font-family: var(--font-titre);
+}
+
+.input {
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  color: var(--couleur-texte);
+  background: var(--couleur-fond);
+  transition: var(--transition);
+  font-family: var(--font-principale);
+  width: 100%;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--couleur-primaire);
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+}
+
+.aide {
+  font-size: 0.78rem;
+  color: var(--couleur-texte-clair);
+  margin-top: 2px;
+}
+
+.champCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--couleur-primaire);
+  cursor: pointer;
+}
+
+.labelCheckbox {
+  font-size: 0.9rem;
+  color: var(--couleur-texte);
+  cursor: pointer;
+}
+
+.modaleActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+.btnAnnuler {
+  background: transparent;
+  color: var(--couleur-texte-clair);
+  border: 1px solid var(--couleur-bordure);
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.btnAnnuler:hover {
+  background: var(--couleur-fond);
+}
+
+.btnSoumettre {
+  background: var(--couleur-primaire);
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: var(--font-titre);
+  transition: var(--transition);
+}
+
+.btnSoumettre:hover:not(:disabled) {
+  background: #c1121f;
+}
+
+.btnSoumettre:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Blacklist ── */
+.blacklistAjout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--couleur-bordure);
+}
+
+.blacklistLigne {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.blacklistLigne .input {
+  flex: 1;
+}
+
+.blacklistListe {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.blacklistItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--couleur-fond);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--border-radius);
+  padding: 0.5rem 0.85rem;
+}
+
+.blacklistVideoId {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--couleur-texte);
+}
+
+.btnRetirer {
+  background: rgba(230, 57, 70, 0.1);
+  color: var(--couleur-primaire);
+  border: 1px solid rgba(230, 57, 70, 0.25);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--border-radius);
+  font-size: 0.78rem;
+  transition: var(--transition);
+}
+
+.btnRetirer:hover {
+  background: rgba(230, 57, 70, 0.2);
+}
+
+@media (max-width: 768px) {
+  .carteEntete {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .carteActions {
+    width: 100%;
+  }
+
+  .modale {
+    padding: 1.5rem 1rem;
+  }
+}
