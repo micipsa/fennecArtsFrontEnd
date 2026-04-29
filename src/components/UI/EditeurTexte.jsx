@@ -7,7 +7,12 @@ import styles from "./EditeurTexte.module.css";
 
 function EditeurTexte({ value, onChange, placeholder }) {
   const editor = useEditor({
-    extensions: [StarterKit, Underline, TextStyle, Color],
+    extensions: [
+      StarterKit.configure({ underline: false }),
+      Underline,
+      TextStyle,
+      Color,
+    ],
     content: value,
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
