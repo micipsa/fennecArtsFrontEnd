@@ -1,8 +1,8 @@
 .wrapper {
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--couleur-bordure);
   border-radius: var(--border-radius);
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--couleur-fond);
 }
 
 .toolbar {
@@ -11,13 +11,13 @@
   flex-wrap: wrap;
   gap: 0.2rem;
   padding: 0.5rem 0.75rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--couleur-blanc);
+  border-bottom: 1px solid var(--couleur-bordure);
 }
 
 .btn {
   background: transparent;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--couleur-texte-clair);
   border: 1px solid transparent;
   border-radius: 4px;
   padding: 0.25rem 0.5rem;
@@ -29,27 +29,27 @@
 }
 
 .btn:hover {
-  color: var(--couleur-blanc);
-  background: rgba(255, 255, 255, 0.08);
+  color: var(--couleur-texte);
+  background: var(--couleur-fond);
 }
 
 .actif {
-  color: var(--couleur-blanc);
-  background: rgba(230, 57, 70, 0.25);
-  border-color: rgba(230, 57, 70, 0.3);
+  color: var(--couleur-primaire);
+  background: rgba(230, 57, 70, 0.08);
+  border-color: rgba(230, 57, 70, 0.25);
 }
 
 .separateur {
   width: 1px;
   height: 20px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--couleur-bordure);
   margin: 0 0.2rem;
 }
 
 .btnCouleur {
   position: relative;
   background: transparent;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--couleur-texte-clair);
   border: 1px solid transparent;
   border-radius: 4px;
   padding: 0.25rem 0.5rem;
@@ -62,8 +62,8 @@
 }
 
 .btnCouleur:hover {
-  color: var(--couleur-blanc);
-  background: rgba(255, 255, 255, 0.08);
+  color: var(--couleur-texte);
+  background: var(--couleur-fond);
 }
 
 .btnCouleur input[type="color"] {
@@ -79,10 +79,11 @@
 .contenu {
   padding: 1rem;
   min-height: 220px;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--couleur-texte);
   font-family: var(--font-principale);
   font-size: 0.95rem;
   line-height: 1.7;
+  background: var(--couleur-blanc);
 }
 
 .contenu :global(.ProseMirror) {
@@ -92,7 +93,7 @@
 
 .contenu :global(.ProseMirror p.is-editor-empty:first-child::before) {
   content: attr(data-placeholder);
-  color: rgba(255, 255, 255, 0.25);
+  color: var(--couleur-texte-clair);
   pointer-events: none;
   float: left;
   height: 0;
@@ -101,39 +102,41 @@
 .contenu :global(h1) {
   font-size: 1.6rem;
   font-family: var(--font-titre);
-  color: var(--couleur-blanc);
+  color: var(--couleur-texte);
   margin: 0.75rem 0 0.4rem;
 }
 .contenu :global(h2) {
   font-size: 1.3rem;
   font-family: var(--font-titre);
-  color: var(--couleur-blanc);
+  color: var(--couleur-texte);
   margin: 0.65rem 0 0.35rem;
 }
 .contenu :global(h3) {
   font-size: 1.1rem;
   font-family: var(--font-titre);
-  color: var(--couleur-blanc);
+  color: var(--couleur-texte);
   margin: 0.5rem 0 0.3rem;
 }
 .contenu :global(blockquote) {
   border-left: 3px solid var(--couleur-primaire);
   padding-left: 1rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--couleur-texte-clair);
   font-style: italic;
   margin: 0.75rem 0;
 }
 .contenu :global(code) {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--couleur-fond);
   padding: 0.15rem 0.4rem;
   border-radius: 4px;
   font-size: 0.85rem;
+  border: 1px solid var(--couleur-bordure);
 }
 .contenu :global(pre) {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--couleur-fond);
   padding: 1rem;
   border-radius: 8px;
   overflow-x: auto;
+  border: 1px solid var(--couleur-bordure);
 }
 .contenu :global(ul),
 .contenu :global(ol) {

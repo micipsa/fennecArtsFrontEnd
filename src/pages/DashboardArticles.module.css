@@ -1,43 +1,376 @@
-.quillWrapper {
+.entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.titre {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--couleur-texte);
+  font-family: var(--font-titre);
+  letter-spacing: 0.02em;
+}
+
+.sousTitre {
+  color: var(--couleur-texte-clair);
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.btnCreer {
+  background: var(--couleur-primaire);
+  color: white;
+  padding: 0.6rem 1.25rem;
   border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: var(--font-titre);
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.btnCreer:hover {
+  background: #c1121f;
+  transform: translateY(-1px);
+}
+
+/* ── Tableau ── */
+.tableau {
+  background: var(--couleur-blanc);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--ombre-sm);
+  border: 1px solid var(--couleur-bordure);
   overflow: hidden;
 }
 
-.quillWrapper :global(.ql-toolbar) {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1) !important;
-  border-radius: var(--border-radius) var(--border-radius) 0 0;
+.tableauScroll {
+  overflow-x: auto;
 }
 
-.quillWrapper :global(.ql-container) {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(255, 255, 255, 0.1) !important;
-  border-radius: 0 0 var(--border-radius) var(--border-radius);
-  min-height: 200px;
-  color: rgba(255, 255, 255, 0.85);
+.tableauEntete {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  padding: 0.85rem 1.25rem;
+  background: var(--couleur-fond);
+  border-bottom: 1px solid var(--couleur-bordure);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--couleur-texte-clair);
+  font-family: var(--font-titre);
+  min-width: 700px;
+}
+
+.tableauLigne {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--couleur-bordure);
+  align-items: center;
+  font-size: 0.88rem;
+  color: var(--couleur-texte);
+  transition: var(--transition);
+  min-width: 700px;
+}
+
+.tableauLigne:last-child {
+  border-bottom: none;
+}
+
+.tableauLigne:hover {
+  background: var(--couleur-fond);
+}
+
+.titreLigne {
+  font-weight: 600;
+  color: var(--couleur-texte);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+}
+
+.vide {
+  padding: 2rem 1.25rem;
+  color: var(--couleur-texte-clair);
+  font-size: 0.9rem;
+}
+
+/* ── Boutons statut ── */
+.btnPublie {
+  background: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+  border: 1px solid rgba(40, 167, 69, 0.3);
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: var(--font-titre);
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.btnPublie:hover {
+  background: rgba(40, 167, 69, 0.2);
+}
+
+.btnBrouillon {
+  background: rgba(255, 193, 7, 0.1);
+  color: #d39e00;
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: var(--font-titre);
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.btnBrouillon:hover {
+  background: rgba(255, 193, 7, 0.2);
+}
+
+/* ── Boutons actions ── */
+.btnModifier {
+  background: rgba(13, 110, 253, 0.1);
+  color: #0d6efd;
+  border: 1px solid rgba(13, 110, 253, 0.25);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--border-radius);
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.btnModifier:hover {
+  background: rgba(13, 110, 253, 0.2);
+}
+
+.btnSupprimer {
+  background: rgba(230, 57, 70, 0.1);
+  color: var(--couleur-primaire);
+  border: 1px solid rgba(230, 57, 70, 0.25);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--border-radius);
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.btnSupprimer:hover {
+  background: rgba(230, 57, 70, 0.2);
+}
+
+/* ── Modale ── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 1rem;
+}
+
+.modale {
+  background: var(--couleur-blanc);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--ombre-lg);
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+.modaleEntete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.modaleTitre {
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: var(--font-titre);
+  color: var(--couleur-texte);
+}
+
+.modaleFermer {
+  background: transparent;
+  color: var(--couleur-texte-clair);
+  font-size: 1.1rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.modaleFermer:hover {
+  background: var(--couleur-fond);
+  color: var(--couleur-texte);
+}
+
+.erreurForm {
+  background: rgba(230, 57, 70, 0.08);
+  border: 1px solid rgba(230, 57, 70, 0.25);
+  color: var(--couleur-primaire);
+  border-radius: var(--border-radius);
+  padding: 0.75rem 1rem;
+  font-size: 0.88rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ── Formulaire ── */
+.formulaire {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--couleur-texte);
+  font-family: var(--font-titre);
+}
+
+.input {
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  color: var(--couleur-texte);
+  background: var(--couleur-fond);
+  transition: var(--transition);
   font-family: var(--font-principale);
+  width: 100%;
 }
 
-.quillWrapper :global(.ql-editor.ql-blank::before) {
-  color: rgba(255, 255, 255, 0.25);
-  font-style: normal;
+.input:focus {
+  outline: none;
+  border-color: var(--couleur-primaire);
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
 }
 
-.quillWrapper :global(.ql-stroke) {
-  stroke: rgba(255, 255, 255, 0.6) !important;
+.textarea {
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  color: var(--couleur-texte);
+  background: var(--couleur-fond);
+  transition: var(--transition);
+  font-family: var(--font-principale);
+  width: 100%;
+  resize: vertical;
 }
 
-.quillWrapper :global(.ql-fill) {
-  fill: rgba(255, 255, 255, 0.6) !important;
-}
-
-.quillWrapper :global(.ql-picker-label) {
-  color: rgba(255, 255, 255, 0.6) !important;
+.textarea:focus {
+  outline: none;
+  border-color: var(--couleur-primaire);
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
 }
 
 .aide {
   font-size: 0.78rem;
   color: var(--couleur-texte-clair);
-  margin-top: 4px;
-  display: block;
+  margin-top: 2px;
+}
+
+.champCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--couleur-primaire);
+  cursor: pointer;
+}
+
+.labelCheckbox {
+  font-size: 0.9rem;
+  color: var(--couleur-texte);
+  cursor: pointer;
+}
+
+/* ── Actions modale ── */
+.modaleActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+.btnAnnuler {
+  background: transparent;
+  color: var(--couleur-texte-clair);
+  border: 1px solid var(--couleur-bordure);
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.btnAnnuler:hover {
+  background: var(--couleur-fond);
+  color: var(--couleur-texte);
+}
+
+.btnSoumettre {
+  background: var(--couleur-primaire);
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: var(--font-titre);
+  transition: var(--transition);
+}
+
+.btnSoumettre:hover:not(:disabled) {
+  background: #c1121f;
+}
+
+.btnSoumettre:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .entete {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .modale {
+    padding: 1.5rem 1rem;
+  }
+
+  .modaleActions {
+    flex-direction: column-reverse;
+  }
+
+  .btnAnnuler,
+  .btnSoumettre {
+    width: 100%;
+    text-align: center;
+  }
 }

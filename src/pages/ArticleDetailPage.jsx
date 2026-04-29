@@ -118,15 +118,10 @@ function ArticleDetailPage() {
           </div>
         )}
         {/* ── Contenu complet de l'article ── */}
-        <div className={styles.contenu}>
-          {/* Découpage du contenu par \n pour créer des paragraphes séparés */}
-          {article.contenu
-            .split("\n")
-            .map(
-              (paragraphe, index) =>
-                paragraphe.trim() && <p key={index}>{paragraphe}</p>,
-            )}
-        </div>
+        <div
+          className={styles.contenu}
+          dangerouslySetInnerHTML={{ __html: article.contenu }}
+        />
         {article.videoUrl && (
           <div className={styles.videoWrapper}>
             <iframe

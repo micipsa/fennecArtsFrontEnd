@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../services/api";
+import EditeurTexte from "../components/UI/EditeurTexte";
 import Spinner from "../components/UI/Spinner";
 import MessageErreur from "../components/UI/MessageErreur";
 import Badge from "../components/UI/Badge";
@@ -62,6 +63,10 @@ function RedacteurArticles() {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
     setFormData({ ...formData, [e.target.name]: value });
+  };
+
+  const handleContenuChange = (valeur) => {
+    setFormData((prev) => ({ ...prev, contenu: valeur }));
   };
 
   const handleCreer = async (e) => {
@@ -144,6 +149,67 @@ function RedacteurArticles() {
   if (chargement) return <Spinner />;
   if (erreur) return <MessageErreur message={erreur} />;
 
+  const formulaireContenu = (
+    <>
+      <div className={styles.champ}>
+        <label className={styles.label}>Titre</label>
+        <input
+          className={styles.input}
+          type="text"
+          name="titre"
+          value={formData.titre}
+          onChange={handleChange}
+          placeholder="Titre de l'article"
+          required
+        />
+      </div>
+      <div className={styles.champ}>
+        <label className={styles.label}>Catégorie</label>
+        <select
+          className={styles.input}
+          name="categorie"
+          value={formData.categorie}
+          onChange={handleChange}>
+          {CATEGORIES.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className={styles.champ}>
+        <label className={styles.label}>Contenu</label>
+        <EditeurTexte
+          value={formData.contenu}
+          onChange={handleContenuChange}
+          placeholder="Rédigez votre article ici..."
+        />
+      </div>
+      <div className={styles.champ}>
+        <label className={styles.label}>Image de couverture (optionnel)</label>
+        <input
+          className={styles.input}
+          type="text"
+          name="imageUrl"
+          value={formData.imageUrl}
+          onChange={handleChange}
+          placeholder="https://exemple.com/image.jpg"
+        />
+      </div>
+      <div className={styles.champ}>
+        <label className={styles.label}>URL vidéo YouTube (optionnel)</label>
+        <input
+          className={styles.input}
+          type="text"
+          name="videoUrl"
+          value={formData.videoUrl}
+          onChange={handleChange}
+          placeholder="https://www.youtube.com/embed/XXXXXXXXX"
+        />
+      </div>
+    </>
+  );
+
   return (
     <div>
       <div className={styles.entete}>
@@ -218,7 +284,7 @@ function RedacteurArticles() {
         </div>
       </div>
 
-      {/* Modale création */}
+      {/* ── Modale création ── */}
       {modaleOuverte && (
         <div className={styles.overlay} onClick={() => setModaleOuverte(false)}>
           <div className={styles.modale} onClick={(e) => e.stopPropagation()}>
@@ -234,70 +300,7 @@ function RedacteurArticles() {
               <div className={styles.erreurForm}>{erreurForm}</div>
             )}
             <form className={styles.formulaire} onSubmit={handleCreer}>
-              <div className={styles.champ}>
-                <label className={styles.label}>Titre</label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  name="titre"
-                  value={formData.titre}
-                  onChange={handleChange}
-                  placeholder="Titre de l'article"
-                  required
-                />
-              </div>
-              <div className={styles.champ}>
-                <label className={styles.label}>Catégorie</label>
-                <select
-                  className={styles.input}
-                  name="categorie"
-                  value={formData.categorie}
-                  onChange={handleChange}>
-                  {CATEGORIES.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className={styles.champ}>
-                <label className={styles.label}>Contenu</label>
-                <textarea
-                  className={styles.textarea}
-                  name="contenu"
-                  value={formData.contenu}
-                  onChange={handleChange}
-                  placeholder="Contenu de l'article..."
-                  rows={6}
-                  required
-                />
-              </div>
-              <div className={styles.champ}>
-                <label className={styles.label}>
-                  Image de couverture (optionnel)
-                </label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  name="imageUrl"
-                  value={formData.imageUrl}
-                  onChange={handleChange}
-                  placeholder="https://exemple.com/image.jpg"
-                />
-              </div>
-              <div className={styles.champ}>
-                <label className={styles.label}>
-                  URL vidéo YouTube (optionnel)
-                </label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  name="videoUrl"
-                  value={formData.videoUrl}
-                  onChange={handleChange}
-                  placeholder="https://www.youtube.com/embed/XXXXXXXXX"
-                />
-              </div>
+              {formulaireContenu}
               <div className={styles.champCheckbox}>
                 <input
                   type="checkbox"
@@ -330,7 +333,7 @@ function RedacteurArticles() {
         </div>
       )}
 
-      {/* Modale édition */}
+      {/* ── Modale édition ── */}
       {modaleEditionOuverte && (
         <div
           className={styles.overlay}
@@ -348,68 +351,7 @@ function RedacteurArticles() {
               <div className={styles.erreurForm}>{erreurForm}</div>
             )}
             <form className={styles.formulaire} onSubmit={handleModifier}>
-              <div className={styles.champ}>
-                <label className={styles.label}>Titre</label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  name="titre"
-                  value={formData.titre}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className={styles.champ}>
-                <label className={styles.label}>Catégorie</label>
-                <select
-                  className={styles.input}
-                  name="categorie"
-                  value={formData.categorie}
-                  onChange={handleChange}>
-                  {CATEGORIES.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className={styles.champ}>
-                <label className={styles.label}>Contenu</label>
-                <textarea
-                  className={styles.textarea}
-                  name="contenu"
-                  value={formData.contenu}
-                  onChange={handleChange}
-                  rows={6}
-                  required
-                />
-              </div>
-              <div className={styles.champ}>
-                <label className={styles.label}>
-                  Image de couverture (optionnel)
-                </label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  name="imageUrl"
-                  value={formData.imageUrl}
-                  onChange={handleChange}
-                  placeholder="https://exemple.com/image.jpg"
-                />
-              </div>
-              <div className={styles.champ}>
-                <label className={styles.label}>
-                  URL vidéo YouTube (optionnel)
-                </label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  name="videoUrl"
-                  value={formData.videoUrl}
-                  onChange={handleChange}
-                  placeholder="https://www.youtube.com/embed/XXXXXXXXX"
-                />
-              </div>
+              {formulaireContenu}
               <div className={styles.champCheckbox}>
                 <input
                   type="checkbox"
