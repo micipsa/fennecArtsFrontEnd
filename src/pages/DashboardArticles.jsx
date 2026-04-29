@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import EditeurTexte from "../components/UI/EditeurTexte";
+import UploadImage from "../components/UI/UploadImage";
 import api from "../services/api";
 import Spinner from "../components/UI/Spinner";
 import MessageErreur from "../components/UI/MessageErreur";
@@ -215,17 +216,22 @@ function DashboardArticles() {
       </div>
       <div className={styles.champ}>
         <label className={styles.label}>Image de couverture (optionnel)</label>
-        <input
-          className={styles.input}
-          type="text"
-          name="imageUrl"
-          value={formData.imageUrl}
-          onChange={handleChange}
-          placeholder="https://exemple.com/image.jpg"
+        <UploadImage
+          onUpload={(url) =>
+            setFormData((prev) => ({ ...prev, imageUrl: url }))
+          }
         />
-        <span className={styles.aide}>
-          Colle l'URL directe de ton image (imgur, cloudinary, discord CDN...)
-        </span>
+        {formData.imageUrl && (
+          <img
+            src={formData.imageUrl}
+            alt="Aperçu"
+            style={{
+              marginTop: "0.5rem",
+              maxHeight: "150px",
+              borderRadius: "6px",
+            }}
+          />
+        )}
       </div>
       <div className={styles.champ}>
         <label className={styles.label}>URL vidéo YouTube (optionnel)</label>

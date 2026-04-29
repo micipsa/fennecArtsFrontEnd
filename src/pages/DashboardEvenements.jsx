@@ -18,6 +18,7 @@
  * permettant à l'utilisateur de sélectionner une date ET une heure.
  */
 import { useState, useEffect } from "react";
+import UploadImage from "../components/UI/UploadImage";
 import api from "../services/api";
 import Spinner from "../components/UI/Spinner";
 import MessageErreur from "../components/UI/MessageErreur";
@@ -256,23 +257,22 @@ function DashboardEvenements() {
                 <label className={styles.label}>
                   Affiche de l'événement (optionnel)
                 </label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  name="imageUrl"
-                  value={formData.imageUrl}
-                  onChange={handleChange}
-                  placeholder="https://exemple.com/affiche.jpg"
+                <UploadImage
+                  onUpload={(url) =>
+                    setFormData((prev) => ({ ...prev, imageUrl: url }))
+                  }
                 />
-                <span
-                  style={{
-                    fontSize: "0.78rem",
-                    color: "var(--couleur-texte-clair)",
-                    marginTop: "4px",
-                    display: "block",
-                  }}>
-                  Colle l'URL directe de l'affiche
-                </span>
+                {formData.imageUrl && (
+                  <img
+                    src={formData.imageUrl}
+                    alt="Aperçu"
+                    style={{
+                      marginTop: "0.5rem",
+                      maxHeight: "150px",
+                      borderRadius: "6px",
+                    }}
+                  />
+                )}
               </div>
 
               {/* Description (textarea) */}

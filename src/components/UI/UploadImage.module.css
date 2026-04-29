@@ -1,0 +1,30 @@
+.conteneur {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: var(--couleur-primaire);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-principale);
+  font-size: 0.9rem;
+  transition: opacity 0.2s;
+}
+
+.label:hover {
+  opacity: 0.85;
+}
+
+.input {
+  display: none;
+}
+
+.erreur {
+  color: var(--couleur-primaire);
+  font-size: 0.85rem;
+}

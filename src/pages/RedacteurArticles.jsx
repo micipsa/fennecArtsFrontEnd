@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../services/api";
 import EditeurTexte from "../components/UI/EditeurTexte";
+import UploadImage from "../components/UI/UploadImage";
 import Spinner from "../components/UI/Spinner";
 import MessageErreur from "../components/UI/MessageErreur";
 import Badge from "../components/UI/Badge";
@@ -187,14 +188,22 @@ function RedacteurArticles() {
       </div>
       <div className={styles.champ}>
         <label className={styles.label}>Image de couverture (optionnel)</label>
-        <input
-          className={styles.input}
-          type="text"
-          name="imageUrl"
-          value={formData.imageUrl}
-          onChange={handleChange}
-          placeholder="https://exemple.com/image.jpg"
+        <UploadImage
+          onUpload={(url) =>
+            setFormData((prev) => ({ ...prev, imageUrl: url }))
+          }
         />
+        {formData.imageUrl && (
+          <img
+            src={formData.imageUrl}
+            alt="Aperçu"
+            style={{
+              marginTop: "0.5rem",
+              maxHeight: "150px",
+              borderRadius: "6px",
+            }}
+          />
+        )}
       </div>
       <div className={styles.champ}>
         <label className={styles.label}>URL vidéo YouTube (optionnel)</label>
