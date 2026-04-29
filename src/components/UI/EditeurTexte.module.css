@@ -1,0 +1,145 @@
+.wrapper {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.btn {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.85rem;
+  font-family: var(--font-principale);
+  transition: var(--transition);
+  cursor: pointer;
+  min-width: 28px;
+}
+
+.btn:hover {
+  color: var(--couleur-blanc);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.actif {
+  color: var(--couleur-blanc);
+  background: rgba(230, 57, 70, 0.25);
+  border-color: rgba(230, 57, 70, 0.3);
+}
+
+.separateur {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 0.2rem;
+}
+
+.btnCouleur {
+  position: relative;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  min-width: 28px;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.btnCouleur:hover {
+  color: var(--couleur-blanc);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btnCouleur input[type="color"] {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.contenu {
+  padding: 1rem;
+  min-height: 220px;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: var(--font-principale);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.contenu :global(.ProseMirror) {
+  outline: none;
+  min-height: 200px;
+}
+
+.contenu :global(.ProseMirror p.is-editor-empty:first-child::before) {
+  content: attr(data-placeholder);
+  color: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+.contenu :global(h1) {
+  font-size: 1.6rem;
+  font-family: var(--font-titre);
+  color: var(--couleur-blanc);
+  margin: 0.75rem 0 0.4rem;
+}
+.contenu :global(h2) {
+  font-size: 1.3rem;
+  font-family: var(--font-titre);
+  color: var(--couleur-blanc);
+  margin: 0.65rem 0 0.35rem;
+}
+.contenu :global(h3) {
+  font-size: 1.1rem;
+  font-family: var(--font-titre);
+  color: var(--couleur-blanc);
+  margin: 0.5rem 0 0.3rem;
+}
+.contenu :global(blockquote) {
+  border-left: 3px solid var(--couleur-primaire);
+  padding-left: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+  margin: 0.75rem 0;
+}
+.contenu :global(code) {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+.contenu :global(pre) {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.contenu :global(ul),
+.contenu :global(ol) {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+.contenu :global(li) {
+  margin: 0.2rem 0;
+}

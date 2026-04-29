@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import EditeurTexte from "../components/UI/EditeurTexte";
 import api from "../services/api";
 import Spinner from "../components/UI/Spinner";
 import MessageErreur from "../components/UI/MessageErreur";
@@ -208,16 +207,11 @@ function DashboardArticles() {
       </div>
       <div className={styles.champ}>
         <label className={styles.label}>Contenu</label>
-        <div className={styles.quillWrapper}>
-          <ReactQuill
-            theme="snow"
-            value={formData.contenu}
-            onChange={handleContenuChange}
-            modules={QUILL_MODULES}
-            formats={QUILL_FORMATS}
-            placeholder="Rédigez votre article ici..."
-          />
-        </div>
+        <EditeurTexte
+          value={formData.contenu}
+          onChange={(val) => setFormData((prev) => ({ ...prev, contenu: val }))}
+          placeholder="Rédigez votre article ici..."
+        />
       </div>
       <div className={styles.champ}>
         <label className={styles.label}>Image de couverture (optionnel)</label>
