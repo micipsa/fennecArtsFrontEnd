@@ -17,12 +17,14 @@
 import { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import useWebTV from "../../hooks/useWebTV";
 import styles from "./Navbar.module.css";
 
 function Navbar() {
   const navigate = useNavigate();
   // Récupération de l'utilisateur connecté et de la fonction de déconnexion
   const { utilisateur, deconnecter } = useAuth();
+  const { estEnLive } = useWebTV();
   // State pour le menu mobile (ouvert/fermé)
   const [menuOuvert, setMenuOuvert] = useState(false);
 
@@ -105,6 +107,7 @@ function Navbar() {
                   `${styles.navLink} ${isActive ? styles.active : ""}`
                 }>
                 WebTV
+                {estEnLive && <span className={styles.badgeLive} />}
               </NavLink>
             </li>
             <li>

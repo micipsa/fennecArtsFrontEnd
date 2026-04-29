@@ -19,11 +19,15 @@ import "./index.css";
 import App from "./App.jsx";
 import AuthProvider from "./context/AuthProvider";
 
+import WebTVProvider from "./context/WebTVProvider";
+
 // createRoot() créé la racine React, render() lance le premier rendu.
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      <App />
+      <WebTVProvider>
+        <App />
+      </WebTVProvider>
     </AuthProvider>
   </StrictMode>,
 );

@@ -256,3 +256,14 @@
     font-size: 1rem;
   }
 }
+
+.badgeLive {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--couleur-primaire);
+  border-radius: 50%;
+  margin-left: 6px;
+  vertical-align: middle;
+  animation: pulser 1.2s ease-in-out infinite;
+}
