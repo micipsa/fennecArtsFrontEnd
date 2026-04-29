@@ -1,0 +1,112 @@
+.bracketContainer {
+  overflow-x: auto;
+  padding-bottom: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Ligne des labels de rounds */
+.roundLabels {
+  display: flex;
+  margin-bottom: 0.6rem;
+  min-width: max-content;
+}
+
+.roundLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--couleur-texte-clair);
+  font-family: var(--font-titre);
+  padding-left: 0.4rem;
+  flex-shrink: 0;
+}
+
+/* Canvas à positionnement absolu */
+.canvas {
+  position: relative;
+  min-width: max-content;
+}
+
+/* SVG des lignes de connexion (non interactif) */
+.lignesSvg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* ── Carte d'un match ──────────────────────────────────────────────────────── */
+.match {
+  height: 72px;
+  display: flex;
+  flex-direction: column;
+  background: var(--couleur-blanc);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  font-size: 0.82rem;
+  transition: var(--transition);
+}
+
+.matchCliquable {
+  cursor: pointer;
+  border-color: var(--couleur-primaire);
+  box-shadow: 0 0 0 1px rgba(230, 57, 70, 0.15);
+}
+
+.matchCliquable:hover {
+  background: rgba(230, 57, 70, 0.04);
+  transform: translateY(-1px);
+}
+
+.matchJoue {
+  opacity: 0.85;
+}
+
+/* ── Slot (une ligne = un participant) ─────────────────────────────────────── */
+.slot {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.6rem;
+  color: var(--couleur-texte);
+  transition: background 0.15s;
+}
+
+.slotGagnant {
+  background: rgba(230, 57, 70, 0.08);
+  font-weight: 700;
+  color: var(--couleur-primaire);
+}
+
+.slotBye {
+  color: var(--couleur-texte-clair);
+  font-style: italic;
+  font-size: 0.76rem;
+}
+
+.nom {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 110px;
+}
+
+.score {
+  font-weight: 800;
+  font-family: var(--font-titre);
+  font-size: 0.9rem;
+  color: var(--couleur-primaire);
+  flex-shrink: 0;
+  margin-left: 0.25rem;
+}
+
+/* Séparateur horizontal entre les deux slots */
+.divider {
+  height: 1px;
+  flex-shrink: 0;
+  background: var(--couleur-bordure);
+}

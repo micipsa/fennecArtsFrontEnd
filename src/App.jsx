@@ -45,6 +45,7 @@ import EvenementDetailPage from "./pages/EvenementDetailPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilPage from "./pages/ProfilPage";
+import MissionsAdherent from "./pages/MissionsAdherent";
 import TournamentsPage from "./pages/TournamentsPage";
 import TournamentDetail from "./pages/TournamentDetail";
 
@@ -55,6 +56,7 @@ import DashboardEvenements from "./pages/DashboardEvenements";
 import DashboardUtilisateurs from "./pages/DashboardUtilisateurs";
 import DashboardTournois from "./pages/DashboardTournois";
 import DashboardChaines from "./pages/DashboardChaines";
+import DashboardMissions from "./pages/DashboardMissions";
 
 // ── Page 404 ──
 import NotFoundPage from "./pages/NotFoundPage";
@@ -65,7 +67,7 @@ import RedacteurLayout from "./layouts/RedacteurLayout";
 import RedacteurArticles from "./pages/RedacteurArticles";
 // ── Route WebTV ──
 import WebTVPage from "./pages/WebTVPage/WebTVPage";
-
+import RouteOrganisateur from "./components/RoutesProtegees/RouteOrganisateur";
 function App() {
   return (
     // BrowserRouter utilise l'API History du navigateur pour gérer les URL.
@@ -93,6 +95,14 @@ function App() {
             element={
               <RouteProtegee>
                 <ProfilPage />
+              </RouteProtegee>
+            }
+          />
+          <Route
+            path="missions"
+            element={
+              <RouteProtegee>
+                <MissionsAdherent />
               </RouteProtegee>
             }
           />
@@ -129,6 +139,16 @@ function App() {
             </RouteRedacteur>
           }>
           <Route index element={<RedacteurArticles />} />
+        </Route>
+        {/* Missions — admin + organisateur */}
+        <Route
+          path="/dashboard/missions"
+          element={
+            <RouteOrganisateur>
+              <DashboardLayout />
+            </RouteOrganisateur>
+          }>
+          <Route index element={<DashboardMissions />} />
         </Route>
 
         {/* Route catch-all : affiche 404 pour toute URL non définie */}

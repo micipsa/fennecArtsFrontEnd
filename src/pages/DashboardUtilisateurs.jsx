@@ -25,13 +25,14 @@ import Badge from "../components/UI/Badge";
 import styles from "./DashboardUtilisateurs.module.css";
 
 // Liste des rôles possibles (affiché dans le select de changement de rôle)
-const ROLES = ["utilisateur", "adherent", "redacteur", "admin"];
+const ROLES = ["utilisateur", "adherent", "redacteur", "organisateur", "admin"];
 
 // Mapping rôle → variante de couleur du Badge
 const varianteRole = {
   admin: "primaire",
   redacteur: "info",
   adherent: "succes",
+  organisateur: "accent",
   utilisateur: "defaut",
 };
 

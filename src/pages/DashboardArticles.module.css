@@ -53,7 +53,7 @@
 
 .tableauEntete {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 0.6fr 1fr 1fr;
   padding: 0.85rem 1.25rem;
   background: var(--couleur-fond);
   border-bottom: 1px solid var(--couleur-bordure);
@@ -68,7 +68,7 @@
 
 .tableauLigne {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 0.6fr 1fr 1fr;
   padding: 1rem 1.25rem;
   border-bottom: 1px solid var(--couleur-bordure);
   align-items: center;

@@ -31,6 +31,9 @@ function DashboardLayout() {
     navigate("/");
   };
 
+  // Navigation entre les sections du dashboard
+  const estAdmin = utilisateur?.role === "admin";
+
   return (
     <div className={styles.wrapper}>
       {/* ── Sidebar (barre latérale) ── */}
@@ -52,40 +55,53 @@ function DashboardLayout() {
             }>
             Vue d'ensemble
           </NavLink>
+
+          {estAdmin && (
+            <>
+              <NavLink
+                to="/dashboard/articles"
+                className={({ isActive }) =>
+                  `${styles.navLien} ${isActive ? styles.actif : ""}`
+                }>
+                Articles
+              </NavLink>
+              <NavLink
+                to="/dashboard/evenements"
+                className={({ isActive }) =>
+                  `${styles.navLien} ${isActive ? styles.actif : ""}`
+                }>
+                Événements
+              </NavLink>
+              <NavLink
+                to="/dashboard/utilisateurs"
+                className={({ isActive }) =>
+                  `${styles.navLien} ${isActive ? styles.actif : ""}`
+                }>
+                Utilisateurs
+              </NavLink>
+              <NavLink
+                to="/dashboard/tournois"
+                className={({ isActive }) =>
+                  `${styles.navLien} ${isActive ? styles.actif : ""}`
+                }>
+                Tournois
+              </NavLink>
+              <NavLink
+                to="/dashboard/chaines"
+                className={({ isActive }) =>
+                  `${styles.navLien} ${isActive ? styles.actif : ""}`
+                }>
+                Chaînes WebTV
+              </NavLink>
+            </>
+          )}
+
           <NavLink
-            to="/dashboard/articles"
+            to="/dashboard/missions"
             className={({ isActive }) =>
               `${styles.navLien} ${isActive ? styles.actif : ""}`
             }>
-            Articles
-          </NavLink>
-          <NavLink
-            to="/dashboard/evenements"
-            className={({ isActive }) =>
-              `${styles.navLien} ${isActive ? styles.actif : ""}`
-            }>
-            Événements
-          </NavLink>
-          <NavLink
-            to="/dashboard/utilisateurs"
-            className={({ isActive }) =>
-              `${styles.navLien} ${isActive ? styles.actif : ""}`
-            }>
-            Utilisateurs
-          </NavLink>
-          <NavLink
-            to="/dashboard/tournois"
-            className={({ isActive }) =>
-              `${styles.navLien} ${isActive ? styles.actif : ""}`
-            }>
-            Tournois
-          </NavLink>
-          <NavLink
-            to="/dashboard/chaines"
-            className={({ isActive }) =>
-              `${styles.navLien} ${isActive ? styles.actif : ""}`
-            }>
-            Chaînes WebTV
+            Missions
           </NavLink>
           <Link to="/" className={styles.navLien}>
             ← Retour au site

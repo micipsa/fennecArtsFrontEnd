@@ -125,6 +125,27 @@
   color: var(--couleur-blanc);
 }
 
+.btnBracket {
+  background: rgba(99, 179, 237, 0.1);
+  color: #3182ce;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: var(--transition);
+  border: 1px solid rgba(99, 179, 237, 0.3);
+  white-space: nowrap;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-titre);
+}
+
+.btnBracket:hover {
+  background: #3182ce;
+  color: var(--couleur-blanc);
+}
+
 .vide {
   padding: 2rem;
   text-align: center;

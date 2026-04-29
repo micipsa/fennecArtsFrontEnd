@@ -272,6 +272,7 @@ function DashboardArticles() {
             <span>Titre</span>
             <span>Catégorie</span>
             <span>Auteur</span>
+            <span>Vues</span>
             <span>Statut</span>
             <span>Actions</span>
           </div>
@@ -287,6 +288,7 @@ function DashboardArticles() {
                 <Badge texte={article.categorie} variante="primaire" />
               </span>
               <span>{article.auteur?.nom ?? "—"}</span>
+              <span>{article.vues ?? 0}</span>
               <span>
                 <button
                   className={

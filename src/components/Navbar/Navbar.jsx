@@ -145,6 +145,19 @@ function Navbar() {
                     Dashboard
                   </Link>
                 )}
+
+                {/* Lien Dashboard pour les organisateurs (non-admins) */}
+                {(utilisateur.estOrganisateur ||
+                  utilisateur.role === "organisateur") &&
+                  utilisateur.role !== "admin" && (
+                    <Link
+                      to="/dashboard/missions"
+                      className={styles.btnDashboard}
+                      onClick={fermerMenu}>
+                      Dashboard
+                    </Link>
+                  )}
+
                 {/* Lien Dashboard visible seulement pour les redacteurs */}
                 {utilisateur.role === "redacteur" && (
                   <Link
@@ -152,6 +165,16 @@ function Navbar() {
                     className={styles.btnDashboard}
                     onClick={fermerMenu}>
                     Mes articles
+                  </Link>
+                )}
+
+                {/* Lien Missions visible pour tous les rôles sauf admin (car admin l'a dans son dashboard) */}
+                {utilisateur.role !== "admin" && (
+                  <Link
+                    to="/missions"
+                    className={styles.btnDashboard}
+                    onClick={fermerMenu}>
+                    Missions
                   </Link>
                 )}
                 {/* Nom de l'utilisateur cliquable → page profil */}

@@ -61,6 +61,7 @@ function ProfilPage() {
     admin: "primaire",
     redacteur: "info",
     adherent: "succes",
+    organisateur: "accent",
     utilisateur: "defaut",
   };
 

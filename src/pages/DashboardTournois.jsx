@@ -22,10 +22,12 @@
  * Les champs sont organisés en grilles de 2 colonnes via CSS.
  */
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import api from "../services/api";
 import Spinner from "../components/UI/Spinner";
 import MessageErreur from "../components/UI/MessageErreur";
 import Badge from "../components/UI/Badge";
+import UploadImage from "../components/UI/UploadImage";
 import styles from "./DashboardTournois.module.css";
 
 // Valeurs initiales du formulaire de création de tournoi
@@ -39,6 +41,7 @@ const FORM_INITIAL = {
   dateFin: "",
   nombreMaxParticipants: 16,
   prize: "",
+  imageUrl: "",
 };
 
 // Formats de tournoi disponibles
@@ -114,6 +117,22 @@ function DashboardTournois() {
    * Changement de statut d'un tournoi via PUT.
    * Met à jour le statut dans la liste côté client (state optimiste).
    */
+  const handleGenererBracket = async (id) => {
+    if (!window.confirm("Générer le bracket pour ce tournoi ? Action irréversible.")) return;
+    try {
+      const res = await api.post(`/api/tournaments/${id}/generer-bracket`);
+      setTournois((prev) =>
+        prev.map((t) =>
+          t._id === id
+            ? { ...t, hasBracket: true, statut: res.data.data.statut }
+            : t
+        )
+      );
+    } catch (err) {
+      alert(err.response?.data?.message || "Erreur lors de la génération.");
+    }
+  };
+
   const handleChangerStatut = async (id, nouveauStatut) => {
     try {
       await api.put(`/api/tournaments/${id}`, { statut: nouveauStatut });
@@ -187,7 +206,6 @@ function DashboardTournois() {
                 />
               </span>
               <span className={styles.actions}>
-                {/* Select pour changer le statut */}
                 <select
                   className={styles.selectStatut}
                   value={t.statut}
@@ -197,7 +215,21 @@ function DashboardTournois() {
                   <option value="en_cours">en_cours</option>
                   <option value="terminé">terminé</option>
                 </select>
-                {/* Bouton de suppression */}
+                {t.hasBracket ? (
+                  <Link
+                    to={`/tournaments/${t._id}`}
+                    className={styles.btnBracket}>
+                    Bracket
+                  </Link>
+                ) : (
+                  t.participants?.length >= 2 && (
+                    <button
+                      className={styles.btnBracket}
+                      onClick={() => handleGenererBracket(t._id)}>
+                      Générer
+                    </button>
+                  )
+                )}
                 <button
                   className={styles.btnSupprimer}
                   onClick={() => handleSupprimer(t._id)}>
@@ -338,6 +370,27 @@ function DashboardTournois() {
                   onChange={handleChange}
                   placeholder="Trophée, DA, matériel..."
                 />
+              </div>
+
+              {/* Image */}
+              <div className={styles.champ}>
+                <label className={styles.label}>Image du tournoi (optionnel)</label>
+                <UploadImage
+                  onUpload={(url) =>
+                    setFormData((prev) => ({ ...prev, imageUrl: url }))
+                  }
+                />
+                {formData.imageUrl && (
+                  <img
+                    src={formData.imageUrl}
+                    alt="Aperçu"
+                    style={{
+                      marginTop: "0.5rem",
+                      maxHeight: "150px",
+                      borderRadius: "6px",
+                    }}
+                  />
+                )}
               </div>
 
               {/* Description */}

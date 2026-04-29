@@ -1,0 +1,497 @@
+/* ============================================================================
+   DashboardMissions.module.css
+   ============================================================================ */
+
+.container {
+  padding: 2rem;
+  color: #e0e0e0;
+}
+
+.loading,
+.erreur {
+  padding: 2rem;
+  text-align: center;
+  color: #aaa;
+}
+
+/* ── En-tête ── */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.titre {
+  font-family: var(--font-titre);
+  font-size: 1.8rem;
+  color: #fff;
+}
+
+.btnCreer {
+  background: var(--couleur-primaire);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+.btnCreer:hover {
+  opacity: 0.85;
+}
+
+/* ── Tableau ── */
+.vide {
+  color: #888;
+  font-style: italic;
+}
+
+.tableau {
+  background: var(--couleur-sombre-2);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.tableauHeader,
+.tableauLigne {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 0.8fr 1.6fr;
+  padding: 0.85rem 1.2rem;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tableauHeader {
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #888;
+}
+
+.tableauLigne {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.9rem;
+}
+.tableauLigne:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.cellTitre {
+  font-weight: 600;
+  color: #fff;
+}
+.cellDate {
+  color: #aaa;
+  font-size: 0.85rem;
+}
+.cellPostes {
+  color: #aaa;
+  font-size: 0.85rem;
+}
+
+/* ── Badges statut ── */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.badge_brouillon {
+  background: rgba(150, 150, 150, 0.2);
+  color: #aaa;
+}
+.badge_ouverte {
+  background: rgba(52, 199, 89, 0.15);
+  color: #34c759;
+}
+.badge_fermee {
+  background: rgba(244, 162, 97, 0.15);
+  color: var(--couleur-accent);
+}
+.badge_terminee {
+  background: rgba(230, 57, 70, 0.15);
+  color: var(--couleur-primaire);
+}
+
+/* ── Actions tableau ── */
+.cellActions {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.btnDetail,
+.btnEdit,
+.btnSuppr {
+  border: none;
+  border-radius: 5px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+.btnDetail {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ddd;
+}
+.btnEdit {
+  background: rgba(244, 162, 97, 0.2);
+  color: var(--couleur-accent);
+}
+.btnSuppr {
+  background: rgba(230, 57, 70, 0.2);
+  color: var(--couleur-primaire);
+}
+.btnDetail:hover,
+.btnEdit:hover,
+.btnSuppr:hover {
+  opacity: 0.75;
+}
+
+/* ── Panel détail ── */
+.detailPanel {
+  background: var(--couleur-sombre-2);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.detailHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.detailHeader h2 {
+  font-family: var(--font-titre);
+  color: #fff;
+  font-size: 1.3rem;
+}
+
+.detailDescription {
+  color: #bbb;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  white-space: pre-line;
+}
+
+.detailMeta {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: #aaa;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Carte poste ── */
+.posteCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.posteCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+.posteCardHeader strong {
+  color: #fff;
+  font-size: 1rem;
+}
+
+.posteResume {
+  margin-left: 0.8rem;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.btnAffecter {
+  background: var(--couleur-primaire);
+  color: #fff;
+  border: none;
+  padding: 0.3rem 0.8rem;
+  border-radius: 5px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btnAffecter:hover {
+  opacity: 0.85;
+}
+
+.aucuneInscription {
+  color: #666;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+/* ── Tableau inscriptions ── */
+.inscriptionsTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.inscriptionsTable th {
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  color: #777;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.inscriptionsTable td {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: #ccc;
+}
+
+.tagExterne {
+  font-size: 0.72rem;
+  background: rgba(244, 162, 97, 0.15);
+  color: var(--couleur-accent);
+  padding: 0.1rem 0.4rem;
+  border-radius: 10px;
+}
+
+.tagCreneau {
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.creneau_matin {
+  background: rgba(52, 199, 89, 0.15);
+  color: #34c759;
+}
+.creneau_soir {
+  background: rgba(100, 130, 255, 0.15);
+  color: #8899ff;
+}
+.creneau_journee {
+  background: rgba(230, 57, 70, 0.15);
+  color: var(--couleur-primaire);
+}
+
+.btnRetirer {
+  background: rgba(230, 57, 70, 0.15);
+  color: var(--couleur-primaire);
+  border: none;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+.btnRetirer:hover {
+  opacity: 0.75;
+}
+
+/* ── Overlay / Modal ── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+}
+
+.modal {
+  background: var(--couleur-sombre);
+  border-radius: 12px;
+  padding: 1.8rem;
+  width: 100%;
+  max-width: 640px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.modalSmall {
+  max-width: 420px;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.modalHeader h2 {
+  font-family: var(--font-titre);
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.btnFermer {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.btnFermer:hover {
+  color: #fff;
+}
+
+/* ── Formulaire ── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: #aaa;
+  font-weight: 500;
+}
+
+.form input,
+.form textarea,
+.form select {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #fff;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form input:focus,
+.form textarea:focus,
+.form select:focus {
+  border-color: var(--couleur-primaire);
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* ── Section postes dans le form ── */
+.postesSection {
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.postesSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  font-size: 0.85rem;
+  color: #aaa;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btnAjouterPoste {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ddd;
+  border: none;
+  padding: 0.3rem 0.8rem;
+  border-radius: 5px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.btnAjouterPoste:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.aucunPoste {
+  color: #666;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+.posteFormLigne {
+  display: grid;
+  grid-template-columns: 1fr 120px auto;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
+
+.posteFormLigne input {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #fff;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.88rem;
+  outline: none;
+}
+
+.btnSupprimerPoste {
+  background: rgba(230, 57, 70, 0.2);
+  color: var(--couleur-primaire);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+/* ── Actions formulaire ── */
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.btnAnnuler {
+  background: rgba(255, 255, 255, 0.07);
+  color: #aaa;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btnSauvegarder {
+  background: var(--couleur-primaire);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.4rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btnSauvegarder:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Séparateur modal affectation ── */
+.ouSeparateur {
+  text-align: center;
+  color: #555;
+  font-size: 0.82rem;
+  margin: -0.3rem 0;
+}

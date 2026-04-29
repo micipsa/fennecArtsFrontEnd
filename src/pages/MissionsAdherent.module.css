@@ -1,0 +1,305 @@
+/* ============================================================================
+   MissionsAdherent.module.css
+   ============================================================================ */
+
+.container {
+  padding: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  color: #e0e0e0;
+}
+
+.loading,
+.erreur {
+  text-align: center;
+  padding: 2rem;
+  color: #aaa;
+}
+
+.titre {
+  font-family: var(--font-titre);
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 0.4rem;
+}
+
+.sousTitre {
+  color: #888;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+
+.vide {
+  color: #666;
+  font-style: italic;
+}
+
+/* ── Grille des missions ── */
+.grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
+}
+
+.carte {
+  background: var(--couleur-sombre-2);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition:
+    border-color 0.2s,
+    transform 0.2s;
+}
+.carte:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.carteActive {
+  border-color: var(--couleur-primaire) !important;
+}
+
+.carteImage {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.carteBody {
+  padding: 1rem 1.2rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.6rem;
+}
+.badge_ouverte {
+  background: rgba(52, 199, 89, 0.15);
+  color: #34c759;
+}
+.badge_fermee {
+  background: rgba(244, 162, 97, 0.15);
+  color: var(--couleur-accent);
+}
+.badge_terminee {
+  background: rgba(150, 150, 150, 0.15);
+  color: #888;
+}
+
+.carteTitre {
+  font-family: var(--font-titre);
+  font-size: 1.05rem;
+  color: #fff;
+  margin-bottom: 0.6rem;
+  line-height: 1.3;
+}
+
+.carteMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* ── Détail mission ── */
+.detail {
+  background: var(--couleur-sombre-2);
+  border-radius: 12px;
+  padding: 1.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.detailHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.2rem;
+}
+
+.detailTitre {
+  font-family: var(--font-titre);
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.detailMeta {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.btnFermer {
+  background: transparent;
+  border: none;
+  color: #666;
+  font-size: 1.2rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.btnFermer:hover {
+  color: #fff;
+}
+
+.description {
+  color: #bbb;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  white-space: pre-line;
+  padding: 1rem 1.2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border-left: 3px solid var(--couleur-primaire);
+  margin-bottom: 1.5rem;
+}
+
+.alerteFermee {
+  background: rgba(244, 162, 97, 0.1);
+  border: 1px solid rgba(244, 162, 97, 0.2);
+  color: var(--couleur-accent);
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  margin-bottom: 1.5rem;
+}
+
+.postestitre {
+  font-family: var(--font-titre);
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+/* ── Grille postes ── */
+.postesGrille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.posteCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 1.1rem;
+  transition: border-color 0.2s;
+}
+
+.posteInscrit {
+  border-color: rgba(52, 199, 89, 0.4);
+  background: rgba(52, 199, 89, 0.05);
+}
+
+.posteComplet {
+  opacity: 0.5;
+}
+
+.posteNom {
+  font-weight: 700;
+  color: #fff;
+  font-size: 0.95rem;
+  margin-bottom: 0.8rem;
+}
+
+/* ── Jauge ── */
+.jauge {
+  height: 5px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.jaugeBar {
+  height: 100%;
+  background: var(--couleur-primaire);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.jaugeLabel {
+  font-size: 0.75rem;
+  color: #777;
+  margin-bottom: 0.8rem;
+}
+
+/* ── Statuts inscription ── */
+.inscritSection {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.tagInscrit {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #34c759;
+}
+
+.tagComplet {
+  font-size: 0.8rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* ── Boutons créneaux ── */
+.creneauxBtns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.btnCreneau {
+  border: none;
+  border-radius: 6px;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  text-align: center;
+}
+.btnCreneau:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btnCreneau:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.btnCreneau_matin {
+  background: rgba(52, 199, 89, 0.15);
+  color: #34c759;
+}
+.btnCreneau_soir {
+  background: rgba(100, 130, 255, 0.15);
+  color: #8899ff;
+}
+.btnCreneau_journee {
+  background: rgba(230, 57, 70, 0.15);
+  color: var(--couleur-primaire);
+}
+
+.btnDesinscrire {
+  background: rgba(230, 57, 70, 0.15);
+  color: var(--couleur-primaire);
+  border: none;
+  padding: 0.3rem 0.7rem;
+  border-radius: 5px;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+.btnDesinscrire:disabled {
+  opacity: 0.5;
+}
