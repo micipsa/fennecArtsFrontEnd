@@ -37,6 +37,7 @@
   cursor: pointer;
   font-weight: 600;
   transition: opacity 0.2s;
+  white-space: nowrap;
 }
 .btnCreer:hover {
   opacity: 0.85;
@@ -494,4 +495,109 @@
   color: #555;
   font-size: 0.82rem;
   margin: -0.3rem 0;
+}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE MOBILE
+   ══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  /* ── En-tête ── */
+  .titre {
+    font-size: 1.3rem;
+  }
+
+  .btnCreer {
+    font-size: 0.82rem;
+    padding: 0.5rem 0.9rem;
+  }
+
+  /* ── Tableau : scroll horizontal ── */
+  .tableau {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tableauHeader,
+  .tableauLigne {
+    min-width: 520px;
+    grid-template-columns: 1.8fr 1fr 1fr 0.7fr 1.5fr;
+    font-size: 0.82rem;
+    padding: 0.75rem 0.8rem;
+  }
+
+  .cellActions {
+    flex-wrap: nowrap;
+  }
+
+  .btnDetail,
+  .btnEdit,
+  .btnSuppr {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  /* ── Panel détail ── */
+  .detailPanel {
+    padding: 1rem;
+  }
+
+  .detailHeader h2 {
+    font-size: 1.1rem;
+  }
+
+  .detailMeta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .posteCardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  /* Tableau inscriptions : scroll horizontal */
+  .posteCard {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .inscriptionsTable {
+    min-width: 420px;
+  }
+
+  /* ── Modal ── */
+  .modal {
+    padding: 1.2rem;
+    border-radius: 10px;
+    max-height: 95vh;
+  }
+
+  .modalHeader h2 {
+    font-size: 1rem;
+  }
+
+  /* ── Formulaire ── */
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+
+  .posteFormLigne {
+    grid-template-columns: 1fr 90px auto;
+  }
+
+  .formActions {
+    flex-direction: column-reverse;
+    gap: 0.6rem;
+  }
+
+  .btnAnnuler,
+  .btnSauvegarder {
+    width: 100%;
+    text-align: center;
+  }
 }

@@ -2,7 +2,6 @@
   display: flex;
   min-height: 100vh;
 }
-
 .sidebar {
   width: 240px;
   min-width: 240px;
@@ -14,19 +13,16 @@
   top: 0;
   height: 100vh;
 }
-
 .sidebarEntete {
   padding: 0 1.5rem 1.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   margin-bottom: 1rem;
 }
-
 .sidebarTitre {
   color: var(--couleur-blanc);
   font-size: 1.1rem;
   font-weight: 700;
 }
-
 .sidebarSousTitre {
   color: var(--couleur-primaire);
   font-size: 0.78rem;
@@ -34,7 +30,6 @@
   letter-spacing: 0.08em;
   margin-top: 0.2rem;
 }
-
 .nav {
   display: flex;
   flex-direction: column;
@@ -42,7 +37,6 @@
   padding: 0 0.75rem;
   flex: 1;
 }
-
 .navLien {
   color: rgba(255, 255, 255, 0.6);
   padding: 0.65rem 0.85rem;
@@ -50,29 +44,25 @@
   font-size: 0.9rem;
   font-weight: 500;
   transition: var(--transition);
+  text-decoration: none;
 }
-
 .navLien:hover {
   color: var(--couleur-blanc);
   background: rgba(255, 255, 255, 0.08);
 }
-
 .navLien.actif {
   color: var(--couleur-blanc);
   background: rgba(230, 57, 70, 0.25);
 }
-
 .sidebarPied {
   padding: 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
-
 .nomAdmin {
   color: rgba(255, 255, 255, 0.75);
   font-size: 0.85rem;
   margin-bottom: 0.75rem;
 }
-
 .btnDeconnexion {
   background: transparent;
   color: rgba(255, 255, 255, 0.5);
@@ -82,13 +72,12 @@
   border: 1px solid rgba(255, 255, 255, 0.15);
   transition: var(--transition);
   width: 100%;
+  cursor: pointer;
 }
-
 .btnDeconnexion:hover {
   color: var(--couleur-blanc);
   border-color: rgba(255, 255, 255, 0.4);
 }
-
 .contenu {
   flex: 1;
   padding: 2rem;
@@ -96,6 +85,7 @@
   overflow-y: auto;
   min-width: 0;
 }
+
 @media (max-width: 768px) {
   .wrapper {
     flex-direction: column;
@@ -106,30 +96,41 @@
     min-width: unset;
     height: auto;
     position: static;
-    padding: 1rem 0;
+    padding: 1rem 0 0;
   }
 
   .sidebarEntete {
     padding: 0 1rem 1rem;
   }
 
+  /* ── Nav : scroll horizontal, une seule ligne ── */
   .nav {
     flex-direction: row;
-    flex-wrap: wrap;
-    padding: 0 0.75rem;
+    flex-wrap: nowrap; /* ← plus de wrap */
+    overflow-x: auto; /* ← scroll si ça dépasse */
+    -webkit-overflow-scrolling: touch;
+    padding: 0 0.75rem 0.5rem;
     gap: 0.25rem;
+    /* Cache la scrollbar sur mobile pour un look propre */
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar {
+    display: none;
   }
 
   .navLien {
     font-size: 0.82rem;
     padding: 0.5rem 0.75rem;
+    white-space: nowrap; /* ← chaque lien reste sur une ligne */
+    flex-shrink: 0;
   }
 
+  /* ── Pied : nom + bouton côte à côte ── */
   .sidebarPied {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 1.5rem 0;
+    padding: 0.75rem 1.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     margin-top: 0.5rem;
   }
