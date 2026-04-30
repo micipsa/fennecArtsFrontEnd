@@ -33,6 +33,8 @@ function DashboardLayout() {
 
   // Navigation entre les sections du dashboard
   const estAdmin = utilisateur?.role === "admin";
+  const estOrganisateur =
+    utilisateur?.role === "organisateur" || utilisateur?.estOrganisateur;
 
   return (
     <div className={styles.wrapper}>
@@ -80,13 +82,6 @@ function DashboardLayout() {
                 Utilisateurs
               </NavLink>
               <NavLink
-                to="/dashboard/tournois"
-                className={({ isActive }) =>
-                  `${styles.navLien} ${isActive ? styles.actif : ""}`
-                }>
-                Tournois
-              </NavLink>
-              <NavLink
                 to="/dashboard/chaines"
                 className={({ isActive }) =>
                   `${styles.navLien} ${isActive ? styles.actif : ""}`
@@ -94,6 +89,16 @@ function DashboardLayout() {
                 Chaînes WebTV
               </NavLink>
             </>
+          )}
+
+          {(estAdmin || estOrganisateur) && (
+            <NavLink
+              to="/dashboard/tournois"
+              className={({ isActive }) =>
+                `${styles.navLien} ${isActive ? styles.actif : ""}`
+              }>
+              Tournois
+            </NavLink>
           )}
 
           <NavLink
