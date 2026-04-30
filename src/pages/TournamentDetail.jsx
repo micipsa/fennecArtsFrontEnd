@@ -5,6 +5,7 @@ import Badge from "../components/UI/Badge";
 import Spinner from "../components/UI/Spinner";
 import MessageErreur from "../components/UI/MessageErreur";
 import BracketVisuel from "../components/UI/BracketVisuel";
+import BracketDoubleElim from "../components/UI/BracketDoubleElim";
 import useAuth from "../hooks/useAuth";
 import styles from "./TournamentDetail.module.css";
 
@@ -20,19 +21,23 @@ function TournamentDetail() {
   const [actionEnCours, setActionEnCours] = useState(false);
   const [messageAction, setMessageAction] = useState(null);
 
-  // Inscription équipe
   const [nomEquipe, setNomEquipe] = useState("");
-
-  // Admin : génération bracket
   const [generationEnCours, setGenerationEnCours] = useState(false);
 
-  // Admin : modal résultat de match
+  // ── Modal résultat — élimination simple ──────────────────────────────────
   const [matchSelecte, setMatchSelecte] = useState(null);
+
+  // ── Modal résultat — double élimination ──────────────────────────────────
+  // { match, zone: "WB"|"LB"|"GF", matchType: "match1"|"reset"|null }
+  const [matchDoubleSelecte, setMatchDoubleSelecte] = useState(null);
+
+  // Champs communs aux deux modals
   const [gagnantInput, setGagnantInput] = useState("");
   const [score1Input, setScore1Input] = useState("");
   const [score2Input, setScore2Input] = useState("");
   const [envoiMatch, setEnvoiMatch] = useState(false);
 
+  // ── Chargement ────────────────────────────────────────────────────────────
   useEffect(() => {
     const charger = async () => {
       try {
@@ -51,16 +56,15 @@ function TournamentDetail() {
   const isAdmin = utilisateur?.role === "admin";
   const isFormatEquipe = FORMATS_EQUIPE.includes(tournoi?.format);
 
-  // Vérifie si l'utilisateur connecté est déjà inscrit (joueur ou capitaine)
   const estInscrit =
     utilisateur &&
     tournoi?.participants?.some(
       (p) =>
         p.joueur?.toString() === utilisateur.id ||
-        p.capitaine?.toString() === utilisateur.id
+        p.capitaine?.toString() === utilisateur.id,
     );
 
-  // ── Inscription ───────────────────────────────────────────────────────────
+  // ── Inscription / Désinscription ──────────────────────────────────────────
   const handleInscrire = async () => {
     if (!utilisateur) return;
     if (isFormatEquipe && !nomEquipe.trim()) return;
@@ -82,7 +86,6 @@ function TournamentDetail() {
     }
   };
 
-  // ── Désinscription ────────────────────────────────────────────────────────
   const handleDesinscrire = async () => {
     if (!utilisateur) return;
     setActionEnCours(true);
@@ -102,9 +105,14 @@ function TournamentDetail() {
     }
   };
 
-  // ── Génération du bracket (admin) ─────────────────────────────────────────
+  // ── Génération bracket simple ─────────────────────────────────────────────
   const handleGenererBracket = async () => {
-    if (!window.confirm("Générer le bracket maintenant ? Cette action est irréversible.")) return;
+    if (
+      !window.confirm(
+        "Générer le bracket (élimination simple) ? Cette action est irréversible.",
+      )
+    )
+      return;
     setGenerationEnCours(true);
     try {
       const res = await api.post(`/api/tournaments/${id}/generer-bracket`);
@@ -116,7 +124,28 @@ function TournamentDetail() {
     }
   };
 
-  // ── Ouverture de la modal résultat ────────────────────────────────────────
+  // ── Génération bracket double élimination ─────────────────────────────────
+  const handleGenererBracketDouble = async () => {
+    if (
+      !window.confirm(
+        "Générer le bracket double élimination ? Cette action est irréversible.",
+      )
+    )
+      return;
+    setGenerationEnCours(true);
+    try {
+      const res = await api.post(
+        `/api/tournaments/${id}/generer-bracket-double`,
+      );
+      setTournoi(res.data.data);
+    } catch (err) {
+      alert(err.response?.data?.message || "Erreur lors de la génération.");
+    } finally {
+      setGenerationEnCours(false);
+    }
+  };
+
+  // ── Ouverture modal — élimination simple ──────────────────────────────────
   const handleOuvrirMatch = (match) => {
     setMatchSelecte(match);
     setGagnantInput("");
@@ -124,7 +153,20 @@ function TournamentDetail() {
     setScore2Input("");
   };
 
-  // ── Envoi du résultat d'un match (admin) ──────────────────────────────────
+  // ── Ouverture modal — double élimination ──────────────────────────────────
+  const handleOuvrirMatchDouble = (match, zone, matchType = null) => {
+    setMatchDoubleSelecte({ match, zone, matchType });
+    setGagnantInput("");
+    setScore1Input("");
+    setScore2Input("");
+  };
+
+  const fermerModal = () => {
+    setMatchSelecte(null);
+    setMatchDoubleSelecte(null);
+  };
+
+  // ── Envoi résultat — élimination simple ───────────────────────────────────
   const handleSaisirResultat = async () => {
     if (!gagnantInput) return;
     setEnvoiMatch(true);
@@ -136,7 +178,7 @@ function TournamentDetail() {
       };
       const res = await api.put(
         `/api/tournaments/${id}/matchs/${matchSelecte._id}`,
-        body
+        body,
       );
       setTournoi(res.data.data);
       setMatchSelecte(null);
@@ -147,6 +189,45 @@ function TournamentDetail() {
     }
   };
 
+  // ── Envoi résultat — double élimination ───────────────────────────────────
+  const handleSaisirResultatDouble = async () => {
+    if (!gagnantInput || !matchDoubleSelecte) return;
+    setEnvoiMatch(true);
+    try {
+      const { match, zone, matchType } = matchDoubleSelecte;
+      const body = {
+        gagnant: gagnantInput,
+        score1: score1Input !== "" ? Number(score1Input) : null,
+        score2: score2Input !== "" ? Number(score2Input) : null,
+      };
+
+      let url;
+      if (zone === "WB") url = `/api/tournaments/${id}/wb/${match._id}`;
+      else if (zone === "LB") url = `/api/tournaments/${id}/lb/${match._id}`;
+      else url = `/api/tournaments/${id}/gf/${matchType}`; // GF : pas d'_id
+
+      const res = await api.put(url, body);
+      setTournoi(res.data.data);
+      setMatchDoubleSelecte(null);
+    } catch (err) {
+      alert(err.response?.data?.message || "Erreur lors de la saisie.");
+    } finally {
+      setEnvoiMatch(false);
+    }
+  };
+
+  // Champion du bracket simple = gagnant du match avec le round le plus élevé
+  const championSimple =
+    tournoi?.statut === "terminé" &&
+    (tournoi?.typeBracket === "simple" || !tournoi?.typeBracket) &&
+    tournoi?.matchs?.length > 0
+      ? tournoi.matchs.reduce(
+          (last, m) => (!last || m.round > last.round ? m : last),
+          null,
+        )?.gagnant?.nomAffiche || null
+      : null;
+
+  // ── Rendu ─────────────────────────────────────────────────────────────────
   if (chargement) return <Spinner />;
   if (erreur)
     return (
@@ -182,6 +263,26 @@ function TournamentDetail() {
     terminé: "defaut",
   };
 
+  // Participants du match sélectionné (modal)
+  const participantsModal = matchSelecte
+    ? [matchSelecte.participant1, matchSelecte.participant2]
+    : matchDoubleSelecte
+      ? [
+          matchDoubleSelecte.match.participant1,
+          matchDoubleSelecte.match.participant2,
+        ]
+      : [];
+
+  const roundModal = matchSelecte
+    ? `Round ${matchSelecte.round}`
+    : matchDoubleSelecte
+      ? matchDoubleSelecte.zone === "GF"
+        ? matchDoubleSelecte.matchType === "reset"
+          ? "Grande Finale — Reset"
+          : "Grande Finale — Match 1"
+        : `${matchDoubleSelecte.zone} Round ${matchDoubleSelecte.match.round}`
+      : "";
+
   return (
     <div className="container">
       <div className={styles.page}>
@@ -198,6 +299,9 @@ function TournamentDetail() {
               variante={varianteStatut[tournoi.statut]}
             />
             <Badge texte={tournoi.format} variante="info" />
+            {tournoi.typeBracket === "double" && (
+              <Badge texte="Double Élimination" variante="accent" />
+            )}
           </div>
           <h1 className={styles.titre}>{tournoi.titre}</h1>
           <div className={styles.separateur} />
@@ -250,7 +354,7 @@ function TournamentDetail() {
           </div>
         </div>
 
-        {/* ── Barre de progression ── */}
+        {/* ── Progression ── */}
         <div className={styles.progressionSection}>
           <div className={styles.progressionTexte}>
             <span className={styles.progressionNombre}>
@@ -271,14 +375,13 @@ function TournamentDetail() {
           </div>
         </div>
 
-        {/* ── Message feedback ── */}
         {messageAction && (
           <div className={`${styles.message} ${styles[messageAction.type]}`}>
             {messageAction.texte}
           </div>
         )}
 
-        {/* ── Zone d'action inscription / désinscription ── */}
+        {/* ── Inscription ── */}
         <div className={styles.actionSection}>
           {!utilisateur ? (
             <div className={styles.nonConnecte}>
@@ -304,7 +407,6 @@ function TournamentDetail() {
           ) : tournoi.statut === "complet" ? (
             <p className={styles.complet}>🔥 Ce tournoi est complet.</p>
           ) : isFormatEquipe ? (
-            // Inscription équipe : saisie du nom d'équipe
             <div className={styles.inscriptionEquipe}>
               <input
                 className={styles.inputEquipe}
@@ -337,48 +439,165 @@ function TournamentDetail() {
         <div className={styles.contenu}>
           {tournoi.description
             .split("\n")
-            .map(
-              (p, i) => p.trim() && <p key={i}>{p}</p>
-            )}
+            .map((p, i) => p.trim() && <p key={i}>{p}</p>)}
         </div>
 
         {/* ════════════════════════════════════════════════
-            Bracket
+            BRACKET
             ════════════════════════════════════════════════ */}
         <div className={styles.bracketSection}>
           <h2 className={styles.participantsTitre}>Bracket</h2>
 
-          {/* Bouton admin : générer le bracket */}
-          {isAdmin && !tournoi.hasBracket && tournoi.participants.length >= 2 && (
-            <button
-              className={styles.btnGenererBracket}
-              onClick={handleGenererBracket}
-              disabled={generationEnCours}>
-              {generationEnCours ? "Génération..." : "⚡ Générer le bracket"}
-            </button>
+          {/* Admin : boutons de génération (affiché si pas encore de bracket) */}
+          {isAdmin &&
+            !tournoi.hasBracket &&
+            tournoi.participants.length >= 2 && (
+              <div className={styles.bracketBtns}>
+                <button
+                  className={styles.btnGenererBracket}
+                  onClick={handleGenererBracket}
+                  disabled={generationEnCours}>
+                  {generationEnCours
+                    ? "Génération..."
+                    : "⚡ Élimination simple"}
+                </button>
+                {tournoi.participants.length >= 4 && (
+                  <button
+                    className={`${styles.btnGenererBracket} ${styles.btnGenererDouble}`}
+                    onClick={handleGenererBracketDouble}
+                    disabled={generationEnCours}>
+                    {generationEnCours
+                      ? "Génération..."
+                      : "⚔ Double élimination"}
+                  </button>
+                )}
+              </div>
+            )}
+
+          {/* Indication admin */}
+          {isAdmin && tournoi.hasBracket && (
+            <p className={styles.indicationAdmin}>
+              Cliquez sur un match pour saisir le résultat.
+            </p>
           )}
 
-          {tournoi.hasBracket && tournoi.matchs?.length > 0 ? (
-            <>
-              {isAdmin && (
-                <p className={styles.indicationAdmin}>
-                  Cliquez sur un match souligné en rouge pour saisir le résultat.
-                </p>
-              )}
+          {/* Champion banner — bracket simple */}
+          {championSimple && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                margin: "0 auto 2rem",
+                animation: "fadeInUp 0.6s ease both",
+              }}>
+              <div
+                style={{
+                  background:
+                    "radial-gradient(ellipse at center, #2a1f00 0%, #150f00 60%, #0a0800 100%)",
+                  border: "2px solid #ffd700",
+                  borderRadius: "16px",
+                  padding: "1.8rem 3rem",
+                  textAlign: "center",
+                  minWidth: "320px",
+                  animation: "glowPulse 2.5s ease-in-out infinite",
+                }}>
+                <style>{`
+                  @keyframes glowPulse {
+                    0%, 100% { box-shadow: 0 0 20px #ffd70066, 0 0 60px #ffd70033; }
+                    50%       { box-shadow: 0 0 40px #ffd700aa, 0 0 100px #ffd70055; }
+                  }
+                  @keyframes trophyFloat {
+                    0%, 100% { transform: translateY(0) rotate(-3deg); }
+                    50%       { transform: translateY(-8px) rotate(3deg); }
+                  }
+                  @keyframes shimmerGold {
+                    0%   { background-position: -300% center; }
+                    100% { background-position: 300% center; }
+                  }
+                `}</style>
+                <div
+                  style={{
+                    fontFamily: "Oxanium, sans-serif",
+                    fontSize: "0.65rem",
+                    letterSpacing: "6px",
+                    color: "#ffd70077",
+                    textTransform: "uppercase",
+                    marginBottom: "0.8rem",
+                  }}>
+                  Champion du tournoi
+                </div>
+                <span
+                  style={{
+                    fontSize: "2.8rem",
+                    display: "block",
+                    animation: "trophyFloat 2s ease-in-out infinite",
+                    marginBottom: "0.5rem",
+                    filter: "drop-shadow(0 0 12px #ffd700)",
+                  }}>
+                  🏆
+                </span>
+                <div
+                  style={{
+                    fontFamily: "Oxanium, sans-serif",
+                    fontSize: "clamp(1.4rem, 4vw, 2rem)",
+                    fontWeight: 800,
+                    background:
+                      "linear-gradient(90deg, #7d5a00, #ffd700, #fff8d0, #ffd700, #7d5a00)",
+                    backgroundSize: "300% auto",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    animation: "shimmerGold 4s linear infinite",
+                    letterSpacing: "2px",
+                  }}>
+                  {championSimple}
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.75rem",
+                    letterSpacing: "5px",
+                    color: "#ffd70066",
+                    marginTop: "0.6rem",
+                    textTransform: "uppercase",
+                  }}>
+                  ★ ══ Vainqueur ══ ★
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Bracket simple */}
+          {tournoi.hasBracket &&
+            (tournoi.typeBracket === "simple" || !tournoi.typeBracket) &&
+            tournoi.matchs?.length > 0 && (
               <BracketVisuel
                 matchs={tournoi.matchs}
                 onClicMatch={handleOuvrirMatch}
                 isAdmin={isAdmin}
               />
-            </>
-          ) : !isAdmin ? (
+            )}
+
+          {/* Bracket double élimination */}
+          {tournoi.hasBracket && tournoi.typeBracket === "double" && (
+            <BracketDoubleElim
+              winnersMatchs={tournoi.winnersMatchs || []}
+              losersMatchs={tournoi.losersMatchs || []}
+              grandeFinale={tournoi.grandeFinale}
+              champion={tournoi.champion}
+              isAdmin={isAdmin}
+              onClicMatch={handleOuvrirMatchDouble}
+            />
+          )}
+
+          {/* Pas encore de bracket, côté public */}
+          {!tournoi.hasBracket && !isAdmin && (
             <p className={styles.bracketAttente}>
               Le bracket sera disponible dès le lancement du tournoi.
             </p>
-          ) : null}
+          )}
         </div>
 
-        {/* ── Liste des participants ── */}
+        {/* ── Participants ── */}
         {tournoi.participants?.length > 0 && (
           <div className={styles.participantsSection}>
             <h2 className={styles.participantsTitre}>
@@ -401,61 +620,39 @@ function TournamentDetail() {
       </div>
 
       {/* ════════════════════════════════════════════════
-          Modal saisie résultat (admin)
+          Modal saisie résultat (simple ET double élim)
           ════════════════════════════════════════════════ */}
-      {matchSelecte && (
-        <div
-          className={styles.overlay}
-          onClick={() => setMatchSelecte(null)}>
+      {(matchSelecte || matchDoubleSelecte) && (
+        <div className={styles.overlay} onClick={fermerModal}>
           <div
             className={styles.modaleMatch}
             onClick={(e) => e.stopPropagation()}>
             <div className={styles.modaleMatchEntete}>
               <h3 className={styles.modaleMatchTitre}>
-                Résultat — Round {matchSelecte.round}
+                Résultat — {roundModal}
               </h3>
-              <button
-                className={styles.modaleFermer}
-                onClick={() => setMatchSelecte(null)}>
+              <button className={styles.modaleFermer} onClick={fermerModal}>
                 ✕
               </button>
             </div>
 
-            {/* Sélection du gagnant */}
             <p className={styles.modaleMatchLabel}>Sélectionner le gagnant</p>
             <div className={styles.versusBloc}>
-              <button
-                className={[
-                  styles.btnJoueur,
-                  gagnantInput === matchSelecte.participant1?.nomAffiche
-                    ? styles.btnJoueurActif
-                    : "",
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-                onClick={() =>
-                  setGagnantInput(matchSelecte.participant1?.nomAffiche)
-                }>
-                {matchSelecte.participant1?.nomAffiche}
-              </button>
-              <span className={styles.vs}>VS</span>
-              <button
-                className={[
-                  styles.btnJoueur,
-                  gagnantInput === matchSelecte.participant2?.nomAffiche
-                    ? styles.btnJoueurActif
-                    : "",
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-                onClick={() =>
-                  setGagnantInput(matchSelecte.participant2?.nomAffiche)
-                }>
-                {matchSelecte.participant2?.nomAffiche}
-              </button>
+              {participantsModal.map((p, i) => (
+                <button
+                  key={i}
+                  className={[
+                    styles.btnJoueur,
+                    gagnantInput === p?.nomAffiche ? styles.btnJoueurActif : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                  onClick={() => setGagnantInput(p?.nomAffiche)}>
+                  {p?.nomAffiche || "TBD"}
+                </button>
+              ))}
             </div>
 
-            {/* Scores (optionnels) */}
             <p className={styles.modaleMatchLabel}>Scores (optionnel)</p>
             <div className={styles.scoresBloc}>
               <input
@@ -478,14 +675,16 @@ function TournamentDetail() {
             </div>
 
             <div className={styles.modaleMatchActions}>
-              <button
-                className={styles.btnAnnuler}
-                onClick={() => setMatchSelecte(null)}>
+              <button className={styles.btnAnnuler} onClick={fermerModal}>
                 Annuler
               </button>
               <button
                 className={styles.btnConfirmer}
-                onClick={handleSaisirResultat}
+                onClick={
+                  matchSelecte
+                    ? handleSaisirResultat
+                    : handleSaisirResultatDouble
+                }
                 disabled={!gagnantInput || envoiMatch}>
                 {envoiMatch ? "Enregistrement..." : "Confirmer le résultat"}
               </button>

@@ -31,6 +31,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // ── Layouts ──
 import MainLayout from "./layouts/MainLayout";
 import DashboardLayout from "./layouts/DashboardLayout";
+import AdherentLayout from "./layouts/AdherentLayout";
 
 // ── Guards (routes protégées) ──
 import RouteProtegee from "./components/RoutesProtegees/RouteProtegee";
@@ -98,14 +99,6 @@ function App() {
               </RouteProtegee>
             }
           />
-          <Route
-            path="missions"
-            element={
-              <RouteProtegee>
-                <MissionsAdherent />
-              </RouteProtegee>
-            }
-          />
         </Route>
 
         {/* ════════════════════════════════════════════
@@ -139,6 +132,19 @@ function App() {
             </RouteRedacteur>
           }>
           <Route index element={<RedacteurArticles />} />
+        </Route>
+
+        {/* ════════════════════════════════════════════
+            ROUTES ADHÉRENT — AdherentLayout (sidebar adhérent)
+            ════════════════════════════════════════════ */}
+        <Route
+          path="/missions"
+          element={
+            <RouteProtegee>
+              <AdherentLayout />
+            </RouteProtegee>
+          }>
+          <Route index element={<MissionsAdherent />} />
         </Route>
         {/* Missions — admin + organisateur */}
         <Route

@@ -169,14 +169,15 @@ function Navbar() {
                 )}
 
                 {/* Lien Missions visible pour tous les rôles sauf admin (car admin l'a dans son dashboard) */}
-                {utilisateur.role !== "admin" && (
-                  <Link
-                    to="/missions"
-                    className={styles.btnDashboard}
-                    onClick={fermerMenu}>
-                    Missions
-                  </Link>
-                )}
+                {utilisateur.role !== "admin" &&
+                  utilisateur.role !== "utilisateur" && (
+                    <Link
+                      to="/missions"
+                      className={styles.btnDashboard}
+                      onClick={fermerMenu}>
+                      Missions
+                    </Link>
+                  )}
                 {/* Nom de l'utilisateur cliquable → page profil */}
                 <Link
                   to="/profil"

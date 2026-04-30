@@ -613,3 +613,29 @@
     text-align: center;
   }
 }
+.bracketBtns {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.btnGenererDouble {
+  background: rgba(230, 57, 70, 0.15);
+  color: var(--couleur-primaire);
+  border: 1px solid rgba(230, 57, 70, 0.3);
+}
+.bracketSection {
+  background: #0a0a16;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.bracketSection .participantsTitre {
+  color: #fff;
+}
+
+.bracketSection .indicationAdmin {
+  color: #888;
+}
