@@ -20,6 +20,7 @@ import api from "../services/api";
 import useAuth from "../hooks/useAuth";
 import Badge from "../components/UI/Badge";
 import Spinner from "../components/UI/Spinner";
+import { calculerRang } from "../utils/rangs";
 import styles from "./ProfilPage.module.css";
 
 function ProfilPage() {
@@ -169,6 +170,84 @@ function ProfilPage() {
             </div>
           </div>
         </div>
+
+        {/* ══════════════════════════════════════════════
+            Section : Rang XP
+            ══════════════════════════════════════════════ */}
+        {role !== "utilisateur" &&
+          (() => {
+            const points = profil?.points ?? 0;
+            const rang = calculerRang(points);
+            return (
+              <div className={styles.sectionXP}>
+                <h2 className={styles.sectionTitre}>Rang & XP</h2>
+                <div className={styles.rangBloc}>
+                  <div
+                    className={styles.rangNom}
+                    style={{ color: rang.couleur }}>
+                    {rang.nom} {rang.division}
+                  </div>
+                  <div className={styles.rangPoints}>{points} pts</div>
+                  <div className={styles.progressBar}>
+                    <div
+                      className={styles.progressFill}
+                      style={{
+                        width: `${rang.progression}%`,
+                        background: rang.couleur,
+                      }}
+                    />
+                  </div>
+                  {rang.pointsSuivant !== null && (
+                    <p className={styles.progressLabel}>
+                      {rang.pointsSuivant} pts avant le rang suivant
+                    </p>
+                  )}
+                  {rang.pointsSuivant === null && (
+                    <p className={styles.progressLabel}>
+                      Rang maximum atteint 🏆
+                    </p>
+                  )}
+                </div>
+              </div>
+            );
+          })()}
+
+        {/* ══════════════════════════════════════════════
+            Section : Tags
+            ══════════════════════════════════════════════ */}
+        {role !== "utilisateur" && profil?.tags?.length > 0 && (
+          <div className={styles.sectionTags}>
+            <h2 className={styles.sectionTitre}>Mes tags</h2>
+            <div className={styles.tagsListe}>
+              {profil.tags.map((tag) => (
+                <span
+                  key={tag._id}
+                  className={styles.tag}
+                  style={{ backgroundColor: tag.couleur }}>
+                  {tag.nom}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ══════════════════════════════════════════════
+            Section : Participations tournois
+            ══════════════════════════════════════════════ */}
+        {profil?.participationsTournois?.length > 0 && (
+          <div className={styles.sectionTags}>
+            <h2 className={styles.sectionTitre}>Tournois joués</h2>
+            <div className={styles.tagsListe}>
+              {profil.participationsTournois.map((p, i) => (
+                <div key={i} className={styles.tag} style={{ backgroundColor: "var(--couleur-sombre)" }}>
+                  <strong>{p.titreTournoi}</strong>
+                  {p.position && <span> — {p.position}</span>}
+                  <span> ({p.pointsGagnes} pts)</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* ══════════════════════════════════════════════
             Section : Changement de mot de passe

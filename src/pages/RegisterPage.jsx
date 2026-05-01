@@ -73,12 +73,12 @@ function RegisterPage() {
         <div className={styles.entete}>
           <img
             src="/FennecArts_eSports_Logo.png"
-            alt="Fennec Arts"
+            alt="Fennec's Clan"
             className={styles.logo}
           />
           <h1 className={styles.titre}>Créer un compte</h1>
           <p className={styles.sousTitre}>
-            Rejoignez la communauté Fennec Arts
+            Rejoignez la communauté Fennec's Clan
           </p>
         </div>
 

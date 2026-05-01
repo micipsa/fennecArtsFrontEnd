@@ -14,6 +14,7 @@ const FORM_INITIAL = {
   published: true,
   videoUrl: "",
   imageUrl: "",
+  tags: "",
 };
 
 const CATEGORIES = [
@@ -70,12 +71,18 @@ function RedacteurArticles() {
     setFormData((prev) => ({ ...prev, contenu: valeur }));
   };
 
+  const tagsPayload = (str) =>
+    str.split(",").map((t) => t.trim()).filter(Boolean);
+
   const handleCreer = async (e) => {
     e.preventDefault();
     setErreurForm(null);
     setEnvoiEnCours(true);
     try {
-      const res = await api.post("/api/articles", formData);
+      const res = await api.post("/api/articles", {
+        ...formData,
+        tags: tagsPayload(formData.tags),
+      });
       setArticles((prev) => [res.data.data, ...prev]);
       setModaleOuverte(false);
       setFormData(FORM_INITIAL);
@@ -97,6 +104,7 @@ function RedacteurArticles() {
       published: article.published,
       videoUrl: article.videoUrl || "",
       imageUrl: article.imageUrl || "",
+      tags: (article.tags || []).join(", "),
     });
     setModaleEditionOuverte(true);
   };
@@ -106,7 +114,10 @@ function RedacteurArticles() {
     setErreurForm(null);
     setEnvoiEnCours(true);
     try {
-      const res = await api.put(`/api/articles/${articleEnEdition}`, formData);
+      const res = await api.put(`/api/articles/${articleEnEdition}`, {
+        ...formData,
+        tags: tagsPayload(formData.tags),
+      });
       setArticles((prev) =>
         prev.map((a) => (a._id === articleEnEdition ? res.data.data : a)),
       );
@@ -214,6 +225,17 @@ function RedacteurArticles() {
           value={formData.videoUrl}
           onChange={handleChange}
           placeholder="https://www.youtube.com/embed/XXXXXXXXX"
+        />
+      </div>
+      <div className={styles.champ}>
+        <label className={styles.label}>Tags (séparés par virgule)</label>
+        <input
+          className={styles.input}
+          type="text"
+          name="tags"
+          value={formData.tags}
+          onChange={handleChange}
+          placeholder="manga, gaming, esport"
         />
       </div>
     </>

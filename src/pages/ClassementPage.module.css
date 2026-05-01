@@ -1,0 +1,125 @@
+.page {
+  padding: 2rem 0 4rem;
+}
+
+.entete {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.titre {
+  font-family: var(--font-titre);
+  font-size: 2rem;
+  color: var(--couleur-primaire);
+  margin: 0 0 0.4rem;
+  white-space: nowrap;
+}
+
+.sousTitre {
+  color: #aaa;
+  font-size: 0.95rem;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--couleur-sombre-2);
+}
+
+.table thead tr {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.table th {
+  padding: 0.9rem 1.2rem;
+  text-align: left;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888;
+  font-weight: 600;
+}
+
+.ligne {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.15s;
+}
+
+.ligne:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.top1 {
+  background: rgba(255, 215, 0, 0.06);
+}
+
+.top2 {
+  background: rgba(192, 192, 192, 0.05);
+}
+
+.top3 {
+  background: rgba(205, 127, 50, 0.05);
+}
+
+.table td {
+  padding: 0.85rem 1.2rem;
+  font-size: 0.9rem;
+  color: #ddd;
+  vertical-align: middle;
+}
+
+.colRang {
+  width: 60px;
+  text-align: center;
+}
+
+.medaille {
+  font-size: 1.4rem;
+}
+
+.numero {
+  color: #666;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.colNom {
+  font-weight: 600;
+  color: #fff;
+}
+
+.rangAffichage {
+  font-weight: 700;
+  font-family: var(--font-titre);
+  font-size: 0.9rem;
+}
+
+.colPoints {
+  font-weight: 700;
+  color: var(--couleur-accent);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.tag {
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.vide {
+  color: #555;
+  font-style: italic;
+}

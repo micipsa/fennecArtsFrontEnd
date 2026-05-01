@@ -14,6 +14,7 @@ const FORM_INITIAL = {
   published: true,
   videoUrl: "",
   imageUrl: "",
+  tags: "",
 };
 
 const CATEGORIES = [
@@ -98,12 +99,18 @@ function DashboardArticles() {
     setFormData((prev) => ({ ...prev, contenu: valeur }));
   };
 
+  const tagsPayload = (str) =>
+    str.split(",").map((t) => t.trim()).filter(Boolean);
+
   const handleCreer = async (e) => {
     e.preventDefault();
     setErreurForm(null);
     setEnvoiEnCours(true);
     try {
-      const res = await api.post("/api/articles", formData);
+      const res = await api.post("/api/articles", {
+        ...formData,
+        tags: tagsPayload(formData.tags),
+      });
       setArticles((prev) => [res.data.data, ...prev]);
       setModaleOuverte(false);
       setFormData(FORM_INITIAL);
@@ -125,6 +132,7 @@ function DashboardArticles() {
       published: article.published,
       videoUrl: article.videoUrl || "",
       imageUrl: article.imageUrl || "",
+      tags: (article.tags || []).join(", "),
     });
     setModaleEditionOuverte(true);
   };
@@ -134,7 +142,10 @@ function DashboardArticles() {
     setErreurForm(null);
     setEnvoiEnCours(true);
     try {
-      const res = await api.put(`/api/articles/${articleEnEdition}`, formData);
+      const res = await api.put(`/api/articles/${articleEnEdition}`, {
+        ...formData,
+        tags: tagsPayload(formData.tags),
+      });
       setArticles((prev) =>
         prev.map((a) => (a._id === articleEnEdition ? res.data.data : a)),
       );
@@ -162,16 +173,23 @@ function DashboardArticles() {
 
   const handleTogglePublish = async (id, estPublie) => {
     try {
-      const res = await api.put(`/api/articles/${id}`, {
-        published: !estPublie,
-      });
+      const res = await api.put(`/api/articles/${id}`, { published: !estPublie });
       setArticles((prev) =>
-        prev.map((a) =>
-          a._id === id ? { ...a, published: res.data.data.published } : a,
-        ),
+        prev.map((a) => (a._id === id ? { ...a, published: res.data.data.published } : a)),
       );
     } catch (err) {
       alert("Erreur lors de la modification.");
+    }
+  };
+
+  const handleToggleVedette = async (id, estEnVedette) => {
+    try {
+      const res = await api.patch(`/api/articles/${id}/vedette`, { enVedette: !estEnVedette });
+      setArticles((prev) =>
+        prev.map((a) => (a._id === id ? { ...a, enVedette: res.data.data.enVedette } : a)),
+      );
+    } catch (err) {
+      alert("Erreur lors de la mise en vedette.");
     }
   };
 
@@ -247,6 +265,17 @@ function DashboardArticles() {
           Colle uniquement l'URL src= de l'iframe YouTube
         </span>
       </div>
+      <div className={styles.champ}>
+        <label className={styles.label}>Tags (séparés par virgule)</label>
+        <input
+          className={styles.input}
+          type="text"
+          name="tags"
+          value={formData.tags}
+          onChange={handleChange}
+          placeholder="manga, gaming, esport"
+        />
+      </div>
     </>
   );
 
@@ -306,6 +335,12 @@ function DashboardArticles() {
                   gap: "0.5rem",
                   alignItems: "center",
                 }}>
+                <button
+                  className={article.enVedette ? styles.btnVedetteActif : styles.btnVedette}
+                  onClick={() => handleToggleVedette(article._id, article.enVedette)}
+                  title={article.enVedette ? "Retirer de la vedette" : "Mettre en vedette"}>
+                  ⭐
+                </button>
                 <button
                   className={styles.btnModifier}
                   onClick={() => handleOuvrirEdition(article)}>

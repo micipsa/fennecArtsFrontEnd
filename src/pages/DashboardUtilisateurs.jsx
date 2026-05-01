@@ -40,16 +40,24 @@ function DashboardUtilisateurs() {
   const [utilisateurs, setUtilisateurs] = useState([]);
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState(null);
-  // Stocke l'id de l'utilisateur dont le rôle est en cours de modification
   const [enCoursDeModif, setEnCoursDeModif] = useState(null);
+  const [tagsDisponibles, setTagsDisponibles] = useState([]);
+  const [modaleGestion, setModaleGestion] = useState(null);
+  const [tagsSelectionnes, setTagsSelectionnes] = useState([]);
+  const [bonusForm, setBonusForm] = useState({ points: "", raison: "" });
+  const [envoiTags, setEnvoiTags] = useState(false);
+  const [envoiBonus, setEnvoiBonus] = useState(false);
 
-  // ── Chargement de tous les utilisateurs au montage ──
   useEffect(() => {
     const charger = async () => {
       try {
         setChargement(true);
-        const res = await api.get("/api/users");
-        setUtilisateurs(res.data.data);
+        const [resUsers, resTags] = await Promise.all([
+          api.get("/api/users"),
+          api.get("/api/tags"),
+        ]);
+        setUtilisateurs(resUsers.data.data);
+        setTagsDisponibles(resTags.data.data || []);
       } catch (err) {
         setErreur("Impossible de charger les utilisateurs.");
       } finally {
@@ -85,13 +93,63 @@ function DashboardUtilisateurs() {
    * Demande confirmation puis effectue un DELETE.
    */
   const handleSupprimer = async (id) => {
-    if (!window.confirm("Confirmer la suppression de cet utilisateur ?"))
-      return;
+    if (!window.confirm("Confirmer la suppression de cet utilisateur ?")) return;
     try {
       await api.delete(`/api/users/${id}`);
       setUtilisateurs((prev) => prev.filter((u) => u._id !== id));
     } catch (err) {
       alert("Erreur lors de la suppression.");
+    }
+  };
+
+  const ouvrirGestion = (u) => {
+    setModaleGestion(u);
+    setTagsSelectionnes((u.tags || []).map((t) => t._id || t));
+    setBonusForm({ points: "", raison: "" });
+  };
+
+  const toggleTag = (tagId) => {
+    setTagsSelectionnes((prev) =>
+      prev.includes(tagId) ? prev.filter((id) => id !== tagId) : [...prev, tagId]
+    );
+  };
+
+  const handleSauvegarderTags = async () => {
+    setEnvoiTags(true);
+    try {
+      const res = await api.patch(`/api/users/${modaleGestion._id}/tags`, { tags: tagsSelectionnes });
+      setUtilisateurs((prev) =>
+        prev.map((u) => (u._id === modaleGestion._id ? { ...u, tags: res.data.data.tags } : u))
+      );
+      setModaleGestion((prev) => ({ ...prev, tags: res.data.data.tags }));
+    } catch {
+      alert("Erreur lors de la sauvegarde des tags.");
+    } finally {
+      setEnvoiTags(false);
+    }
+  };
+
+  const handleAjouterBonus = async (e) => {
+    e.preventDefault();
+    if (!bonusForm.points || !bonusForm.raison) return;
+    setEnvoiBonus(true);
+    try {
+      await api.patch(`/api/users/${modaleGestion._id}/points-bonus`, {
+        points: Number(bonusForm.points),
+        raison: bonusForm.raison,
+      });
+      setUtilisateurs((prev) =>
+        prev.map((u) =>
+          u._id === modaleGestion._id
+            ? { ...u, points: (u.points || 0) + Number(bonusForm.points) }
+            : u
+        )
+      );
+      setBonusForm({ points: "", raison: "" });
+    } catch {
+      alert("Erreur lors de l'ajout des points.");
+    } finally {
+      setEnvoiBonus(false);
     }
   };
 
@@ -148,7 +206,14 @@ function DashboardUtilisateurs() {
                 ))}
               </select>
             </span>
-            <span>
+            <span style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
+              {u.role === "adherent" && (
+                <button
+                  className={styles.btnGerer}
+                  onClick={() => ouvrirGestion(u)}>
+                  Gérer
+                </button>
+              )}
               <button
                 className={styles.btnSupprimer}
                 onClick={() => handleSupprimer(u._id)}>
@@ -158,6 +223,75 @@ function DashboardUtilisateurs() {
           </div>
         ))}
       </div>
+
+      {/* ── Modale gestion adhérent ── */}
+      {modaleGestion && (
+        <div className={styles.overlay} onClick={() => setModaleGestion(null)}>
+          <div className={styles.modale} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modaleEntete}>
+              <h2 className={styles.modaleTitre}>Gérer — {modaleGestion.nom}</h2>
+              <button className={styles.modaleFermer} onClick={() => setModaleGestion(null)}>✕</button>
+            </div>
+
+            {/* Tags */}
+            <div className={styles.modaleSection}>
+              <h3 className={styles.modaleSousTitre}>Tags</h3>
+              <div className={styles.tagsGrille}>
+                {tagsDisponibles.map((tag) => (
+                  <label key={tag._id} className={styles.tagLabel}>
+                    <input
+                      type="checkbox"
+                      checked={tagsSelectionnes.includes(tag._id)}
+                      onChange={() => toggleTag(tag._id)}
+                    />
+                    <span
+                      className={styles.tagChip}
+                      style={{ background: tag.couleur + "22", color: tag.couleur, borderColor: tag.couleur + "66" }}>
+                      {tag.nom}
+                    </span>
+                  </label>
+                ))}
+                {tagsDisponibles.length === 0 && (
+                  <p className={styles.videModale}>Aucun tag disponible.</p>
+                )}
+              </div>
+              <button
+                className={styles.btnSauvegarder}
+                onClick={handleSauvegarderTags}
+                disabled={envoiTags}>
+                {envoiTags ? "Sauvegarde..." : "Sauvegarder les tags"}
+              </button>
+            </div>
+
+            {/* Bonus points */}
+            <div className={styles.modaleSection}>
+              <h3 className={styles.modaleSousTitre}>Bonus points</h3>
+              <form className={styles.bonusForm} onSubmit={handleAjouterBonus}>
+                <input
+                  className={styles.bonusInput}
+                  type="number"
+                  min="1"
+                  placeholder="Points"
+                  value={bonusForm.points}
+                  onChange={(e) => setBonusForm((p) => ({ ...p, points: e.target.value }))}
+                  required
+                />
+                <input
+                  className={styles.bonusInput}
+                  type="text"
+                  placeholder="Raison"
+                  value={bonusForm.raison}
+                  onChange={(e) => setBonusForm((p) => ({ ...p, raison: e.target.value }))}
+                  required
+                />
+                <button className={styles.btnBonus} type="submit" disabled={envoiBonus}>
+                  {envoiBonus ? "..." : "+ Ajouter"}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -28,16 +28,19 @@ function HomePage() {
   const [articles, setArticles] = useState([]);
   const [evenements, setEvenements] = useState([]);
   const [tournois, setTournois] = useState([]);
+  const [articleVedette, setArticleVedette] = useState(null);
   const [chargement, setChargement] = useState(true);
 
   useEffect(() => {
     const charger = async () => {
       try {
-        const [resArticles, resEvents, resTournois] = await Promise.all([
+        const [resArticles, resEvents, resTournois, resVedette] = await Promise.all([
           api.get("/api/articles?limit=3&page=1"),
           api.get("/api/events"),
           api.get("/api/tournaments"),
+          api.get("/api/articles?enVedette=true&limit=1"),
         ]);
+        setArticleVedette(resVedette.data.data?.[0] || null);
 
         setArticles(resArticles.data.data);
 
@@ -65,6 +68,26 @@ function HomePage() {
   return (
     <>
       <Hero />
+
+      {/* Article en vedette */}
+      {articleVedette && (
+        <section className={styles.sectionVedette}>
+          <div className="container">
+            <div
+              className={styles.carteVedette}
+              style={{ backgroundImage: articleVedette.imageUrl ? `url(${articleVedette.imageUrl})` : undefined }}>
+              <div className={styles.vedetteOverlay}>
+                <span className={styles.badgeVedette}>EN VEDETTE</span>
+                <h2 className={styles.vedetteTitre}>{articleVedette.titre}</h2>
+                <p className={styles.vedetteCategorie}>{articleVedette.categorie}</p>
+                <a href={`/articles/${articleVedette._id}`} className={styles.vedetteLien}>
+                  Lire l'article →
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Section 1 : Articles récents */}
       <section className={styles.section}>

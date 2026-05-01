@@ -1,0 +1,158 @@
+.section {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--couleur-bordure);
+}
+
+.titre {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--couleur-texte);
+  font-family: var(--font-titre);
+  margin-bottom: 1.25rem;
+}
+
+.formulaire {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.formulaireReponse {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--couleur-primaire);
+}
+
+.textarea {
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--couleur-bordure);
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: var(--couleur-texte);
+  background: var(--couleur-blanc);
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.textarea:focus {
+  border-color: var(--couleur-primaire);
+}
+
+.btnEnvoyer {
+  align-self: flex-end;
+  background: var(--couleur-primaire);
+  color: #fff;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--border-radius);
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: var(--font-titre);
+  transition: background 0.2s;
+}
+
+.btnEnvoyer:hover:not(:disabled) {
+  background: #c1121f;
+}
+
+.btnEnvoyer:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.nonConnecte {
+  color: var(--couleur-texte-clair);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.liste {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.vide {
+  color: var(--couleur-texte-clair);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.commentaire {
+  background: var(--couleur-fond);
+  border-radius: var(--border-radius);
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--couleur-bordure);
+}
+
+.reponse {
+  background: var(--couleur-blanc);
+  border-radius: var(--border-radius-sm);
+  padding: 0.75rem 1rem;
+  margin-top: 0.75rem;
+  margin-left: 1.5rem;
+  border-left: 3px solid var(--couleur-bordure);
+}
+
+.commentaireEntete {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+
+.auteur {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--couleur-texte);
+}
+
+.date {
+  font-size: 0.78rem;
+  color: var(--couleur-texte-clair);
+}
+
+.contenu {
+  font-size: 0.9rem;
+  color: var(--couleur-texte);
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.btnRepondre {
+  font-size: 0.78rem;
+  color: var(--couleur-primaire);
+  background: transparent;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.btnRepondre:hover {
+  opacity: 0.7;
+}
+
+.btnSupprimer {
+  font-size: 0.78rem;
+  color: var(--couleur-texte-clair);
+  background: transparent;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.btnSupprimer:hover {
+  color: var(--couleur-primaire);
+}

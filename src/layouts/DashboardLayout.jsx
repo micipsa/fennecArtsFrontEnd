@@ -42,7 +42,7 @@ function DashboardLayout() {
       <aside className={styles.sidebar}>
         {/* En-tête de la sidebar */}
         <div className={styles.sidebarEntete}>
-          <p className={styles.sidebarTitre}>Fennec Arts</p>
+          <p className={styles.sidebarTitre}>Fennec's Clan</p>
           <p className={styles.sidebarSousTitre}>Administration</p>
         </div>
 

@@ -137,6 +137,26 @@
 }
 
 /* ── Boutons actions ── */
+.btnVedette {
+  background: rgba(244, 162, 97, 0.08);
+  color: #aaa;
+  border: 1px solid rgba(244, 162, 97, 0.2);
+  padding: 0.3rem 0.5rem;
+  border-radius: var(--border-radius);
+  font-size: 0.85rem;
+  transition: var(--transition);
+}
+
+.btnVedetteActif {
+  background: rgba(244, 162, 97, 0.2);
+  color: var(--couleur-accent);
+  border: 1px solid rgba(244, 162, 97, 0.5);
+  padding: 0.3rem 0.5rem;
+  border-radius: var(--border-radius);
+  font-size: 0.85rem;
+  transition: var(--transition);
+}
+
 .btnModifier {
   background: rgba(13, 110, 253, 0.1);
   color: #0d6efd;

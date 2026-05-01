@@ -13,6 +13,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../services/api";
+import Commentaires from "../components/UI/Commentaires";
 import Badge from "../components/UI/Badge";
 import Spinner from "../components/UI/Spinner";
 import MessageErreur from "../components/UI/MessageErreur";
@@ -21,6 +22,7 @@ import styles from "./EvenementDetailPage.module.css";
 function EvenementDetailPage() {
   // Récupération de l'id depuis l'URL (ex: /events/abc123)
   const { id } = useParams();
+  const [photoActive, setPhotoActive] = useState(null);
 
   const [evenement, setEvenement] = useState(null);
   const [chargement, setChargement] = useState(true);
@@ -177,6 +179,31 @@ function EvenementDetailPage() {
                 paragraphe.trim() && <p key={index}>{paragraphe}</p>,
             )}
         </div>
+        {evenement.galerie?.length > 0 && (
+          <div className={styles.galerieSection}>
+            <h2 className={styles.galerieTitre}>Galerie photos</h2>
+            <div className={styles.galerieGrille}>
+              {evenement.galerie.map((photo, i) => (
+                <button key={i} className={styles.galerieItem} onClick={() => setPhotoActive(photo)}>
+                  <img src={photo.url} alt={photo.legende || `Photo ${i + 1}`} className={styles.galerieImg} />
+                  {photo.legende && <span className={styles.galerieLegende}>{photo.legende}</span>}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {photoActive && (
+          <div className={styles.lightbox} onClick={() => setPhotoActive(null)}>
+            <div className={styles.lightboxContenu} onClick={(e) => e.stopPropagation()}>
+              <button className={styles.lightboxFermer} onClick={() => setPhotoActive(null)}>✕</button>
+              <img src={photoActive.url} alt={photoActive.legende || ""} className={styles.lightboxImg} />
+              {photoActive.legende && <p className={styles.lightboxLegende}>{photoActive.legende}</p>}
+            </div>
+          </div>
+        )}
+
+        <Commentaires cibleId={evenement._id} typeCible="event" />
       </div>
     </div>
   );

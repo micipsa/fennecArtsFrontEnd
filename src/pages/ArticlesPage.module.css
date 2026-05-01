@@ -78,6 +78,42 @@
   color: var(--couleur-blanc);
 }
 
+.filtresTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 2rem;
+}
+
+.tagChip {
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1.5px solid var(--couleur-bordure);
+  background: transparent;
+  color: var(--couleur-texte-clair);
+  transition: var(--transition);
+  font-family: var(--font-titre);
+}
+
+.tagChip:hover {
+  border-color: var(--couleur-accent);
+  color: var(--couleur-accent);
+}
+
+.tagChipActif {
+  background: var(--couleur-accent);
+  border-color: var(--couleur-accent);
+  color: #fff;
+}
+
+.tagChipActif:hover {
+  background: #e08a4a;
+  border-color: #e08a4a;
+  color: #fff;
+}
+
 .grille {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

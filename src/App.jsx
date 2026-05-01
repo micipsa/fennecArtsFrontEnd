@@ -49,6 +49,9 @@ import ProfilPage from "./pages/ProfilPage";
 import MissionsAdherent from "./pages/MissionsAdherent";
 import TournamentsPage from "./pages/TournamentsPage";
 import TournamentDetail from "./pages/TournamentDetail";
+import ClassementPage from "./pages/ClassementPage";
+import RechercheGlobale from "./pages/RechercheGlobale";
+import AgendaPage from "./pages/AgendaPage";
 
 // ── Pages dashboard (admin) ──
 import DashboardAccueil from "./pages/DashboardAccueil";
@@ -87,6 +90,9 @@ function App() {
           <Route path="events/:id" element={<EvenementDetailPage />} />
           <Route path="tournaments" element={<TournamentsPage />} />
           <Route path="tournaments/:id" element={<TournamentDetail />} />
+          <Route path="classement" element={<ClassementPage />} />
+          <Route path="recherche" element={<RechercheGlobale />} />
+          <Route path="agenda" element={<AgendaPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="/webtv" element={<WebTVPage />} />

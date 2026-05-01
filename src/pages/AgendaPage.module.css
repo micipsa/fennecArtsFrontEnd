@@ -1,0 +1,243 @@
+.page {
+  padding: 2rem 0 4rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.titre {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--couleur-sombre);
+  margin-bottom: 0.5rem;
+}
+
+.legende {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--couleur-texte-clair);
+}
+
+.legendeItem {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ── Navigation mois ── */
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.moisLabel {
+  font-size: 1.15rem;
+  font-weight: 600;
+  min-width: 180px;
+  text-align: center;
+  color: var(--couleur-sombre);
+}
+
+.btnNav {
+  background: none;
+  border: 1px solid var(--couleur-bordure);
+  border-radius: 6px;
+  width: 36px;
+  height: 36px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--couleur-texte);
+  transition: background 0.15s;
+}
+
+.btnNav:hover {
+  background: var(--couleur-fond);
+}
+
+/* ── Grille calendrier ── */
+.grille {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.enteteJour {
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--couleur-texte-clair);
+  padding: 0.4rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.celluleVide {
+  aspect-ratio: 1;
+}
+
+.cellule {
+  aspect-ratio: 1;
+  border: 1px solid var(--couleur-bordure);
+  border-radius: 8px;
+  background: var(--couleur-blanc);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  transition: background 0.15s, border-color 0.15s;
+  padding: 0;
+}
+
+.cellule:hover {
+  background: var(--couleur-fond);
+  border-color: var(--couleur-primaire);
+}
+
+.aujourd {
+  border-color: var(--couleur-primaire);
+  background: #fff5f5;
+}
+
+.selectionne {
+  background: var(--couleur-primaire) !important;
+  border-color: var(--couleur-primaire);
+}
+
+.selectionne .numJour {
+  color: #fff;
+}
+
+.numJour {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--couleur-texte);
+  line-height: 1;
+}
+
+.dots {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  min-height: 8px;
+}
+
+.dotEvent {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--couleur-primaire);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.dotTournoi {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--couleur-accent);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* ── Panneau du jour sélectionné ── */
+.panneauJour {
+  background: var(--couleur-blanc);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.panneauTitre {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--couleur-sombre);
+  margin-bottom: 1rem;
+  text-transform: capitalize;
+}
+
+.vide {
+  color: var(--couleur-texte-clair);
+  font-style: italic;
+}
+
+.listeItems {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.itemBadge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.itemBadge[data-type="event"] {
+  background: #fff5f5;
+  color: var(--couleur-primaire);
+  border: 1px solid var(--couleur-primaire);
+}
+
+.itemBadge[data-type="tournoi"] {
+  background: #fff8f0;
+  color: var(--couleur-accent);
+  border: 1px solid var(--couleur-accent);
+}
+
+.itemLien {
+  font-weight: 500;
+  color: var(--couleur-sombre);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.itemLien:hover {
+  color: var(--couleur-primaire);
+}
+
+.itemLieu {
+  font-size: 0.85rem;
+  color: var(--couleur-texte-clair);
+}
+
+/* ── Responsive ── */
+@media (max-width: 540px) {
+  .grille {
+    gap: 2px;
+  }
+
+  .numJour {
+    font-size: 0.75rem;
+  }
+
+  .dotEvent,
+  .dotTournoi {
+    width: 5px;
+    height: 5px;
+  }
+
+  .moisLabel {
+    font-size: 1rem;
+    min-width: 140px;
+  }
+}

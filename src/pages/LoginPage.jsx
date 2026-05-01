@@ -46,7 +46,7 @@ function LoginPage() {
    */
   const handleSubmit = async (e) => {
     e.preventDefault(); // Empêche le rechargement de la page
-    setErreur(null);     // Reset du message d'erreur
+    setErreur(null); // Reset du message d'erreur
     setChargement(true); // Active l'indicateur de chargement
 
     try {
@@ -76,11 +76,11 @@ function LoginPage() {
         <div className={styles.entete}>
           <img
             src="/FennecArts_eSports_Logo.png"
-            alt="Fennec Arts"
+            alt="Fennec's Clan"
             className={styles.logo}
           />
           <h1 className={styles.titre}>Connexion</h1>
-          <p className={styles.sousTitre}>Accédez à votre espace Fennec Arts</p>
+          <p className={styles.sousTitre}>Accédez à votre espace Fennec's Clan</p>
         </div>
 
         {/* Affichage conditionnel de l'erreur */}

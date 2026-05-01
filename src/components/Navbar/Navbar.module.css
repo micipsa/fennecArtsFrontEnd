@@ -17,14 +17,9 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  color: var(--couleur-blanc);
-  font-size: 1.3rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  transition: var(--transition);
-  white-space: nowrap;
-  z-index: 101;
+  gap: 0.6rem;
+  text-decoration: none;
+  flex-shrink: 0;
 }
 
 .logo:hover {
@@ -32,19 +27,39 @@
 }
 
 .logoImg {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid var(--couleur-primaire);
+  object-position: center 20%;
+  border-radius: 8px;
+  border: 1.5px solid rgba(230, 57, 70, 0.4);
 }
-
-.logoTexte {
+.logoTextes {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  gap: 0.05rem;
+}
+.logoNom {
+  font-family: var(--font-titre);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
   color: var(--couleur-blanc);
   transition: var(--transition);
 }
 
-.logo:hover .logoTexte {
+.logoDojo {
+  font-family: var(--font-texte);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--couleur-accent);
+  transition: var(--transition);
+}
+
+.logo:hover .logoNom,
+.logo:hover .logoDojo {
   color: var(--couleur-accent);
 }
 
@@ -98,24 +113,25 @@
 .menuWrapper {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .nav {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.15rem;
 }
 
 .navLink {
   color: rgba(255, 255, 255, 0.75);
-  padding: 0.5rem 0.9rem;
+  padding: 0.5rem 0.7rem;
   border-radius: var(--border-radius);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
   transition: var(--transition);
   font-family: var(--font-titre);
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 .navLink:hover {
@@ -131,15 +147,24 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .nomUtilisateur {
   color: rgba(255, 255, 255, 0.75);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-family: var(--font-titre);
   letter-spacing: 0.03em;
   white-space: nowrap;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity 0.3s ease;
+}
+
+/* Cache le nom quand la recherche est ouverte pour gagner de la place */
+.searchOuverte ~ .actions .nomUtilisateur {
+  display: none;
 }
 
 .btnConnexion {
@@ -196,7 +221,7 @@
 }
 
 /* ===== MOBILE ===== */
-@media (max-width: 1024px) {
+@media (max-width: 1350px) {
   .burger {
     display: flex;
   }
@@ -255,6 +280,49 @@
     padding: 0.75rem 1rem;
     font-size: 1rem;
   }
+}
+
+.searchForm {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.searchToggle {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: var(--border-radius-sm);
+  transition: var(--transition);
+  line-height: 1;
+}
+
+.searchToggle:hover {
+  color: var(--couleur-blanc);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.searchInput {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--border-radius-sm);
+  color: var(--couleur-blanc);
+  font-size: 0.85rem;
+  padding: 0.3rem 0.75rem;
+  outline: none;
+  width: 120px;
+  transition: var(--transition);
+  font-family: inherit;
+}
+
+.searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.searchInput:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .badgeLive {

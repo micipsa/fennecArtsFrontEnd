@@ -224,3 +224,86 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+/* ── Section XP & Rang ── */
+.sectionXP {
+  margin-top: 2rem;
+  background: var(--couleur-blanc);
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  border: 1px solid var(--couleur-bordure);
+  box-shadow: var(--ombre-sm);
+}
+
+.sectionTitre {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--couleur-texte);
+  font-family: var(--font-titre);
+  margin-bottom: 1.5rem;
+}
+
+.rangBloc {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.rangNom {
+  font-size: 1.6rem;
+  font-weight: 800;
+  font-family: var(--font-titre);
+  letter-spacing: 0.05em;
+}
+
+.rangPoints {
+  font-size: 0.9rem;
+  color: var(--couleur-texte-clair);
+  font-weight: 500;
+}
+
+.progressBar {
+  height: 10px;
+  background: var(--couleur-bordure);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 0.25rem;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.5s ease;
+}
+
+.progressLabel {
+  font-size: 0.8rem;
+  color: var(--couleur-texte-clair);
+  margin-top: 0.1rem;
+}
+
+/* ── Section Tags ── */
+.sectionTags {
+  margin-top: 2rem;
+  background: var(--couleur-blanc);
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  border: 1px solid var(--couleur-bordure);
+  box-shadow: var(--ombre-sm);
+}
+
+.tagsListe {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  border-radius: 99px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: white;
+  font-family: var(--font-titre);
+  letter-spacing: 0.03em;
+}

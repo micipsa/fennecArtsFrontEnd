@@ -45,46 +45,45 @@ function ArticlesPage() {
   const [articles, setArticles] = useState([]); // Liste des articles
   const [chargement, setChargement] = useState(true); // Indicateur de chargement
   const [erreur, setErreur] = useState(null); // Message d'erreur
-  const [page, setPage] = useState(1); // Numéro de page courante
-  const [totalPages, setTotalPages] = useState(1); // Nombre total de pages
-  const [categorie, setCategorie] = useState("Toutes"); // Filtre de catégorie actif
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [categorie, setCategorie] = useState("Toutes");
+  const [tagActif, setTagActif] = useState(null);
+  const [tagsDisponibles, setTagsDisponibles] = useState([]);
 
-  // ── Chargement des articles quand la page ou la catégorie change ──
   useEffect(() => {
     const chargerArticles = async () => {
       try {
         setChargement(true);
         setErreur(null);
-
-        // Construction des paramètres de requête (query string)
         const params = new URLSearchParams();
         params.append("page", page);
         params.append("limit", LIMITE);
-        // On n'ajoute le filtre catégorie que si ce n'est pas "Toutes"
         if (categorie !== "Toutes") params.append("categorie", categorie);
-
-        // Requête GET avec les paramètres de pagination et filtrage
+        if (tagActif) params.append("tag", tagActif);
         const res = await api.get(`/api/articles?${params.toString()}`);
         setArticles(res.data.data);
         setTotalPages(res.data.pagination?.totalPages || 1);
+        const tags = [...new Set(res.data.data.flatMap((a) => a.tags || []))];
+        setTagsDisponibles(tags);
       } catch (err) {
-        setErreur(
-          err.response?.data?.message || "Impossible de charger les articles.",
-        );
+        setErreur(err.response?.data?.message || "Impossible de charger les articles.");
       } finally {
         setChargement(false);
       }
     };
-
     chargerArticles();
-  }, [page, categorie]); // Dépendances : relance à chaque changement
+  }, [page, categorie, tagActif]);
 
-  /**
-   * Changement de catégorie : met à jour le filtre et remet la page à 1.
-   */
   const handleCategorie = (nouvelleCategorie) => {
     setCategorie(nouvelleCategorie);
-    setPage(1); // On revient à la page 1 quand on change de catégorie
+    setTagActif(null);
+    setPage(1);
+  };
+
+  const handleTag = (tag) => {
+    setTagActif((prev) => (prev === tag ? null : tag));
+    setPage(1);
   };
 
   return (
@@ -97,7 +96,6 @@ function ArticlesPage() {
         </p>
       </div>
 
-      {/* ── Boutons de filtre par catégorie ── */}
       <div className={styles.filtres}>
         {CATEGORIES.map((cat) => (
           <button
@@ -108,6 +106,19 @@ function ArticlesPage() {
           </button>
         ))}
       </div>
+
+      {tagsDisponibles.length > 0 && (
+        <div className={styles.filtresTags}>
+          {tagsDisponibles.map((tag) => (
+            <button
+              key={tag}
+              className={`${styles.tagChip} ${tagActif === tag ? styles.tagChipActif : ""}`}
+              onClick={() => handleTag(tag)}>
+              #{tag}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* ── États conditionnels : chargement, erreur, liste vide ── */}
       {chargement && <Spinner />}

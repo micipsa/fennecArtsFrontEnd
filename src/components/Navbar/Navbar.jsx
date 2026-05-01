@@ -27,6 +27,8 @@ function Navbar() {
   const { estEnLive } = useWebTV();
   // State pour le menu mobile (ouvert/fermé)
   const [menuOuvert, setMenuOuvert] = useState(false);
+  const [recherche, setRecherche] = useState("");
+  const [rechercheOuverte, setRechercheOuverte] = useState(false);
 
   /**
    * Gestionnaire de déconnexion :
@@ -43,19 +45,30 @@ function Navbar() {
   // Ferme le menu mobile (utilisé dans les onClick des liens)
   const fermerMenu = () => setMenuOuvert(false);
 
+  const handleRecherche = (e) => {
+    e.preventDefault();
+    if (!recherche.trim()) return;
+    setRechercheOuverte(false);
+    fermerMenu();
+    navigate(`/recherche?q=${encodeURIComponent(recherche.trim())}`);
+    setRecherche("");
+  };
+
   return (
     <nav className={styles.navbar}>
       <div className={`container ${styles.inner}`}>
         {/* ── Logo ── */}
         <Link to="/" className={styles.logo} onClick={fermerMenu}>
           <img
-            src="/FennecArts_eSports_Logo.png"
-            alt="Fennec Arts"
+            src="/fennekagelogo.png"
+            alt="Fennec's Clan"
             className={styles.logoImg}
           />
-          <span className={styles.logoTexte}>Fennec Arts</span>
+          <div className={styles.logoTextes}>
+            <span className={styles.logoNom}>Fennec's</span>
+            <span className={styles.logoDojo}>Clan</span>
+          </div>
         </Link>
-
         {/* ── Bouton burger — visible uniquement sur mobile (via CSS) ── */}
         <button
           className={styles.burger}
@@ -130,7 +143,50 @@ function Navbar() {
                 Tournois
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/agenda"
+                onClick={fermerMenu}
+                className={({ isActive }) =>
+                  `${styles.navLink} ${isActive ? styles.active : ""}`
+                }>
+                Agenda
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/classement"
+                onClick={fermerMenu}
+                className={({ isActive }) =>
+                  `${styles.navLink} ${isActive ? styles.active : ""}`
+                }>
+                Classement
+              </NavLink>
+            </li>
           </ul>
+
+          {/* ── Recherche ── */}
+          <form
+            className={`${styles.searchForm} ${rechercheOuverte ? styles.searchOuverte : ""}`}
+            onSubmit={handleRecherche}>
+            <button
+              type="button"
+              className={styles.searchToggle}
+              onClick={() => setRechercheOuverte((v) => !v)}
+              aria-label="Rechercher">
+              🔍
+            </button>
+            {rechercheOuverte && (
+              <input
+                className={styles.searchInput}
+                type="text"
+                placeholder="Rechercher..."
+                value={recherche}
+                onChange={(e) => setRecherche(e.target.value)}
+                autoFocus
+              />
+            )}
+          </form>
 
           {/* ── Zone d'actions (connexion / profil / déconnexion) ── */}
           <div className={styles.actions}>

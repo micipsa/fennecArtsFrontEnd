@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../services/api";
+import Commentaires from "../components/UI/Commentaires";
 import Badge from "../components/UI/Badge";
 import Spinner from "../components/UI/Spinner";
 import MessageErreur from "../components/UI/MessageErreur";
@@ -692,6 +693,7 @@ function TournamentDetail() {
           </div>
         </div>
       )}
+      <Commentaires cibleId={id} typeCible="tournoi" />
     </div>
   );
 }

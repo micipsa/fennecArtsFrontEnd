@@ -1,3 +1,68 @@
+.sectionVedette {
+  padding: 2rem 0;
+}
+
+.carteVedette {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  min-height: 280px;
+  background: var(--couleur-sombre-2);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+}
+
+.vedetteOverlay {
+  width: 100%;
+  padding: 2rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 60%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.badgeVedette {
+  display: inline-block;
+  background: var(--couleur-primaire);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  width: fit-content;
+  font-family: var(--font-titre);
+}
+
+.vedetteTitre {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: var(--font-titre);
+  line-height: 1.2;
+}
+
+.vedetteCategorie {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.vedetteLien {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: var(--couleur-accent);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.vedetteLien:hover {
+  color: #fff;
+}
+
 .section {
   padding: 4rem 0;
 }

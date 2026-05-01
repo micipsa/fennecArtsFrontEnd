@@ -47,7 +47,6 @@ const CATEGORIES = [
 ];
 
 function DashboardEvenements() {
-  // ── States ──
   const [evenements, setEvenements] = useState([]);
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState(null);
@@ -55,6 +54,10 @@ function DashboardEvenements() {
   const [formData, setFormData] = useState(FORM_INITIAL);
   const [envoiEnCours, setEnvoiEnCours] = useState(false);
   const [erreurForm, setErreurForm] = useState(null);
+  const [galerieEventId, setGalerieEventId] = useState(null);
+  const [galeriePhotos, setGaleriePhotos] = useState([]);
+  const [legendeNouvelle, setLegendeNouvelle] = useState("");
+  const [urlNouvelle, setUrlNouvelle] = useState("");
 
   // ── Chargement des événements au montage ──
   useEffect(() => {
@@ -113,6 +116,43 @@ function DashboardEvenements() {
     }
   };
 
+  const ouvrirGalerie = (ev) => {
+    setGalerieEventId(ev._id);
+    setGaleriePhotos(ev.galerie || []);
+    setUrlNouvelle("");
+    setLegendeNouvelle("");
+  };
+
+  const handleAjouterPhoto = async () => {
+    if (!urlNouvelle) return;
+    try {
+      const res = await api.post(`/api/events/${galerieEventId}/photos`, {
+        url: urlNouvelle,
+        legende: legendeNouvelle,
+      });
+      setGaleriePhotos(res.data.data);
+      setEvenements((prev) =>
+        prev.map((ev) => ev._id === galerieEventId ? { ...ev, galerie: res.data.data } : ev)
+      );
+      setUrlNouvelle("");
+      setLegendeNouvelle("");
+    } catch {
+      alert("Erreur lors de l'ajout.");
+    }
+  };
+
+  const handleSupprimerPhoto = async (index) => {
+    try {
+      const res = await api.delete(`/api/events/${galerieEventId}/photos/${index}`);
+      setGaleriePhotos(res.data.data);
+      setEvenements((prev) =>
+        prev.map((ev) => ev._id === galerieEventId ? { ...ev, galerie: res.data.data } : ev)
+      );
+    } catch {
+      alert("Erreur lors de la suppression.");
+    }
+  };
+
   if (chargement) return <Spinner />;
   if (erreur) return <MessageErreur message={erreur} />;
 
@@ -155,7 +195,12 @@ function DashboardEvenements() {
             </span>
             <span className={styles.cellule}>{ev.lieu}</span>
             <span>{new Date(ev.dateDebut).toLocaleDateString("fr-FR")}</span>
-            <span>
+            <span style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
+              <button
+                className={styles.btnGalerie}
+                onClick={() => ouvrirGalerie(ev)}>
+                Photos ({ev.galerie?.length ?? 0})
+              </button>
               <button
                 className={styles.btnSupprimer}
                 onClick={() => handleSupprimer(ev._id)}>
@@ -305,6 +350,50 @@ function DashboardEvenements() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+      {/* ── Modale galerie ── */}
+      {galerieEventId && (
+        <div className={styles.overlay} onClick={() => setGalerieEventId(null)}>
+          <div className={styles.modale} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modaleEntete}>
+              <h2 className={styles.modaleTitre}>Galerie photos</h2>
+              <button className={styles.modaleFermer} onClick={() => setGalerieEventId(null)}>✕</button>
+            </div>
+
+            <div className={styles.galerieUpload}>
+              <UploadImage onUpload={(url) => setUrlNouvelle(url)} />
+              {urlNouvelle && (
+                <>
+                  <img src={urlNouvelle} alt="aperçu" style={{ maxHeight: 80, borderRadius: 6, marginTop: 8 }} />
+                  <input
+                    className={styles.input}
+                    type="text"
+                    placeholder="Légende (optionnel)"
+                    value={legendeNouvelle}
+                    onChange={(e) => setLegendeNouvelle(e.target.value)}
+                    style={{ marginTop: 8 }}
+                  />
+                  <button className={styles.btnSoumettre} onClick={handleAjouterPhoto} style={{ marginTop: 8 }}>
+                    Ajouter la photo
+                  </button>
+                </>
+              )}
+            </div>
+
+            <div className={styles.galerieGrille}>
+              {galeriePhotos.length === 0 && (
+                <p className={styles.vide}>Aucune photo.</p>
+              )}
+              {galeriePhotos.map((photo, i) => (
+                <div key={i} className={styles.galerieItem}>
+                  <img src={photo.url} alt={photo.legende || `Photo ${i + 1}`} className={styles.galerieImg} />
+                  {photo.legende && <p className={styles.galerieLegende}>{photo.legende}</p>}
+                  <button className={styles.galerieSup} onClick={() => handleSupprimerPhoto(i)}>✕</button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
