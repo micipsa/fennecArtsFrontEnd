@@ -1,271 +1,96 @@
-/**
- * Navbar — barre de navigation principale visible sur toutes les pages publiques.
- *
- * Fonctionnalités :
- * - Logo cliquable qui ramène à l'accueil.
- * - Menu hamburger (burger) responsive pour mobile :
- *   - Un state `menuOuvert` contrôle l'affichage du menu mobile.
- *   - Les trois barres du burger s'animent quand le menu est ouvert.
- * - Liens de navigation vers : Accueil, Articles, Événements, Tournois.
- *   - Chaque lien utilise <NavLink> qui ajoute la classe `active`
- *     quand il correspond à la route courante.
- * - Zone d'actions contextuelle selon l'état d'authentification :
- *   - Non connecté : bouton "Connexion"
- *   - Connecté : nom de l'utilisateur (lien vers profil) + bouton "Déconnexion"
- *   - Admin : lien supplémentaire vers le Dashboard
- */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useWebTV from "../../hooks/useWebTV";
+import CommandPalette from "../UI/CommandPalette";
+import AvatarMenu from "../UI/AvatarMenu";
 import NotifCloche from "../UI/NotifCloche";
 import styles from "./Navbar.module.css";
 
 function Navbar() {
   const navigate = useNavigate();
-  // Récupération de l'utilisateur connecté et de la fonction de déconnexion
   const { utilisateur, deconnecter } = useAuth();
   const { estEnLive } = useWebTV();
-  // State pour le menu mobile (ouvert/fermé)
-  const [menuOuvert, setMenuOuvert] = useState(false);
-  const [recherche, setRecherche] = useState("");
-  const [rechercheOuverte, setRechercheOuverte] = useState(false);
+  const [paletteOuverte, setPaletteOuverte] = useState(false);
+  const [menuMobile, setMenuMobile] = useState(false);
 
-  /**
-   * Gestionnaire de déconnexion :
-   * 1. Appelle deconnecter() (supprime token + reset state)
-   * 2. Ferme le menu mobile
-   * 3. Redirige vers la page d'accueil
-   */
+  useEffect(() => {
+    const handler = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setPaletteOuverte(true);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
+
   const handleDeconnexion = () => {
     deconnecter();
-    setMenuOuvert(false);
+    setMenuMobile(false);
     navigate("/");
   };
 
-  // Ferme le menu mobile (utilisé dans les onClick des liens)
-  const fermerMenu = () => setMenuOuvert(false);
-
-  const handleRecherche = (e) => {
-    e.preventDefault();
-    if (!recherche.trim()) return;
-    setRechercheOuverte(false);
-    fermerMenu();
-    navigate(`/recherche?q=${encodeURIComponent(recherche.trim())}`);
-    setRecherche("");
-  };
-
   return (
-    <nav className={styles.navbar}>
-      <div className={`container ${styles.inner}`}>
-        {/* ── Logo ── */}
-        <Link to="/" className={styles.logo} onClick={fermerMenu}>
-          <img
-            src="/fennekagelogo.png"
-            alt="Fennec's Clan"
-            className={styles.logoImg}
-          />
-          <div className={styles.logoTextes}>
-            <span className={styles.logoNom}>Fennec's</span>
-            <span className={styles.logoDojo}>Clan</span>
-          </div>
-        </Link>
-        {/* ── Bouton burger — visible uniquement sur mobile (via CSS) ── */}
-        <button
-          className={styles.burger}
-          onClick={() => setMenuOuvert((v) => !v)}
-          aria-label="Menu">
-          {/* Les trois lignes du burger s'animent quand menuOuvert est true */}
-          <span
-            className={`${styles.burgerLigne} ${menuOuvert ? styles.burgerLigne1Ouvert : ""}`}
-          />
-          <span
-            className={`${styles.burgerLigne} ${menuOuvert ? styles.burgerLigne2Ouvert : ""}`}
-          />
-          <span
-            className={`${styles.burgerLigne} ${menuOuvert ? styles.burgerLigne3Ouvert : ""}`}
-          />
-        </button>
+    <>
+      <nav className={styles.navbar}>
+        <div className={styles.inner}>
 
-        {/* ── Menu — masqué sur mobile sauf si ouvert ── */}
-        <div
-          className={`${styles.menuWrapper} ${menuOuvert ? styles.menuOuvert : ""}`}>
-          {/* Liens de navigation principaux */}
+          <Link to="/" className={styles.logo} onClick={() => setMenuMobile(false)}>
+            <img src="/fennekagelogo.png" alt="Fennec's Clan" className={styles.logoImg} />
+          </Link>
+
           <ul className={styles.nav}>
+            <li><NavLink to="/" end className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>Accueil</NavLink></li>
+            <li><NavLink to="/articles" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>Articles</NavLink></li>
+            <li><NavLink to="/events" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>Événements</NavLink></li>
+            <li><NavLink to="/tournaments" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>Tournois</NavLink></li>
             <li>
-              <NavLink
-                to="/"
-                end
-                onClick={fermerMenu}
-                className={({ isActive }) =>
-                  `${styles.navLink} ${isActive ? styles.active : ""}`
-                }>
-                Accueil
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/articles"
-                onClick={fermerMenu}
-                className={({ isActive }) =>
-                  `${styles.navLink} ${isActive ? styles.active : ""}`
-                }>
-                Articles
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/webtv"
-                onClick={fermerMenu}
-                className={({ isActive }) =>
-                  `${styles.navLink} ${isActive ? styles.active : ""}`
-                }>
-                WebTV
-                {estEnLive && <span className={styles.badgeLive} />}
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/events"
-                onClick={fermerMenu}
-                className={({ isActive }) =>
-                  `${styles.navLink} ${isActive ? styles.active : ""}`
-                }>
-                Événements
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/tournaments"
-                onClick={fermerMenu}
-                className={({ isActive }) =>
-                  `${styles.navLink} ${isActive ? styles.active : ""}`
-                }>
-                Tournois
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/agenda"
-                onClick={fermerMenu}
-                className={({ isActive }) =>
-                  `${styles.navLink} ${isActive ? styles.active : ""}`
-                }>
-                Agenda
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/classement"
-                onClick={fermerMenu}
-                className={({ isActive }) =>
-                  `${styles.navLink} ${isActive ? styles.active : ""}`
-                }>
-                Classement
+              <NavLink to="/webtv" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>
+                WebTV {estEnLive && <span className={styles.badgeLive} />}
               </NavLink>
             </li>
           </ul>
 
-          {/* ── Recherche ── */}
-          <form
-            className={`${styles.searchForm} ${rechercheOuverte ? styles.searchOuverte : ""}`}
-            onSubmit={handleRecherche}>
-            <button
-              type="button"
-              className={styles.searchToggle}
-              onClick={() => setRechercheOuverte((v) => !v)}
-              aria-label="Rechercher">
-              🔍
-            </button>
-            {rechercheOuverte && (
-              <input
-                className={styles.searchInput}
-                type="text"
-                placeholder="Rechercher..."
-                value={recherche}
-                onChange={(e) => setRecherche(e.target.value)}
-                autoFocus
-              />
-            )}
-          </form>
-
-          {/* ── Zone d'actions (connexion / profil / déconnexion) ── */}
           <div className={styles.actions}>
+            <button className={styles.iconBtn} onClick={() => setPaletteOuverte(true)} aria-label="Recherche / Commandes">
+              <span className={styles.iconLoupe}>🔍</span>
+              <span className={styles.kbdHint}>⌘K</span>
+            </button>
+
             {utilisateur ? (
               <>
-                {/* Lien Dashboard visible seulement pour les admins */}
-                {utilisateur.role === "admin" && (
-                  <Link
-                    to="/dashboard"
-                    className={styles.btnDashboard}
-                    onClick={fermerMenu}>
-                    Dashboard
-                  </Link>
-                )}
-
-                {/* Lien Dashboard pour les organisateurs (non-admins) */}
-                {(utilisateur.estOrganisateur ||
-                  utilisateur.role === "organisateur") &&
-                  utilisateur.role !== "admin" && (
-                    <Link
-                      to="/dashboard/missions"
-                      className={styles.btnDashboard}
-                      onClick={fermerMenu}>
-                      Dashboard
-                    </Link>
-                  )}
-
-                {/* Lien Dashboard visible seulement pour les redacteurs */}
-                {utilisateur.role === "redacteur" && (
-                  <Link
-                    to="/redacteur"
-                    className={styles.btnDashboard}
-                    onClick={fermerMenu}>
-                    Mes articles
-                  </Link>
-                )}
-
-                {/* Lien Missions visible pour tous les rôles sauf admin (car admin l'a dans son dashboard) */}
-                {utilisateur.role !== "admin" &&
-                  utilisateur.role !== "utilisateur" && (
-                    <Link
-                      to="/missions"
-                      className={styles.btnDashboard}
-                      onClick={fermerMenu}>
-                      Missions
-                    </Link>
-                  )}
-                {/* Nom de l'utilisateur cliquable → page profil */}
                 <NotifCloche />
-                <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
-                  <span style={{color: '#ffd700', fontSize: '0.9rem', fontWeight: 'bold'}}>🪙 {utilisateur.fm || 0} FM</span>
-                  <Link
-                    to="/profil"
-                    className={styles.nomUtilisateur}
-                    onClick={fermerMenu}>
-                    {utilisateur.nom}
-                  </Link>
-                </div>
-                {/* Bouton de déconnexion */}
-                <button
-                  className={styles.btnDeconnexion}
-                  onClick={handleDeconnexion}>
-                  Déconnexion
-                </button>
+                <AvatarMenu utilisateur={utilisateur} onDeconnexion={handleDeconnexion} />
               </>
             ) : (
-              /* Si non connecté : bouton de connexion */
-              <Link
-                to="/login"
-                className={styles.btnConnexion}
-                onClick={fermerMenu}>
-                Connexion
-              </Link>
+              <Link to="/login" className={styles.btnConnexion}>Connexion</Link>
             )}
+
+            <button className={styles.burger} onClick={() => setMenuMobile(!menuMobile)} aria-label="Menu">
+              <span /><span /><span />
+            </button>
           </div>
         </div>
-      </div>
-    </nav>
+
+        {menuMobile && (
+          <div className={styles.menuMobile}>
+            <NavLink to="/" end onClick={() => setMenuMobile(false)}>🏠 Accueil</NavLink>
+            <NavLink to="/articles" onClick={() => setMenuMobile(false)}>📰 Articles</NavLink>
+            <NavLink to="/tournaments" onClick={() => setMenuMobile(false)}>🏆 Tournois</NavLink>
+            <NavLink to="/events" onClick={() => setMenuMobile(false)}>📅 Événements</NavLink>
+            <NavLink to="/webtv" onClick={() => setMenuMobile(false)}>📺 WebTV</NavLink>
+            <NavLink to="/missions" onClick={() => setMenuMobile(false)}>🎯 Missions</NavLink>
+            <NavLink to="/classement" onClick={() => setMenuMobile(false)}>🏅 Classement</NavLink>
+            <NavLink to="/communaute" onClick={() => setMenuMobile(false)}>👥 Communauté</NavLink>
+            <NavLink to="/store" onClick={() => setMenuMobile(false)}>🛒 Store</NavLink>
+            {!utilisateur && <Link to="/login" onClick={() => setMenuMobile(false)}>🔑 Connexion</Link>}
+          </div>
+        )}
+      </nav>
+
+      <CommandPalette ouvert={paletteOuverte} onFermer={() => setPaletteOuverte(false)} />
+    </>
   );
 }
 

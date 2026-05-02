@@ -45,7 +45,7 @@ function DashboardUtilisateurs() {
   const [tagsDisponibles, setTagsDisponibles] = useState([]);
   const [modaleGestion, setModaleGestion] = useState(null);
   const [tagsSelectionnes, setTagsSelectionnes] = useState([]);
-  const [bonusForm, setBonusForm] = useState({ points: "", raison: "" });
+  const [bonusForm, setBonusForm] = useState({ points: "", fm: "", raison: "" });
   const [envoiTags, setEnvoiTags] = useState(false);
   const [envoiBonus, setEnvoiBonus] = useState(false);
 
@@ -106,7 +106,7 @@ function DashboardUtilisateurs() {
   const ouvrirGestion = (u) => {
     setModaleGestion(u);
     setTagsSelectionnes((u.tags || []).map((t) => t._id || t));
-    setBonusForm({ points: "", raison: "" });
+    setBonusForm({ points: "", fm: "", raison: "" });
   };
 
   const toggleTag = (tagId) => {
@@ -132,21 +132,22 @@ function DashboardUtilisateurs() {
 
   const handleAjouterBonus = async (e) => {
     e.preventDefault();
-    if (!bonusForm.points || !bonusForm.raison) return;
+    if ((!bonusForm.points && !bonusForm.fm) || !bonusForm.raison) return;
     setEnvoiBonus(true);
     try {
       await api.patch(`/api/users/${modaleGestion._id}/points-bonus`, {
-        points: Number(bonusForm.points),
+        points: Number(bonusForm.points) || 0,
+        fm: Number(bonusForm.fm) || 0,
         raison: bonusForm.raison,
       });
       setUtilisateurs((prev) =>
         prev.map((u) =>
           u._id === modaleGestion._id
-            ? { ...u, points: (u.points || 0) + Number(bonusForm.points) }
+            ? { ...u, points: (u.points || 0) + (Number(bonusForm.points) || 0), fm: (u.fm || 0) + (Number(bonusForm.fm) || 0) }
             : u
         )
       );
-      setBonusForm({ points: "", raison: "" });
+      setBonusForm({ points: "", fm: "", raison: "" });
     } catch {
       alert("Erreur lors de l'ajout des points.");
     } finally {
@@ -270,16 +271,23 @@ function DashboardUtilisateurs() {
 
             {/* Bonus points */}
             <div className={styles.modaleSection}>
-              <h3 className={styles.modaleSousTitre}>Bonus points</h3>
+              <h3 className={styles.modaleSousTitre}>Bonus points et FM</h3>
               <form className={styles.bonusForm} onSubmit={handleAjouterBonus}>
                 <input
                   className={styles.bonusInput}
                   type="number"
-                  min="1"
-                  placeholder="Points"
+                  min="0"
+                  placeholder="Points XP"
                   value={bonusForm.points}
                   onChange={(e) => setBonusForm((p) => ({ ...p, points: e.target.value }))}
-                  required
+                />
+                <input
+                  className={styles.bonusInput}
+                  type="number"
+                  min="0"
+                  placeholder="FM"
+                  value={bonusForm.fm}
+                  onChange={(e) => setBonusForm((p) => ({ ...p, fm: e.target.value }))}
                 />
                 <input
                   className={styles.bonusInput}
