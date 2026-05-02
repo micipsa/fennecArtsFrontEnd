@@ -1,0 +1,12 @@
+.wrapper { display: flex; flex-direction: column; gap: 1.5rem; }
+.section { background: var(--couleur-sombre-2); border-radius: 12px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.05); }
+.titre { font-family: var(--font-titre); font-size: 1.1rem; margin-bottom: 1rem; color: white; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.champ { display: flex; flex-direction: column; gap: 0.4rem; }
+.champ label { font-size: 0.85rem; color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 0.4rem; }
+.icon { font-size: 1.1rem; }
+.champ input { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); padding: 0.65rem; border-radius: 6px; color: white; font-family: var(--font-principale); }
+.champ input:focus { outline: none; border-color: var(--couleur-primaire); }
+.btnSauvegarder { padding: 0.8rem 2rem; background: var(--couleur-primaire); color: white; border: none; border-radius: 8px; font-family: var(--font-titre); font-weight: 700; cursor: pointer; transition: 0.2s; align-self: flex-start; }
+.btnSauvegarder:hover:not(:disabled) { background: #d90429; }
+.btnSauvegarder:disabled { opacity: 0.5; }

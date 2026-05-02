@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import api from "../services/api";
 import { calculerRang } from "../utils/rangs";
 import Spinner from "../components/UI/Spinner";
+import ClassementFiltres from "../components/UI/ClassementFiltres";
 import styles from "./ClassementPage.module.css";
 
 const MEDAILLES = ["🥇", "🥈", "🥉"];
@@ -10,15 +11,18 @@ const MEDAILLES = ["🥇", "🥈", "🥉"];
 function ClassementPage() {
   const [joueurs, setJoueurs] = useState([]);
   const [chargement, setChargement] = useState(true);
+  const [filtreJeu, setFiltreJeu] = useState("global");
 
-  useEffect(() => {
-    api.get("/api/users/classement")
+  const chargerClassement = (jeuId) => {
+    setChargement(true);
+    const url = jeuId === "global" ? "/api/users/classement" : `/api/users/classement?jeu=${jeuId}`;
+    api.get(url)
       .then((res) => setJoueurs(res.data.data))
       .catch(() => setJoueurs([]))
       .finally(() => setChargement(false));
-  }, []);
+  };
 
-  if (chargement) return <Spinner />;
+  useEffect(() => { chargerClassement(filtreJeu); }, [filtreJeu]);
 
   return (
     <div className="container">
@@ -28,6 +32,9 @@ function ClassementPage() {
           <p className={styles.sousTitre}>Top 50 adhérents</p>
         </div>
 
+        <ClassementFiltres onFiltrer={(val) => setFiltreJeu(val)} />
+
+        {chargement ? <Spinner /> : (
         <div className={styles.tableWrapper}>
           <table className={styles.table}>
             <thead>
@@ -98,6 +105,7 @@ function ClassementPage() {
             </tbody>
           </table>
         </div>
+        )}
       </div>
     </div>
   );

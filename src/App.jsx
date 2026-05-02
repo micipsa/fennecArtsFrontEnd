@@ -54,15 +54,21 @@ import ClassementPage from "./pages/ClassementPage";
 import RechercheGlobale from "./pages/RechercheGlobale";
 import AgendaPage from "./pages/AgendaPage";
 import ProfilPublicPage from "./pages/ProfilPublicPage";
+import StorePage from "./pages/StorePage";
+import InventairePage from "./pages/InventairePage";
+import DefisPage from "./pages/DefisPage";
+import EnConstruction from "./pages/EnConstruction";
 
 // ── Pages dashboard (admin) ──
 import DashboardAccueil from "./pages/DashboardAccueil";
 import DashboardArticles from "./pages/DashboardArticles";
+import DashboardStore from "./pages/DashboardStore";
 import DashboardEvenements from "./pages/DashboardEvenements";
 import DashboardUtilisateurs from "./pages/DashboardUtilisateurs";
 import DashboardTournois from "./pages/DashboardTournois";
 import DashboardChaines from "./pages/DashboardChaines";
 import DashboardMissions from "./pages/DashboardMissions";
+import DashboardQuetes from "./pages/DashboardQuetes";
 
 // ── Page 404 ──
 import NotFoundPage from "./pages/NotFoundPage";
@@ -100,6 +106,13 @@ function App() {
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="/webtv" element={<WebTVPage />} />
+          <Route path="/store" element={<StorePage />} />
+          <Route path="/inventaire" element={<RouteProtegee><InventairePage /></RouteProtegee>} />
+          <Route path="/defis" element={<RouteProtegee><DefisPage /></RouteProtegee>} />
+          <Route path="/mon-activite" element={<RouteProtegee><EnConstruction titre="Mon activité" /></RouteProtegee>} />
+          <Route path="/notifications" element={<RouteProtegee><EnConstruction titre="Notifications" /></RouteProtegee>} />
+          <Route path="/communaute" element={<EnConstruction titre="Communauté" />} />
+          <Route path="/saisons" element={<EnConstruction titre="Saisons" />} />
           {/* Route protégée : redirige vers /login si non connecté */}
           <Route
             path="profil"
@@ -128,6 +141,8 @@ function App() {
           <Route path="utilisateurs" element={<DashboardUtilisateurs />} />
           <Route path="tournois" element={<DashboardTournois />} />
           <Route path="chaines" element={<DashboardChaines />} />
+          <Route path="store" element={<DashboardStore />} />
+          <Route path="quetes" element={<DashboardQuetes />} />
         </Route>
 
         {/* ════════════════════════════════════════════

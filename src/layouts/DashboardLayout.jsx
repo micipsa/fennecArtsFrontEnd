@@ -92,6 +92,20 @@ function DashboardLayout() {
                 }>
                 Chaînes WebTV
               </NavLink>
+              <NavLink
+                to="/dashboard/store"
+                className={({ isActive }) =>
+                  `${styles.navLien} ${isActive ? styles.actif : ""}`
+                }>
+                Store
+              </NavLink>
+              <NavLink
+                to="/dashboard/quetes"
+                className={({ isActive }) =>
+                  `${styles.navLien} ${isActive ? styles.actif : ""}`
+                }>
+                Quêtes
+              </NavLink>
             </>
           )}
 

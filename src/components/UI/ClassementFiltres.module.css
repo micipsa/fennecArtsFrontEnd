@@ -1,0 +1,39 @@
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.5rem 0 1.5rem;
+}
+.filtre {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.6);
+  font-family: var(--font-titre);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.filtre:hover {
+  color: white;
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.12);
+}
+.actif {
+  color: white;
+  background: color-mix(in srgb, var(--couleur-jeu, var(--couleur-primaire)) 20%, transparent);
+  border-color: var(--couleur-jeu, var(--couleur-primaire));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--couleur-jeu, var(--couleur-primaire)) 25%, transparent);
+}
+.icone {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  border-radius: 3px;
+}

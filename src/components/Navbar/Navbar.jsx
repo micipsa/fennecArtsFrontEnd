@@ -84,6 +84,7 @@ function Navbar() {
             <NavLink to="/classement" onClick={() => setMenuMobile(false)}>🏅 Classement</NavLink>
             <NavLink to="/communaute" onClick={() => setMenuMobile(false)}>👥 Communauté</NavLink>
             <NavLink to="/store" onClick={() => setMenuMobile(false)}>🛒 Store</NavLink>
+            <NavLink to="/defis" onClick={() => setMenuMobile(false)}>⚔️ Défis</NavLink>
             {!utilisateur && <Link to="/login" onClick={() => setMenuMobile(false)}>🔑 Connexion</Link>}
           </div>
         )}

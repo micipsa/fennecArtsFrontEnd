@@ -1,0 +1,112 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.header h1 {
+  font-family: var(--font-titre);
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+.header h1 span { color: var(--couleur-accent); }
+.header p { color: rgba(255,255,255,0.6); }
+
+.loading, .empty {
+  text-align: center;
+  color: white;
+  padding: 4rem;
+  background: var(--couleur-sombre-2);
+  border-radius: 16px;
+  border: 1px dashed rgba(255,255,255,0.1);
+}
+.emptyIcon { font-size: 4rem; margin-bottom: 1rem; opacity: 0.5; }
+.btnStore {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background: var(--couleur-primaire);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+.btnStore:hover { transform: translateY(-2px); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: var(--couleur-sombre-2);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.05);
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+
+.equipeCard {
+  border-color: var(--couleur-primaire);
+  box-shadow: 0 0 20px rgba(230, 57, 70, 0.15);
+}
+
+.badgeEquipe {
+  position: absolute;
+  top: 12px; left: -25px;
+  background: var(--couleur-primaire);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.2rem 2rem;
+  transform: rotate(-45deg);
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.imageBox {
+  height: 140px;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.imageBox img { width: 100%; height: 100%; object-fit: cover; }
+.placeholderIcon { font-size: 3.5rem; opacity: 0.3; }
+
+.infoBox { padding: 1.5rem; }
+.infoBox h3 { margin: 0 0 0.5rem 0; font-family: var(--font-titre); color: white; }
+.infoBox p { color: rgba(255,255,255,0.6); font-size: 0.85rem; height: 2.5rem; overflow: hidden; }
+
+.actions { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
+
+.btnEquiper {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btnEquiper:hover { background: rgba(255,255,255,0.2); }
+
+.btnDesequiper {
+  background: rgba(230, 57, 70, 0.15);
+  color: var(--couleur-primaire);
+  border: 1px solid rgba(230, 57, 70, 0.3);
+}
+.btnDesequiper:hover { background: rgba(230, 57, 70, 0.25); }
+
+.statutLabel { font-size: 0.85rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.05em; }

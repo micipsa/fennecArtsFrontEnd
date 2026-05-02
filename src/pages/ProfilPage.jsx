@@ -21,6 +21,11 @@ import useAuth from "../hooks/useAuth";
 import Badge from "../components/UI/Badge";
 import Spinner from "../components/UI/Spinner";
 import { calculerRang } from "../utils/rangs";
+import PanneauQuetes from "../components/UI/PanneauQuetes";
+import OngletGaming from "./profil/OngletGaming";
+import OngletGeek from "./profil/OngletGeek";
+import OngletReseaux from "./profil/OngletReseaux";
+import OngletPersonnalisation from "./profil/OngletPersonnalisation";
 import styles from "./ProfilPage.module.css";
 
 function ProfilPage() {
@@ -115,6 +120,20 @@ function ProfilPage() {
     }
   };
 
+  const [ongletActif, setOngletActif] = useState("apercu");
+  const rechargerProfil = () => {
+    api.get("/api/auth/me").then(res => setProfil(res.data.user)).catch(() => {});
+  };
+
+  const ONGLETS = [
+    { id: "apercu", label: "Vue d'ensemble" },
+    { id: "gaming", label: "Identité Gaming" },
+    { id: "geek", label: "Identité Geek" },
+    { id: "reseaux", label: "Réseaux" },
+    { id: "perso", label: "Personnalisation" },
+    { id: "securite", label: "Sécurité" },
+  ];
+
   // Affichage du spinner pendant le chargement des données
   if (chargement) return <Spinner />;
 
@@ -140,6 +159,21 @@ function ProfilPage() {
           <h1 className={styles.titre}>Mon profil</h1>
           <p className={styles.sousTitre}>Informations de votre compte</p>
         </div>
+
+        <div className={styles.onglets}>
+          {ONGLETS.map(o => (
+            <button key={o.id} className={`${styles.onglet} ${ongletActif === o.id ? styles.ongletActif : ""}`} onClick={() => setOngletActif(o.id)}>
+              {o.label}
+            </button>
+          ))}
+        </div>
+
+        {ongletActif === "gaming" && <OngletGaming profil={profil} onUpdate={rechargerProfil} />}
+        {ongletActif === "geek" && <OngletGeek profil={profil} onUpdate={rechargerProfil} />}
+        {ongletActif === "reseaux" && <OngletReseaux profil={profil} onUpdate={rechargerProfil} />}
+        {ongletActif === "perso" && <OngletPersonnalisation profil={profil} onUpdate={rechargerProfil} />}
+
+        {ongletActif === "apercu" && (<>
 
         {/* ── Carte de profil ── */}
         <div className={styles.carte}>
@@ -229,6 +263,8 @@ function ProfilPage() {
               </div>
             );
           })()}
+
+        <PanneauQuetes />
 
         {/* ══════════════════════════════════════════════
             Section : Tags
@@ -364,6 +400,31 @@ function ProfilPage() {
             </button>
           </form>
         </div>
+        </>)}
+
+        {ongletActif === "securite" && (
+        <div className={styles.sectionMdp}>
+          <h2 className={styles.sectionTitre}>Changer le mot de passe</h2>
+          <form onSubmit={handleSubmitMdp} className={styles.formMdp}>
+            <div className={styles.champ}>
+              <label className={styles.label}>Ancien mot de passe</label>
+              <input className={styles.input} type="password" name="ancien" value={formMdp.ancien} onChange={handleChangeMdp} placeholder="••••••••" required />
+            </div>
+            <div className={styles.champ}>
+              <label className={styles.label}>Nouveau mot de passe</label>
+              <input className={styles.input} type="password" name="nouveau" value={formMdp.nouveau} onChange={handleChangeMdp} placeholder="••••••••" required />
+            </div>
+            <div className={styles.champ}>
+              <label className={styles.label}>Confirmer le nouveau mot de passe</label>
+              <input className={styles.input} type="password" name="confirmation" value={formMdp.confirmation} onChange={handleChangeMdp} placeholder="••••••••" required />
+            </div>
+            <button type="submit" className={styles.btnMdp} disabled={envoiEnCours}>
+              {envoiEnCours ? "Modification..." : "Changer le mot de passe"}
+            </button>
+          </form>
+        </div>
+        )}
+
       </div>
     </div>
   );

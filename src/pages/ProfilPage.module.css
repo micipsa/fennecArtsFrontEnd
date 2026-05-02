@@ -8,6 +8,33 @@
   margin-bottom: 2rem;
 }
 
+.onglets {
+  display: flex;
+  gap: 0.3rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.onglet {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(255,255,255,0.5);
+  font-family: var(--font-titre);
+  font-size: 0.82rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.2s;
+}
+.onglet:hover { color: white; background: rgba(255,255,255,0.04); }
+.ongletActif {
+  color: var(--couleur-primaire);
+  background: rgba(230,57,70,0.1);
+  border-color: rgba(230,57,70,0.3);
+}
+
 .titre {
   font-size: 1.8rem;
   font-weight: 800;

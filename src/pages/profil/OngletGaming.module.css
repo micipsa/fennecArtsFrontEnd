@@ -1,0 +1,32 @@
+.wrapper { display: flex; flex-direction: column; gap: 1.5rem; }
+.section { background: var(--couleur-sombre-2); border-radius: 12px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.05); }
+.titre { font-family: var(--font-titre); font-size: 1.1rem; margin-bottom: 1rem; color: white; }
+.recherche { display: flex; gap: 0.5rem; align-items: flex-start; position: relative; flex-wrap: wrap; }
+.input { flex: 1; min-width: 200px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 0.7rem; border-radius: 6px; color: white; font-family: var(--font-principale); }
+.input:focus { outline: none; border-color: var(--couleur-primaire); }
+.suggestions { position: absolute; top: 100%; left: 0; right: 0; background: var(--couleur-sombre); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; z-index: 10; max-height: 200px; overflow-y: auto; }
+.suggestion { display: block; width: 100%; text-align: left; padding: 0.6rem 1rem; background: none; border: none; border-left: 3px solid; color: white; cursor: pointer; font-size: 0.9rem; }
+.suggestion:hover { background: rgba(255,255,255,0.05); }
+.btnCustom { padding: 0.7rem 1rem; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.2); border-radius: 6px; color: rgba(255,255,255,0.6); cursor: pointer; white-space: nowrap; }
+.btnCustom:hover { background: rgba(255,255,255,0.1); }
+.jeuxListe { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem; }
+.jeuCard { background: rgba(0,0,0,0.25); border-radius: 10px; padding: 1rem; border: 1px solid rgba(255,255,255,0.05); }
+.jeuCard.top3 { border-color: var(--couleur-accent); box-shadow: 0 0 8px rgba(244,162,97,0.1); }
+.jeuHeader { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+.jeuNom { font-family: var(--font-titre); font-weight: 700; color: white; }
+.jeuActions { display: flex; gap: 0.3rem; }
+.jeuActions button { background: rgba(255,255,255,0.05); border: none; padding: 0.3rem 0.5rem; border-radius: 4px; cursor: pointer; color: white; }
+.jeuActions button:disabled { opacity: 0.3; }
+.jeuChamps { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.5rem; }
+.jeuChamps select, .jeuChamps input { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); padding: 0.5rem; border-radius: 6px; color: white; font-size: 0.85rem; }
+.jeuChamps select:focus, .jeuChamps input:focus { outline: none; border-color: var(--couleur-primaire); }
+.setup { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem; }
+.setup select, .setup input, .setup textarea { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); padding: 0.7rem; border-radius: 6px; color: white; font-family: var(--font-principale); }
+.setup textarea { grid-column: 1 / -1; min-height: 60px; resize: vertical; }
+.pseudos { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.75rem; }
+.pseudoChamp { display: flex; flex-direction: column; gap: 0.3rem; }
+.pseudoChamp label { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+.pseudoChamp input { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); padding: 0.6rem; border-radius: 6px; color: white; }
+.btnSauvegarder { padding: 0.8rem 2rem; background: var(--couleur-primaire); color: white; border: none; border-radius: 8px; font-family: var(--font-titre); font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.2s; align-self: flex-start; }
+.btnSauvegarder:hover:not(:disabled) { background: #d90429; transform: translateY(-1px); }
+.btnSauvegarder:disabled { opacity: 0.5; cursor: not-allowed; }

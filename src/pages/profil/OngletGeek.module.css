@@ -1,0 +1,11 @@
+.wrapper { display: flex; flex-direction: column; gap: 1.5rem; }
+.section { background: var(--couleur-sombre-2); border-radius: 12px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.05); }
+.titre { font-family: var(--font-titre); font-size: 1.1rem; margin-bottom: 0.75rem; color: white; }
+.input { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 0.7rem; border-radius: 6px; color: white; font-family: var(--font-principale); }
+.input:focus { outline: none; border-color: var(--couleur-primaire); }
+.textarea { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 0.7rem; border-radius: 6px; color: white; font-family: var(--font-principale); resize: vertical; }
+.textarea:focus { outline: none; border-color: var(--couleur-primaire); }
+.hint { font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-top: 0.3rem; }
+.btnSauvegarder { padding: 0.8rem 2rem; background: var(--couleur-primaire); color: white; border: none; border-radius: 8px; font-family: var(--font-titre); font-weight: 700; cursor: pointer; transition: 0.2s; align-self: flex-start; }
+.btnSauvegarder:hover:not(:disabled) { background: #d90429; transform: translateY(-1px); }
+.btnSauvegarder:disabled { opacity: 0.5; cursor: not-allowed; }

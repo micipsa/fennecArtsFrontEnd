@@ -1,0 +1,27 @@
+.container { padding: 1.5rem; }
+.titre { font-family: var(--font-titre); font-size: 2rem; margin-bottom: 2rem; color: white; }
+.layout { display: grid; grid-template-columns: 350px 1fr; gap: 2rem; align-items: start; }
+.formPanel, .listPanel { background: var(--couleur-sombre-2); border-radius: 12px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.05); }
+.formPanel h2, .listPanel h2 { font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--couleur-accent); }
+.formGroup { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+.formGroup label { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+.formGroup input, .formGroup select, .formGroup textarea { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem; border-radius: 6px; color: white; font-family: var(--font-principale); }
+.formGroup input:focus, .formGroup select:focus, .formGroup textarea:focus { outline: none; border-color: var(--couleur-primaire); }
+.row { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.5rem; }
+.actions { display: flex; gap: 1rem; margin-top: 1rem; }
+.btnSubmit { flex: 1; background: var(--couleur-primaire); color: white; border: none; padding: 0.75rem; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+.btnSubmit:hover { background: #d90429; }
+.btnCancel { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.2); padding: 0.75rem 1rem; border-radius: 6px; cursor: pointer; }
+.listHeader { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
+.filtres { display: flex; gap: 0.3rem; }
+.filtre, .filtreActif { padding: 0.3rem 0.7rem; border-radius: 6px; border: none; cursor: pointer; font-size: 0.8rem; background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6); transition: 0.15s; }
+.filtreActif { background: rgba(230,57,70,0.15); color: var(--couleur-primaire); }
+.tableWrapper { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { padding: 0.75rem 0.5rem; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; }
+.table th { color: rgba(255,255,255,0.5); font-size: 0.75rem; text-transform: uppercase; }
+.tdActions { display: flex; gap: 0.4rem; }
+.btnEdit, .btnDelete, .toggleBtn { background: rgba(255,255,255,0.05); border: none; padding: 0.3rem; border-radius: 4px; cursor: pointer; transition: 0.2s; }
+.btnEdit:hover { background: rgba(255,255,255,0.15); }
+.btnDelete:hover { background: rgba(230, 57, 70, 0.2); }
+@media (max-width: 1024px) { .layout { grid-template-columns: 1fr; } }
