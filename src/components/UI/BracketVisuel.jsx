@@ -24,13 +24,49 @@ function getX(round) {
   return (round - 1) * ROUND_W;
 }
 
-// ─── Carte d'un match individuel ────────────────────────────────────────────
-function CarteMatch({ match, onClic, isAdmin }) {
+// Détermine la couleur du statut d'un match
+function getStatutIndicateur(match) {
+  if (match.statut === "joue") return { color: "#27ae60", label: "Validé" };
+  if (match.statut === "en_litige") {
+    if (match.report1 && match.report2) {
+      const accord =
+        match.report1.gagnant === match.report2.gagnant &&
+        match.report1.score1 === match.report2.score1 &&
+        match.report1.score2 === match.report2.score2;
+      return accord
+        ? { color: "#f1c40f", label: "Accord — en attente de validation" }
+        : { color: "#e74c3c", label: "Litige — scores différents" };
+    }
+    return { color: "#f39c12", label: "1 rapport soumis" };
+  }
+  return { color: "#555", label: "En attente" };
+}
+
+// Vérifie si l'utilisateur est participant d'un match
+function estParticipant(match, userId) {
+  if (!userId) return false;
+  const p1 = match.participant1;
+  const p2 = match.participant2;
+  return (
+    p1?.joueur?.toString() === userId ||
+    p1?.capitaine?.toString() === userId ||
+    p2?.joueur?.toString() === userId ||
+    p2?.capitaine?.toString() === userId
+  );
+}
+
+// ─── Carte d'un match individuel ──────────────────────────────────────────
+function CarteMatch({ match, onClic, isAdmin, utilisateurId }) {
   const p1 = match.participant1;
   const p2 = match.participant2;
   const gagnant = match.gagnant;
+  const indicateur = getStatutIndicateur(match);
+
+  // Admin peut toujours cliquer, joueur peut cliquer sur son propre match non validé
+  const estJoueur = estParticipant(match, utilisateurId);
   const peutCliquer =
-    isAdmin && match.statut === "en_attente" && p1 && p2;
+    p1 && p2 &&
+    (isAdmin || (estJoueur && match.statut !== "joue"));
 
   return (
     <div
@@ -38,12 +74,20 @@ function CarteMatch({ match, onClic, isAdmin }) {
         styles.match,
         peutCliquer ? styles.matchCliquable : "",
         match.statut === "joue" ? styles.matchJoue : "",
+        match.statut === "en_litige" ? styles.matchLitige : "",
       ]
         .filter(Boolean)
         .join(" ")}
       onClick={() => peutCliquer && onClic(match)}
-      title={peutCliquer ? "Cliquer pour entrer le résultat" : undefined}
+      title={peutCliquer ? (isAdmin ? "Cliquer pour valider/modifier" : "Soumettre votre résultat") : indicateur.label}
     >
+      {/* Indicateur de statut */}
+      <span
+        className={styles.statutDot}
+        style={{ backgroundColor: indicateur.color }}
+        title={indicateur.label}
+      />
+
       {/* Participant 1 */}
       <div
         className={[
@@ -86,7 +130,7 @@ function CarteMatch({ match, onClic, isAdmin }) {
 }
 
 // ─── Composant principal du bracket ─────────────────────────────────────────
-function BracketVisuel({ matchs, onClicMatch, isAdmin = false }) {
+function BracketVisuel({ matchs, onClicMatch, isAdmin = false, utilisateurId = null }) {
   if (!matchs || matchs.length === 0) return null;
 
   const maxRound = Math.max(...matchs.map((m) => m.round));
@@ -106,11 +150,10 @@ function BracketVisuel({ matchs, onClicMatch, isAdmin = false }) {
 
     const x1 = getX(match.round) + CARD_W;
     const y1 = getY(match.round, match.position) + CARD_H / 2;
-    const xMid = x1 + 25; // point médian dans l'espace entre les deux rounds
+    const xMid = x1 + 25;
     const x2 = getX(nextMatch.round);
     const y2 = getY(nextMatch.round, nextMatch.position) + CARD_H / 2;
 
-    // Chemin en "S" horizontal : droite → vertical → droite
     lignes.push(
       <path
         key={`line-${match._id}`}
@@ -133,7 +176,7 @@ function BracketVisuel({ matchs, onClicMatch, isAdmin = false }) {
         ))}
       </div>
 
-      {/* Canvas du bracket : cartes + lignes SVG superposées */}
+      {/* Canvas du bracket */}
       <div
         className={styles.canvas}
         style={{ height: containerH, width: containerW }}
@@ -160,6 +203,7 @@ function BracketVisuel({ matchs, onClicMatch, isAdmin = false }) {
               match={match}
               onClic={onClicMatch}
               isAdmin={isAdmin}
+              utilisateurId={utilisateurId}
             />
           </div>
         ))}

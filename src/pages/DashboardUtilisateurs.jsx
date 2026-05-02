@@ -18,6 +18,7 @@
  *     eux-mêmes via la page /register.
  */
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import api from "../services/api";
 import Spinner from "../components/UI/Spinner";
 import MessageErreur from "../components/UI/MessageErreur";
@@ -184,7 +185,11 @@ function DashboardUtilisateurs() {
 
         {utilisateurs.map((u) => (
           <div key={u._id} className={styles.tableauLigne}>
-            <span className={styles.nom}>{u.nom}</span>
+            <span className={styles.nom}>
+              <Link to={`/membres/${u._id}`} className={styles.lienProfil} title="Voir le profil public">
+                {u.nom}
+              </Link>
+            </span>
             <span className={styles.email}>{u.email}</span>
             <span>
               <Badge

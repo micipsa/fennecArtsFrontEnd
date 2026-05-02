@@ -18,6 +18,7 @@ import { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useWebTV from "../../hooks/useWebTV";
+import NotifCloche from "../UI/NotifCloche";
 import styles from "./Navbar.module.css";
 
 function Navbar() {
@@ -235,12 +236,16 @@ function Navbar() {
                     </Link>
                   )}
                 {/* Nom de l'utilisateur cliquable → page profil */}
-                <Link
-                  to="/profil"
-                  className={styles.nomUtilisateur}
-                  onClick={fermerMenu}>
-                  {utilisateur.nom}
-                </Link>
+                <NotifCloche />
+                <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
+                  <span style={{color: '#ffd700', fontSize: '0.9rem', fontWeight: 'bold'}}>🪙 {utilisateur.fm || 0} FM</span>
+                  <Link
+                    to="/profil"
+                    className={styles.nomUtilisateur}
+                    onClick={fermerMenu}>
+                    {utilisateur.nom}
+                  </Link>
+                </div>
                 {/* Bouton de déconnexion */}
                 <button
                   className={styles.btnDeconnexion}

@@ -596,6 +596,55 @@
   cursor: not-allowed;
 }
 
+/* ── Modal Réclamation ─────────────────────────────────────────────────────── */
+.reclamationVue {
+  display: flex;
+  flex-direction: column;
+}
+
+.reclamationTextarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: var(--couleur-fond);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--border-radius);
+  color: var(--couleur-texte);
+  font-size: 0.95rem;
+  font-family: var(--font-principale);
+  resize: vertical;
+  transition: var(--transition);
+}
+
+.reclamationTextarea:focus {
+  outline: none;
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.15);
+}
+
+.uploadInput {
+  color: var(--couleur-texte-clair);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.btnReclamation {
+  padding: 0.65rem 1rem;
+  background: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  border-radius: var(--border-radius);
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: var(--font-titre);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btnReclamation:hover {
+  background: rgba(231, 76, 60, 0.2);
+  border-color: #e74c3c;
+}
+
 @media (max-width: 600px) {
   .infosGrille {
     grid-template-columns: 1fr;
@@ -638,4 +687,64 @@
 
 .bracketSection .indicationAdmin {
   color: #888;
+}
+
+/* ── Section reports (arbitrage admin) ─────────────────────────────────────── */
+.reportsSection {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--couleur-bordure);
+}
+
+.reportsGrille {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.reportCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.85rem;
+  background: var(--couleur-fond);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--couleur-bordure);
+}
+
+.reportTitre {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--couleur-texte);
+  font-family: var(--font-titre);
+  margin-bottom: 0.25rem;
+}
+
+.reportDetail {
+  font-size: 0.78rem;
+  color: var(--couleur-texte-clair);
+}
+
+.reportDetail strong {
+  color: var(--couleur-texte);
+}
+
+.btnAccepterReport {
+  margin-top: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  background: rgba(39, 174, 96, 0.12);
+  color: #27ae60;
+  border: 1px solid rgba(39, 174, 96, 0.3);
+  border-radius: var(--border-radius);
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-titre);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btnAccepterReport:hover {
+  background: rgba(39, 174, 96, 0.2);
+  border-color: #27ae60;
 }

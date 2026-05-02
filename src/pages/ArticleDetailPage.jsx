@@ -18,6 +18,7 @@ import { useState, useEffect } from "react";
 import api from "../services/api";
 import Commentaires from "../components/UI/Commentaires";
 import Badge from "../components/UI/Badge";
+import BoutonPartage from "../components/UI/BoutonPartage";
 import Spinner from "../components/UI/Spinner";
 import MessageErreur from "../components/UI/MessageErreur";
 import styles from "./ArticleDetailPage.module.css";
@@ -104,9 +105,12 @@ function ArticleDetailPage() {
               <span className={styles.auteurNom}>
                 {article.auteur?.nom ?? "Auteur inconnu"}
               </span>
-              <span className={styles.auteurRole}>Rédacteur Fennec Arts</span>
+              <span className={styles.auteurRole}>Rédacteur Fennec's Clan</span>
             </div>
           </div>
+
+          {/* Boutons de partage */}
+          <BoutonPartage titre={article.titre} />
         </div>
         {/* Image de couverture */}
         {article.imageUrl && (

@@ -1,0 +1,84 @@
+/* ── Skeleton shimmer effect ── */
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+.ligne {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite ease-in-out;
+  border-radius: 6px;
+}
+
+/* ── Carte squelette ── */
+.carte {
+  background: var(--couleur-blanc);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--couleur-bordure);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.carte .ligne {
+  background: linear-gradient(
+    90deg,
+    var(--couleur-bordure) 25%,
+    rgba(0, 0, 0, 0.06) 50%,
+    var(--couleur-bordure) 75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite ease-in-out;
+}
+
+.carteImage {
+  width: 100%;
+  height: 180px;
+  background: linear-gradient(
+    90deg,
+    var(--couleur-bordure) 25%,
+    rgba(0, 0, 0, 0.06) 50%,
+    var(--couleur-bordure) 75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite ease-in-out;
+}
+
+.carteCorps {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.carteEntete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cartePied {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--couleur-bordure);
+  margin-top: 0.5rem;
+}
+
+/* ── Grille identique à celle des sections HomePage ── */
+.grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}

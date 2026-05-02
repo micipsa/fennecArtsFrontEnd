@@ -1,29 +1,27 @@
 /**
  * CarteArticle — composant card pour afficher un aperçu d'article.
  *
- * Utilisé dans la liste des articles (ArticlesPage) et sur la page d'accueil (HomePage).
- *
- * Props :
- * - article : objet contenant les données de l'article
- *   - _id       : identifiant MongoDB (utilisé pour le lien de détail)
- *   - titre     : titre de l'article
- *   - contenu   : texte complet de l'article (tronqué à 120 caractères pour l'aperçu)
- *   - categorie : catégorie de l'article (ex: "Peinture", "Musique")
- *   - auteur    : objet { nom } de l'auteur (peut être null → "Auteur inconnu")
- *   - createdAt : date de création au format ISO (formatée en français)
- *
- * Structure de la carte :
- * - En-tête : Badge de catégorie + date formatée
- * - Corps   : titre + extrait du contenu (120 premiers caractères)
- * - Pied    : nom de l'auteur + lien "Lire la suite →"
+ * Inclut un bouton Like avec compteur et animation.
  */
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Badge from "../UI/Badge";
+import useAuth from "../../hooks/useAuth";
+import api from "../../services/api";
+import { useToast } from "../UI/Toast";
 import styles from "./CarteArticle.module.css";
 
 function CarteArticle({ article }) {
-  const { _id, titre, contenu, categorie, auteur, createdAt, imageUrl } =
+  const { utilisateur } = useAuth();
+  const { addToast } = useToast();
+  const { _id, titre, contenu, categorie, auteur, createdAt, imageUrl, tags } =
     article;
+
+  const [likesCount, setLikesCount] = useState(article.likes?.length || 0);
+  const [liked, setLiked] = useState(
+    article.likes?.includes(utilisateur?.id) || false,
+  );
+  const [animating, setAnimating] = useState(false);
 
   const extraitContenu =
     contenu.length > 120 ? contenu.slice(0, 120) + "..." : contenu;
@@ -33,6 +31,33 @@ function CarteArticle({ article }) {
     month: "long",
     year: "numeric",
   });
+
+  const handleLike = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!utilisateur) {
+      addToast("Connecte-toi pour liker !", "info");
+      return;
+    }
+
+    // Animation optimiste
+    setAnimating(true);
+    setLiked((prev) => !prev);
+    setLikesCount((prev) => (liked ? prev - 1 : prev + 1));
+    setTimeout(() => setAnimating(false), 400);
+
+    try {
+      const res = await api.post(`/api/articles/${_id}/like`);
+      setLikesCount(res.data.totalLikes);
+      setLiked(res.data.liked);
+    } catch {
+      // Rollback si erreur
+      setLiked((prev) => !prev);
+      setLikesCount((prev) => (liked ? prev + 1 : prev - 1));
+      addToast("Erreur lors du like", "error");
+    }
+  };
 
   return (
     <article className={styles.carte}>
@@ -44,7 +69,12 @@ function CarteArticle({ article }) {
 
       <div className={styles.corps}>
         <div className={styles.entete}>
-          <Badge texte={categorie} variante="primaire" />
+          <div className={styles.meta}>
+            <Badge texte={categorie} variante="primaire" />
+            {tags && tags.map(tag => (
+              <Link key={tag} to={`/articles?tag=${tag}`} className={styles.tagLien}>#{tag}</Link>
+            ))}
+          </div>
           <span className={styles.date}>{dateFormatee}</span>
         </div>
 
@@ -55,9 +85,18 @@ function CarteArticle({ article }) {
           <span className={styles.auteur}>
             Par <strong>{auteur?.nom ?? "Auteur inconnu"}</strong>
           </span>
-          <Link to={`/articles/${_id}`} className={styles.lien}>
-            Lire la suite →
-          </Link>
+          <div className={styles.piedDroit}>
+            <button
+              className={`${styles.likeBtn} ${liked ? styles.likeBtnActive : ""} ${animating ? styles.likeBtnPulse : ""}`}
+              onClick={handleLike}
+              aria-label={liked ? "Retirer le like" : "Liker cet article"}>
+              <span className={styles.likeIcon}>{liked ? "❤️" : "🤍"}</span>
+              <span className={styles.likeCount}>{likesCount}</span>
+            </button>
+            <Link to={`/articles/${_id}`} className={styles.lien}>
+              Lire →
+            </Link>
+          </div>
         </div>
       </div>
     </article>

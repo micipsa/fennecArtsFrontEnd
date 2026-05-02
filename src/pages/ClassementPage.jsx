@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import api from "../services/api";
 import { calculerRang } from "../utils/rangs";
 import Spinner from "../components/UI/Spinner";
@@ -55,7 +56,11 @@ function ClassementPage() {
                         <span className={styles.numero}>#{index + 1}</span>
                       )}
                     </td>
-                    <td className={styles.colNom}>{joueur.nom}</td>
+                    <td className={styles.colNom}>
+                      <Link to={`/membres/${joueur._id}`} className={styles.nomLien}>
+                        {joueur.nom}
+                      </Link>
+                    </td>
                     <td className={styles.colRangLol}>
                       <span style={{ color: rang.couleur }} className={styles.rangAffichage}>
                         {rang.affichage}

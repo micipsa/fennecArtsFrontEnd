@@ -40,6 +40,7 @@ function ProfilPage() {
   const [erreurMdp, setErreurMdp] = useState(null);
   const [successMdp, setSuccessMdp] = useState(null);
   const [envoiEnCours, setEnvoiEnCours] = useState(false);
+  const [historique, setHistorique] = useState([]);
 
   // ── Chargement du profil au montage ──
   useEffect(() => {
@@ -55,6 +56,7 @@ function ProfilPage() {
       }
     };
     chargerProfil();
+    api.get("/api/users/historique-xp").then((r) => setHistorique(r.data.data)).catch(() => {});
   }, [utilisateur]);
 
   // Mapping rôle → variante de couleur du Badge
@@ -212,6 +214,22 @@ function ProfilPage() {
             );
           })()}
 
+        {role !== "utilisateur" &&
+          (() => {
+            const fm = profil?.fm ?? 0;
+            return (
+              <div className={styles.sectionXP} style={{marginTop: '1rem', background: 'linear-gradient(145deg, #1f1f23, #151518)'}}>
+                <h2 className={styles.sectionTitre} style={{color: '#ffd700'}}>Fennekage Money (FM)</h2>
+                <div className={styles.rangBloc}>
+                  <div className={styles.rangPoints} style={{fontSize: '2rem', color: '#ffd700'}}>🪙 {fm} FM</div>
+                  <p className={styles.progressLabel} style={{color: '#aaa', marginTop: '0.5rem'}}>
+                    La monnaie officielle à dépenser dans la boutique (bientôt disponible).
+                  </p>
+                </div>
+              </div>
+            );
+          })()}
+
         {/* ══════════════════════════════════════════════
             Section : Tags
             ══════════════════════════════════════════════ */}
@@ -231,18 +249,52 @@ function ProfilPage() {
           </div>
         )}
 
-        {/* ══════════════════════════════════════════════
-            Section : Participations tournois
-            ══════════════════════════════════════════════ */}
-        {profil?.participationsTournois?.length > 0 && (
-          <div className={styles.sectionTags}>
+        {role !== "utilisateur" && profil?.participationsTournois?.length > 0 && (
+          <div className={styles.sectionTournois}>
             <h2 className={styles.sectionTitre}>Tournois joués</h2>
-            <div className={styles.tagsListe}>
+            <div className={styles.tournoiListe}>
               {profil.participationsTournois.map((p, i) => (
-                <div key={i} className={styles.tag} style={{ backgroundColor: "var(--couleur-sombre)" }}>
-                  <strong>{p.titreTournoi}</strong>
-                  {p.position && <span> — {p.position}</span>}
-                  <span> ({p.pointsGagnes} pts)</span>
+                <div key={i} className={styles.tournoiItem}>
+                  <span className={styles.tournoiTitre}>{p.titreTournoi}</span>
+                  {p.position && <span className={styles.tournoiPosition}>{p.position}</span>}
+                  <span className={styles.tournoiPoints}>+{p.pointsGagnes} pts</span>
+                  <span className={styles.tournoiDate}>
+                    {new Date(p.dateParticipation).toLocaleDateString("fr-FR")}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {profil?.badges?.length > 0 && (
+          <div className={styles.sectionBadges}>
+            <h2 className={styles.sectionTitre}>Badges</h2>
+            <div className={styles.badgesGrille}>
+              {profil.badges.map((b) => (
+                <div key={b._id} className={styles.badgeItem} title={b.description}>
+                  <span className={styles.badgeIcone}>{b.icone}</span>
+                  <span className={styles.badgeNom}>{b.nom}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {historique.length > 0 && (
+          <div className={styles.sectionHistorique}>
+            <h2 className={styles.sectionTitre}>Historique XP</h2>
+            <div className={styles.historiqueList}>
+              {historique.map((h, i) => (
+                <div key={i} className={styles.historiqueItem}>
+                  <span className={styles.historiqueType}>
+                    {{ mission: "🎯", article: "📝", commentaire: "💬", evenement: "📅", tournoi: "⚔️", bonus: "⭐" }[h.type] || "📌"}
+                  </span>
+                  <span className={styles.historiqueRaison}>{h.raison}</span>
+                  <span className={styles.historiquePoints}>+{h.points} pts</span>
+                  <span className={styles.historiqueDate}>
+                    {new Date(h.createdAt).toLocaleDateString("fr-FR")}
+                  </span>
                 </div>
               ))}
             </div>

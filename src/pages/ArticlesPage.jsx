@@ -10,6 +10,7 @@
  * ce qui relance automatiquement la requête API avec les nouveaux paramètres.
  */
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import api from "../services/api";
 import CarteArticle from "../components/Cards/CarteArticle";
 import Spinner from "../components/UI/Spinner";
@@ -41,6 +42,8 @@ const CATEGORIES = [
 const LIMITE = 9;
 
 function ArticlesPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const urlTag = searchParams.get("tag");
   // ── States ──
   const [articles, setArticles] = useState([]); // Liste des articles
   const [chargement, setChargement] = useState(true); // Indicateur de chargement
@@ -48,8 +51,12 @@ function ArticlesPage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [categorie, setCategorie] = useState("Toutes");
-  const [tagActif, setTagActif] = useState(null);
+  const [tagActif, setTagActif] = useState(urlTag);
   const [tagsDisponibles, setTagsDisponibles] = useState([]);
+
+  useEffect(() => {
+    setTagActif(urlTag);
+  }, [urlTag]);
 
   useEffect(() => {
     const chargerArticles = async () => {
@@ -82,7 +89,10 @@ function ArticlesPage() {
   };
 
   const handleTag = (tag) => {
-    setTagActif((prev) => (prev === tag ? null : tag));
+    const nouveauTag = tag === tagActif ? null : tag;
+    setTagActif(nouveauTag);
+    if (nouveauTag) setSearchParams({ tag: nouveauTag });
+    else setSearchParams({});
     setPage(1);
   };
 

@@ -38,6 +38,13 @@ function TournamentDetail() {
   const [score2Input, setScore2Input] = useState("");
   const [envoiMatch, setEnvoiMatch] = useState(false);
 
+  // ── Modal Réclamation ─────────────────────────────────────────────────────
+  const [reclamationOuverte, setReclamationOuverte] = useState(false);
+  const [reclamationMessage, setReclamationMessage] = useState("");
+  const [reclamationImage, setReclamationImage] = useState("");
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [envoiReclamation, setEnvoiReclamation] = useState(false);
+
   // ── Chargement ────────────────────────────────────────────────────────────
   useEffect(() => {
     const charger = async () => {
@@ -54,7 +61,7 @@ function TournamentDetail() {
     charger();
   }, [id]);
 
-  const isAdmin = utilisateur?.role === "admin";
+  const isAdmin = utilisateur?.role === "admin" || utilisateur?.role === "organisateur";
   const isFormatEquipe = FORMATS_EQUIPE.includes(tournoi?.format);
 
   const estInscrit =
@@ -149,27 +156,31 @@ function TournamentDetail() {
   // ── Ouverture modal — élimination simple ──────────────────────────────────
   const handleOuvrirMatch = (match) => {
     setMatchSelecte(match);
-    setGagnantInput("");
-    setScore1Input("");
-    setScore2Input("");
+    setGagnantInput(match.gagnant?.nomAffiche || "");
+    setScore1Input(match.score1 !== null && match.score1 !== undefined ? match.score1.toString() : "");
+    setScore2Input(match.score2 !== null && match.score2 !== undefined ? match.score2.toString() : "");
   };
 
   // ── Ouverture modal — double élimination ──────────────────────────────────
   const handleOuvrirMatchDouble = (match, zone, matchType = null) => {
     setMatchDoubleSelecte({ match, zone, matchType });
-    setGagnantInput("");
-    setScore1Input("");
-    setScore2Input("");
+    setGagnantInput(match.gagnant?.nomAffiche || "");
+    setScore1Input(match.score1 !== null && match.score1 !== undefined ? match.score1.toString() : "");
+    setScore2Input(match.score2 !== null && match.score2 !== undefined ? match.score2.toString() : "");
   };
 
   const fermerModal = () => {
     setMatchSelecte(null);
     setMatchDoubleSelecte(null);
+    setReclamationOuverte(false);
+    setReclamationMessage("");
+    setReclamationImage("");
   };
 
-  // ── Envoi résultat — élimination simple ───────────────────────────────────
+  // ── Envoi résultat — élimination simple ───────────────────────────────────────
   const handleSaisirResultat = async () => {
     if (!gagnantInput) return;
+    if (isAdmin && !window.confirm(`Valider le résultat : ${gagnantInput} gagne ?`)) return;
     setEnvoiMatch(true);
     try {
       const body = {
@@ -177,10 +188,10 @@ function TournamentDetail() {
         score1: score1Input !== "" ? Number(score1Input) : null,
         score2: score2Input !== "" ? Number(score2Input) : null,
       };
-      const res = await api.put(
-        `/api/tournaments/${id}/matchs/${matchSelecte._id}`,
-        body,
-      );
+      const url = isAdmin
+        ? `/api/tournaments/${id}/matchs/${matchSelecte._id}`
+        : `/api/tournaments/${id}/matchs/${matchSelecte._id}/report`;
+      const res = await api.put(url, body);
       setTournoi(res.data.data);
       setMatchSelecte(null);
     } catch (err) {
@@ -193,6 +204,7 @@ function TournamentDetail() {
   // ── Envoi résultat — double élimination ───────────────────────────────────
   const handleSaisirResultatDouble = async () => {
     if (!gagnantInput || !matchDoubleSelecte) return;
+    if (isAdmin && !window.confirm(`Valider le résultat : ${gagnantInput} gagne ?`)) return;
     setEnvoiMatch(true);
     try {
       const { match, zone, matchType } = matchDoubleSelecte;
@@ -203,9 +215,15 @@ function TournamentDetail() {
       };
 
       let url;
-      if (zone === "WB") url = `/api/tournaments/${id}/wb/${match._id}`;
-      else if (zone === "LB") url = `/api/tournaments/${id}/lb/${match._id}`;
-      else url = `/api/tournaments/${id}/gf/${matchType}`; // GF : pas d'_id
+      if (isAdmin) {
+        if (zone === "WB") url = `/api/tournaments/${id}/wb/${match._id}`;
+        else if (zone === "LB") url = `/api/tournaments/${id}/lb/${match._id}`;
+        else url = `/api/tournaments/${id}/gf/${matchType}`;
+      } else {
+        if (zone === "WB") url = `/api/tournaments/${id}/wb/${match._id}/report`;
+        else if (zone === "LB") url = `/api/tournaments/${id}/lb/${match._id}/report`;
+        else url = `/api/tournaments/${id}/gf/${matchType}/report`;
+      }
 
       const res = await api.put(url, body);
       setTournoi(res.data.data);
@@ -216,6 +234,54 @@ function TournamentDetail() {
       setEnvoiMatch(false);
     }
   };
+
+  // ── Envoi d'une réclamation ────────────────────────────────────────────────
+  const handleUploadImage = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const formData = new FormData();
+    formData.append("image", file);
+    setUploadingImage(true);
+    try {
+      const res = await api.post("/api/upload", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setReclamationImage(res.data.url);
+    } catch (err) {
+      alert("Erreur lors de l'upload de l'image.");
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  const handleSoumettreReclamation = async () => {
+    if (!reclamationMessage || !reclamationImage) {
+      alert("Veuillez fournir un message et une image de preuve.");
+      return;
+    }
+    const activeMatch = matchSelecte || matchDoubleSelecte?.match;
+    if (!activeMatch) return;
+
+    setEnvoiReclamation(true);
+    try {
+      await api.post(`/api/reclamations`, {
+        tournoiId: id,
+        matchId: activeMatch._id || matchDoubleSelecte?.matchType,
+        roundLabel: roundModal,
+        message: reclamationMessage,
+        imagePreuve: reclamationImage,
+      });
+      alert("Votre réclamation a été soumise avec succès ! L'organisateur sera notifié.");
+      setReclamationOuverte(false);
+      setReclamationMessage("");
+      setReclamationImage("");
+    } catch (err) {
+      alert(err.response?.data?.message || "Erreur lors de la soumission de la réclamation.");
+    } finally {
+      setEnvoiReclamation(false);
+    }
+  };
+
 
   // Champion du bracket simple = gagnant du match avec le round le plus élevé
   const championSimple =
@@ -475,10 +541,15 @@ function TournamentDetail() {
               </div>
             )}
 
-          {/* Indication admin */}
+          {/* Indication */}
           {isAdmin && tournoi.hasBracket && (
             <p className={styles.indicationAdmin}>
-              Cliquez sur un match pour saisir le résultat.
+              Cliquez sur un match pour valider ou arbitrer le résultat.
+            </p>
+          )}
+          {!isAdmin && estInscrit && tournoi.hasBracket && tournoi.statut === "en_cours" && (
+            <p className={styles.indicationAdmin}>
+              Cliquez sur votre match pour soumettre votre résultat.
             </p>
           )}
 
@@ -575,6 +646,7 @@ function TournamentDetail() {
                 matchs={tournoi.matchs}
                 onClicMatch={handleOuvrirMatch}
                 isAdmin={isAdmin}
+                utilisateurId={utilisateur?.id}
               />
             )}
 
@@ -587,6 +659,7 @@ function TournamentDetail() {
               champion={tournoi.champion}
               isAdmin={isAdmin}
               onClicMatch={handleOuvrirMatchDouble}
+              utilisateurId={utilisateur?.id}
             />
           )}
 
@@ -623,76 +696,197 @@ function TournamentDetail() {
       {/* ════════════════════════════════════════════════
           Modal saisie résultat (simple ET double élim)
           ════════════════════════════════════════════════ */}
-      {(matchSelecte || matchDoubleSelecte) && (
+      {(matchSelecte || matchDoubleSelecte) && (() => {
+        const activeMatch = matchSelecte || matchDoubleSelecte?.match;
+        const r1 = activeMatch?.report1;
+        const r2 = activeMatch?.report2;
+        const aDesReports = r1 || r2;
+        const enAccord = r1 && r2 &&
+          r1.gagnant === r2.gagnant &&
+          r1.score1 === r2.score1 &&
+          r1.score2 === r2.score2;
+
+        return (
         <div className={styles.overlay} onClick={fermerModal}>
           <div
             className={styles.modaleMatch}
             onClick={(e) => e.stopPropagation()}>
             <div className={styles.modaleMatchEntete}>
               <h3 className={styles.modaleMatchTitre}>
-                Résultat — {roundModal}
+                {isAdmin ? "Arbitrage" : "Soumettre votre résultat"} — {roundModal}
               </h3>
               <button className={styles.modaleFermer} onClick={fermerModal}>
                 ✕
               </button>
             </div>
 
-            <p className={styles.modaleMatchLabel}>Sélectionner le gagnant</p>
-            <div className={styles.versusBloc}>
-              {participantsModal.map((p, i) => (
-                <button
-                  key={i}
-                  className={[
-                    styles.btnJoueur,
-                    gagnantInput === p?.nomAffiche ? styles.btnJoueurActif : "",
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                  onClick={() => setGagnantInput(p?.nomAffiche)}>
-                  {p?.nomAffiche || "TBD"}
-                </button>
-              ))}
-            </div>
+            {/* Affichage des reports existants pour l'admin */}
+            {isAdmin && aDesReports && (
+              <div className={styles.reportsSection}>
+                <p className={styles.modaleMatchLabel}>
+                  {enAccord ? "✅ Les deux joueurs sont d'accord" : "⚠️ Litige — résultats différents"}
+                </p>
+                <div className={styles.reportsGrille}>
+                  <div className={styles.reportCard}>
+                    <span className={styles.reportTitre}>
+                      {activeMatch.participant1?.nomAffiche || "Joueur 1"}
+                    </span>
+                    {r1 ? (
+                      <>
+                        <span className={styles.reportDetail}>Gagnant : <strong>{r1.gagnant}</strong></span>
+                        <span className={styles.reportDetail}>Score : {r1.score1 ?? "—"} — {r1.score2 ?? "—"}</span>
+                        <button
+                          className={styles.btnAccepterReport}
+                          onClick={() => {
+                            setGagnantInput(r1.gagnant);
+                            setScore1Input(r1.score1?.toString() ?? "");
+                            setScore2Input(r1.score2?.toString() ?? "");
+                          }}>
+                          Utiliser ce résultat
+                        </button>
+                      </>
+                    ) : (
+                      <span className={styles.reportDetail}>Pas encore soumis</span>
+                    )}
+                  </div>
+                  <div className={styles.reportCard}>
+                    <span className={styles.reportTitre}>
+                      {activeMatch.participant2?.nomAffiche || "Joueur 2"}
+                    </span>
+                    {r2 ? (
+                      <>
+                        <span className={styles.reportDetail}>Gagnant : <strong>{r2.gagnant}</strong></span>
+                        <span className={styles.reportDetail}>Score : {r2.score1 ?? "—"} — {r2.score2 ?? "—"}</span>
+                        <button
+                          className={styles.btnAccepterReport}
+                          onClick={() => {
+                            setGagnantInput(r2.gagnant);
+                            setScore1Input(r2.score1?.toString() ?? "");
+                            setScore2Input(r2.score2?.toString() ?? "");
+                          }}>
+                          Utiliser ce résultat
+                        </button>
+                      </>
+                    ) : (
+                      <span className={styles.reportDetail}>Pas encore soumis</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
 
-            <p className={styles.modaleMatchLabel}>Scores (optionnel)</p>
-            <div className={styles.scoresBloc}>
-              <input
-                className={styles.scoreInput}
-                type="number"
-                min="0"
-                placeholder="0"
-                value={score1Input}
-                onChange={(e) => setScore1Input(e.target.value)}
-              />
-              <span className={styles.tiret}>—</span>
-              <input
-                className={styles.scoreInput}
-                type="number"
-                min="0"
-                placeholder="0"
-                value={score2Input}
-                onChange={(e) => setScore2Input(e.target.value)}
-              />
-            </div>
+            {!reclamationOuverte ? (
+              <>
+                <p className={styles.modaleMatchLabel}>Sélectionner le gagnant</p>
+                <div className={styles.versusBloc}>
+                  {participantsModal.map((p, i) => (
+                    <button
+                      key={i}
+                      className={[
+                        styles.btnJoueur,
+                        gagnantInput === p?.nomAffiche ? styles.btnJoueurActif : "",
+                      ]
+                        .filter(Boolean)
+                        .join(" ")}
+                      onClick={() => setGagnantInput(p?.nomAffiche)}>
+                      {p?.nomAffiche || "TBD"}
+                    </button>
+                  ))}
+                </div>
 
-            <div className={styles.modaleMatchActions}>
-              <button className={styles.btnAnnuler} onClick={fermerModal}>
-                Annuler
-              </button>
-              <button
-                className={styles.btnConfirmer}
-                onClick={
-                  matchSelecte
-                    ? handleSaisirResultat
-                    : handleSaisirResultatDouble
-                }
-                disabled={!gagnantInput || envoiMatch}>
-                {envoiMatch ? "Enregistrement..." : "Confirmer le résultat"}
-              </button>
-            </div>
+                <p className={styles.modaleMatchLabel}>Scores (optionnel)</p>
+                <div className={styles.scoresBloc}>
+                  <input
+                    className={styles.scoreInput}
+                    type="number"
+                    min="0"
+                    placeholder="0"
+                    value={score1Input}
+                    onChange={(e) => setScore1Input(e.target.value)}
+                  />
+                  <span className={styles.tiret}>—</span>
+                  <input
+                    className={styles.scoreInput}
+                    type="number"
+                    min="0"
+                    placeholder="0"
+                    value={score2Input}
+                    onChange={(e) => setScore2Input(e.target.value)}
+                  />
+                </div>
+
+                <div className={styles.modaleMatchActions}>
+                  {!isAdmin && estInscrit && (
+                    <button 
+                      className={styles.btnReclamation} 
+                      onClick={() => setReclamationOuverte(true)}>
+                      🚨 Signaler un problème
+                    </button>
+                  )}
+                  <div style={{ flex: 1 }}></div>
+                  <button className={styles.btnAnnuler} onClick={fermerModal}>
+                    Annuler
+                  </button>
+                  <button
+                    className={styles.btnConfirmer}
+                    onClick={
+                      matchSelecte
+                        ? handleSaisirResultat
+                        : handleSaisirResultatDouble
+                    }
+                    disabled={!gagnantInput || envoiMatch}>
+                    {envoiMatch
+                      ? "Enregistrement..."
+                      : isAdmin
+                        ? "✓ Valider le résultat"
+                        : "Soumettre mon résultat"}
+                  </button>
+                </div>
+              </>
+            ) : (
+              // Vue Réclamation
+              <div className={styles.reclamationVue}>
+                <p className={styles.modaleMatchLabel}>Description du problème</p>
+                <textarea
+                  className={styles.reclamationTextarea}
+                  placeholder="Expliquez pourquoi le résultat de ce match est incorrect..."
+                  value={reclamationMessage}
+                  onChange={(e) => setReclamationMessage(e.target.value)}
+                  rows={4}
+                />
+                
+                <p className={styles.modaleMatchLabel} style={{ marginTop: '1rem' }}>Image / Capture d'écran (Preuve)</p>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleUploadImage}
+                  className={styles.uploadInput}
+                />
+                {uploadingImage && <p style={{ fontSize: '0.8rem', color: '#f39c12' }}>Upload en cours...</p>}
+                {reclamationImage && (
+                  <div style={{ marginTop: '0.5rem' }}>
+                    <img src={reclamationImage} alt="Preuve" style={{ maxWidth: '100%', borderRadius: '4px', border: '1px solid #333' }} />
+                  </div>
+                )}
+
+                <div className={styles.modaleMatchActions} style={{ marginTop: '1.5rem' }}>
+                  <button className={styles.btnAnnuler} onClick={() => setReclamationOuverte(false)}>
+                    Retour
+                  </button>
+                  <button
+                    className={styles.btnConfirmer}
+                    style={{ background: '#e74c3c' }}
+                    onClick={handleSoumettreReclamation}
+                    disabled={envoiReclamation || uploadingImage || !reclamationMessage || !reclamationImage}>
+                    {envoiReclamation ? "Envoi..." : "Envoyer la réclamation"}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      )}
+        );
+      })()}
       <Commentaires cibleId={id} typeCible="tournoi" />
     </div>
   );

@@ -307,3 +307,26 @@
   font-family: var(--font-titre);
   letter-spacing: 0.03em;
 }
+
+.sectionBadges { margin-top: 2rem; background: var(--couleur-blanc); border-radius: var(--border-radius-lg); padding: 2rem; border: 1px solid var(--couleur-bordure); }
+.badgesGrille { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.badgeItem { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; padding: 0.75rem 1rem; border-radius: var(--border-radius); background: var(--couleur-fond); border: 1px solid var(--couleur-bordure); min-width: 80px; cursor: default; transition: transform 0.2s; }
+.badgeItem:hover { transform: translateY(-2px); }
+.badgeIcone { font-size: 1.6rem; }
+.badgeNom { font-size: 0.72rem; font-family: var(--font-titre); color: var(--couleur-texte-clair); text-align: center; }
+
+.sectionHistorique { margin-top: 2rem; background: var(--couleur-blanc); border-radius: var(--border-radius-lg); padding: 2rem; border: 1px solid var(--couleur-bordure); }
+.historiqueList { display: flex; flex-direction: column; gap: 0.4rem; max-height: 320px; overflow-y: auto; }
+.historiqueItem { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0.75rem; border-radius: var(--border-radius); background: var(--couleur-fond); font-size: 0.85rem; }
+.historiqueType { font-size: 1rem; }
+.historiqueRaison { flex: 1; color: var(--couleur-texte); }
+.historiquePoints { color: #28a745; font-weight: 700; font-family: var(--font-titre); white-space: nowrap; }
+.historiqueDate { color: var(--couleur-texte-clair); font-size: 0.75rem; white-space: nowrap; }
+
+.sectionTournois { margin-top: 2rem; background: var(--couleur-blanc); border-radius: var(--border-radius-lg); padding: 2rem; border: 1px solid var(--couleur-bordure); }
+.tournoiListe { display: flex; flex-direction: column; gap: 0.5rem; }
+.tournoiItem { display: flex; align-items: center; gap: 1rem; padding: 0.6rem 1rem; border-radius: var(--border-radius); background: var(--couleur-fond); }
+.tournoiTitre { flex: 1; font-size: 0.9rem; color: var(--couleur-texte); font-weight: 500; }
+.tournoiPosition { font-size: 0.8rem; font-weight: 700; color: var(--couleur-accent); font-family: var(--font-titre); }
+.tournoiPoints { font-size: 0.8rem; color: #28a745; font-weight: 600; }
+.tournoiDate { font-size: 0.75rem; color: var(--couleur-texte-clair); }

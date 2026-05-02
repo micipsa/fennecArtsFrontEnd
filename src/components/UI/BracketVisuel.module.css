@@ -65,6 +65,26 @@
   opacity: 0.85;
 }
 
+.matchLitige {
+  border-color: #f39c12;
+  box-shadow: 0 0 0 1px rgba(243, 156, 18, 0.25);
+}
+
+.match {
+  position: relative;
+}
+
+.statutDot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  z-index: 1;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
 /* ── Slot (une ligne = un participant) ─────────────────────────────────────── */
 .slot {
   flex: 1;

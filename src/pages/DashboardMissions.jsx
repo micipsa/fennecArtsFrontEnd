@@ -22,6 +22,8 @@ const FORM_INITIAL = {
   lieu: "",
   statut: "brouillon",
   imageUrl: "",
+  pointsRecompense: 0,
+  fmRecompense: 0,
   postes: [],
 };
 
@@ -101,6 +103,8 @@ export default function DashboardMissions() {
       lieu: mission.lieu || "",
       statut: mission.statut,
       imageUrl: mission.imageUrl || "",
+      pointsRecompense: mission.pointsRecompense || 0,
+      fmRecompense: mission.fmRecompense || 0,
       postes: (mission.postes || []).map((p) => ({
         _id: p._id,
         nom: p.nom,
@@ -237,6 +241,7 @@ export default function DashboardMissions() {
             <span>Titre</span>
             <span>Date</span>
             <span>Statut</span>
+            <span>Récompenses</span>
             <span>Postes</span>
             <span>Actions</span>
           </div>
@@ -251,6 +256,9 @@ export default function DashboardMissions() {
                   className={`${styles.badge} ${styles[`badge_${m.statut}`]}`}>
                   {STATUT_LABELS[m.statut]}
                 </span>
+              </span>
+              <span className={styles.cellRecompense}>
+                {m.pointsRecompense || 0} XP | {m.fmRecompense || 0} FM
               </span>
               <span className={styles.cellPostes}>
                 {m.postes?.length ?? 0} poste(s)
@@ -462,6 +470,17 @@ export default function DashboardMissions() {
                       </option>
                     ))}
                   </select>
+                </label>
+              </div>
+
+              <div className={styles.formRow}>
+                <label>
+                  XP Récompense
+                  <input type="number" name="pointsRecompense" value={form.pointsRecompense} onChange={handleChamp} min="0" />
+                </label>
+                <label>
+                  FM Récompense
+                  <input type="number" name="fmRecompense" value={form.fmRecompense} onChange={handleChamp} min="0" />
                 </label>
               </div>
 

@@ -10,6 +10,7 @@
  *     toujours passer par `api` (cette instance).
  */
 import axios from "axios";
+import toast from "react-hot-toast";
 
 // Création de l'instance Axios avec la baseURL lue depuis le fichier .env.
 // En développement : http://localhost:5000 (typiquement).
@@ -34,6 +35,53 @@ api.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
+});
+
+/**
+ * Intercepteur de réponse (response interceptor).
+ * Déclenche des notifications visuelles (Toasts) si le serveur renvoie
+ * des gains d'XP, des badges ou des montées de niveau.
+ */
+api.interceptors.response.use((response) => {
+  const data = response.data;
+
+  // Notification Gain d'XP
+  if (data.pointsGagnes) {
+    toast.success(`+${data.pointsGagnes} XP : ${data.raison || "Activité"}`, {
+      icon: "✨",
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
+  }
+
+  // Notification Nouveau Badge
+  if (data.nouveauBadge) {
+    toast.success(`Nouveau Badge débloqué : ${data.nouveauBadge.nom} !`, {
+      icon: "🏆",
+      duration: 5000,
+      style: {
+        border: "1px solid #ffd700",
+        padding: "16px",
+        color: "#ffd700",
+        background: "#1a1a1a",
+      },
+    });
+  }
+
+  // Notification Niveau Supérieur
+  if (data.niveauGagne) {
+    toast.success(`Félicitations ! Vous êtes passé au rang ${data.niveauGagne} !`, {
+      icon: "🚀",
+      duration: 6000,
+    });
+  }
+
+  return response;
+}, (error) => {
+  return Promise.reject(error);
 });
 
 export default api;

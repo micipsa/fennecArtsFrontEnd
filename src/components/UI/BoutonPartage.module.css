@@ -1,0 +1,60 @@
+.partage {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.label {
+  font-size: 0.82rem;
+  color: var(--couleur-texte-clair);
+  font-family: var(--font-titre);
+  letter-spacing: 0.03em;
+}
+
+.boutons {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--couleur-bordure);
+  background: transparent;
+  color: var(--couleur-texte-clair);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.facebook:hover {
+  background: rgba(24, 119, 242, 0.12);
+  border-color: rgba(24, 119, 242, 0.3);
+  color: #1877f2;
+}
+
+.twitter:hover {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.2);
+  color: var(--couleur-texte);
+}
+
+.copier:hover {
+  background: rgba(230, 57, 70, 0.08);
+  border-color: rgba(230, 57, 70, 0.3);
+  color: var(--couleur-primaire);
+}
+
+.copieFait {
+  background: rgba(40, 167, 69, 0.1) !important;
+  border-color: rgba(40, 167, 69, 0.3) !important;
+  color: #28a745 !important;
+}

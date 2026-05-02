@@ -170,6 +170,17 @@ const css = `
   .match-card.lb-card { border-left: 3px solid #f4a26144; }
   .match-card.gf-card { border-left: 3px solid #ffd70066; border-width: 1px; border-left-width: 3px; }
   .match-card.pending { opacity: 0.55; }
+  .match-card.litige { border-color: #f39c12 !important; box-shadow: 0 0 6px rgba(243,156,18,0.3); opacity: 1; }
+
+  .statut-dot {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0,0,0,0.4);
+  }
 
   /* Cliquable en mode admin */
   .match-card.clickable {
@@ -289,14 +300,33 @@ function TeamRow({ name, score, winner, loser }) {
   );
 }
 
-function MatchCard({ match, variant = "wb", isAdmin, onClick }) {
+function MatchCard({ match, variant = "wb", isAdmin, onClick, utilisateurId }) {
   const e1 = match.participant1?.nomAffiche || null;
   const e2 = match.participant2?.nomAffiche || null;
   const gagnantNom = match.gagnant?.nomAffiche || null;
   const joue = match.statut === "joue";
+  const enLitige = match.statut === "en_litige";
 
-  // Cliquable si admin, pas encore joué, et les deux participants sont connus
-  const clickable = isAdmin && !joue && e1 && e2;
+  // Vérifie si l'utilisateur est participant
+  const estParticipant = utilisateurId && (
+    match.participant1?.joueur?.toString() === utilisateurId ||
+    match.participant1?.capitaine?.toString() === utilisateurId ||
+    match.participant2?.joueur?.toString() === utilisateurId ||
+    match.participant2?.capitaine?.toString() === utilisateurId
+  );
+
+  // Cliquable si admin ou si joueur participant et match non validé
+  const clickable = e1 && e2 && (isAdmin || (estParticipant && !joue));
+
+  // Indicateur de statut
+  let dotColor = "#555";
+  if (joue) dotColor = "#27ae60";
+  else if (enLitige && match.report1 && match.report2) {
+    const accord = match.report1.gagnant === match.report2.gagnant &&
+      match.report1.score1 === match.report2.score1 &&
+      match.report1.score2 === match.report2.score2;
+    dotColor = accord ? "#f1c40f" : "#e74c3c";
+  } else if (enLitige) dotColor = "#f39c12";
 
   const winner1 = joue && gagnantNom === e1;
   const winner2 = joue && gagnantNom === e2;
@@ -305,9 +335,11 @@ function MatchCard({ match, variant = "wb", isAdmin, onClick }) {
 
   return (
     <div
-      className={`match-card ${variant}-card ${!joue ? "pending" : ""} ${clickable ? "clickable" : ""}`}
+      className={`match-card ${variant}-card ${!joue && !enLitige ? "pending" : ""} ${enLitige ? "litige" : ""} ${clickable ? "clickable" : ""}`}
+      style={{ position: "relative" }}
       onClick={clickable ? onClick : undefined}
-      title={clickable ? "Cliquer pour saisir le résultat" : undefined}>
+      title={clickable ? (isAdmin ? "Valider/arbitrer" : "Soumettre votre résultat") : undefined}>
+      <span className="statut-dot" style={{ backgroundColor: dotColor }} />
       <TeamRow name={e1} score={match.score1} winner={winner1} loser={loser1} />
       <TeamRow name={e2} score={match.score2} winner={winner2} loser={loser2} />
     </div>
@@ -323,6 +355,7 @@ export default function BracketDoubleElim({
   champion = null,
   isAdmin = false,
   onClicMatch,
+  utilisateurId = null,
 }) {
   const wbRounds =
     winnersMatchs.length > 0
@@ -374,6 +407,7 @@ export default function BracketDoubleElim({
                         match={m}
                         variant="wb"
                         isAdmin={isAdmin}
+                        utilisateurId={utilisateurId}
                         onClick={() => onClicMatch && onClicMatch(m, "WB")}
                       />
                     ))}
@@ -404,6 +438,7 @@ export default function BracketDoubleElim({
                         match={m}
                         variant="lb"
                         isAdmin={isAdmin}
+                        utilisateurId={utilisateurId}
                         onClick={() => onClicMatch && onClicMatch(m, "LB")}
                       />
                     ))}
@@ -427,6 +462,7 @@ export default function BracketDoubleElim({
                   match={gfMatch1}
                   variant="gf"
                   isAdmin={isAdmin}
+                  utilisateurId={utilisateurId}
                   onClick={() =>
                     onClicMatch && onClicMatch(gfMatch1, "GF", "match1")
                   }
@@ -453,7 +489,8 @@ export default function BracketDoubleElim({
                     <MatchCard
                       match={gfReset}
                       variant="gf"
-                      isAdmin={isAdmin && gfReset.statut === "en_attente"}
+                      isAdmin={isAdmin}
+                      utilisateurId={utilisateurId}
                       onClick={() =>
                         onClicMatch && onClicMatch(gfReset, "GF", "reset")
                       }

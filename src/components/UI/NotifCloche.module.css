@@ -1,0 +1,121 @@
+.wrapper {
+  position: relative;
+}
+.cloche {
+  background: transparent;
+  font-size: 1.1rem;
+  padding: 0.3rem;
+  cursor: pointer;
+  position: relative;
+  line-height: 1;
+  border-radius: var(--border-radius-sm);
+  transition: background 0.2s;
+}
+.cloche:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.badge {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  background: var(--couleur-primaire);
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 700;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-titre);
+}
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 320px;
+  max-height: 400px;
+  background: var(--couleur-sombre);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  z-index: 200;
+  overflow: hidden;
+  animation: slideDown 0.2s ease;
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.headerTitre {
+  font-family: var(--font-titre);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--couleur-blanc);
+}
+.toutLu {
+  background: transparent;
+  color: var(--couleur-accent);
+  font-size: 0.72rem;
+  font-family: var(--font-titre);
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+.toutLu:hover {
+  background: rgba(244, 162, 97, 0.15);
+}
+.liste {
+  max-height: 320px;
+  overflow-y: auto;
+}
+.vide {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.85rem;
+}
+.item {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.65rem 1rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  align-items: flex-start;
+}
+.item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+.nonLu {
+  background: rgba(230, 57, 70, 0.06);
+  border-left: 2px solid var(--couleur-primaire);
+}
+.icone {
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+.contenu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.titre {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--couleur-blanc);
+  font-family: var(--font-titre);
+}
+.message {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}

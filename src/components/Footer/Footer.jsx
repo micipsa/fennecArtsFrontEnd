@@ -1,48 +1,50 @@
 /**
  * Footer — pied de page affiché en bas de toutes les pages publiques.
  *
- * Structure en trois colonnes :
+ * Structure en quatre colonnes :
  * 1. Logo + description de la plateforme + tags de catégories
- * 2. Liens de navigation rapide (Accueil, Articles, Événements)
- * 3. Liens liés au compte (Connexion, Inscription, Mon profil)
+ * 2. Liens de navigation rapide
+ * 3. Communauté (Tournois, WebTV, Classement)
+ * 4. Liens liés au compte
  *
- * En bas : copyright avec l'année dynamique + badge "Made by Suncraft".
+ * En bas : copyright avec l'année dynamique + réseaux sociaux + badge "Made by Suncraft".
  */
 import { Link } from "react-router-dom";
 import styles from "./Footer.module.css";
 
 function Footer() {
-  // Récupère l'année actuelle pour le copyright dynamique
   const annee = new Date().getFullYear();
 
   return (
     <footer className={styles.footer}>
-      {/* ── Partie principale : 3 colonnes ── */}
+      {/* ── Partie principale : 4 colonnes ── */}
       <div className={`container ${styles.inner}`}>
         {/* Colonne 1 : Logo + description + tags */}
         <div className={styles.logoCol}>
           <Link to="/" className={styles.logo}>
             <img
-              src="/FennecArts_eSports_Logo.png"
-              alt="Fennec Arts"
+              src="/fennekagelogo.png"
+              alt="Fennec's Clan"
               className={styles.logoImg}
             />
-            Fennec Arts
+            <div className={styles.logoTextes}>
+              <span className={styles.logoNom}>Fennec's</span>
+              <span className={styles.logoClan}>Clan</span>
+            </div>
           </Link>
           <p>
-            Plateforme culturelle dédiée au gaming, à l'esport et à la culture
-            numérique en Algérie.
+            La communauté gaming, esport et culture geek algérienne. Articles,
+            tournois, événements et WebTV — tout l'univers du fennec.
           </p>
-          {/* Tags visuels des thématiques couvertes */}
           <div className={styles.tags}>
             <span className={styles.tag}>🎮 Gaming</span>
-            <span className={styles.tag}>🏆 Esport</span>
-            <span className={styles.tag}>🎨 Culture</span>
-            <span className={styles.tag}>🤖 Geek</span>
+            <span className={styles.tag}>⚔️ Esport</span>
+            <span className={styles.tag}>📖 Manga</span>
+            <span className={styles.tag}>🇩🇿 Culture DZ</span>
           </div>
         </div>
 
-        {/* Colonne 2 : Liens de navigation rapide */}
+        {/* Colonne 2 : Navigation */}
         <div>
           <p className={styles.colTitre}>Navigation</p>
           <ul className={styles.liensList}>
@@ -55,10 +57,29 @@ function Footer() {
             <li>
               <Link to="/events">Événements</Link>
             </li>
+            <li>
+              <Link to="/agenda">Agenda</Link>
+            </li>
           </ul>
         </div>
 
-        {/* Colonne 3 : Liens liés au compte utilisateur */}
+        {/* Colonne 3 : Communauté */}
+        <div>
+          <p className={styles.colTitre}>Communauté</p>
+          <ul className={styles.liensList}>
+            <li>
+              <Link to="/tournaments">Tournois</Link>
+            </li>
+            <li>
+              <Link to="/webtv">WebTV</Link>
+            </li>
+            <li>
+              <Link to="/classement">Classement</Link>
+            </li>
+          </ul>
+        </div>
+
+        {/* Colonne 4 : Compte */}
         <div>
           <p className={styles.colTitre}>Compte</p>
           <ul className={styles.liensList}>
@@ -66,7 +87,7 @@ function Footer() {
               <Link to="/login">Connexion</Link>
             </li>
             <li>
-              <Link to="/register">Inscription</Link>
+              <Link to="/register">Rejoindre le Clan</Link>
             </li>
             <li>
               <Link to="/profil">Mon profil</Link>
@@ -75,16 +96,16 @@ function Footer() {
         </div>
       </div>
 
-      {/* ── Barre inférieure : copyright + badge créateur ── */}
+      {/* ── Barre inférieure : copyright + réseaux + badge ── */}
       <div className="container">
         <div className={styles.bas}>
           <p className={styles.copyright}>
             © {annee}{" "}
-            <span className={styles.accentCopyright}>Fennec Arts</span> — Tous
-            droits réservés
+            <span className={styles.accentCopyright}>Fennec's Clan</span> —
+            Tous droits réservés
           </p>
 
-          {/* Réseaux sociaux — centré entre copyright et badge */}
+          {/* Réseaux sociaux */}
           <div className={styles.reseaux}>
             <a
               href="https://www.instagram.com/fennecarts/"
@@ -142,7 +163,7 @@ function Footer() {
             </a>
           </div>
 
-          {/* Lien vers la page Facebook de Suncraft (créateur du site) */}
+          {/* Badge créateur */}
           <a
             href="https://www.facebook.com/suncraftbejaia"
             target="_blank"

@@ -229,3 +229,7 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+.participationAction { margin-top: 1.5rem; display: flex; justify-content: center; }
+.btnParticiper { background: var(--couleur-primaire); color: var(--couleur-blanc); padding: 0.75rem 1.5rem; border-radius: var(--border-radius); font-size: 0.95rem; font-weight: 700; font-family: var(--font-titre); transition: var(--transition); border: 1px solid var(--couleur-primaire); }
+.btnParticiper:hover:not(:disabled) { background: transparent; color: var(--couleur-primaire); }
+.btnParticiper:disabled { opacity: 0.7; background: #28a745; border-color: #28a745; cursor: default; }

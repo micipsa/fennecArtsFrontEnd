@@ -27,6 +27,8 @@ function EvenementDetailPage() {
   const [evenement, setEvenement] = useState(null);
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState(null);
+  const [participe, setParticipe] = useState(false);
+  const [envoiParticipation, setEnvoiParticipation] = useState(false);
 
   // ── Chargement de l'événement au montage ──
   useEffect(() => {
@@ -44,6 +46,22 @@ function EvenementDetailPage() {
     };
     chargerEvenement();
   }, [id]);
+
+  const handleParticiper = async () => {
+    setEnvoiParticipation(true);
+    try {
+      await api.post(`/api/events/${id}/participer`);
+      setParticipe(true);
+      setEvenement((prev) => ({
+        ...prev,
+        participants: [...(prev.participants || []), { _id: "me" }],
+      }));
+    } catch (err) {
+      alert(err.response?.data?.message || "Erreur lors de l'inscription.");
+    } finally {
+      setEnvoiParticipation(false);
+    }
+  };
 
   // Spinner pendant le chargement
   if (chargement) return <Spinner />;
@@ -126,7 +144,7 @@ function EvenementDetailPage() {
               <div className={styles.infoTexte}>
                 <span className={styles.infoLabel}>Participants</span>
                 <span className={styles.infoValeur}>
-                  {evenement.adherents?.length ?? 0} inscrit(s)
+                  {evenement.participants?.length ?? 0} inscrit(s)
                 </span>
               </div>
             </div>
@@ -166,6 +184,18 @@ function EvenementDetailPage() {
               </div>
             )}
           </div>
+
+          {/* Bouton de participation */}
+          {estFutur && (
+            <div className={styles.participationAction}>
+              <button
+                className={styles.btnParticiper}
+                onClick={handleParticiper}
+                disabled={participe || envoiParticipation}>
+                {participe ? "✓ Inscrit" : envoiParticipation ? "Envoi..." : "Participer à l'événement"}
+              </button>
+            </div>
+          )}
         </div>
 
         <div className={styles.separateur} />

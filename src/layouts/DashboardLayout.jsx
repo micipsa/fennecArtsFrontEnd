@@ -43,20 +43,24 @@ function DashboardLayout() {
         {/* En-tête de la sidebar */}
         <div className={styles.sidebarEntete}>
           <p className={styles.sidebarTitre}>Fennec's Clan</p>
-          <p className={styles.sidebarSousTitre}>Administration</p>
+          <p className={styles.sidebarSousTitre}>
+            {estAdmin ? "Administration" : "Espace Organisateur"}
+          </p>
         </div>
 
         {/* Navigation entre les sections du dashboard */}
         <nav className={styles.nav}>
-          {/* `end` = le lien n'est actif QUE pour /dashboard exact, pas /dashboard/articles */}
-          <NavLink
-            to="/dashboard"
-            end
-            className={({ isActive }) =>
-              `${styles.navLien} ${isActive ? styles.actif : ""}`
-            }>
-            Vue d'ensemble
-          </NavLink>
+          {/* Vue d'ensemble : admin uniquement */}
+          {estAdmin && (
+            <NavLink
+              to="/dashboard"
+              end
+              className={({ isActive }) =>
+                `${styles.navLien} ${isActive ? styles.actif : ""}`
+              }>
+              Vue d'ensemble
+            </NavLink>
+          )}
 
           {estAdmin && (
             <>

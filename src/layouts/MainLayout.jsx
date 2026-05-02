@@ -10,12 +10,15 @@
  * automatiquement le composant enfant correspondant à la route active.
  * Par exemple, si l'URL est "/articles", <Outlet /> affichera <ArticlesPage />.
  */
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
+import AnimationPage from "../components/UI/AnimationPage";
 import styles from "./MainLayout.module.css";
 
 function MainLayout() {
+  const location = useLocation();
+
   return (
     <div className={styles.wrapper}>
       {/* Barre de navigation persistante en haut de chaque page */}
@@ -23,7 +26,9 @@ function MainLayout() {
 
       {/* Zone de contenu principal — rendu dynamique selon la route */}
       <main className={styles.main}>
-        <Outlet />
+        <AnimationPage key={location.pathname}>
+          <Outlet />
+        </AnimationPage>
       </main>
 
       {/* Pied de page persistant en bas */}

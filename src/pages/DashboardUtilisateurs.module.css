@@ -71,6 +71,15 @@
   text-overflow: ellipsis;
   padding-right: 0.5rem;
 }
+.lienProfil {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.lienProfil:hover {
+  color: var(--couleur-primaire);
+  text-decoration: underline;
+}
 
 .email {
   color: var(--couleur-texte-clair);

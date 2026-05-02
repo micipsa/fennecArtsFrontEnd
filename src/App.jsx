@@ -27,6 +27,7 @@
  * 3. Route catch-all  → page 404 (NotFoundPage)
  */
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 // ── Layouts ──
 import MainLayout from "./layouts/MainLayout";
@@ -52,6 +53,7 @@ import TournamentDetail from "./pages/TournamentDetail";
 import ClassementPage from "./pages/ClassementPage";
 import RechercheGlobale from "./pages/RechercheGlobale";
 import AgendaPage from "./pages/AgendaPage";
+import ProfilPublicPage from "./pages/ProfilPublicPage";
 
 // ── Pages dashboard (admin) ──
 import DashboardAccueil from "./pages/DashboardAccueil";
@@ -76,6 +78,7 @@ function App() {
   return (
     // BrowserRouter utilise l'API History du navigateur pour gérer les URL.
     <BrowserRouter>
+      <Toaster position="top-right" reverseOrder={false} />
       <Routes>
         {/* ════════════════════════════════════════════
             ROUTES PUBLIQUES — MainLayout (Navbar + Footer)
@@ -93,6 +96,7 @@ function App() {
           <Route path="classement" element={<ClassementPage />} />
           <Route path="recherche" element={<RechercheGlobale />} />
           <Route path="agenda" element={<AgendaPage />} />
+          <Route path="membres/:id" element={<ProfilPublicPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="/webtv" element={<WebTVPage />} />

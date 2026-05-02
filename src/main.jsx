@@ -18,6 +18,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import AuthProvider from "./context/AuthProvider";
+import { ToastProvider } from "./components/UI/Toast";
 
 import WebTVProvider from "./context/WebTVProvider";
 
@@ -25,9 +26,11 @@ import WebTVProvider from "./context/WebTVProvider";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      <WebTVProvider>
-        <App />
-      </WebTVProvider>
+      <ToastProvider>
+        <WebTVProvider>
+          <App />
+        </WebTVProvider>
+      </ToastProvider>
     </AuthProvider>
   </StrictMode>,
 );

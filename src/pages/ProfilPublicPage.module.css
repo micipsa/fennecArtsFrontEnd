@@ -1,0 +1,18 @@
+.page { max-width: 600px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+.retourBtn { background: none; border: none; padding: 0; display: inline-flex; align-items: center; gap: 0.4rem; color: var(--couleur-texte-clair); font-size: 0.88rem; margin-bottom: 2rem; transition: var(--transition); font-family: var(--font-titre); cursor: pointer; }
+.retourBtn:hover { color: var(--couleur-primaire); }
+.carte { background: var(--couleur-blanc); border-radius: var(--border-radius-lg); padding: 2.5rem; border: 1px solid var(--couleur-bordure); text-align: center; }
+.avatar { width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 800; color: white; font-family: var(--font-titre); margin: 0 auto 1rem; }
+.nom { font-size: 1.5rem; font-weight: 800; font-family: var(--font-titre); color: var(--couleur-texte); margin-bottom: 0.3rem; }
+.rangNom { font-size: 1rem; font-weight: 700; font-family: var(--font-titre); margin-bottom: 0.5rem; }
+.meta { font-size: 0.82rem; color: var(--couleur-texte-clair); margin-bottom: 1.5rem; }
+.tagsListe { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; margin-bottom: 1.5rem; }
+.tag { color: white; padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-family: var(--font-titre); }
+.badgesListe { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin-bottom: 1.5rem; }
+.badgeItem { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; padding: 0.5rem 0.75rem; border-radius: var(--border-radius); background: var(--couleur-fond); border: 1px solid var(--couleur-bordure); }
+.badgeIcone { font-size: 1.4rem; }
+.badgeNom { font-size: 0.7rem; font-family: var(--font-titre); color: var(--couleur-texte-clair); }
+.tournois { text-align: left; margin-top: 1.5rem; border-top: 1px solid var(--couleur-bordure); padding-top: 1.5rem; }
+.sousTitre { font-size: 0.9rem; font-weight: 700; font-family: var(--font-titre); color: var(--couleur-texte); margin-bottom: 0.75rem; }
+.tournoiItem { display: flex; align-items: center; justify-content: space-between; padding: 0.4rem 0.6rem; font-size: 0.85rem; border-radius: var(--border-radius); background: var(--couleur-fond); margin-bottom: 0.3rem; }
+.position { font-weight: 700; color: var(--couleur-accent); font-family: var(--font-titre); }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import api from "../../services/api";
 import useAuth from "../../hooks/useAuth";
 import styles from "./Commentaires.module.css";
@@ -105,7 +106,9 @@ function Commentaires({ cibleId, typeCible }) {
         {commentaires.map((c) => (
           <div key={c._id} className={styles.commentaire}>
             <div className={styles.commentaireEntete}>
-              <span className={styles.auteur}>{c.auteur?.nom ?? "Anonyme"}</span>
+              <Link to={`/membres/${c.auteur?._id}`} className={styles.auteurLien}>
+                <span className={styles.auteur}>{c.auteur?.nom ?? "Anonyme"}</span>
+              </Link>
               <span className={styles.date}>
                 {new Date(c.createdAt).toLocaleDateString("fr-FR")}
               </span>
@@ -146,7 +149,9 @@ function Commentaires({ cibleId, typeCible }) {
             {reponses.filter((r) => r.parent?.toString() === c._id || r.parent === c._id).map((r) => (
               <div key={r._id} className={styles.reponse}>
                 <div className={styles.commentaireEntete}>
-                  <span className={styles.auteur}>{r.auteur?.nom ?? "Anonyme"}</span>
+                  <Link to={`/membres/${r.auteur?._id}`} className={styles.auteurLien}>
+                    <span className={styles.auteur}>{r.auteur?.nom ?? "Anonyme"}</span>
+                  </Link>
                   <span className={styles.date}>
                     {new Date(r.createdAt).toLocaleDateString("fr-FR")}
                   </span>

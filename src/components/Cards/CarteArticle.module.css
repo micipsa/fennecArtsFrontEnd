@@ -70,10 +70,32 @@
   justify-content: space-between;
 }
 
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tagLien {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--couleur-accent);
+  text-decoration: none;
+  font-family: var(--font-titre);
+  transition: var(--transition);
+}
+
+.tagLien:hover {
+  color: #e08a4a;
+  text-decoration: underline;
+}
+
 .date {
   font-size: 0.82rem;
   color: var(--couleur-texte-clair);
   font-family: var(--font-titre);
+  white-space: nowrap;
 }
 
 .titre {
@@ -103,6 +125,70 @@
 .auteur {
   font-size: 0.85rem;
   color: var(--couleur-texte-clair);
+}
+
+.piedDroit {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.likeBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+}
+
+.likeBtn:hover {
+  background: rgba(230, 57, 70, 0.08);
+}
+
+.likeBtnActive {
+  color: var(--couleur-primaire);
+}
+
+.likeIcon {
+  font-size: 1rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.likeBtn:hover .likeIcon {
+  transform: scale(1.15);
+}
+
+.likeBtnPulse .likeIcon {
+  animation: likePulse 0.4s ease;
+}
+
+@keyframes likePulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.likeCount {
+  font-family: var(--font-titre);
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: var(--couleur-texte-clair);
+}
+
+.likeBtnActive .likeCount {
+  color: var(--couleur-primaire);
 }
 
 .lien {

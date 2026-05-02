@@ -18,20 +18,15 @@ export default function SidebarAdherent() {
 
       <nav className={styles.nav}>
         <NavLink
-          to="/dashboard"
-          end
-          className={({ isActive }) =>
-            isActive ? `${styles.lien} ${styles.actif}` : styles.lien
-          }>
-          🏠 Accueil
-        </NavLink>
-
-        <NavLink
           to="/missions"
           className={({ isActive }) =>
             isActive ? `${styles.lien} ${styles.actif}` : styles.lien
           }>
           📋 Missions
+        </NavLink>
+
+        <NavLink to="/" className={styles.lien}>
+          ← Retour au site
         </NavLink>
       </nav>
     </aside>

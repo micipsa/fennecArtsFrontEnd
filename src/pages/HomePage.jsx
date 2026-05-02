@@ -20,6 +20,7 @@ import CarteArticle from "../components/Cards/CarteArticle";
 import CarteEvenement from "../components/Cards/CarteEvenement";
 import CarteTournoi from "../components/Cards/CarteTournoi";
 import Spinner from "../components/UI/Spinner";
+import { SkeletonGrille } from "../components/UI/Skeleton";
 import AnecdoteAleatoire from "../components/Anecdotes/AnecdoteAleatoire";
 import CitationAleatoire from "../components/Citations/CitationAleatoire";
 import styles from "./HomePage.module.css";
@@ -104,7 +105,7 @@ function HomePage() {
             </Link>
           </div>
           {chargement ? (
-            <Spinner />
+            <SkeletonGrille nombre={3} />
           ) : (
             <div className={styles.grille}>
               {articles.map((article) => (
@@ -132,7 +133,7 @@ function HomePage() {
             </Link>
           </div>
           {chargement ? (
-            <Spinner />
+            <SkeletonGrille nombre={3} />
           ) : tournois.length === 0 ? (
             <p className={styles.vide}>Aucun tournoi ouvert pour le moment.</p>
           ) : (
@@ -160,7 +161,7 @@ function HomePage() {
             </Link>
           </div>
           {chargement ? (
-            <Spinner />
+            <SkeletonGrille nombre={3} />
           ) : evenements.length === 0 ? (
             <p className={styles.vide}>
               Aucun événement à venir pour le moment.
