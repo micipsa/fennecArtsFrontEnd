@@ -63,7 +63,7 @@ export default function PlayPage() {
                 <span>+{anim.recompenseXP} XP</span>
                 <span>+{anim.recompenseFM} FM</span>
               </div>
-              {anim.dejaFait && <div className={styles.badgeFait}>Terminé ✓</div>}
+              {anim.dejaFait && <div className={styles.badgeFait}>QUÊTE ACCOMPLIE</div>}
             </div>
           ))}
         </div>

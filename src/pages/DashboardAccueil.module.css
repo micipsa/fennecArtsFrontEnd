@@ -23,11 +23,11 @@
 }
 
 .carte {
-  background: var(--couleur-blanc);
+  background: var(--couleur-sombre-2);
   border-radius: var(--border-radius-lg);
   padding: 1.5rem;
-  box-shadow: var(--ombre-sm);
-  border: 1px solid var(--couleur-bordure);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   position: relative;
   overflow: hidden;
   transition: var(--transition);

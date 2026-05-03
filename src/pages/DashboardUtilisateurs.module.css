@@ -21,8 +21,8 @@
 }
 .tableau {
   border-radius: var(--border-radius-lg);
-  border: 1px solid var(--couleur-bordure);
-  background: var(--couleur-blanc);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--couleur-sombre-2);
 }
 
 .tableauScroll {
@@ -165,14 +165,15 @@
 }
 
 .modale {
-  background: var(--couleur-blanc);
+  background: var(--couleur-sombre-2);
   border-radius: var(--border-radius-lg);
   padding: 2rem;
   width: 100%;
   max-width: 500px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: var(--ombre-lg);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modaleEntete {

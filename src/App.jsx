@@ -84,6 +84,8 @@ import RedacteurArticles from "./pages/RedacteurArticles";
 // ── Route WebTV ──
 import WebTVPage from "./pages/WebTVPage/WebTVPage";
 import RouteOrganisateur from "./components/RoutesProtegees/RouteOrganisateur";
+import RouteAdherent from "./components/RoutesProtegees/RouteAdherent";
+
 function App() {
   return (
     // BrowserRouter utilise l'API History du navigateur pour gérer les URL.
@@ -173,9 +175,9 @@ function App() {
         <Route
           path="/missions"
           element={
-            <RouteProtegee>
+            <RouteAdherent>
               <AdherentLayout />
-            </RouteProtegee>
+            </RouteAdherent>
           }>
           <Route index element={<MissionsAdherent />} />
         </Route>

@@ -44,13 +44,13 @@ function Navbar() {
           <ul className={styles.nav}>
             <li><NavLink to="/" end className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>Accueil</NavLink></li>
             <li><NavLink to="/articles" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>Articles</NavLink></li>
-            <li><NavLink to="/events" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>Événements</NavLink></li>
-            <li><NavLink to="/tournaments" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>Tournois</NavLink></li>
             <li>
               <NavLink to="/webtv" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>
                 WebTV {estEnLive && <span className={styles.badgeLive} />}
               </NavLink>
             </li>
+            <li><NavLink to="/events" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>Événements</NavLink></li>
+            <li><NavLink to="/tournaments" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>Tournois</NavLink></li>
             <li>
               <NavLink to="/play" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>
                 🎮 Dojo Play
@@ -93,16 +93,24 @@ function Navbar() {
           <div className={styles.drawerLinks}>
             <NavLink to="/" end onClick={() => setMenuMobile(false)}>🏠 Accueil</NavLink>
             <NavLink to="/articles" onClick={() => setMenuMobile(false)}>📰 Articles</NavLink>
-            <NavLink to="/tournaments" onClick={() => setMenuMobile(false)}>🏆 Tournois</NavLink>
-            <NavLink to="/events" onClick={() => setMenuMobile(false)}>📅 Événements</NavLink>
             <NavLink to="/webtv" onClick={() => setMenuMobile(false)}>📺 WebTV</NavLink>
-            <NavLink to="/play" onClick={() => setMenuMobile(false)}>🎮 Dojo Play</NavLink>
+            <NavLink to="/events" onClick={() => setMenuMobile(false)}>📅 Événements</NavLink>
+            <NavLink to="/tournaments" onClick={() => setMenuMobile(false)}>🏆 Tournois</NavLink>
+            
             <div className={styles.separateur} />
-            <NavLink to="/missions" onClick={() => setMenuMobile(false)}>🎯 Missions</NavLink>
+            
+            <NavLink to="/defis" onClick={() => setMenuMobile(false)}>⚔️ Défis</NavLink>
+            <NavLink to="/play" onClick={() => setMenuMobile(false)}>🎮 Dojo Play</NavLink>
+            
+            <div className={styles.separateur} />
+            
             <NavLink to="/classement" onClick={() => setMenuMobile(false)}>🏅 Classement</NavLink>
             <NavLink to="/communaute" onClick={() => setMenuMobile(false)}>👥 Communauté</NavLink>
+            
+            <div className={styles.separateur} />
+            
             <NavLink to="/store" onClick={() => setMenuMobile(false)}>🛒 Store</NavLink>
-            <NavLink to="/defis" onClick={() => setMenuMobile(false)}>⚔️ Défis</NavLink>
+            
             {!utilisateur && (
               <>
                 <div className={styles.separateur} />

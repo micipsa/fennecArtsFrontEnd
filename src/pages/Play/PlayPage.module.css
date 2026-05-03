@@ -85,20 +85,27 @@
 }
 
 .fait {
-  opacity: 0.6;
-  cursor: default;
+  opacity: 0.5;
+  filter: grayscale(100%);
+  cursor: not-allowed;
 }
 
 .badgeFait {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: #34c759;
+  top: 25px;
+  right: -40px;
+  background: var(--couleur-primaire);
   color: white;
-  font-size: 0.75rem;
+  font-family: var(--font-titre);
+  font-size: 0.8rem;
   font-weight: 800;
-  padding: 0.3rem 0.6rem;
-  border-radius: 6px;
+  padding: 0.4rem 3rem;
+  border-radius: 0;
+  transform: rotate(45deg);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.05em;
+  text-align: center;
+  z-index: 10;
 }
 
 .btnRetour {

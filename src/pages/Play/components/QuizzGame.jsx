@@ -13,6 +13,10 @@ export default function QuizzGame({ quizz, onFinish }) {
   const questions = quizz.config.questions || [];
   const currentQuestion = questions[currentIdx];
 
+  if (!currentQuestion) {
+    return <div className={styles.game}>Ce quizz est vide ou mal configuré.</div>;
+  }
+
   const handleNext = useCallback((correct = false) => {
     if (correct) setScore(s => s + 1);
     
