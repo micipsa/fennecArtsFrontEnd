@@ -1,421 +1,408 @@
-.hero {
-  background: linear-gradient(
-    160deg,
-    var(--couleur-sombre) 0%,
-    var(--couleur-sombre-2) 60%,
-    #0d0d1a 100%
-  );
-  padding: 5rem 0 4rem;
+.heroWrapper {
   position: relative;
   overflow: hidden;
-  min-height: 90vh;
+  background: var(--couleur-sombre);
+  min-height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-/* Grille perspective 3D en fond */
-.grid3D {
+/* === GRILLE CYBERPUNK === */
+.grilleCyberpunk {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 220px;
-  background-image:
-    linear-gradient(rgba(230, 57, 70, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(230, 57, 70, 0.08) 1px, transparent 1px);
-  background-size: 60px 60px;
-  transform: perspective(400px) rotateX(60deg);
-  transform-origin: bottom;
+  inset: 0;
+  background:
+    linear-gradient(0deg, transparent 24%, rgba(0, 212, 255, 0.05) 25%, rgba(0, 212, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 212, 255, 0.05) 75%, rgba(0, 212, 255, 0.05) 76%, transparent 77%, transparent),
+    linear-gradient(90deg, transparent 24%, rgba(0, 212, 255, 0.05) 25%, rgba(0, 212, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 212, 255, 0.05) 75%, rgba(0, 212, 255, 0.05) 76%, transparent 77%, transparent);
+  background-size: 80px 80px;
+  background-position: 0 0, 40px 40px;
   pointer-events: none;
-  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+  z-index: 0;
+  opacity: 0.3;
 }
 
-.grille {
-  max-width: var(--max-width);
+.grilleCyberpunk::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(230, 57, 70, 0.03) 30%,
+    transparent 60%,
+    rgba(244, 162, 97, 0.02) 100%
+  );
+  pointer-events: none;
+}
+
+/* === PARTICULES === */
+.particulesWrapper {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* === HALOS DE GLOW === */
+.glowHalo1,
+.glowHalo2 {
+  position: absolute;
+  right: 15%;
+  top: 40%;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(80px);
+  animation: floatGlow 8s ease-in-out infinite;
+}
+
+.glowHalo1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(230, 57, 70, 0.15) 0%, transparent 70%);
+  animation-delay: 0s;
+}
+
+.glowHalo2 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(244, 162, 97, 0.1) 0%, transparent 70%);
+  top: 50%;
+  right: 20%;
+  animation-delay: -4s;
+}
+
+@keyframes floatGlow {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(40px, -40px); }
+}
+
+/* === CONTENU PRINCIPAL === */
+.contenuHero {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 2rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: 2rem;
-  position: relative;
-  z-index: 1;
-  width: 100%;
+  gap: 4rem;
 }
 
-/* ── Contenu gauche ── */
-.contenu {
+.texteSection {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
-.badge {
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.badges span {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
   background: rgba(230, 57, 70, 0.1);
-  color: rgba(255, 255, 255, 0.75);
-  padding: 0.4rem 1rem;
-  border-radius: 999px;
-  font-size: 0.82rem;
-  font-family: var(--font-titre);
   border: 1px solid rgba(230, 57, 70, 0.2);
-  letter-spacing: 0.03em;
-  width: fit-content;
-}
-
-.badgeDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--couleur-primaire);
-  animation: clignoter 1.5s ease-in-out infinite;
-}
-
-@keyframes clignoter {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.2;
-  }
-}
-
-.entree {
+  border-radius: 999px;
+  color: white;
+  font-size: 0.8rem;
   font-family: var(--font-titre);
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
+  font-weight: 600;
 }
 
-.entreeTexte {
-  color: var(--couleur-primaire);
-  opacity: 0.7;
+.bienvenue {
+  font-size: 0.9rem;
+  letter-spacing: 0.3em;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  font-family: var(--font-tech, var(--font-principale));
 }
 
 .titre {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
+  font-family: var(--font-manga, var(--font-titre));
+  font-size: clamp(3rem, 7vw, 6rem);
+  letter-spacing: 0.05em;
   line-height: 1.1;
+  margin: 0;
+  color: white;
+  position: relative;
+  display: inline-block;
 }
 
-.titreSub {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.45);
-  font-family: var(--font-titre);
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.titreMain {
-  font-size: clamp(2.4rem, 5vw, 3.8rem);
-  font-weight: 900;
-  color: var(--couleur-blanc);
-  font-family: var(--font-titre);
-  letter-spacing: -0.01em;
-}
-
-.titreDojo {
-  font-size: clamp(3rem, 7vw, 5.5rem);
-  font-weight: 900;
-  font-family: var(--font-titre);
+.titreRed {
   color: var(--couleur-primaire);
-  line-height: 0.9;
-  text-shadow:
-    0 0 30px rgba(230, 57, 70, 0.6),
-    0 0 60px rgba(230, 57, 70, 0.3);
-  letter-spacing: -0.02em;
+  text-shadow: 0 0 30px rgba(230, 57, 70, 0.5);
+  display: block;
+}
+
+.ligneAnimee {
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--couleur-primaire), var(--couleur-accent));
+  border-radius: 999px;
+  width: 0;
+  animation: lineGrow 1.2s ease-out forwards;
+  animation-delay: 0.4s;
+}
+
+@keyframes lineGrow {
+  from { width: 0; }
+  to { width: 150px; }
 }
 
 .description {
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.55);
-  line-height: 1.8;
-  max-width: 420px;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  max-width: 500px;
 }
 
-.actions {
+.boutons {
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
   flex-wrap: wrap;
 }
 
 .btnPrimaire {
-  background: var(--couleur-primaire);
-  color: var(--couleur-blanc);
-  padding: 0.75rem 1.75rem;
-  border-radius: var(--border-radius);
-  font-size: 0.95rem;
-  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, var(--couleur-primaire), #ff6b6b);
+  border: none;
+  border-radius: 8px;
+  color: white;
   font-family: var(--font-titre);
-  letter-spacing: 0.05em;
-  transition: var(--transition);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 8px 20px rgba(230, 57, 70, 0.3);
   text-decoration: none;
-  border: 1px solid transparent;
 }
 
 .btnPrimaire:hover {
-  background: transparent;
-  border-color: var(--couleur-primaire);
-  color: var(--couleur-primaire);
-  transform: translateY(-2px);
-  box-shadow: 0 0 20px rgba(230, 57, 70, 0.35);
+  transform: translateY(-3px);
+  box-shadow: 
+    0 12px 30px rgba(230, 57, 70, 0.5),
+    0 0 30px rgba(230, 57, 70, 0.3);
+  color: white;
+}
+
+.btnPrimaire:active {
+  transform: translateY(-1px);
+}
+
+.arrow {
+  font-size: 1.3rem;
+  font-weight: 900;
 }
 
 .btnSecondaire {
+  display: inline-flex;
+  align-items: center;
+  padding: 1rem 2rem;
   background: transparent;
-  color: rgba(255, 255, 255, 0.7);
-  padding: 0.75rem 1.75rem;
-  border-radius: var(--border-radius);
-  font-size: 0.95rem;
-  font-weight: 600;
+  border: 2px solid rgba(244, 162, 97, 0.4);
+  border-radius: 8px;
+  color: white;
   font-family: var(--font-titre);
-  letter-spacing: 0.03em;
-  transition: var(--transition);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
   text-decoration: none;
 }
 
 .btnSecondaire:hover {
-  border-color: rgba(255, 255, 255, 0.5);
-  color: var(--couleur-blanc);
-  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--couleur-accent);
+  background: rgba(244, 162, 97, 0.1);
+  box-shadow: 0 0 20px rgba(244, 162, 97, 0.3);
+  color: white;
 }
 
 .stats {
   display: flex;
-  align-items: center;
-  gap: 1.25rem;
+  gap: 3rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.statItem {
+.stats > div {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.3rem;
 }
 
-.statNombre {
-  font-size: 1.3rem;
-  font-weight: 800;
-  color: var(--couleur-blanc);
+.stats strong {
   font-family: var(--font-titre);
-  line-height: 1;
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, var(--couleur-primaire), var(--couleur-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.statLabel {
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.4);
+.stats p {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  margin: 0;
 }
 
-.separateur {
-  width: 1px;
-  height: 32px;
-  background: rgba(255, 255, 255, 0.12);
-}
-
-.tags {
+.ctas {
   display: flex;
+  gap: 0.8rem;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  margin-top: 1rem;
 }
 
-.tag {
-  font-size: 0.75rem;
-  padding: 0.2rem 0.7rem;
-  border-radius: 999px;
+.ctas button {
+  padding: 0.5rem 1rem;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  color: white;
+  font-size: 0.9rem;
   font-family: var(--font-titre);
-  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-/* ── Colonne droite : personnage ── */
-.personnageSection {
+.ctas button:hover {
+  background: rgba(244, 162, 97, 0.15);
+  border-color: var(--couleur-accent);
+  box-shadow: 0 0 12px rgba(244, 162, 97, 0.2);
+}
+
+.imageSection {
   position: relative;
   display: flex;
-  align-items: center;
   justify-content: center;
-  height: 560px;
+  align-items: center;
 }
 
-.personnage {
-  width: 100%;
-  height: 560px;
-  object-fit: cover;
-  object-position: center center;
-  position: relative;
+.imageSection img {
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 40px rgba(244, 162, 97, 0.3));
+  animation: floatImage 4s ease-in-out infinite;
+}
+
+@keyframes floatImage {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 1024px) {
+  .contenuHero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .titre {
+    font-size: clamp(2rem, 5vw, 4rem);
+  }
+
+  .glowHalo1,
+  .glowHalo2 {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+@media (max-width: 640px) {
+  .contenuHero {
+    padding: 1rem;
+  }
+
+  .badges {
+    gap: 0.5rem;
+  }
+
+  .badges span {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .stats {
+    gap: 2rem;
+  }
+
+  .ctas {
+    gap: 0.5rem;
+  }
+
+  .ctas button {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .grilleCyberpunk {
+    opacity: 0.15;
+  }
+}
+
+/* TÂCHE 3 — Animation de scan TV au hover */
+.heroWrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(255, 255, 255, 0.03) 3px,
+    rgba(255, 255, 255, 0.03) 4px
+  );
+  pointer-events: none;
   z-index: 3;
-  border-radius: 0;
-  filter: brightness(0.95);
-  animation: flotter 5s ease-in-out infinite;
-  /* Dégradés sur tous les bords pour fondre dans le fond */
-  mask-image:
-    linear-gradient(
-      to right,
-      transparent 0%,
-      black 18%,
-      black 82%,
-      transparent 100%
-    ),
-    linear-gradient(
-      to bottom,
-      transparent 0%,
-      black 12%,
-      black 85%,
-      transparent 100%
-    );
-  mask-composite: intersect;
-  -webkit-mask-image:
-    linear-gradient(
-      to right,
-      transparent 0%,
-      black 18%,
-      black 82%,
-      transparent 100%
-    ),
-    linear-gradient(
-      to bottom,
-      transparent 0%,
-      black 12%,
-      black 85%,
-      transparent 100%
-    );
-  -webkit-mask-composite: source-in;
+  animation: scanlineMove 8s linear infinite;
+  opacity: 0.3;
 }
 
-@keyframes flotter {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+@keyframes scanlineMove {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(10px); }
 }
 
-/* Aura chakra */
-.aura {
-  position: absolute;
-  width: 350px;
-  height: 350px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(230, 57, 70, 0.2) 0%,
-    transparent 70%
-  );
-  z-index: 1;
-  animation: pulser 5s ease-in-out infinite;
-}
-
-.aura2 {
-  position: absolute;
-  width: 480px;
-  height: 480px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(244, 162, 97, 0.06) 0%,
-    transparent 70%
-  );
-  z-index: 1;
-  animation: pulser 5s ease-in-out infinite reverse;
-}
-
-@keyframes pulser {
-  0%,
-  100% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.08);
-  }
-}
-
-/* Lignes scan manga */
-.scanLines {
-  display: none;
-}
-
-/* Badge rang */
+/* === BOUTON REJOINDRE === */
 .rejoindreBtn {
   position: absolute;
   bottom: 8%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 6;
-  background: linear-gradient(
-    90deg,
-    var(--couleur-primaire),
-    var(--couleur-accent)
-  );
-  padding: 0.55rem 1.4rem;
+  background: linear-gradient(90deg, var(--couleur-primaire), var(--couleur-accent));
+  padding: 0.6rem 1.5rem;
   border-radius: 999px;
   box-shadow: 0 0 20px rgba(230, 57, 70, 0.5);
   font-family: var(--font-titre);
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   font-weight: 800;
   color: white;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-decoration: none;
   white-space: nowrap;
-  transition: var(--transition);
+  transition: all 0.3s;
 }
 
 .rejoindreBtn:hover {
-  transform: translateX(-50%) translateY(-2px);
-  box-shadow: 0 0 30px rgba(230, 57, 70, 0.7);
-}
-
-/* ── Responsive ── */
-@media (max-width: 900px) {
-  .grille {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .personnageSection {
-    order: -1;
-    height: 380px;
-  }
-
-  .personnage {
-    width: 280px;
-    height: 350px;
-  }
-
-  .aura {
-    width: 250px;
-    height: 250px;
-  }
-  .aura2 {
-    width: 340px;
-    height: 340px;
-  }
-}
-
-@media (max-width: 600px) {
-  .hero {
-    padding: 3rem 0 2.5rem;
-    min-height: auto;
-  }
-  .titreDojo {
-    font-size: 3rem;
-  }
-  .personnage {
-    width: 220px;
-    height: 280px;
-  }
-  .personnageSection {
-    height: 300px;
-  }
+  transform: translateX(-50%) translateY(-3px);
+  box-shadow: 0 0 30px rgba(230, 57, 70, 0.8);
+  color: white;
 }

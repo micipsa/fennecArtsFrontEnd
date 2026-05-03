@@ -113,6 +113,13 @@ function DashboardLayout() {
                 }>
                 🎟️ Codes Promo
               </NavLink>
+              <NavLink
+                to="/dashboard/animations"
+                className={({ isActive }) =>
+                  `${styles.navLien} ${isActive ? styles.actif : ""}`
+                }>
+                🎮 Dojo Play
+              </NavLink>
             </>
           )}
 

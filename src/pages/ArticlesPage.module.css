@@ -51,45 +51,6 @@
 
 .contenu { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 4rem; }
 
-:global(.carteArticle) {
-  background: #f5f1e8 !important;
-  color: #1a1a1a !important;
-  border: 2px solid #1a1a1a !important;
-  box-shadow:
-    6px 6px 0 var(--couleur-primaire),
-    0 0 0 1px #1a1a1a !important;
-  transition: all 0.2s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-:global(.carteArticle::before) {
-  content: "";
-  position: absolute;
-  top: 0; right: 0;
-  width: 50px; height: 50px;
-  background: linear-gradient(225deg, transparent 50%, var(--couleur-primaire) 50%);
-}
-
-:global(.carteArticle:hover) {
-  transform: translate(-3px, -3px);
-  box-shadow:
-    9px 9px 0 var(--couleur-primaire),
-    0 0 0 1px #1a1a1a !important;
-}
-
-:global(.carteArticle h3),
-:global(.carteArticle .titre) {
-  font-family: var(--font-manga) !important;
-  letter-spacing: 0.05em;
-  color: #1a1a1a !important;
-}
-
-:global(.carteArticle p),
-:global(.carteArticle .description) {
-  font-family: var(--font-noir) !important;
-  color: #333 !important;
-}
 
 .filtres {
   display: flex;
@@ -170,47 +131,4 @@
   .filtres { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 0.5rem; }
 }
 
-.pageWrapper :global(.carte-article) {
-  background: #f5f1e8 !important;
-  color: #1a1a1a !important;
-  border: 2px solid #1a1a1a !important;
-  box-shadow:
-    6px 6px 0 var(--couleur-primaire),
-    0 0 0 1px #1a1a1a !important;
-  transition: all 0.2s ease;
-  position: relative;
-  overflow: hidden;
-}
 
-.pageWrapper :global(.carte-article:hover) {
-  transform: translate(-3px, -3px);
-  box-shadow:
-    9px 9px 0 var(--couleur-primaire),
-    0 0 0 1px #1a1a1a !important;
-}
-
-.pageWrapper :global(.carte-article .titre) {
-  font-family: var(--font-manga) !important;
-  letter-spacing: 0.05em;
-  color: #1a1a1a !important;
-}
-
-.pageWrapper :global(.carte-article .titre:hover) {
-  color: var(--couleur-primaire) !important;
-}
-
-.pageWrapper :global(.carte-article .description) {
-  font-family: var(--font-noir) !important;
-  color: #333 !important;
-}
-
-.pageWrapper :global(.carte-article .date) {
-  font-family: var(--font-noir) !important;
-  color: var(--couleur-primaire) !important;
-  font-size: 0.8rem !important;
-}
-
-.pageWrapper :global(.carte-article .auteur) {
-  color: #555 !important;
-  font-size: 0.85rem !important;
-}

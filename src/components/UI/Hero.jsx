@@ -1,95 +1,87 @@
 import { Link } from "react-router-dom";
+import ParticulesFond from "./ParticulesFond";
+import useAuth from "../../hooks/useAuth";
 import styles from "./Hero.module.css";
 
 function Hero() {
+  const { utilisateur } = useAuth();
+
   return (
-    <section className={styles.hero}>
-      {/* Grille cyberpunk */}
-      <div className={styles.grille}>
-        {/* ── Colonne gauche : texte ── */}
-        <div className={styles.contenu}>
-          <div className={styles.badge}>
-            <span className={styles.badgeDot} />
-            🎮 Gaming · ⚔️ Esport · 📖 Manga · 🇩🇿 Culture DZ
+    <section className={styles.heroWrapper}>
+      {/* Grille de fond */}
+      <div className={styles.grilleCyberpunk} />
+      
+      {/* Particules flottantes */}
+      <div className={styles.particulesWrapper}>
+        <ParticulesFond couleur="#e63946" densite={15} vitesse={0.3} taille={2} />
+        <ParticulesFond couleur="#f4a261" densite={10} vitesse={0.2} taille={1.5} />
+      </div>
+
+      {/* Halos de glow autour du personnage */}
+      <div className={styles.glowHalo1} />
+      <div className={styles.glowHalo2} />
+
+      {/* Contenu principal */}
+      <div className={styles.contenuHero}>
+        {/* Gauche : texte */}
+        <div className={styles.texteSection}>
+          <div className={styles.badges}>
+            <span>🎮 Gaming</span>
+            <span>🏆 Esport</span>
+            <span>📚 Manga</span>
+            <span>🇩🇿 Culture DZ</span>
           </div>
 
+          <div className={styles.bienvenue}>BIENVENUE AU</div>
+          
           <h1 className={styles.titre}>
-            <span className={styles.titreSub}>Bienvenue au</span>
-            <span className={styles.titreMain}>Fennec's</span>
-            <span className={styles.titreDojo}>Clan</span>
+            Fennec's<br />
+            <span className={styles.titreRed}>Clan</span>
+            {/* Ligne animée sous le titre */}
+            <div className={styles.ligneAnimee} />
           </h1>
 
           <p className={styles.description}>
-            Articles, tournois, événements et WebTV —<br />
-            l'espace du fennec geek algérien.
+            Articles, tournois, événements et WebTV — l'espace du fennec geek algérien.
           </p>
 
-          <div className={styles.actions}>
+          <div className={styles.boutons}>
             <Link to="/articles" className={styles.btnPrimaire}>
-              Explorer →
+              <span>Explorer</span>
+              <span className={styles.arrow}>→</span>
             </Link>
-            <Link to="/events" className={styles.btnSecondaire}>
-              Événements
-            </Link>
+            <Link to="/events" className={styles.btnSecondaire}>Événements</Link>
           </div>
 
           <div className={styles.stats}>
-            <div className={styles.statItem}>
-              <span className={styles.statNombre}>100+</span>
-              <span className={styles.statLabel}>Articles</span>
-            </div>
-            <div className={styles.separateur} />
-            <div className={styles.statItem}>
-              <span className={styles.statNombre}>100+</span>
-              <span className={styles.statLabel}>Événements</span>
-            </div>
-            <div className={styles.separateur} />
-            <div className={styles.statItem}>
-              <span className={styles.statNombre}>200+</span>
-              <span className={styles.statLabel}>Membres</span>
-            </div>
+            <div><strong>100+</strong><p>Articles</p></div>
+            <div><strong>100+</strong><p>Événements</p></div>
+            <div><strong>200+</strong><p>Membres</p></div>
           </div>
 
-          {/* Tags flottants */}
-          <div className={styles.tags}>
-            <span className={styles.tag}>⚔️ Tournois</span>
-            <span className={styles.tag}>📺 WebTV</span>
-            <span className={styles.tag}>🏆 Classements</span>
-            <span className={styles.tag}>🎌 Otaku</span>
+          <div className={styles.ctas}>
+            <button>🎮 Tournois</button>
+            <button>📺 WebTV</button>
+            <button>🏆 Classements</button>
+            <button>🎌 Otaku</button>
           </div>
         </div>
 
-        {/* ── Colonne droite : Fennekage ── */}
-        <div className={styles.personnageSection}>
-          {/* Aura de chakra */}
-          <div className={styles.aura} />
-          <div className={styles.aura2} />
-
-          {/* Lignes scan manga */}
-          <div className={styles.scanLines} />
-
-          {/* Le personnage */}
-          <img
-            src="/fennekage.png"
-            alt="Fennekage"
-            className={styles.personnage}
-          />
-
-          {/* Icônes orbitantes */}
-
-          {/* Badge rang */}
-          {/* Lien Rejoindre */}
-          <Link
-            to="/register"
-            className={styles.rejoindreBtn}
-            onClick={() => {}}>
-            ⚔️ Rejoins le Clan
-          </Link>
+        {/* Droite : image personnage */}
+        <div className={styles.imageSection}>
+          <img src="/fennekage.png" alt="Fennekage" />
+          
+          {utilisateur ? (
+            <Link to="/dashboard/missions" className={styles.rejoindreBtn}>
+              ⚔️ Accomplis tes quêtes
+            </Link>
+          ) : (
+            <Link to="/register" className={styles.rejoindreBtn}>
+              ⚔️ Rejoins le Clan
+            </Link>
+          )}
         </div>
       </div>
-
-      {/* Grille de fond perspective */}
-      <div className={styles.grid3D} />
     </section>
   );
 }

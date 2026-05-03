@@ -30,11 +30,11 @@
   --couleur-sombre: #1a1a2e;         /* Bleu très foncé — arrière-plans sombres */
   --couleur-sombre-2: #16213e;       /* Bleu foncé — variante sombre */
   --couleur-accent: #f4a261;         /* Orange — couleur d'accent secondaire */
-  --couleur-texte: #2d2d2d;          /* Gris foncé — texte principal */
-  --couleur-texte-clair: #6c757d;    /* Gris moyen — texte secondaire */
-  --couleur-fond: #f8f9fa;           /* Gris très clair — fond de page */
+  --couleur-texte: #e1e1e1;          /* Gris clair — texte principal */
+  --couleur-texte-clair: #a0a0a0;    /* Gris moyen — texte secondaire */
+  --couleur-fond: #0f0f1b;           /* Bleu nuit profond — fond de page principal */
   --couleur-blanc: #ffffff;          /* Blanc pur */
-  --couleur-bordure: #dee2e6;        /* Gris clair — bordures */
+  --couleur-bordure: rgba(255, 255, 255, 0.1); /* Bordure translucide */
 
   /* Typographie */
   --font-principale: "Inter", "Segoe UI", sans-serif;  /* Police pour le texte */

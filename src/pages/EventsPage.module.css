@@ -68,31 +68,7 @@
   z-index: 2;
 }
 
-:global(.carteEvenement) {
-  background: linear-gradient(135deg, rgba(74, 0, 224, 0.15), rgba(255, 0, 110, 0.08)) !important;
-  border: 1px solid rgba(255, 215, 0, 0.3) !important;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s;
-}
 
-:global(.carteEvenement::before) {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, transparent, rgba(255, 215, 0, 0.1));
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
-}
-
-:global(.carteEvenement:hover) {
-  border-color: #ffd700 !important;
-  transform: translateY(-4px);
-  box-shadow: 0 10px 40px rgba(74, 0, 224, 0.4);
-}
-
-:global(.carteEvenement:hover::before) { opacity: 1; }
 
 .filtres {
   display: flex;
@@ -170,53 +146,4 @@
   }
 }
 
-.pageWrapper :global(.carte-evenement) {
-  background: linear-gradient(135deg, rgba(74, 0, 224, 0.15), rgba(255, 0, 110, 0.08)) !important;
-  border: 1px solid rgba(255, 215, 0, 0.3) !important;
-  border-radius: 20px !important;
-  color: white !important;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-  overflow: hidden !important;
-}
 
-.pageWrapper :global(.carte-evenement:hover) {
-  transform: translateY(-8px) scale(1.02) !important;
-  border-color: #ffd700 !important;
-  box-shadow: 0 15px 40px rgba(74, 0, 224, 0.3), 0 0 20px rgba(255, 215, 0, 0.15) !important;
-}
-
-.pageWrapper :global(.carte-evenement .titre) {
-  color: white !important;
-  font-family: var(--font-manga) !important;
-  font-size: 1.4rem !important;
-}
-
-.pageWrapper :global(.carte-evenement .description) {
-  color: rgba(255,255,255,0.7) !important;
-}
-
-.pageWrapper :global(.carte-evenement .date) {
-  color: #ffd700 !important;
-  font-weight: bold !important;
-}
-
-.pageWrapper :global(.carte-evenement .lieu) {
-  color: #a275ff !important;
-}
-
-.pageWrapper :global(.carte-evenement .lien) {
-  color: #ffd700 !important;
-  background: rgba(255, 215, 0, 0.1) !important;
-  padding: 0.5rem 1rem !important;
-  border-radius: 999px !important;
-  text-align: center !important;
-  display: inline-block !important;
-  width: 100% !important;
-  transition: all 0.3s !important;
-}
-
-.pageWrapper :global(.carte-evenement .lien:hover) {
-  background: #ffd700 !important;
-  color: #0a0010 !important;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4) !important;
-}

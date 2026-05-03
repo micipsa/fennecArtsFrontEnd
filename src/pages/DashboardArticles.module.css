@@ -40,10 +40,10 @@
 
 /* ── Tableau ── */
 .tableau {
-  background: var(--couleur-blanc);
+  background: var(--couleur-sombre-2);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--ombre-sm);
-  border: 1px solid var(--couleur-bordure);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   overflow: hidden;
 }
 
@@ -55,13 +55,13 @@
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 0.6fr 1fr 1fr;
   padding: 0.85rem 1.25rem;
-  background: var(--couleur-fond);
-  border-bottom: 1px solid var(--couleur-bordure);
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  color: var(--couleur-texte-clair);
+  color: rgba(255, 255, 255, 0.5);
   font-family: var(--font-titre);
   min-width: 700px;
 }
@@ -70,10 +70,10 @@
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 0.6fr 1fr 1fr;
   padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--couleur-bordure);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   align-items: center;
   font-size: 0.88rem;
-  color: var(--couleur-texte);
+  color: rgba(255, 255, 255, 0.8);
   transition: var(--transition);
   min-width: 700px;
 }
@@ -83,12 +83,12 @@
 }
 
 .tableauLigne:hover {
-  background: var(--couleur-fond);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .titreLigne {
   font-weight: 600;
-  color: var(--couleur-texte);
+  color: white;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -270,11 +270,11 @@
 
 .input {
   padding: 0.65rem 0.9rem;
-  border: 1px solid var(--couleur-bordure);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--border-radius);
   font-size: 0.9rem;
-  color: var(--couleur-texte);
-  background: var(--couleur-fond);
+  color: white;
+  background: rgba(0, 0, 0, 0.3);
   transition: var(--transition);
   font-family: var(--font-principale);
   width: 100%;
@@ -288,11 +288,11 @@
 
 .textarea {
   padding: 0.65rem 0.9rem;
-  border: 1px solid var(--couleur-bordure);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--border-radius);
   font-size: 0.9rem;
-  color: var(--couleur-texte);
-  background: var(--couleur-fond);
+  color: white;
+  background: rgba(0, 0, 0, 0.3);
   transition: var(--transition);
   font-family: var(--font-principale);
   width: 100%;

@@ -70,18 +70,7 @@
   padding: 0 1.5rem 4rem;
 }
 
-:global(.carteTournoi) {
-  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
-  background: linear-gradient(135deg, var(--couleur-sombre-2) 0%, #0d0d1a 100%) !important;
-  border: 1px solid rgba(230, 57, 70, 0.3) !important;
-  position: relative;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
 
-:global(.carteTournoi:hover) {
-  transform: translateY(-4px);
-  box-shadow: 0 0 30px rgba(230, 57, 70, 0.4), inset 0 0 20px rgba(244, 162, 97, 0.05);
-}
 
 .filtres {
   display: flex;
@@ -158,46 +147,4 @@
   }
 }
 
-.pageWrapper :global(.carte-tournoi) {
-  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
-  background: linear-gradient(135deg, var(--couleur-sombre-2) 0%, #0d0d1a 100%) !important;
-  border: 1px solid rgba(230, 57, 70, 0.3) !important;
-  border-radius: 0 !important;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  color: white !important;
-}
 
-.pageWrapper :global(.carte-tournoi:hover) {
-  transform: translateY(-4px);
-  box-shadow: 0 0 30px rgba(230, 57, 70, 0.4), inset 0 0 20px rgba(244, 162, 97, 0.05);
-}
-
-.pageWrapper :global(.carte-tournoi h3) {
-  color: white !important;
-  font-family: var(--font-manga) !important;
-  text-transform: uppercase !important;
-  letter-spacing: 1px !important;
-}
-
-.pageWrapper :global(.carte-tournoi p) {
-  color: rgba(255,255,255,0.6) !important;
-}
-
-.pageWrapper :global(.carte-tournoi .infos) {
-  background: rgba(0,0,0,0.5) !important;
-  border-left-color: var(--couleur-primaire) !important;
-}
-
-.pageWrapper :global(.carte-tournoi .infoLigne) {
-  color: rgba(255,255,255,0.7) !important;
-}
-
-.pageWrapper :global(.carte-tournoi .lien) {
-  color: #ffd700 !important;
-  text-transform: uppercase !important;
-}
-
-.pageWrapper :global(.carte-tournoi .lien:hover) {
-  color: white !important;
-  text-shadow: 0 0 8px rgba(255, 215, 0, 0.5) !important;
-}

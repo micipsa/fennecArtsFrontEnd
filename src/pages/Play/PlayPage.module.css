@@ -1,0 +1,126 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  min-height: 80vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.titre {
+  font-family: var(--font-titre);
+  font-size: 3rem;
+  color: white;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 20px rgba(230, 57, 70, 0.4);
+}
+
+.description {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.1rem;
+}
+
+.grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.carte {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.carte:hover:not(.fait) {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--couleur-primaire);
+  box-shadow: 0 10px 30px rgba(230, 57, 70, 0.2);
+}
+
+.carteType {
+  font-family: var(--font-titre);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--couleur-primaire);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.carteTitre {
+  font-family: var(--font-titre);
+  font-size: 1.5rem;
+  color: white;
+  margin-bottom: 0.8rem;
+}
+
+.carteDesc {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.recompenses {
+  display: flex;
+  gap: 1rem;
+}
+
+.recompenses span {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--couleur-accent);
+}
+
+.fait {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.badgeFait {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #34c759;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+}
+
+.btnRetour {
+  background: transparent;
+  border: none;
+  color: var(--couleur-primaire);
+  font-family: var(--font-titre);
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 2rem;
+}
+
+.gameArea {
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .titre { font-size: 2.2rem; }
+  .grille { grid-template-columns: 1fr; }
+}

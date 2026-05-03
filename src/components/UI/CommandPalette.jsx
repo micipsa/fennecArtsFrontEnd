@@ -23,6 +23,7 @@ const COMMANDES = [
     { label: "Notifications", icone: "🔔", path: "/notifications", keywords: "notifications" },
     { label: "Inventaire", icone: "🎒", path: "/inventaire", keywords: "inventaire items" },
     { label: "Codes promo", icone: "🎟️", path: "/codes", keywords: "code promo qr" },
+    { label: "Dojo Play", icone: "🎮", path: "/play", keywords: "play dojo" },
   ]},
 ];
 

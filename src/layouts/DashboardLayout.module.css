@@ -81,7 +81,7 @@
 .contenu {
   flex: 1;
   padding: 2rem;
-  background: var(--couleur-fond);
+  background: var(--couleur-sombre-2);
   overflow-y: auto;
   min-width: 0;
 }
