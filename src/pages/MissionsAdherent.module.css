@@ -303,3 +303,31 @@
 .btnDesinscrire:disabled {
   opacity: 0.5;
 }
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0;
+  }
+
+  .titre {
+    font-size: 1.6rem;
+  }
+
+  .detailHeader {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .btnFermer {
+    align-self: flex-end;
+    order: -1;
+  }
+
+  .postesGrille {
+    grid-template-columns: 1fr;
+  }
+
+  .carteImage {
+    height: 120px;
+  }
+}

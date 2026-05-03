@@ -9,3 +9,13 @@
   padding: 2rem;
   overflow-y: auto;
 }
+
+@media (max-width: 768px) {
+  .wrapper {
+    flex-direction: column;
+  }
+  
+  .contenu {
+    padding: 1.5rem 1rem;
+  }
+}

@@ -72,3 +72,42 @@
   color: white;
   font-weight: 600;
 }
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+    padding: 1rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .profil {
+    flex-direction: row;
+    gap: 0.8rem;
+    text-align: left;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .role {
+    display: none;
+  }
+
+  .nav {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .lien {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}

@@ -13,12 +13,6 @@ function Hero() {
             🎮 Gaming · ⚔️ Esport · 📖 Manga · 🇩🇿 Culture DZ
           </div>
 
-          <div className={styles.entree}>
-            <span className={styles.entreeTexte}>
-              {">>> ENTER THE DOJO <<<"}
-            </span>
-          </div>
-
           <h1 className={styles.titre}>
             <span className={styles.titreSub}>Bienvenue au</span>
             <span className={styles.titreMain}>Fennec's</span>
