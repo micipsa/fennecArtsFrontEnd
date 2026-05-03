@@ -73,11 +73,12 @@
 }
 
 .carte {
-  background: var(--couleur-blanc);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
   border-radius: var(--border-radius-lg);
   overflow: hidden;
-  box-shadow: var(--ombre);
-  border: 1px solid var(--couleur-bordure);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .carteBandeau {
@@ -182,11 +183,12 @@
 }
 .sectionMdp {
   margin-top: 2rem;
-  background: var(--couleur-blanc);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
   border-radius: var(--border-radius-lg);
   padding: 2rem;
-  border: 1px solid var(--couleur-bordure);
-  box-shadow: var(--ombre-sm);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .sectionMdpTitre {
@@ -250,7 +252,7 @@
 
 .input:focus {
   border-color: var(--couleur-primaire);
-  background: var(--couleur-blanc);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .btnMdp {
@@ -278,11 +280,12 @@
 /* ── Section XP & Rang ── */
 .sectionXP {
   margin-top: 2rem;
-  background: var(--couleur-blanc);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
   border-radius: var(--border-radius-lg);
   padding: 2rem;
-  border: 1px solid var(--couleur-bordure);
-  box-shadow: var(--ombre-sm);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .sectionTitre {
@@ -335,11 +338,12 @@
 /* ── Section Tags ── */
 .sectionTags {
   margin-top: 2rem;
-  background: var(--couleur-blanc);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
   border-radius: var(--border-radius-lg);
   padding: 2rem;
-  border: 1px solid var(--couleur-bordure);
-  box-shadow: var(--ombre-sm);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .tagsListe {
@@ -359,22 +363,22 @@
   letter-spacing: 0.03em;
 }
 
-.sectionBadges { margin-top: 2rem; background: var(--couleur-blanc); border-radius: var(--border-radius-lg); padding: 2rem; border: 1px solid var(--couleur-bordure); }
+.sectionBadges { margin-top: 2rem; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border-radius: var(--border-radius-lg); padding: 2rem; border: 1px solid rgba(255, 255, 255, 0.08); }
 .badgesGrille { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-.badgeItem { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; padding: 0.75rem 1rem; border-radius: var(--border-radius); background: var(--couleur-fond); border: 1px solid var(--couleur-bordure); min-width: 80px; cursor: default; transition: transform 0.2s; }
+.badgeItem { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; padding: 0.75rem 1rem; border-radius: var(--border-radius); background: rgba(0,0,0,0.3); border: 1px solid rgba(255, 255, 255, 0.08); min-width: 80px; cursor: default; transition: transform 0.2s; }
 .badgeItem:hover { transform: translateY(-2px); }
 .badgeIcone { font-size: 1.6rem; }
 .badgeNom { font-size: 0.72rem; font-family: var(--font-titre); color: var(--couleur-texte-clair); text-align: center; }
 
-.sectionHistorique { margin-top: 2rem; background: var(--couleur-blanc); border-radius: var(--border-radius-lg); padding: 2rem; border: 1px solid var(--couleur-bordure); }
+.sectionHistorique { margin-top: 2rem; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border-radius: var(--border-radius-lg); padding: 2rem; border: 1px solid rgba(255, 255, 255, 0.08); }
 .historiqueList { display: flex; flex-direction: column; gap: 0.4rem; max-height: 320px; overflow-y: auto; }
-.historiqueItem { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0.75rem; border-radius: var(--border-radius); background: var(--couleur-fond); font-size: 0.85rem; }
+.historiqueItem { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0.75rem; border-radius: var(--border-radius); background: rgba(0,0,0,0.3); font-size: 0.85rem; }
 .historiqueType { font-size: 1rem; }
 .historiqueRaison { flex: 1; color: var(--couleur-texte); }
 .historiquePoints { color: #28a745; font-weight: 700; font-family: var(--font-titre); white-space: nowrap; }
 .historiqueDate { color: var(--couleur-texte-clair); font-size: 0.75rem; white-space: nowrap; }
 
-.sectionTournois { margin-top: 2rem; background: var(--couleur-blanc); border-radius: var(--border-radius-lg); padding: 2rem; border: 1px solid var(--couleur-bordure); }
+.sectionTournois { margin-top: 2rem; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border-radius: var(--border-radius-lg); padding: 2rem; border: 1px solid rgba(255, 255, 255, 0.08); }
 .tournoiListe { display: flex; flex-direction: column; gap: 0.5rem; }
 .tournoiItem { display: flex; align-items: center; gap: 1rem; padding: 0.6rem 1rem; border-radius: var(--border-radius); background: var(--couleur-fond); }
 .tournoiTitre { flex: 1; font-size: 0.9rem; color: var(--couleur-texte); font-weight: 500; }
