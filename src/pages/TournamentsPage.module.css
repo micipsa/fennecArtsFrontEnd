@@ -1,114 +1,203 @@
-.entete {
-  padding: 3rem 0 2rem;
-  margin-bottom: 1.5rem;
+.pageWrapper {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(230, 57, 70, 0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 80%, rgba(244, 162, 97, 0.1) 0%, transparent 50%),
+    var(--couleur-sombre);
   position: relative;
+  overflow: hidden;
 }
 
-.entete::after {
+.pageWrapper::before {
   content: "";
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(
-    90deg,
-    var(--couleur-primaire),
-    var(--couleur-accent)
-  );
-  border-radius: 999px;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 100px,
+      rgba(230, 57, 70, 0.03) 100px,
+      rgba(230, 57, 70, 0.03) 101px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 100px,
+      rgba(244, 162, 97, 0.03) 100px,
+      rgba(244, 162, 97, 0.03) 101px
+    );
+  pointer-events: none;
+  z-index: 0;
 }
 
-.titre {
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: var(--couleur-texte);
-  font-family: var(--font-titre);
-  letter-spacing: 0.02em;
+.pageEntete {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 4rem 1rem 2rem;
 }
 
-.sousTitre {
-  color: var(--couleur-texte-clair);
-  margin-top: 0.4rem;
-  font-size: 0.95rem;
+.pageTitre {
+  font-family: var(--font-manga);
+  font-size: clamp(3rem, 7vw, 6rem);
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, #ffd700 0%, #e63946 50%, #ff6b35 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 40px rgba(230, 57, 70, 0.3);
+  margin: 0;
+}
+
+.pageSousTitre {
+  font-family: var(--font-tech);
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+
+.pageSousTitre::before { content: "⚔️ "; }
+.pageSousTitre::after { content: " ⚔️"; }
+
+.contenu {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+:global(.carteTournoi) {
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  background: linear-gradient(135deg, var(--couleur-sombre-2) 0%, #0d0d1a 100%) !important;
+  border: 1px solid rgba(230, 57, 70, 0.3) !important;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+:global(.carteTournoi:hover) {
+  transform: translateY(-4px);
+  box-shadow: 0 0 30px rgba(230, 57, 70, 0.4), inset 0 0 20px rgba(244, 162, 97, 0.05);
 }
 
 .filtres {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 2.5rem;
-  padding: 1rem 1.25rem;
-  background: var(--couleur-blanc);
-  border-radius: var(--border-radius-lg);
-  border: 1px solid var(--couleur-bordure);
-  box-shadow: var(--ombre-sm);
+  gap: 1rem;
+  margin-bottom: 3.5rem;
+  padding: 1.5rem;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.05);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
 }
 
 .filtreBouton {
-  padding: 0.4rem 1rem;
-  border-radius: 999px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  border: 1.5px solid var(--couleur-bordure);
-  background: transparent;
-  color: var(--couleur-texte-clair);
-  transition: var(--transition);
+  padding: 0.6rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 800;
+  background: rgba(255,255,255,0.03);
+  color: rgba(255,255,255,0.5);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   font-family: var(--font-titre);
-  letter-spacing: 0.03em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+  border: 1px solid transparent;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
 }
 
 .filtreBouton:hover {
-  border-color: var(--couleur-primaire);
-  color: var(--couleur-primaire);
+  background: rgba(255,255,255,0.1);
+  color: white;
 }
 
 .filtreActif {
-  background: var(--couleur-primaire);
-  border-color: var(--couleur-primaire);
-  color: var(--couleur-blanc);
-  box-shadow: 0 2px 8px rgba(230, 57, 70, 0.3);
+  background: rgba(230, 57, 70, 0.15);
+  border: 1px solid var(--couleur-primaire);
+  color: white;
+  box-shadow: inset 0 0 15px rgba(230, 57, 70, 0.2);
 }
 
 .filtreActif:hover {
-  background: #c1121f;
-  border-color: #c1121f;
-  color: var(--couleur-blanc);
+  background: rgba(230, 57, 70, 0.25);
 }
 
 .grille {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-  padding-bottom: 3rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
 }
 
 .vide {
   text-align: center;
-  color: var(--couleur-texte-clair);
-  padding: 4rem 0;
-  font-size: 0.95rem;
+  color: rgba(255,255,255,0.4);
+  padding: 5rem 0;
+  font-size: 1.2rem;
+  font-family: var(--font-titre);
+  text-transform: uppercase;
+  border: 1px dashed rgba(255,255,255,0.1);
 }
 
 .vide::before {
-  content: "🏆";
+  content: "⚠️";
   display: block;
-  font-size: 2.5rem;
+  font-size: 3rem;
   margin-bottom: 1rem;
+  opacity: 0.5;
 }
 
 @media (max-width: 768px) {
   .grille {
     grid-template-columns: 1fr;
   }
-
   .filtres {
     overflow-x: auto;
     flex-wrap: nowrap;
   }
+}
 
-  .titre {
-    font-size: 1.6rem;
-  }
+.pageWrapper :global(.carte-tournoi) {
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  background: linear-gradient(135deg, var(--couleur-sombre-2) 0%, #0d0d1a 100%) !important;
+  border: 1px solid rgba(230, 57, 70, 0.3) !important;
+  border-radius: 0 !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: white !important;
+}
+
+.pageWrapper :global(.carte-tournoi:hover) {
+  transform: translateY(-4px);
+  box-shadow: 0 0 30px rgba(230, 57, 70, 0.4), inset 0 0 20px rgba(244, 162, 97, 0.05);
+}
+
+.pageWrapper :global(.carte-tournoi h3) {
+  color: white !important;
+  font-family: var(--font-manga) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+}
+
+.pageWrapper :global(.carte-tournoi p) {
+  color: rgba(255,255,255,0.6) !important;
+}
+
+.pageWrapper :global(.carte-tournoi .infos) {
+  background: rgba(0,0,0,0.5) !important;
+  border-left-color: var(--couleur-primaire) !important;
+}
+
+.pageWrapper :global(.carte-tournoi .infoLigne) {
+  color: rgba(255,255,255,0.7) !important;
+}
+
+.pageWrapper :global(.carte-tournoi .lien) {
+  color: #ffd700 !important;
+  text-transform: uppercase !important;
+}
+
+.pageWrapper :global(.carte-tournoi .lien:hover) {
+  color: white !important;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.5) !important;
 }

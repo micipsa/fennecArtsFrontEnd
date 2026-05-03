@@ -58,6 +58,7 @@ import StorePage from "./pages/StorePage";
 import InventairePage from "./pages/InventairePage";
 import DefisPage from "./pages/DefisPage";
 import EnConstruction from "./pages/EnConstruction";
+import CodesPromoPage from "./pages/CodesPromoPage";
 
 // ── Pages dashboard (admin) ──
 import DashboardAccueil from "./pages/DashboardAccueil";
@@ -69,6 +70,7 @@ import DashboardTournois from "./pages/DashboardTournois";
 import DashboardChaines from "./pages/DashboardChaines";
 import DashboardMissions from "./pages/DashboardMissions";
 import DashboardQuetes from "./pages/DashboardQuetes";
+import DashboardCodesPromo from "./pages/DashboardCodesPromo";
 
 // ── Page 404 ──
 import NotFoundPage from "./pages/NotFoundPage";
@@ -113,6 +115,7 @@ function App() {
           <Route path="/notifications" element={<RouteProtegee><EnConstruction titre="Notifications" /></RouteProtegee>} />
           <Route path="/communaute" element={<EnConstruction titre="Communauté" />} />
           <Route path="/saisons" element={<EnConstruction titre="Saisons" />} />
+          <Route path="/codes" element={<RouteProtegee><CodesPromoPage /></RouteProtegee>} />
           {/* Route protégée : redirige vers /login si non connecté */}
           <Route
             path="profil"
@@ -143,6 +146,7 @@ function App() {
           <Route path="chaines" element={<DashboardChaines />} />
           <Route path="store" element={<DashboardStore />} />
           <Route path="quetes" element={<DashboardQuetes />} />
+          <Route path="codes" element={<DashboardCodesPromo />} />
         </Route>
 
         {/* ════════════════════════════════════════════

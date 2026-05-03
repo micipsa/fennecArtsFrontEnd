@@ -150,3 +150,100 @@
     grid-template-columns: 1fr;
   }
 }
+
+.sectionTransition {
+  position: relative;
+  height: 80px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sectionTransition::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, var(--couleur-sombre-2));
+}
+
+.sectionTransition.versRouge::before {
+  background: linear-gradient(180deg, transparent, rgba(230, 57, 70, 0.1), var(--couleur-sombre));
+}
+
+.sectionTransition.versAccent::before {
+  background: linear-gradient(180deg, transparent, rgba(244, 162, 97, 0.08), var(--couleur-sombre-2));
+}
+
+.sectionDecor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.kanjiDecor {
+  position: absolute;
+  font-family: serif;
+  color: rgba(230, 57, 70, 0.04);
+  font-size: 18rem;
+  pointer-events: none;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.kanjiDecor.gauche { left: -3rem; }
+.kanjiDecor.droite { right: -3rem; }
+
+.sectionEnteteAnimee {
+  display: inline-block;
+  position: relative;
+  padding-bottom: 0.6rem;
+}
+
+.sectionEnteteAnimee::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--couleur-primaire), var(--couleur-accent));
+  border-radius: 99px;
+  animation: barreGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes barreGlow {
+  0% { width: 50px; box-shadow: 0 0 10px rgba(230, 57, 70, 0.3); }
+  100% { width: 80px; box-shadow: 0 0 20px rgba(230, 57, 70, 0.6); }
+}
+
+.sectionFlottants {
+  position: relative;
+}
+
+.sectionFlottants::before,
+.sectionFlottants::after {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(230, 57, 70, 0.06), transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+  animation: flottementBg 8s ease-in-out infinite;
+}
+
+.sectionFlottants::before {
+  top: 20%;
+  left: 5%;
+}
+
+.sectionFlottants::after {
+  bottom: 20%;
+  right: 5%;
+  animation-delay: -4s;
+}
+
+@keyframes flottementBg {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(30px, -30px); }
+}

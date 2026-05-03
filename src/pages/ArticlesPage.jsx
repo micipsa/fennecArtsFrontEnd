@@ -97,15 +97,15 @@ function ArticlesPage() {
   };
 
   return (
-    <div className="container">
-      {/* ── En-tête de la page ── */}
-      <div className={styles.entete}>
-        <h1 className={styles.titre}>Articles</h1>
-        <p className={styles.sousTitre}>
+    <div className={styles.pageWrapper}>
+      <div className={styles.pageEntete}>
+        <h1 className={styles.pageTitre}>ARTICLES</h1>
+        <p className={styles.pageSousTitre}>
           Explorez nos publications culturelles
         </p>
       </div>
 
+      <div className={styles.contenu}>
       <div className={styles.filtres}>
         {CATEGORIES.map((cat) => (
           <button
@@ -130,7 +130,6 @@ function ArticlesPage() {
         </div>
       )}
 
-      {/* ── États conditionnels : chargement, erreur, liste vide ── */}
       {chargement && <Spinner />}
 
       {erreur && (
@@ -143,7 +142,6 @@ function ArticlesPage() {
         </p>
       )}
 
-      {/* ── Grille d'articles + pagination ── */}
       {!chargement && !erreur && articles.length > 0 && (
         <>
           <div className={styles.grille}>
@@ -151,7 +149,6 @@ function ArticlesPage() {
               <CarteArticle key={article._id} article={article} />
             ))}
           </div>
-          {/* Composant de pagination */}
           <Pagination
             page={page}
             totalPages={totalPages}
@@ -160,6 +157,7 @@ function ArticlesPage() {
           />
         </>
       )}
+      </div>
     </div>
   );
 }

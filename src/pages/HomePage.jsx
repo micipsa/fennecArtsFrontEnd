@@ -90,12 +90,15 @@ function HomePage() {
         </section>
       )}
 
+      <div className={`${styles.sectionTransition} ${styles.versRouge}`} />
+
       {/* Section 1 : Articles récents */}
-      <section className={styles.section}>
+      <section className={`${styles.section} ${styles.sectionFlottants}`}>
+        <span className={`${styles.kanjiDecor} ${styles.gauche}`}>新</span>
         <div className="container">
           <div className={styles.sectionEntete}>
             <div>
-              <h2 className={styles.sectionTitre}>Articles récents</h2>
+              <h2 className={`${styles.sectionTitre} ${styles.sectionEnteteAnimee}`}>Articles récents</h2>
               <p className={styles.sectionSousTitre}>
                 Les dernières publications de la communauté
               </p>
@@ -116,14 +119,17 @@ function HomePage() {
         </div>
       </section>
 
+      <div className={`${styles.sectionTransition} ${styles.versAccent}`} />
+
       <AnecdoteAleatoire />
 
       {/* Section 2 : Tournois ouverts */}
-      <section className={`${styles.section} ${styles.sectionSombre}`}>
+      <section className={`${styles.section} ${styles.sectionSombre} ${styles.sectionFlottants}`}>
+        <span className={`${styles.kanjiDecor} ${styles.droite}`}>戦</span>
         <div className="container">
           <div className={styles.sectionEntete}>
             <div>
-              <h2 className={styles.sectionTitre}>🏆 Tournois ouverts</h2>
+              <h2 className={`${styles.sectionTitre} ${styles.sectionEnteteAnimee}`}>🏆 Tournois ouverts</h2>
               <p className={styles.sectionSousTitre}>
                 Inscrivez-vous avant qu'il ne soit trop tard
               </p>
@@ -146,12 +152,15 @@ function HomePage() {
         </div>
       </section>
 
+      <div className={`${styles.sectionTransition} ${styles.versRouge}`} />
+
       {/* Section 3 : Événements à venir */}
-      <section className={styles.section}>
+      <section className={`${styles.section} ${styles.sectionFlottants}`}>
+        <span className={`${styles.kanjiDecor} ${styles.gauche}`}>祭</span>
         <div className="container">
           <div className={styles.sectionEntete}>
             <div>
-              <h2 className={styles.sectionTitre}>Événements à venir</h2>
+              <h2 className={`${styles.sectionTitre} ${styles.sectionEnteteAnimee}`}>Événements à venir</h2>
               <p className={styles.sectionSousTitre}>
                 Ne manquez aucun événement de la scène
               </p>

@@ -1,3 +1,27 @@
+.pageWrapper {
+  min-height: 100vh;
+  position: relative;
+  transition: background 0.6s ease;
+}
+
+.pageWrapper :global(.titre),
+.pageWrapper :global(h1),
+.pageWrapper :global(h2) {
+  color: var(--theme-primaire) !important;
+}
+
+.pageWrapper :global(.btnPrimaire),
+.pageWrapper :global(.btnSauvegarder) {
+  background: linear-gradient(135deg, var(--theme-primaire), var(--theme-accent)) !important;
+  border-color: var(--theme-primaire) !important;
+}
+
+.pageWrapper :global(.actif),
+.pageWrapper :global(.onglet.actif) {
+  border-color: var(--theme-primaire) !important;
+  color: var(--theme-primaire) !important;
+}
+
 .page {
   max-width: 650px;
   margin: 0 auto;

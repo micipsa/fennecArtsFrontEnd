@@ -51,6 +51,7 @@ export default function AvatarMenu({ utilisateur, onDeconnexion }) {
             <button onClick={() => handleClick("/mon-activite")}>📊 Mon activité</button>
             <button onClick={() => handleClick("/inventaire")}>🎒 Inventaire</button>
             <button onClick={() => handleClick("/notifications")}>🔔 Notifications</button>
+            <button onClick={() => handleClick("/codes")}>🎟️ Codes promo</button>
             {utilisateur.role === "admin" && (
               <button onClick={() => handleClick("/dashboard")}>⚙️ Dashboard</button>
             )}

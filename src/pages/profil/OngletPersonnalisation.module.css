@@ -17,3 +17,12 @@
 .btnSauvegarder { padding: 0.8rem 2rem; background: var(--couleur-primaire); color: white; border: none; border-radius: 8px; font-family: var(--font-titre); font-weight: 700; cursor: pointer; transition: 0.2s; align-self: flex-start; }
 .btnSauvegarder:hover:not(:disabled) { background: #d90429; }
 .btnSauvegarder:disabled { opacity: 0.5; }
+.description { font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 1rem; }
+.themesGrille { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; margin-top: 1rem; }
+.themeCard { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; padding: 1.2rem 1rem; border-radius: var(--border-radius); background: linear-gradient(135deg, var(--theme-c1, var(--couleur-fond)), var(--theme-c2, var(--couleur-fond))); border: 2px solid transparent; cursor: pointer; transition: all 0.2s; color: white; }
+.themeCard:hover:not(:disabled) { transform: translateY(-3px); }
+.themeActif { border-color: var(--couleur-accent); box-shadow: 0 0 20px rgba(244, 162, 97, 0.4); }
+.themeBloque { opacity: 0.4; cursor: not-allowed; filter: grayscale(80%); }
+.themeIcone { font-size: 1.6rem; }
+.themeNom { font-family: var(--font-titre); font-weight: 700; font-size: 0.9rem; }
+.themeDesc { font-size: 0.7rem; opacity: 0.8; text-align: center; }

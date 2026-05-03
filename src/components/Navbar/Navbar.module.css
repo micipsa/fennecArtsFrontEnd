@@ -24,6 +24,9 @@
   object-fit: contain;
   filter: drop-shadow(0 0 6px rgba(230, 57, 70, 0.4));
   transition: transform 0.2s;
+  border-radius: 50%;
+  mask-image: radial-gradient(circle, black 50%, transparent 95%);
+  -webkit-mask-image: radial-gradient(circle, black 50%, transparent 95%);
 }
 .logoImg:hover { transform: scale(1.05); }
 

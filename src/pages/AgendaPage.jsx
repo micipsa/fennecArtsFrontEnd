@@ -110,10 +110,15 @@ function AgendaPage() {
   if (erreur) return <MessageErreur message={erreur} />;
 
   return (
-    <div className="container">
-      <div className={styles.page}>
-        <h1 className={styles.titre}>Agenda</h1>
+    <div className={styles.pageWrapper}>
+      <div className={styles.scanLine} />
 
+      <div className={styles.pageEntete}>
+        <h1 className={styles.pageTitre}>AGENDA</h1>
+        <p className={styles.pageSousTitre}>Tactical Calendar</p>
+      </div>
+
+      <div className={styles.contenu}>
         <div className={styles.legende}>
           <span className={styles.legendeItem}>
             <span className={styles.dotEvent} /> Événements
@@ -123,7 +128,6 @@ function AgendaPage() {
           </span>
         </div>
 
-        {/* Navigation mois */}
         <div className={styles.navigation}>
           <button className={styles.btnNav} onClick={moisPrecedent}>‹</button>
           <span className={styles.moisLabel}>
@@ -132,7 +136,6 @@ function AgendaPage() {
           <button className={styles.btnNav} onClick={moisSuivant}>›</button>
         </div>
 
-        {/* Grille calendrier */}
         <div className={styles.grille}>
           {JOURS.map((j) => (
             <div key={j} className={styles.enteteJour}>{j}</div>
@@ -170,7 +173,6 @@ function AgendaPage() {
           })}
         </div>
 
-        {/* Liste du jour sélectionné */}
         {jourSelectionne && (
           <div className={styles.panneauJour}>
             <h2 className={styles.panneauTitre}>

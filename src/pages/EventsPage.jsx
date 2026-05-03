@@ -68,16 +68,18 @@ function EventsPage() {
   }, [evenements, statut]);
 
   return (
-    <div className="container">
-      {/* ── En-tête ── */}
-      <div className={styles.entete}>
-        <h1 className={styles.titre}>Événements</h1>
-        <p className={styles.sousTitre}>
-          Concerts, expositions, ateliers et bien plus
+    <div className={styles.pageWrapper}>
+      <div className={styles.spotlight + " " + styles.gauche} />
+      <div className={styles.spotlight + " " + styles.droite} />
+
+      <div className={styles.pageEntete}>
+        <h1 className={styles.pageTitre}>Evénement</h1>
+        <p className={styles.pageSousTitre}>
+          "freeplay" "exposition" "ateliers" "masterclass" "animation" et bien plus
         </p>
       </div>
 
-      {/* ── Boutons de filtre par statut ── */}
+      <div className={styles.contenu}>
       <div className={styles.filtres}>
         {STATUTS.map((s) => (
           <button
@@ -89,7 +91,6 @@ function EventsPage() {
         ))}
       </div>
 
-      {/* ── États conditionnels ── */}
       {chargement && <Spinner />}
 
       {erreur && (
@@ -106,7 +107,6 @@ function EventsPage() {
         <p className={styles.vide}>Aucun événement trouvé.</p>
       )}
 
-      {/* ── Grille des événements filtrés ── */}
       {!chargement && !erreur && evenementsFiltres.length > 0 && (
         <div className={styles.grille}>
           {evenementsFiltres.map((evenement) => (
@@ -114,6 +114,7 @@ function EventsPage() {
           ))}
         </div>
       )}
+      </div>
     </div>
   );
 }

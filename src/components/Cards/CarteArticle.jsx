@@ -60,7 +60,7 @@ function CarteArticle({ article }) {
   };
 
   return (
-    <article className={styles.carte}>
+    <article className={`${styles.carte} carte-article`}>
       {imageUrl && (
         <div className={styles.vignette}>
           <img src={imageUrl} alt={titre} className={styles.vignetteImg} />

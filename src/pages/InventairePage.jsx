@@ -61,7 +61,13 @@ export default function InventairePage() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.pageWrapper}>
+      <div className={styles.pageEntete}>
+        <h1 className={styles.pageTitre}>SAGE'S VAULT</h1>
+        <p className={styles.pageSousTitre}>Inventaire RPG</p>
+      </div>
+
+      <div className={styles.contenu}>
       <header className={styles.header}>
         <h1>
           Mon <span>Inventaire</span>
@@ -120,6 +126,7 @@ export default function InventairePage() {
           ))}
         </div>
       )}
+      </div>
     </div>
   );
 }

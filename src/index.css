@@ -55,6 +55,15 @@
 
   /* Largeur maximale du conteneur */
   --max-width: 1200px;
+
+  /* Polices thématiques */
+  --font-manga: 'Bangers', 'Oxanium', sans-serif;
+  --font-cyber: 'Orbitron', 'Oxanium', sans-serif;
+  --font-medieval: 'Cinzel', serif;
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-tech: 'Rajdhani', 'Inter', sans-serif;
+  --font-noir: 'Special Elite', monospace;
+  --font-elegant: 'Cormorant Garamond', serif;
 }
 
 /* ── Styles de base ── */

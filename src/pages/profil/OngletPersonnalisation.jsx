@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../../services/api";
 import { useToast } from "../../components/UI/Toast";
+import { THEMES_PROFIL, getThemesDebloquesPour } from "../../utils/themesProfil";
 import styles from "./OngletPersonnalisation.module.css";
 
 export default function OngletPersonnalisation({ profil, onUpdate }) {
@@ -10,6 +11,8 @@ export default function OngletPersonnalisation({ profil, onUpdate }) {
   const [profilPublic, setProfilPublic] = useState(profil?.profilPublic !== false);
   const [banniereUrl, setBanniereUrl] = useState(profil?.banniereUrl || "");
   const [sauvegarde, setSauvegarde] = useState(false);
+  const [themeChoisi, setThemeChoisi] = useState(profil?.themeProfilActif || "auto");
+  const themesDebloques = profil?.themesDebloques || getThemesDebloquesPour(profil?.points || 0);
   const { addToast } = useToast();
 
   const toggleBadge = (id) => {
@@ -19,6 +22,17 @@ export default function OngletPersonnalisation({ profil, onUpdate }) {
       setBadgesEquipes([...badgesEquipes, id]);
     } else {
       addToast("Maximum 3 badges équipés", "warning");
+    }
+  };
+
+  const changerTheme = async (code) => {
+    setThemeChoisi(code);
+    try {
+      await api.patch("/api/users/me/theme-profil", { theme: code });
+      addToast("Thème mis à jour", "success");
+      onUpdate?.();
+    } catch (err) {
+      addToast(err.response?.data?.message || "Erreur", "error");
     }
   };
 
@@ -38,6 +52,42 @@ export default function OngletPersonnalisation({ profil, onUpdate }) {
 
   return (
     <div className={styles.wrapper}>
+      <section className={styles.section}>
+        <h3 className={styles.titre}>🎨 Thème de profil</h3>
+        <p className={styles.description}>Choisis ton ambiance ou laisse en auto pour suivre ton rang</p>
+
+        <div className={styles.themesGrille}>
+          <button
+            className={`${styles.themeCard} ${themeChoisi === "auto" ? styles.themeActif : ""}`}
+            onClick={() => changerTheme("auto")}
+          >
+            <span className={styles.themeIcone}>⚡</span>
+            <span className={styles.themeNom}>Auto</span>
+            <span className={styles.themeDesc}>Selon mon rang</span>
+          </button>
+
+          {Object.entries(THEMES_PROFIL).map(([code, theme]) => {
+            const debloque = themesDebloques.includes(code);
+            return (
+              <button
+                key={code}
+                className={`${styles.themeCard} ${themeChoisi === code ? styles.themeActif : ""} ${!debloque ? styles.themeBloque : ""}`}
+                onClick={() => debloque && changerTheme(code)}
+                disabled={!debloque}
+                style={{
+                  "--theme-c1": theme.couleurPrimaire,
+                  "--theme-c2": theme.couleurSecondaire,
+                }}
+              >
+                <span className={styles.themeIcone}>{debloque ? theme.icone : "🔒"}</span>
+                <span className={styles.themeNom}>{theme.nom}</span>
+                <span className={styles.themeDesc}>{theme.description}</span>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
       <section className={styles.section}>
         <h3 className={styles.titre}>🏅 Badges équipés (max 3)</h3>
         {badges.length === 0 ? (

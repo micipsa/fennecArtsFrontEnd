@@ -54,12 +54,16 @@ export default function DefisPage() {
   const current = onglet === "recus" ? recus : onglet === "envoyes" ? envoyes : historique;
 
   return (
-    <div className="container">
-      <div className={styles.page}>
+    <div className={styles.pageWrapper}>
+      <div className={styles.pageEntete}>
+        <h1 className={styles.pageTitre}>VERSUS</h1>
+        <p className={styles.pageSousTitre}>Combat Arena</p>
+      </div>
+
+      <div className={styles.contenu}>
         <div className={styles.entete}>
           <div>
-            <h1 className={styles.titre}>⚔️ Défis 1v1</h1>
-            <p className={styles.sousTitre}>Défie d'autres joueurs et mise tes FM</p>
+            <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.1rem" }}>Défie d'autres joueurs et mise tes FM</p>
           </div>
           <button className={styles.btnCreer} onClick={() => setModalOuvert(true)}>+ Nouveau défi</button>
         </div>

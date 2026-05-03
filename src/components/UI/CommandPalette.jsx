@@ -22,6 +22,7 @@ const COMMANDES = [
     { label: "Mon activité", icone: "📊", path: "/mon-activite", keywords: "activite stats" },
     { label: "Notifications", icone: "🔔", path: "/notifications", keywords: "notifications" },
     { label: "Inventaire", icone: "🎒", path: "/inventaire", keywords: "inventaire items" },
+    { label: "Codes promo", icone: "🎟️", path: "/codes", keywords: "code promo qr" },
   ]},
 ];
 

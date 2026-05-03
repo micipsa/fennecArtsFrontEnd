@@ -71,14 +71,22 @@ function RegisterPage() {
       <div className={styles.carte}>
         {/* ── En-tête : logo + titre ── */}
         <div className={styles.entete}>
-          <img
-            src="/FennecArts_eSports_Logo.png"
-            alt="Fennec's Clan"
-            className={styles.logo}
-          />
+          <div className={styles.wrapperLogos}>
+            <img
+              src="/fennekagelogo.png"
+              alt="Fennec's Clan"
+              className={`${styles.logoCollab} ${styles.logoFennecClan}`}
+            />
+            <span className={styles.xCollab}>X</span>
+            <img
+              src="/FennecArts_eSports_Logo.png"
+              alt="Fennec Arts"
+              className={styles.logoCollab}
+            />
+          </div>
           <h1 className={styles.titre}>Créer un compte</h1>
           <p className={styles.sousTitre}>
-            Rejoignez la communauté Fennec's Clan
+            Collaboration exclusive entre Fennec's Clan & Fennec Arts
           </p>
         </div>
 

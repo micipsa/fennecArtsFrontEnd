@@ -66,7 +66,7 @@ function CarteTournoi({ tournoi }) {
     ((participants?.length ?? 0) / nombreMaxParticipants) * 100;
 
   return (
-    <article className={styles.carte}>
+    <article className={`${styles.carte} carte-tournoi`}>
       {/* En-tête : Badge du jeu + Badge du statut */}
       <div className={styles.entete}>
         <Badge texte={jeu} variante="primaire" />

@@ -1,243 +1,315 @@
-.page {
-  padding: 2rem 0 4rem;
-  max-width: 800px;
-  margin: 0 auto;
+.pageWrapper {
+  min-height: 100vh;
+  background: #050810;
+  position: relative;
+  overflow: hidden;
 }
 
-.titre {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--couleur-sombre);
-  margin-bottom: 0.5rem;
+.pageWrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(0, 255, 200, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 200, 0.04) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+}
+
+.pageWrapper::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(transparent, rgba(0, 255, 200, 0.08));
+  background-size: 100% 100%;
+  transform: perspective(500px) rotateX(60deg);
+  transform-origin: bottom;
+  background-image:
+    linear-gradient(rgba(0, 255, 200, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 200, 0.15) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.scanLine {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #00ffc8, transparent);
+  box-shadow: 0 0 12px #00ffc8;
+  animation: scanMove 8s linear infinite;
+  pointer-events: none;
+  z-index: 5;
+}
+
+@keyframes scanMove {
+  0% { top: 0; opacity: 0.8; }
+  50% { top: 100vh; opacity: 1; }
+  100% { top: 0; opacity: 0.8; }
+}
+
+.pageEntete {
+  text-align: center;
+  padding: 4rem 1rem 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.pageEntete::before {
+  content: ">> SYSTEM ONLINE";
+  display: block;
+  font-family: var(--font-pixel);
+  font-size: 0.7rem;
+  color: #00ffc8;
+  margin-bottom: 1rem;
+  letter-spacing: 0.3em;
+  text-shadow: 0 0 8px #00ffc8;
+}
+
+.pageTitre {
+  font-family: var(--font-cyber);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0;
+  text-shadow:
+    0 0 20px #00ffc8,
+    0 0 40px rgba(0, 255, 200, 0.5);
+}
+
+.pageSousTitre {
+  font-family: var(--font-tech);
+  color: rgba(0, 255, 200, 0.7);
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.contenu {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+  position: relative;
+  z-index: 2;
 }
 
 .legende {
   display: flex;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-  font-size: 0.85rem;
-  color: var(--couleur-texte-clair);
+  gap: 2rem;
+  margin-bottom: 2rem;
+  background: rgba(0, 255, 200, 0.05);
+  padding: 1rem;
+  border: 1px solid rgba(0, 255, 200, 0.2);
+  border-radius: 4px;
+  font-family: monospace;
 }
 
 .legendeItem {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-}
-
-/* ── Navigation mois ── */
-.navigation {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.moisLabel {
-  font-size: 1.15rem;
-  font-weight: 600;
-  min-width: 180px;
-  text-align: center;
-  color: var(--couleur-sombre);
-}
-
-.btnNav {
-  background: none;
-  border: 1px solid var(--couleur-bordure);
-  border-radius: 6px;
-  width: 36px;
-  height: 36px;
-  font-size: 1.3rem;
-  cursor: pointer;
-  color: var(--couleur-texte);
-  transition: background 0.15s;
-}
-
-.btnNav:hover {
-  background: var(--couleur-fond);
-}
-
-/* ── Grille calendrier ── */
-.grille {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-  margin-bottom: 1.5rem;
-}
-
-.enteteJour {
-  text-align: center;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--couleur-texte-clair);
-  padding: 0.4rem 0;
+  gap: 0.5rem;
+  color: #a0d4c8;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.celluleVide {
-  aspect-ratio: 1;
-}
-
-.cellule {
-  aspect-ratio: 1;
-  border: 1px solid var(--couleur-bordure);
-  border-radius: 8px;
-  background: var(--couleur-blanc);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  transition: background 0.15s, border-color 0.15s;
-  padding: 0;
-}
-
-.cellule:hover {
-  background: var(--couleur-fond);
-  border-color: var(--couleur-primaire);
-}
-
-.aujourd {
-  border-color: var(--couleur-primaire);
-  background: #fff5f5;
-}
-
-.selectionne {
-  background: var(--couleur-primaire) !important;
-  border-color: var(--couleur-primaire);
-}
-
-.selectionne .numJour {
-  color: #fff;
-}
-
-.numJour {
   font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--couleur-texte);
-  line-height: 1;
-}
-
-.dots {
-  display: flex;
-  gap: 3px;
-  align-items: center;
-  min-height: 8px;
 }
 
 .dotEvent {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--couleur-primaire);
-  display: inline-block;
-  flex-shrink: 0;
+  width: 10px; height: 10px;
+  background: #ff0055;
+  box-shadow: 0 0 8px #ff0055;
 }
 
 .dotTournoi {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--couleur-accent);
-  display: inline-block;
-  flex-shrink: 0;
+  width: 10px; height: 10px;
+  background: #00ffc8;
+  box-shadow: 0 0 8px #00ffc8;
 }
 
-/* ── Panneau du jour sélectionné ── */
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 255, 200, 0.3);
+  padding: 0.5rem;
+}
+
+.btnNav {
+  background: transparent;
+  color: #00ffc8;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0 1rem;
+  transition: 0.2s;
+}
+.btnNav:hover {
+  text-shadow: 0 0 10px #00ffc8;
+  background: rgba(0, 255, 200, 0.1);
+}
+
+.moisLabel {
+  font-size: 1.5rem;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: var(--font-cyber);
+}
+
+.grille {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: rgba(0, 255, 200, 0.2);
+  border: 1px solid rgba(0, 255, 200, 0.3);
+  margin-bottom: 3rem;
+}
+
+.enteteJour {
+  background: #06110f;
+  padding: 1rem 0;
+  text-align: center;
+  color: #00ffc8;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: monospace;
+}
+
+.cellule, .celluleVide {
+  background: #06110f;
+  aspect-ratio: 1;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+  transition: 0.2s;
+  cursor: pointer;
+  font-family: monospace;
+  color: #a0d4c8;
+}
+
+.cellule:hover {
+  background: rgba(0, 255, 200, 0.1);
+}
+
+.numJour {
+  font-size: 1.2rem;
+  color: #a0d4c8;
+}
+
+.aujourd {
+  background: rgba(0, 255, 200, 0.15);
+  box-shadow: inset 0 0 15px rgba(0, 255, 200, 0.3);
+}
+
+.aujourd .numJour {
+  color: #00ffc8;
+  font-weight: bold;
+}
+
+.selectionne {
+  background: rgba(255, 0, 85, 0.15) !important;
+  border: 1px solid #ff0055 !important;
+  box-shadow: inset 0 0 15px rgba(255, 0, 85, 0.3) !important;
+  position: relative;
+  z-index: 2;
+}
+
+.dots {
+  margin-top: auto;
+  display: flex;
+  gap: 0.3rem;
+  justify-content: flex-end;
+}
+
 .panneauJour {
-  background: var(--couleur-blanc);
-  border: 1px solid var(--couleur-bordure);
-  border-radius: 12px;
-  padding: 1.5rem;
+  background: rgba(5, 8, 16, 0.85);
+  border: 1px solid rgba(0, 255, 200, 0.3);
+  border-left: 4px solid #00ffc8;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 40px rgba(0, 255, 200, 0.1);
 }
 
 .panneauTitre {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--couleur-sombre);
-  margin-bottom: 1rem;
-  text-transform: capitalize;
-}
-
-.vide {
-  color: var(--couleur-texte-clair);
-  font-style: italic;
+  color: #00ffc8;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px rgba(0, 255, 200, 0.4);
+  font-family: var(--font-cyber);
 }
 
 .listeItems {
   list-style: none;
-  margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 1rem;
 }
 
 .item {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(255,255,255,0.02);
+  border: 1px dashed rgba(0, 255, 200, 0.15);
+  transition: 0.2s;
+  font-family: monospace;
+}
+
+.item:hover {
+  background: rgba(0, 255, 200, 0.05);
+  border-color: rgba(0, 255, 200, 0.3);
 }
 
 .itemBadge {
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-size: 0.7rem;
   padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  white-space: nowrap;
-  flex-shrink: 0;
+  text-transform: uppercase;
+  border: 1px solid;
+  font-family: var(--font-cyber);
 }
 
 .itemBadge[data-type="event"] {
-  background: #fff5f5;
-  color: var(--couleur-primaire);
-  border: 1px solid var(--couleur-primaire);
+  color: #ff0055;
+  border-color: #ff0055;
+  background: rgba(255,0,85,0.1);
 }
 
 .itemBadge[data-type="tournoi"] {
-  background: #fff8f0;
-  color: var(--couleur-accent);
-  border: 1px solid var(--couleur-accent);
+  color: #00ffc8;
+  border-color: #00ffc8;
+  background: rgba(0,255,200,0.1);
 }
 
 .itemLien {
-  font-weight: 500;
-  color: var(--couleur-sombre);
+  color: white;
+  font-size: 1.1rem;
   text-decoration: none;
-  transition: color 0.15s;
+}
+.itemLien:hover { color: #00ffc8; }
+
+.itemLieu { color: rgba(255,255,255,0.4); }
+
+.vide {
+  color: rgba(0, 255, 200, 0.4);
+  text-align: center;
+  padding: 2rem;
+  font-family: monospace;
 }
 
-.itemLien:hover {
-  color: var(--couleur-primaire);
-}
-
-.itemLieu {
-  font-size: 0.85rem;
-  color: var(--couleur-texte-clair);
-}
-
-/* ── Responsive ── */
-@media (max-width: 540px) {
-  .grille {
-    gap: 2px;
-  }
-
-  .numJour {
-    font-size: 0.75rem;
-  }
-
-  .dotEvent,
-  .dotTournoi {
-    width: 5px;
-    height: 5px;
-  }
-
-  .moisLabel {
-    font-size: 1rem;
-    min-width: 140px;
-  }
+@media (max-width: 768px) {
+  .legende { flex-direction: column; gap: 0.5rem; }
+  .cellule { aspect-ratio: auto; min-height: 60px; }
 }

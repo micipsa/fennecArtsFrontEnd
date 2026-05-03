@@ -21,6 +21,7 @@ import useAuth from "../hooks/useAuth";
 import Badge from "../components/UI/Badge";
 import Spinner from "../components/UI/Spinner";
 import { calculerRang } from "../utils/rangs";
+import { getThemeUtilisateur } from "../utils/themesProfil";
 import PanneauQuetes from "../components/UI/PanneauQuetes";
 import OngletGaming from "./profil/OngletGaming";
 import OngletGeek from "./profil/OngletGeek";
@@ -151,7 +152,19 @@ function ProfilPage() {
       })
     : "Non disponible";
 
+  const rangCalculeProfil = calculerRang(profil?.points || 0);
+  const themeActif = getThemeUtilisateur({ ...profil, rangCalcule: rangCalculeProfil });
+
   return (
+    <div
+      className={styles.pageWrapper}
+      style={{
+        "--theme-primaire": themeActif.couleurPrimaire,
+        "--theme-secondaire": themeActif.couleurSecondaire,
+        "--theme-accent": themeActif.couleurAccent,
+        background: themeActif.fond,
+      }}
+    >
     <div className="container">
       <div className={styles.page}>
         {/* ── En-tête de la page ── */}
@@ -426,6 +439,7 @@ function ProfilPage() {
         )}
 
       </div>
+    </div>
     </div>
   );
 }

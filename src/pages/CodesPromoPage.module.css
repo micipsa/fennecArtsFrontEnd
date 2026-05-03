@@ -1,0 +1,22 @@
+.pageWrapper { min-height: 100vh; background: linear-gradient(135deg, var(--couleur-sombre) 0%, var(--couleur-sombre-2) 100%); padding: 4rem 1rem; }
+.contenu { max-width: 700px; margin: 0 auto; }
+.titre { font-family: var(--font-titre); font-size: 2.5rem; color: white; margin-bottom: 0.5rem; }
+.sousTitre { color: rgba(255,255,255,0.6); margin-bottom: 2rem; }
+.formulaire { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+.input { flex: 1; padding: 1rem; background: rgba(255,255,255,0.05); border: 2px solid rgba(244, 162, 97, 0.3); border-radius: 8px; color: white; font-family: var(--font-titre); font-size: 1.2rem; letter-spacing: 0.1em; text-align: center; outline: none; }
+.input:focus { border-color: var(--couleur-accent); box-shadow: 0 0 20px rgba(244, 162, 97, 0.3); }
+.btnUtiliser { padding: 0 2rem; background: linear-gradient(135deg, var(--couleur-primaire), var(--couleur-accent)); color: white; border: none; border-radius: 8px; font-family: var(--font-titre); font-weight: 700; cursor: pointer; }
+.btnUtiliser:disabled { opacity: 0.5; cursor: not-allowed; }
+.succes { background: linear-gradient(135deg, rgba(40, 167, 69, 0.2), rgba(244, 162, 97, 0.1)); border: 1px solid #28a745; padding: 1.2rem; border-radius: 8px; color: white; display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; animation: slideIn 0.3s; }
+.succesIcone { font-size: 2rem; }
+.recompenses { display: flex; gap: 0.5rem; margin-top: 0.4rem; }
+.recompenses span { background: rgba(244, 162, 97, 0.2); padding: 0.2rem 0.6rem; border-radius: 99px; font-size: 0.85rem; color: var(--couleur-accent); }
+.erreur { background: rgba(230, 57, 70, 0.15); border: 1px solid var(--couleur-primaire); padding: 1rem; border-radius: 8px; color: white; margin-bottom: 1rem; }
+.titreHistorique { font-family: var(--font-titre); color: white; margin-top: 3rem; margin-bottom: 1rem; }
+.vide { color: rgba(255,255,255,0.4); text-align: center; padding: 2rem; }
+.historique { display: flex; flex-direction: column; gap: 0.5rem; }
+.historiqueItem { display: flex; align-items: center; gap: 1rem; background: rgba(255,255,255,0.04); padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); }
+.codeBadge { font-family: var(--font-titre); font-weight: 700; color: var(--couleur-accent); padding: 0.2rem 0.6rem; background: rgba(244, 162, 97, 0.15); border-radius: 4px; font-size: 0.85rem; }
+.codeDesc { flex: 1; color: rgba(255,255,255,0.8); font-size: 0.9rem; }
+.codeRecomp { color: #28a745; font-weight: 600; font-size: 0.85rem; }
+@keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }

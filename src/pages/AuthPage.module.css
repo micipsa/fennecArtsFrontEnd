@@ -71,6 +71,42 @@
   filter: drop-shadow(0 0 15px rgba(230, 57, 70, 0.4));
 }
 
+.wrapperLogos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.logoCollab {
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(230, 57, 70, 0.3));
+  transition: transform 0.3s ease;
+}
+
+.logoCollab:hover {
+  transform: scale(1.05);
+}
+
+.logoFennecClan {
+  border-radius: 50%;
+  mask-image: radial-gradient(circle, black 50%, transparent 95%);
+  -webkit-mask-image: radial-gradient(circle, black 50%, transparent 95%);
+  filter: drop-shadow(0 0 12px rgba(230, 57, 70, 0.4));
+}
+
+.xCollab {
+  font-family: var(--font-titre);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--couleur-primaire);
+  text-shadow: 0 0 10px rgba(230, 57, 70, 0.5);
+  opacity: 0.9;
+}
+
 .titre {
   font-size: 1.6rem;
   font-weight: 700;

@@ -52,51 +52,45 @@ function TournamentsPage() {
     statut === "tous" ? tournois : tournois.filter((t) => t.statut === statut);
 
   return (
-    <div className="container">
-      {/* ── En-tête ── */}
-      <div className={styles.entete}>
-        <div className={styles.enteteTexte}>
-          <h1 className={styles.titre}>🏆 Tournois</h1>
-          <p className={styles.sousTitre}>
-            Inscrivez-vous aux tournois gaming et esport
-          </p>
-        </div>
+    <div className={styles.pageWrapper}>
+      <div className={styles.pageEntete}>
+        <h1 className={styles.pageTitre}>ARENA</h1>
+        <p className={styles.pageSousTitre}>Tournament Hub</p>
       </div>
 
-      {/* ── Boutons de filtre par statut ── */}
-      <div className={styles.filtres}>
-        {STATUTS.map((s) => (
-          <button
-            key={s.valeur}
-            className={`${styles.filtreBouton} ${statut === s.valeur ? styles.filtreActif : ""}`}
-            onClick={() => setStatut(s.valeur)}>
-            {s.label}
-          </button>
-        ))}
-      </div>
-
-      {/* ── États conditionnels ── */}
-      {chargement && <Spinner />}
-
-      {erreur && (
-        <MessageErreur
-          message={erreur}
-          onReessayer={() => window.location.reload()}
-        />
-      )}
-
-      {!chargement && !erreur && tournoisFiltres.length === 0 && (
-        <p className={styles.vide}>Aucun tournoi trouvé.</p>
-      )}
-
-      {/* ── Grille des tournois filtrés ── */}
-      {!chargement && !erreur && tournoisFiltres.length > 0 && (
-        <div className={styles.grille}>
-          {tournoisFiltres.map((tournoi) => (
-            <CarteTournoi key={tournoi._id} tournoi={tournoi} />
+      <div className={styles.contenu}>
+        <div className={styles.filtres}>
+          {STATUTS.map((s) => (
+            <button
+              key={s.valeur}
+              className={`${styles.filtreBouton} ${statut === s.valeur ? styles.filtreActif : ""}`}
+              onClick={() => setStatut(s.valeur)}>
+              {s.label}
+            </button>
           ))}
         </div>
-      )}
+
+        {chargement && <Spinner />}
+
+        {erreur && (
+          <MessageErreur
+            message={erreur}
+            onReessayer={() => window.location.reload()}
+          />
+        )}
+
+        {!chargement && !erreur && tournoisFiltres.length === 0 && (
+          <p className={styles.vide}>Aucun tournoi trouvé.</p>
+        )}
+
+        {!chargement && !erreur && tournoisFiltres.length > 0 && (
+          <div className={styles.grille}>
+            {tournoisFiltres.map((tournoi) => (
+              <CarteTournoi key={tournoi._id} tournoi={tournoi} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

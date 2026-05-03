@@ -59,19 +59,16 @@ function WebTVPage() {
   }
 
   return (
-    <div className={styles.page}>
-      <div className="container">
-        {/* ── En-tête ── */}
-        <div className={styles.entete}>
-          <h1 className={styles.titre}>
-            📺 Web<span className={styles.accent}>TV</span>
-          </h1>
-          <p className={styles.sousTitre}>
-            Lives, replays et contenus gaming des chaînes Fennec Arts
-          </p>
-        </div>
+    <div className={styles.pageWrapper}>
+      <div className={styles.noiseOverlay} />
 
-        {/* ── Zone live ── */}
+      <div className={styles.pageEntete}>
+        <span className={styles.liveBadge}>BROADCAST</span>
+        <h1 className={styles.pageTitre}>WEBTV</h1>
+        <p className={styles.pageSousTitre}>&gt;&gt;&gt; ON AIR &lt;&lt;&lt;</p>
+      </div>
+
+      <div className={styles.contenu}>
         {data.estEnLive ? (
           <div className={styles.zoneLive}>
             <div className={styles.badgeLive}>
@@ -94,7 +91,6 @@ function WebTVPage() {
           </div>
         )}
 
-        {/* ── Player intégré ── */}
         {videoSelectionnee && (
           <div className={styles.zonePlayer}>
             <div className={styles.playerEntete}>
@@ -116,7 +112,6 @@ function WebTVPage() {
           </div>
         )}
 
-        {/* ── Barre de filtres chaînes ── */}
         <div className={styles.filtresEntete}>
           <h2 className={styles.titreSection}>Dernières vidéos</h2>
           <div className={styles.filtres}>
@@ -136,7 +131,6 @@ function WebTVPage() {
           </div>
         </div>
 
-        {/* ── Grille vidéos ── */}
         <div className={styles.grille}>
           {videosFiltrees.map((video) => (
             <button

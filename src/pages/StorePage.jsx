@@ -56,7 +56,14 @@ export default function StorePage() {
     : articles.filter(a => a.type === categorie);
 
   return (
-    <div className={styles.immersiveWrapper}>
+    <div className={styles.pageWrapper}>
+      <div className={styles.fumee} />
+
+      <div className={styles.pageEntete}>
+        <h1 className={styles.pageTitre}>SACRED SHOP</h1>
+        <p className={styles.pageSousTitre}>Marchand mystique</p>
+      </div>
+
       <div className={styles.container}>
         <header className={styles.header}>
         <div className={styles.titreBox}>

@@ -106,6 +106,13 @@ function DashboardLayout() {
                 }>
                 Quêtes
               </NavLink>
+              <NavLink
+                to="/dashboard/codes"
+                className={({ isActive }) =>
+                  `${styles.navLien} ${isActive ? styles.actif : ""}`
+                }>
+                🎟️ Codes Promo
+              </NavLink>
             </>
           )}
 

@@ -1,116 +1,222 @@
-.entete {
-  padding: 3rem 0 2rem;
-  margin-bottom: 1.5rem;
+.pageWrapper {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(74, 0, 224, 0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 0%, rgba(255, 0, 110, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+    #0a0010;
   position: relative;
+  overflow: hidden;
 }
 
-.entete::after {
-  content: "";
+.spotlight {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(
-    90deg,
-    var(--couleur-accent),
-    var(--couleur-primaire)
-  );
-  border-radius: 999px;
+  width: 200px;
+  height: 100vh;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+  filter: blur(20px);
+  pointer-events: none;
+  z-index: 0;
+  transform-origin: top;
+  animation: balayer 8s ease-in-out infinite alternate;
 }
 
-.titre {
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: var(--couleur-texte);
-  font-family: var(--font-titre);
-  letter-spacing: 0.02em;
+.spotlight.gauche { left: 10%; animation-delay: 0s; }
+.spotlight.droite { right: 10%; animation-delay: -4s; }
+
+@keyframes balayer {
+  0% { transform: rotate(-15deg); opacity: 0.5; }
+  100% { transform: rotate(15deg); opacity: 0.8; }
 }
 
-.sousTitre {
-  color: var(--couleur-texte-clair);
-  margin-top: 0.4rem;
-  font-size: 0.95rem;
+.pageEntete {
+  text-align: center;
+  padding: 5rem 1rem 3rem;
+  position: relative;
+  z-index: 2;
 }
 
-.filtres {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 2.5rem;
-  padding: 1rem 1.25rem;
-  background: var(--couleur-blanc);
-  border-radius: var(--border-radius-lg);
-  border: 1px solid var(--couleur-bordure);
-  box-shadow: var(--ombre-sm);
+.pageTitre {
+  font-family: var(--font-manga);
+  font-size: clamp(3rem, 7vw, 6rem);
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, #ff006e 0%, #ffd700 50%, #4a00e0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 40px rgba(255, 0, 110, 0.4);
+  margin: 0;
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
 }
 
-.filtreBouton {
-  padding: 0.4rem 1rem;
-  border-radius: 999px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  border: 1.5px solid var(--couleur-bordure);
-  background: transparent;
-  color: var(--couleur-texte-clair);
-  transition: var(--transition);
-  font-family: var(--font-titre);
-  letter-spacing: 0.03em;
+.pageSousTitre {
+  font-family: var(--font-tech);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  margin-top: 1rem;
+  letter-spacing: 0.4em;
   text-transform: uppercase;
 }
 
+.pageSousTitre::before { content: "✦ "; color: #ffd700; }
+.pageSousTitre::after { content: " ✦"; color: #ffd700; }
+
+.contenu {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+  position: relative;
+  z-index: 2;
+}
+
+:global(.carteEvenement) {
+  background: linear-gradient(135deg, rgba(74, 0, 224, 0.15), rgba(255, 0, 110, 0.08)) !important;
+  border: 1px solid rgba(255, 215, 0, 0.3) !important;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+:global(.carteEvenement::before) {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent, rgba(255, 215, 0, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+:global(.carteEvenement:hover) {
+  border-color: #ffd700 !important;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 40px rgba(74, 0, 224, 0.4);
+}
+
+:global(.carteEvenement:hover::before) { opacity: 1; }
+
+.filtres {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 3.5rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 30px;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  backdrop-filter: blur(10px);
+}
+
+.filtreBouton {
+  padding: 0.6rem 1.8rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+  transition: all 0.4s ease;
+  font-family: var(--font-principale);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
 .filtreBouton:hover {
-  border-color: var(--couleur-primaire);
-  color: var(--couleur-primaire);
-  background: rgba(230, 57, 70, 0.04);
+  color: white;
+  background: rgba(255,255,255,0.05);
 }
 
 .filtreActif {
-  background: var(--couleur-primaire);
-  border-color: var(--couleur-primaire);
-  color: var(--couleur-blanc);
-  box-shadow: 0 2px 8px rgba(230, 57, 70, 0.3);
+  background: linear-gradient(135deg, #4a00e0, #8e2de2);
+  color: white;
+  box-shadow: 0 4px 15px rgba(74, 0, 224, 0.4);
+  border-color: rgba(255,255,255,0.1);
 }
 
 .filtreActif:hover {
-  background: #c1121f;
-  border-color: #c1121f;
-  color: var(--couleur-blanc);
+  background: linear-gradient(135deg, #5b11ef, #9f3ef3);
 }
 
 .grille {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-  padding-bottom: 3rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
 }
 
 .vide {
   text-align: center;
-  color: var(--couleur-texte-clair);
-  padding: 4rem 0;
-  font-size: 0.95rem;
+  color: rgba(255,255,255,0.4);
+  padding: 5rem 0;
+  font-size: 1.1rem;
 }
 
 .vide::before {
-  content: "📅";
+  content: "🎭";
   display: block;
-  font-size: 2.5rem;
+  font-size: 3rem;
   margin-bottom: 1rem;
+  opacity: 0.5;
 }
 
 @media (max-width: 768px) {
   .grille {
     grid-template-columns: 1fr;
   }
-
   .filtres {
     overflow-x: auto;
     flex-wrap: nowrap;
-    padding-bottom: 0.75rem;
+    justify-content: flex-start;
   }
+}
 
-  .titre {
-    font-size: 1.6rem;
-  }
+.pageWrapper :global(.carte-evenement) {
+  background: linear-gradient(135deg, rgba(74, 0, 224, 0.15), rgba(255, 0, 110, 0.08)) !important;
+  border: 1px solid rgba(255, 215, 0, 0.3) !important;
+  border-radius: 20px !important;
+  color: white !important;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  overflow: hidden !important;
+}
+
+.pageWrapper :global(.carte-evenement:hover) {
+  transform: translateY(-8px) scale(1.02) !important;
+  border-color: #ffd700 !important;
+  box-shadow: 0 15px 40px rgba(74, 0, 224, 0.3), 0 0 20px rgba(255, 215, 0, 0.15) !important;
+}
+
+.pageWrapper :global(.carte-evenement .titre) {
+  color: white !important;
+  font-family: var(--font-manga) !important;
+  font-size: 1.4rem !important;
+}
+
+.pageWrapper :global(.carte-evenement .description) {
+  color: rgba(255,255,255,0.7) !important;
+}
+
+.pageWrapper :global(.carte-evenement .date) {
+  color: #ffd700 !important;
+  font-weight: bold !important;
+}
+
+.pageWrapper :global(.carte-evenement .lieu) {
+  color: #a275ff !important;
+}
+
+.pageWrapper :global(.carte-evenement .lien) {
+  color: #ffd700 !important;
+  background: rgba(255, 215, 0, 0.1) !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 999px !important;
+  text-align: center !important;
+  display: inline-block !important;
+  width: 100% !important;
+  transition: all 0.3s !important;
+}
+
+.pageWrapper :global(.carte-evenement .lien:hover) {
+  background: #ffd700 !important;
+  color: #0a0010 !important;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4) !important;
 }
