@@ -147,7 +147,8 @@
 .ligneAnimee {
   position: absolute;
   bottom: -10px;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   height: 4px;
   background: linear-gradient(90deg, var(--couleur-primaire), var(--couleur-accent));
   border-radius: 999px;

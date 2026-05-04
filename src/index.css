@@ -71,6 +71,8 @@
 /* Défilement fluide lors des clics sur les ancres */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* Corps de la page : police, couleur, fond, hauteur minimale */
@@ -81,6 +83,7 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
+  width: 100%;
 }
 
 /* Liens : suppression du soulignement et héritage de la couleur */
