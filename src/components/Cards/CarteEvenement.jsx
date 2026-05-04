@@ -36,8 +36,10 @@ function CarteEvenement({ evenement }) {
   } = evenement;
 
   // Troncature de la description à 100 caractères pour l'aperçu
+  // Suppression des balises HTML pour l'extrait
+  const descriptionPure = description.replace(/<[^>]*>/g, "");
   const extraitDescription =
-    description.length > 100 ? description.slice(0, 100) + "..." : description;
+    descriptionPure.length > 100 ? descriptionPure.slice(0, 100) + "..." : descriptionPure;
 
   // Fonction utilitaire pour formater une date ISO en français
   const formatDate = (dateISO) =>

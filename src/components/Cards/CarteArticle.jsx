@@ -23,8 +23,10 @@ function CarteArticle({ article }) {
   );
   const [animating, setAnimating] = useState(false);
 
+  // Suppression des balises HTML pour l'extrait
+  const contenuPur = contenu.replace(/<[^>]*>/g, "");
   const extraitContenu =
-    contenu.length > 120 ? contenu.slice(0, 120) + "..." : contenu;
+    contenuPur.length > 120 ? contenuPur.slice(0, 120) + "..." : contenuPur;
 
   const dateFormatee = new Date(createdAt).toLocaleDateString("fr-FR", {
     day: "numeric",

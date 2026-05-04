@@ -302,6 +302,9 @@
   height: auto;
   filter: drop-shadow(0 0 40px rgba(244, 162, 97, 0.3));
   animation: floatImage 4s ease-in-out infinite;
+  /* Effet de fondu progressif en bas */
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
 }
 
 @keyframes floatImage {

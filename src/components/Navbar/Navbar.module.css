@@ -255,21 +255,29 @@
 }
 .btnConnexion:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(230, 57, 70, 0.4); }
 
+@media (max-width: 992px) {
+  .brandName { display: none; }
+}
+
+@media (max-width: 768px) {
+  .kbdHint { display: none; }
+  .actions { gap: 0.5rem; }
+  .inner { padding: 0.7rem 1rem; }
+}
+
 @media (max-width: 480px) {
   .navbar { overflow-x: hidden; }
   .drawer { width: 100%; max-width: 100vw; right: -100%; }
   .drawerOuvert { right: 0; }
-  .inner { padding: 0.5rem 0.6rem; gap: 0.5rem; }
-  .actions { gap: 0.4rem; }
-  .iconBtn { padding: 0.35rem; }
-  .iconLoupe { font-size: 0.9rem; }
-  .kbdHint { display: none; }
+  .inner { padding: 0.5rem 0.6rem; gap: 0.4rem; }
+  .actions { gap: 0.3rem; }
+  .iconBtn { padding: 0.3rem; }
+  .iconLoupe { font-size: 0.85rem; }
   .btnConnexion { padding: 0.35rem 0.7rem; font-size: 0.75rem; }
-  .burger { padding: 0.5rem; }
+  .burger { padding: 0.4rem; }
   .burger span { width: 18px; }
 }
 
 @media (max-width: 360px) {
-  .brandName { display: none; }
   .logoImg { width: 32px; height: 32px; }
 }

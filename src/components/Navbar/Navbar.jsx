@@ -74,9 +74,9 @@ function Navbar() {
             )}
 
             <button className={styles.burger} onClick={() => setMenuMobile(!menuMobile)} aria-label="Menu">
-              <span />
-              <span />
-              <span />
+              <span className={menuMobile ? styles.b1 : ""} />
+              <span className={menuMobile ? styles.b2 : ""} />
+              <span className={menuMobile ? styles.b3 : ""} />
             </button>
           </div>
         </div>
