@@ -295,6 +295,18 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
+.progressionGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .progressionGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .sectionTitre {
   font-size: 1.2rem;
   font-weight: 700;
@@ -307,6 +319,10 @@
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .rangNom {

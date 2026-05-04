@@ -45,7 +45,11 @@ function DashboardUtilisateurs() {
   const [tagsDisponibles, setTagsDisponibles] = useState([]);
   const [modaleGestion, setModaleGestion] = useState(null);
   const [tagsSelectionnes, setTagsSelectionnes] = useState([]);
-  const [bonusForm, setBonusForm] = useState({ points: "", fm: "", raison: "" });
+  const [bonusForm, setBonusForm] = useState({
+    points: "",
+    fm: "",
+    raison: "",
+  });
   const [envoiTags, setEnvoiTags] = useState(false);
   const [envoiBonus, setEnvoiBonus] = useState(false);
 
@@ -94,7 +98,8 @@ function DashboardUtilisateurs() {
    * Demande confirmation puis effectue un DELETE.
    */
   const handleSupprimer = async (id) => {
-    if (!window.confirm("Confirmer la suppression de cet utilisateur ?")) return;
+    if (!window.confirm("Confirmer la suppression de cet utilisateur ?"))
+      return;
     try {
       await api.delete(`/api/users/${id}`);
       setUtilisateurs((prev) => prev.filter((u) => u._id !== id));
@@ -111,16 +116,22 @@ function DashboardUtilisateurs() {
 
   const toggleTag = (tagId) => {
     setTagsSelectionnes((prev) =>
-      prev.includes(tagId) ? prev.filter((id) => id !== tagId) : [...prev, tagId]
+      prev.includes(tagId)
+        ? prev.filter((id) => id !== tagId)
+        : [...prev, tagId],
     );
   };
 
   const handleSauvegarderTags = async () => {
     setEnvoiTags(true);
     try {
-      const res = await api.patch(`/api/users/${modaleGestion._id}/tags`, { tags: tagsSelectionnes });
+      const res = await api.patch(`/api/users/${modaleGestion._id}/tags`, {
+        tags: tagsSelectionnes,
+      });
       setUtilisateurs((prev) =>
-        prev.map((u) => (u._id === modaleGestion._id ? { ...u, tags: res.data.data.tags } : u))
+        prev.map((u) =>
+          u._id === modaleGestion._id ? { ...u, tags: res.data.data.tags } : u,
+        ),
       );
       setModaleGestion((prev) => ({ ...prev, tags: res.data.data.tags }));
     } catch {
@@ -143,9 +154,13 @@ function DashboardUtilisateurs() {
       setUtilisateurs((prev) =>
         prev.map((u) =>
           u._id === modaleGestion._id
-            ? { ...u, points: (u.points || 0) + (Number(bonusForm.points) || 0), fm: (u.fm || 0) + (Number(bonusForm.fm) || 0) }
-            : u
-        )
+            ? {
+                ...u,
+                points: (u.points || 0) + (Number(bonusForm.points) || 0),
+                fm: (u.fm || 0) + (Number(bonusForm.fm) || 0),
+              }
+            : u,
+        ),
       );
       setBonusForm({ points: "", fm: "", raison: "" });
     } catch {
@@ -187,7 +202,10 @@ function DashboardUtilisateurs() {
         {utilisateurs.map((u) => (
           <div key={u._id} className={styles.tableauLigne}>
             <span className={styles.nom}>
-              <Link to={`/membres/${u._id}`} className={styles.lienProfil} title="Voir le profil public">
+              <Link
+                to={`/membres/${u._id}`}
+                className={styles.lienProfil}
+                title="Voir le profil public">
                 {u.nom}
               </Link>
             </span>
@@ -212,14 +230,13 @@ function DashboardUtilisateurs() {
                 ))}
               </select>
             </span>
-            <span style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
-              {u.role === "adherent" && (
-                <button
-                  className={styles.btnGerer}
-                  onClick={() => ouvrirGestion(u)}>
-                  Gérer
-                </button>
-              )}
+            <span
+              style={{ display: "flex", gap: "0.4rem", alignItems: "center" }}>
+              <button
+                className={styles.btnGerer}
+                onClick={() => ouvrirGestion(u)}>
+                Gérer
+              </button>
               <button
                 className={styles.btnSupprimer}
                 onClick={() => handleSupprimer(u._id)}>
@@ -235,8 +252,14 @@ function DashboardUtilisateurs() {
         <div className={styles.overlay} onClick={() => setModaleGestion(null)}>
           <div className={styles.modale} onClick={(e) => e.stopPropagation()}>
             <div className={styles.modaleEntete}>
-              <h2 className={styles.modaleTitre}>Gérer — {modaleGestion.nom}</h2>
-              <button className={styles.modaleFermer} onClick={() => setModaleGestion(null)}>✕</button>
+              <h2 className={styles.modaleTitre}>
+                Gérer — {modaleGestion.nom}
+              </h2>
+              <button
+                className={styles.modaleFermer}
+                onClick={() => setModaleGestion(null)}>
+                ✕
+              </button>
             </div>
 
             {/* Tags */}
@@ -252,7 +275,11 @@ function DashboardUtilisateurs() {
                     />
                     <span
                       className={styles.tagChip}
-                      style={{ background: tag.couleur + "22", color: tag.couleur, borderColor: tag.couleur + "66" }}>
+                      style={{
+                        background: tag.couleur + "22",
+                        color: tag.couleur,
+                        borderColor: tag.couleur + "66",
+                      }}>
                       {tag.nom}
                     </span>
                   </label>
@@ -279,7 +306,9 @@ function DashboardUtilisateurs() {
                   min="0"
                   placeholder="Points XP"
                   value={bonusForm.points}
-                  onChange={(e) => setBonusForm((p) => ({ ...p, points: e.target.value }))}
+                  onChange={(e) =>
+                    setBonusForm((p) => ({ ...p, points: e.target.value }))
+                  }
                 />
                 <input
                   className={styles.bonusInput}
@@ -287,17 +316,24 @@ function DashboardUtilisateurs() {
                   min="0"
                   placeholder="FM"
                   value={bonusForm.fm}
-                  onChange={(e) => setBonusForm((p) => ({ ...p, fm: e.target.value }))}
+                  onChange={(e) =>
+                    setBonusForm((p) => ({ ...p, fm: e.target.value }))
+                  }
                 />
                 <input
                   className={styles.bonusInput}
                   type="text"
                   placeholder="Raison"
                   value={bonusForm.raison}
-                  onChange={(e) => setBonusForm((p) => ({ ...p, raison: e.target.value }))}
+                  onChange={(e) =>
+                    setBonusForm((p) => ({ ...p, raison: e.target.value }))
+                  }
                   required
                 />
-                <button className={styles.btnBonus} type="submit" disabled={envoiBonus}>
+                <button
+                  className={styles.btnBonus}
+                  type="submit"
+                  disabled={envoiBonus}>
                   {envoiBonus ? "..." : "+ Ajouter"}
                 </button>
               </form>

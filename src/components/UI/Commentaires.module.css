@@ -34,8 +34,8 @@
   border-radius: var(--border-radius);
   font-size: 0.9rem;
   font-family: inherit;
-  color: var(--couleur-texte);
-  background: var(--couleur-blanc);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
   resize: vertical;
   outline: none;
   transition: border-color 0.2s;
@@ -94,12 +94,12 @@
 }
 
 .reponse {
-  background: var(--couleur-blanc);
+  background: rgba(255, 255, 255, 0.03);
   border-radius: var(--border-radius-sm);
   padding: 0.75rem 1rem;
   margin-top: 0.75rem;
   margin-left: 1.5rem;
-  border-left: 3px solid var(--couleur-bordure);
+  border-left: 3px solid var(--couleur-primaire);
 }
 
 .commentaireEntete {

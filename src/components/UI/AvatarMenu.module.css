@@ -64,19 +64,30 @@
   color: white; font-family: var(--font-titre); font-weight: 800; font-size: 1.2rem;
 }
 
-.infos { display: flex; flex-direction: column; gap: 0.15rem; }
+.infos { display: flex; flex-direction: column; gap: 0.25rem; }
 .nom { font-family: var(--font-titre); font-weight: 700; color: white; font-size: 0.95rem; }
+.badgesInline { display: flex; align-items: center; gap: 0.5rem; }
+.niveauBadge { background: rgba(255, 255, 255, 0.1); padding: 0.15rem 0.4rem; border-radius: 4px; font-family: var(--font-titre); font-size: 0.7rem; font-weight: 800; color: white; letter-spacing: 0.05em; }
 .rang { font-family: var(--font-titre); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; }
 
 .stats {
   display: flex;
-  padding: 0.75rem 1rem;
+  flex-direction: column;
+  padding: 1rem;
   border-bottom: 1px solid rgba(255,255,255,0.06);
-  gap: 1rem;
+  gap: 0.8rem;
 }
-.stat { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; }
-.statLabel { font-size: 0.7rem; color: rgba(255,255,255,0.4); font-family: var(--font-titre); letter-spacing: 0.08em; text-transform: uppercase; }
-.statValeur { font-size: 0.95rem; font-weight: 700; color: white; font-family: var(--font-titre); }
+
+.xpBarContainer { display: flex; flex-direction: column; gap: 0.4rem; }
+.xpBarHeader { display: flex; justify-content: space-between; align-items: center; }
+.xpLabel { font-size: 0.75rem; color: #2ecc71; font-family: var(--font-titre); font-weight: 800; letter-spacing: 0.05em; }
+.xpValeurs { font-size: 0.75rem; color: rgba(255,255,255,0.6); font-family: var(--font-principale); font-weight: 600; }
+.xpBarBackground { height: 6px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; position: relative; }
+.xpBarFill { height: 100%; background: #2ecc71; border-radius: 999px; transition: width 0.4s ease; box-shadow: 0 0 10px rgba(46, 204, 113, 0.5); }
+
+.statFm { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); padding: 0.5rem 0.75rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
+.statLabel { font-size: 0.75rem; color: rgba(255,255,255,0.5); font-family: var(--font-titre); letter-spacing: 0.08em; text-transform: uppercase; }
+.statValeur { font-size: 0.95rem; font-weight: 800; color: white; font-family: var(--font-titre); }
 
 .menu { padding: 0.5rem; display: flex; flex-direction: column; gap: 0.1rem; }
 .menu button {

@@ -70,7 +70,25 @@
 .rangNom {
   font-size: 1.1rem; font-weight: 700;
   font-family: var(--font-titre);
+}
+
+.badgesInline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
   margin-bottom: 0.4rem;
+}
+
+.niveauBadge {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-family: var(--font-titre);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: white;
+  letter-spacing: 0.05em;
 }
 
 .statut {

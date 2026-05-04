@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { calculerRang } from "../../utils/rangs";
+import { calculerProgressionNiveau } from "../../utils/niveaux";
 import styles from "./AvatarMenu.module.css";
 
 export default function AvatarMenu({ utilisateur, onDeconnexion }) {
@@ -15,6 +16,7 @@ export default function AvatarMenu({ utilisateur, onDeconnexion }) {
   }, []);
 
   const rang = calculerRang(utilisateur.points || 0);
+  const progNiveau = calculerProgressionNiveau(utilisateur.points || 0);
   const initiale = utilisateur.nom?.[0]?.toUpperCase() || "?";
 
   const handleClick = (path) => { setOuvert(false); navigate(path); };
@@ -33,15 +35,26 @@ export default function AvatarMenu({ utilisateur, onDeconnexion }) {
             </div>
             <div className={styles.infos}>
               <span className={styles.nom}>{utilisateur.nom}</span>
-              <span className={styles.rang} style={{ color: rang.couleur }}>{rang.affichage}</span>
+              <div className={styles.badgesInline}>
+                <span className={styles.niveauBadge}>Lvl {progNiveau.niveau}</span>
+                <span className={styles.rang} style={{ color: rang.couleur }}>{rang.affichage}</span>
+              </div>
             </div>
           </div>
           <div className={styles.stats}>
-            <div className={styles.stat}>
-              <span className={styles.statLabel}>XP</span>
-              <span className={styles.statValeur}>{utilisateur.points || 0}</span>
+            <div className={styles.xpBarContainer}>
+              <div className={styles.xpBarHeader}>
+                <span className={styles.xpLabel}>XP</span>
+                <span className={styles.xpValeurs}>{progNiveau.xpProgression} / {progNiveau.xpRequis}</span>
+              </div>
+              <div className={styles.xpBarBackground}>
+                <div 
+                  className={styles.xpBarFill} 
+                  style={{ width: `${progNiveau.pourcentage}%` }}
+                />
+              </div>
             </div>
-            <div className={styles.stat}>
+            <div className={styles.statFm}>
               <span className={styles.statLabel}>FM</span>
               <span className={styles.statValeur} style={{ color: "var(--couleur-accent)" }}>💰 {utilisateur.fm || 0}</span>
             </div>
