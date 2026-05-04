@@ -266,7 +266,6 @@
 }
 
 @media (max-width: 480px) {
-  .navbar { overflow-x: hidden; }
   .drawer { width: 100%; max-width: 100vw; right: -100%; }
   .drawerOuvert { right: 0; }
   .inner { padding: 0.5rem 0.6rem; gap: 0.4rem; }
