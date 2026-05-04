@@ -1,0 +1,311 @@
+/* ── Page Wrapper ── */
+.pageWrapper {
+  min-height: 100vh;
+  position: relative;
+}
+
+.pageEntete {
+  text-align: center;
+  padding: 4rem 1rem 2rem;
+  position: relative;
+}
+
+.pageTitre {
+  font-family: var(--font-titre);
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  background: linear-gradient(135deg, var(--couleur-primaire), var(--couleur-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  margin-bottom: 0.3rem;
+}
+
+.pageSousTitre {
+  font-family: var(--font-titre);
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.contenu {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+/* ── Search Bar ── */
+.searchBar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 0.75rem 1.25rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-lg);
+  font-size: 0.95rem;
+  color: white;
+  font-family: var(--font-principale);
+  outline: none;
+  transition: all 0.2s;
+}
+
+.searchInput:focus {
+  border-color: var(--couleur-primaire);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+}
+
+.searchBtn {
+  padding: 0.75rem 1.5rem;
+  background: var(--couleur-primaire);
+  color: white;
+  border-radius: var(--border-radius-lg);
+  font-family: var(--font-titre);
+  font-weight: 700;
+  font-size: 0.88rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.searchBtn:hover {
+  background: #c1121f;
+  transform: translateY(-1px);
+}
+
+/* ── Filtres ── */
+.filtres {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.filtre {
+  padding: 0.55rem 0.85rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius);
+  color: var(--couleur-texte);
+  font-size: 0.85rem;
+  font-family: var(--font-principale);
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 150px;
+}
+
+.filtre:focus {
+  border-color: var(--couleur-primaire);
+}
+
+.filtre option {
+  background: var(--couleur-sombre-2);
+  color: white;
+}
+
+.resetBtn {
+  padding: 0.55rem 1rem;
+  background: rgba(230, 57, 70, 0.1);
+  border: 1px solid rgba(230, 57, 70, 0.3);
+  border-radius: var(--border-radius);
+  color: var(--couleur-primaire);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.resetBtn:hover {
+  background: var(--couleur-primaire);
+  color: white;
+}
+
+/* ── Compteur ── */
+.compteur {
+  font-size: 0.82rem;
+  color: var(--couleur-texte-clair);
+  margin-bottom: 1.5rem;
+  font-family: var(--font-titre);
+}
+
+/* ── Grille des membres ── */
+.grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+/* ── Carte membre ── */
+.carte {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.carte:hover {
+  transform: translateY(-4px);
+  border-color: rgba(230, 57, 70, 0.3);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.carteBanniere {
+  height: 60px;
+  background-size: cover;
+  background-position: center;
+}
+
+.carteCorps {
+  padding: 1rem 1.25rem 1.25rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  flex: 1;
+}
+
+.carteAvatar {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; font-weight: 800;
+  color: white; font-family: var(--font-titre);
+  margin-top: -38px;
+  border: 3px solid rgba(15, 15, 27, 0.9);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.carteNom {
+  font-size: 1rem; font-weight: 700;
+  font-family: var(--font-titre);
+  color: white;
+  margin-top: 0.3rem;
+}
+
+.carteRang {
+  font-size: 0.78rem; font-weight: 700;
+  font-family: var(--font-titre);
+}
+
+.carteXP {
+  font-size: 0.72rem;
+  color: var(--couleur-texte-clair);
+  font-family: var(--font-titre);
+}
+
+.carteBadges {
+  display: flex; gap: 0.3rem;
+  font-size: 1.1rem;
+  margin-top: 0.2rem;
+}
+
+.carteTags {
+  display: flex; gap: 0.3rem; flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.3rem;
+}
+
+.carteTag {
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: white;
+  font-family: var(--font-titre);
+}
+
+.carteJeux {
+  display: flex; gap: 0.3rem; flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.3rem;
+}
+
+.carteJeu {
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.carteBio {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.4;
+  margin-top: 0.4rem;
+}
+
+/* ── Vide ── */
+.vide {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--couleur-texte-clair);
+}
+
+.videIcone {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+/* ── Pagination ── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.pageBtn {
+  padding: 0.5rem 1.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius);
+  color: var(--couleur-texte);
+  font-family: var(--font-titre);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.pageBtn:hover:not(:disabled) {
+  background: var(--couleur-primaire);
+  border-color: var(--couleur-primaire);
+  color: white;
+}
+
+.pageBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pageInfo {
+  font-size: 0.85rem;
+  color: var(--couleur-texte-clair);
+  font-family: var(--font-titre);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .pageTitre { font-size: 2.5rem; }
+  .searchBar { flex-direction: column; }
+  .filtres { flex-direction: column; }
+  .filtre { min-width: unset; width: 100%; }
+  .grille { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+}

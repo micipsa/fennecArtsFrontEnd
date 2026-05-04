@@ -1,0 +1,192 @@
+.page {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.titre {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--couleur-texte);
+  font-family: var(--font-titre);
+}
+
+.sousTitre {
+  font-size: 0.88rem;
+  color: var(--couleur-texte-clair);
+  margin-top: 0.2rem;
+}
+
+.btnToutLire {
+  padding: 0.5rem 1rem;
+  background: rgba(40, 167, 69, 0.1);
+  border: 1px solid rgba(40, 167, 69, 0.3);
+  border-radius: var(--border-radius);
+  color: #28a745;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: var(--font-titre);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btnToutLire:hover {
+  background: rgba(40, 167, 69, 0.2);
+}
+
+/* ── Filtres ── */
+.filtres {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.filtre {
+  padding: 0.45rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.82rem;
+  font-family: var(--font-titre);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filtre:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.filtreActif {
+  background: rgba(230, 57, 70, 0.15) !important;
+  border-color: rgba(230, 57, 70, 0.3) !important;
+  color: white !important;
+}
+
+/* ── Liste ── */
+.liste {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ── Notification ── */
+.notif {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--border-radius-lg);
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.notif:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.nonLue {
+  background: rgba(230, 57, 70, 0.04) !important;
+  border-color: rgba(230, 57, 70, 0.15) !important;
+}
+
+.notifIcone {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.notifCorps {
+  flex: 1;
+  min-width: 0;
+}
+
+.notifEntete {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.notifTitre {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--couleur-texte);
+  font-family: var(--font-titre);
+}
+
+.notifDate {
+  font-size: 0.72rem;
+  color: var(--couleur-texte-clair);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.notifMessage {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+}
+
+.notifLien {
+  display: inline-block;
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--couleur-primaire);
+  text-decoration: none;
+  font-weight: 600;
+  font-family: var(--font-titre);
+}
+
+.notifLien:hover {
+  text-decoration: underline;
+}
+
+.notifDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--couleur-primaire);
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  box-shadow: 0 0 8px rgba(230, 57, 70, 0.5);
+}
+
+/* ── Vide ── */
+.vide {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--couleur-texte-clair);
+}
+
+.videIcone {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .page { padding: 1rem 1rem 3rem; }
+  .entete { flex-direction: column; }
+  .notifEntete { flex-direction: column; gap: 0.15rem; }
+}

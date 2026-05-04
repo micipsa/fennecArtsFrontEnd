@@ -17,7 +17,7 @@ export default function DashboardStore() {
   const [loading, setLoading] = useState(true);
   const { addToast } = useToast();
   
-  const [form, setForm] = useState({ nom: "", description: "", type: "cadre_profil", prix: 0, stock: -1, imageUrl: "" });
+  const [form, setForm] = useState({ nom: "", description: "", type: "cadre_profil", prix: 0, stock: -1, imageUrl: "", donnees: {} });
   const [isEditing, setIsEditing] = useState(null);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function DashboardStore() {
         await api.post("/api/store", form);
         addToast("Article créé !", "success");
       }
-      setForm({ nom: "", description: "", type: "cadre_profil", prix: 0, stock: -1, imageUrl: "" });
+      setForm({ nom: "", description: "", type: "cadre_profil", prix: 0, stock: -1, imageUrl: "", donnees: {} });
       setIsEditing(null);
       fetchArticles();
     } catch (err) {
@@ -58,7 +58,8 @@ export default function DashboardStore() {
     setIsEditing(article._id);
     setForm({
       nom: article.nom, description: article.description,
-      type: article.type, prix: article.prix, stock: article.stock, imageUrl: article.imageUrl || ""
+      type: article.type, prix: article.prix, stock: article.stock, imageUrl: article.imageUrl || "",
+      donnees: article.donnees || {}
     });
   };
 
@@ -113,8 +114,54 @@ export default function DashboardStore() {
               <input type="text" value={form.imageUrl} onChange={e => setForm({...form, imageUrl: e.target.value})} />
             </div>
 
+            {/* ── Champs donnees dynamiques selon le type ── */}
+            {form.type === "couleur_pseudo" && (
+              <div className={styles.formGroup}>
+                <label>Couleur (HEX)</label>
+                <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                  <input type="color" value={form.donnees?.couleur || "#e63946"}
+                    onChange={e => setForm({...form, donnees: { ...form.donnees, couleur: e.target.value }})} 
+                    style={{ width: "48px", height: "36px", border: "none", borderRadius: "6px", cursor: "pointer" }}
+                  />
+                  <input type="text" value={form.donnees?.couleur || ""} placeholder="#e63946"
+                    onChange={e => setForm({...form, donnees: { ...form.donnees, couleur: e.target.value }})} />
+                </div>
+              </div>
+            )}
+
+            {form.type === "titre_custom" && (
+              <div className={styles.formGroup}>
+                <label>Texte du titre</label>
+                <input type="text" placeholder="Ex: Le Fennec Suprême" value={form.donnees?.titre || ""}
+                  onChange={e => setForm({...form, donnees: { ...form.donnees, titre: e.target.value }})} />
+              </div>
+            )}
+
+            {form.type === "boost_xp" && (
+              <div className={styles.row}>
+                <div className={styles.formGroup}>
+                  <label>Multiplicateur XP</label>
+                  <input type="number" step="0.1" min="1" placeholder="1.5" value={form.donnees?.multiplicateur || ""}
+                    onChange={e => setForm({...form, donnees: { ...form.donnees, multiplicateur: Number(e.target.value) }})} />
+                </div>
+                <div className={styles.formGroup}>
+                  <label>Durée (heures)</label>
+                  <input type="number" min="1" placeholder="24" value={form.donnees?.dureeHeures || ""}
+                    onChange={e => setForm({...form, donnees: { ...form.donnees, dureeHeures: Number(e.target.value) }})} />
+                </div>
+              </div>
+            )}
+
+            {form.type === "cadre_profil" && (
+              <div className={styles.formGroup}>
+                <label>CSS Classe ou style du cadre</label>
+                <input type="text" placeholder="Ex: border-gold, gradient-fire" value={form.donnees?.style || ""}
+                  onChange={e => setForm({...form, donnees: { ...form.donnees, style: e.target.value }})} />
+              </div>
+            )}
+
             <div className={styles.actions}>
-              {isEditing && <button type="button" onClick={() => { setIsEditing(null); setForm({ nom: "", description: "", type: "cadre_profil", prix: 0, stock: -1, imageUrl: "" }); }} className={styles.btnCancel}>Annuler</button>}
+              {isEditing && <button type="button" onClick={() => { setIsEditing(null); setForm({ nom: "", description: "", type: "cadre_profil", prix: 0, stock: -1, imageUrl: "", donnees: {} }); }} className={styles.btnCancel}>Annuler</button>}
               <button type="submit" className={styles.btnSubmit}>{isEditing ? "Enregistrer" : "Créer l'article"}</button>
             </div>
           </form>

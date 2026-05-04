@@ -1,18 +1,275 @@
-.page { max-width: 600px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-.retourBtn { background: none; border: none; padding: 0; display: inline-flex; align-items: center; gap: 0.4rem; color: var(--couleur-texte-clair); font-size: 0.88rem; margin-bottom: 2rem; transition: var(--transition); font-family: var(--font-titre); cursor: pointer; }
+.page { max-width: 700px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+.retourBtn {
+  background: none; border: none; padding: 0;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  color: var(--couleur-texte-clair); font-size: 0.88rem;
+  margin-bottom: 1.5rem; transition: var(--transition);
+  font-family: var(--font-titre); cursor: pointer;
+}
 .retourBtn:hover { color: var(--couleur-primaire); }
-.carte { background: var(--couleur-blanc); border-radius: var(--border-radius-lg); padding: 2.5rem; border: 1px solid var(--couleur-bordure); text-align: center; }
-.avatar { width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 800; color: white; font-family: var(--font-titre); margin: 0 auto 1rem; }
-.nom { font-size: 1.5rem; font-weight: 800; font-family: var(--font-titre); color: var(--couleur-texte); margin-bottom: 0.3rem; }
-.rangNom { font-size: 1rem; font-weight: 700; font-family: var(--font-titre); margin-bottom: 0.5rem; }
-.meta { font-size: 0.82rem; color: var(--couleur-texte-clair); margin-bottom: 1.5rem; }
-.tagsListe { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; margin-bottom: 1.5rem; }
-.tag { color: white; padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-family: var(--font-titre); }
-.badgesListe { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin-bottom: 1.5rem; }
-.badgeItem { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; padding: 0.5rem 0.75rem; border-radius: var(--border-radius); background: var(--couleur-fond); border: 1px solid var(--couleur-bordure); }
+
+/* ── Carte principale ── */
+.carte {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.banniere {
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.banniereOverlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(15, 15, 27, 0.95));
+}
+
+.carteCorps {
+  padding: 0 2rem 2rem;
+  text-align: center;
+}
+
+.avatarWrapper {
+  margin-top: -44px;
+  margin-bottom: 1rem;
+  position: relative; z-index: 1;
+  display: flex; justify-content: center;
+}
+
+.avatar {
+  width: 88px; height: 88px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.2rem; font-weight: 800; color: white;
+  font-family: var(--font-titre);
+  border: 4px solid rgba(15, 15, 27, 0.9);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.nom {
+  font-size: 1.6rem; font-weight: 800;
+  font-family: var(--font-titre);
+  color: var(--couleur-texte);
+  margin-bottom: 0.2rem;
+}
+
+.titreActif {
+  font-size: 0.85rem; font-weight: 600;
+  color: var(--couleur-accent);
+  font-family: var(--font-titre);
+  margin-bottom: 0.3rem;
+}
+
+.rangNom {
+  font-size: 1.1rem; font-weight: 700;
+  font-family: var(--font-titre);
+  margin-bottom: 0.4rem;
+}
+
+.statut {
+  font-size: 0.88rem; color: rgba(255, 255, 255, 0.5);
+  font-style: italic; margin-bottom: 0.5rem;
+}
+
+.meta {
+  font-size: 0.8rem; color: var(--couleur-texte-clair);
+  margin-bottom: 1.25rem;
+}
+
+.prive {
+  font-size: 1rem; color: var(--couleur-texte-clair);
+  padding: 2rem; text-align: center;
+}
+
+/* ── Bio ── */
+.bioSection {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--border-radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  border-left: 3px solid var(--couleur-primaire);
+}
+
+.bio {
+  font-size: 0.9rem; color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+}
+
+/* ── Badges équipés ── */
+.badgesEquipes {
+  display: flex; flex-wrap: wrap; gap: 0.6rem;
+  justify-content: center; margin-bottom: 1.25rem;
+}
+
+.badgeItem {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0.2rem; padding: 0.5rem 0.75rem;
+  border-radius: var(--border-radius);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.2s;
+}
+.badgeItem:hover { transform: translateY(-2px); }
 .badgeIcone { font-size: 1.4rem; }
 .badgeNom { font-size: 0.7rem; font-family: var(--font-titre); color: var(--couleur-texte-clair); }
-.tournois { text-align: left; margin-top: 1.5rem; border-top: 1px solid var(--couleur-bordure); padding-top: 1.5rem; }
-.sousTitre { font-size: 0.9rem; font-weight: 700; font-family: var(--font-titre); color: var(--couleur-texte); margin-bottom: 0.75rem; }
-.tournoiItem { display: flex; align-items: center; justify-content: space-between; padding: 0.4rem 0.6rem; font-size: 0.85rem; border-radius: var(--border-radius); background: var(--couleur-fond); margin-bottom: 0.3rem; }
+
+/* ── Tags ── */
+.tagsListe {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+  justify-content: center; margin-bottom: 1rem;
+}
+
+.tag {
+  color: white; padding: 0.25rem 0.7rem;
+  border-radius: 999px; font-size: 0.75rem;
+  font-family: var(--font-titre); font-weight: 600;
+}
+
+/* ── Sections ── */
+.section {
+  margin-top: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sectionTitre {
+  font-size: 1rem; font-weight: 700;
+  font-family: var(--font-titre);
+  color: var(--couleur-texte);
+  margin-bottom: 1rem;
+}
+
+/* ── Jeux préférés ── */
+.jeuxGrille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+
+.jeuCard {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  display: flex; flex-direction: column; gap: 0.3rem;
+}
+
+.jeuNom {
+  font-size: 0.95rem; font-weight: 700;
+  font-family: var(--font-titre);
+  color: var(--couleur-accent);
+}
+
+.jeuDetail {
+  font-size: 0.78rem; color: rgba(255, 255, 255, 0.5);
+}
+
+/* ── Setup Gaming ── */
+.setupGrille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.6rem;
+}
+
+.setupItem {
+  display: flex; flex-direction: column; gap: 0.15rem;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.88rem; color: var(--couleur-texte);
+}
+
+.setupLabel {
+  font-size: 0.72rem; font-weight: 600;
+  color: var(--couleur-texte-clair);
+  text-transform: uppercase;
+  font-family: var(--font-titre);
+  letter-spacing: 0.05em;
+}
+
+/* ── Réseaux ── */
+.reseauxGrille {
+  display: flex; flex-wrap: wrap; gap: 0.6rem;
+}
+
+.reseauLink {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  font-size: 0.82rem; font-weight: 600;
+  color: var(--couleur-texte);
+  text-decoration: none; text-transform: capitalize;
+  transition: all 0.2s;
+}
+.reseauLink:hover {
+  background: rgba(230, 57, 70, 0.15);
+  border-color: var(--couleur-primaire);
+  color: white;
+}
+
+/* ── Culture ── */
+.cultureBloc {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.88rem; color: rgba(255, 255, 255, 0.7);
+}
+.cultureBloc:last-child { border-bottom: none; }
+
+.cultureLabel {
+  font-weight: 700; color: var(--couleur-texte);
+  margin-right: 0.4rem; font-family: var(--font-titre);
+  font-size: 0.82rem;
+}
+
+/* ── Badges complets ── */
+.badgesGrille {
+  display: flex; flex-wrap: wrap; gap: 0.6rem;
+}
+
+.badgeItemFull {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0.2rem; padding: 0.6rem 0.85rem;
+  border-radius: var(--border-radius);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  min-width: 72px;
+}
+
+/* ── Tournois ── */
+.tournoisListe {
+  display: flex; flex-direction: column; gap: 0.4rem;
+}
+
+.tournoiItem {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 0.75rem; padding: 0.6rem 1rem;
+  border-radius: var(--border-radius);
+  background: rgba(0, 0, 0, 0.3);
+  font-size: 0.85rem;
+}
+
+.tournoiTitre { flex: 1; color: var(--couleur-texte); }
 .position { font-weight: 700; color: var(--couleur-accent); font-family: var(--font-titre); }
+.tournoiPts { font-size: 0.8rem; color: #28a745; font-weight: 600; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .page { padding: 1rem 1rem 3rem; }
+  .banniere { height: 120px; }
+  .carteCorps { padding: 0 1.25rem 1.5rem; }
+  .nom { font-size: 1.3rem; }
+  .jeuxGrille, .setupGrille { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,334 @@
+/* ── Page Wrapper ── */
+.pageWrapper { min-height: 100vh; }
+
+.pageEntete {
+  text-align: center;
+  padding: 4rem 1rem 2rem;
+}
+
+.pageTitre {
+  font-family: var(--font-titre);
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  background: linear-gradient(135deg, #d4a853, #c27c3a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.3rem;
+}
+
+.pageSousTitre {
+  font-family: var(--font-titre);
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.contenu {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+/* ── Saison Active Banner ── */
+.saisonActive { margin-bottom: 2rem; }
+
+.saisonActiveBanner {
+  background: linear-gradient(135deg, rgba(212, 168, 83, 0.08), rgba(230, 57, 70, 0.05));
+  border: 1px solid rgba(212, 168, 83, 0.2);
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.saisonBadge {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  background: rgba(212, 168, 83, 0.15);
+  border: 1px solid rgba(212, 168, 83, 0.3);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #d4a853;
+  font-family: var(--font-titre);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.saisonActiveInfo { flex: 1; min-width: 250px; }
+
+.saisonActiveNom {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white;
+  font-family: var(--font-titre);
+  margin-bottom: 0.3rem;
+}
+
+.saisonActiveDesc {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+.saisonDates {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.82rem;
+  color: var(--couleur-texte-clair);
+  flex-wrap: wrap;
+}
+
+.joursRestants {
+  color: #d4a853;
+  font-weight: 700;
+  font-family: var(--font-titre);
+}
+
+/* ── Récompenses ── */
+.saisonRecompenses {
+  min-width: 200px;
+}
+
+.saisonRecompenses h4 {
+  font-size: 0.9rem;
+  color: white;
+  font-family: var(--font-titre);
+  margin-bottom: 0.75rem;
+}
+
+.recompGrille {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.recompItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius);
+  font-size: 0.82rem;
+  color: var(--couleur-texte);
+}
+
+.recompItem strong {
+  color: #d4a853;
+  font-family: var(--font-titre);
+}
+
+/* ── Pas de saison ── */
+.pasDeSaison {
+  text-align: center;
+  padding: 4rem 1rem;
+  margin-bottom: 2rem;
+}
+
+.pasDeSaisonIcone { font-size: 3rem; display: block; margin-bottom: 1rem; }
+.pasDeSaison h2 { font-family: var(--font-titre); color: white; margin-bottom: 0.5rem; }
+.pasDeSaison p { color: var(--couleur-texte-clair); }
+
+/* ── Onglets ── */
+.onglets {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.onglet {
+  padding: 0.55rem 1.25rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  font-family: var(--font-titre);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.onglet:hover { color: white; }
+
+.ongletActif {
+  background: rgba(212, 168, 83, 0.12) !important;
+  border-color: rgba(212, 168, 83, 0.3) !important;
+  color: white !important;
+}
+
+/* ── Section ── */
+.section {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem;
+}
+
+/* ── Classement ── */
+.classement {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.classementItem {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.classementItem:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.classementTop {
+  background: rgba(212, 168, 83, 0.04) !important;
+  border-color: rgba(212, 168, 83, 0.1) !important;
+}
+
+.classementPos {
+  font-family: var(--font-titre);
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--couleur-texte-clair);
+  min-width: 32px;
+  text-align: center;
+}
+
+.posTop { font-size: 1.2rem; }
+
+.classementAvatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; font-weight: 800; color: white;
+  font-family: var(--font-titre);
+  flex-shrink: 0;
+}
+
+.classementInfo { flex: 1; display: flex; flex-direction: column; }
+
+.classementNom {
+  font-size: 0.9rem; font-weight: 600; color: white;
+  font-family: var(--font-titre);
+}
+
+.classementRang {
+  font-size: 0.72rem; font-weight: 600;
+  font-family: var(--font-titre);
+}
+
+.classementStats {
+  text-align: right;
+  display: flex; flex-direction: column; gap: 0.1rem;
+}
+
+.classementXP {
+  font-size: 0.9rem; font-weight: 800;
+  color: #2ecc71; font-family: var(--font-titre);
+}
+
+.classementActions {
+  font-size: 0.68rem; color: var(--couleur-texte-clair);
+}
+
+/* ── Historique des saisons ── */
+.historiqueGrille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.saisonCard {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--border-radius-lg);
+  padding: 1.25rem;
+  transition: transform 0.2s;
+}
+
+.saisonCard:hover { transform: translateY(-2px); }
+
+.saisonCardActive {
+  border-color: rgba(212, 168, 83, 0.2) !important;
+  background: rgba(212, 168, 83, 0.03) !important;
+}
+
+.saisonCardEntete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.saisonNumero {
+  font-family: var(--font-titre);
+  font-weight: 800; font-size: 0.85rem;
+  color: var(--couleur-accent);
+  background: rgba(244, 162, 97, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.saisonStatut {
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-family: var(--font-titre);
+  border: 1px solid;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+
+.saisonCardNom {
+  font-size: 1rem; font-weight: 700;
+  color: white; font-family: var(--font-titre);
+  margin-bottom: 0.3rem;
+}
+
+.saisonCardDates {
+  font-size: 0.78rem;
+  color: var(--couleur-texte-clair);
+  margin-bottom: 0.75rem;
+}
+
+.saisonCardPodium {
+  display: flex; flex-direction: column; gap: 0.2rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.podiumItem {
+  font-size: 0.8rem;
+  color: var(--couleur-texte);
+}
+
+/* ── Vide ── */
+.vide {
+  text-align: center;
+  padding: 2rem;
+  color: var(--couleur-texte-clair);
+}
+
+.videHint {
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .pageTitre { font-size: 2.5rem; }
+  .saisonActiveBanner { flex-direction: column; }
+  .historiqueGrille { grid-template-columns: 1fr; }
+}

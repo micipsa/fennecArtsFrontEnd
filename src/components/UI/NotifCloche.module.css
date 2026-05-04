@@ -119,3 +119,22 @@
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.5);
 }
+
+.voirTout {
+  display: block;
+  width: 100%;
+  padding: 0.7rem 1rem;
+  text-align: center;
+  background: transparent;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--couleur-primaire);
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: var(--font-titre);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.voirTout:hover {
+  background: rgba(230, 57, 70, 0.08);
+}

@@ -47,10 +47,10 @@ function Hero() {
 
           <div className={styles.boutons}>
             <Link to="/articles" className={styles.btnPrimaire}>
-              <span>Explorer</span>
+              <span>Articles</span>
               <span className={styles.arrow}>→</span>
             </Link>
-            <Link to="/events" className={styles.btnSecondaire}>Événements</Link>
+            <Link to="/tournaments" className={styles.btnSecondaire}>Tournois</Link>
           </div>
 
           <div className={styles.stats}>
@@ -60,10 +60,13 @@ function Hero() {
           </div>
 
           <div className={styles.ctas}>
-            <button>🎮 Tournois</button>
-            <button>📺 WebTV</button>
-            <button>🏆 Classements</button>
-            <button>🎌 Otaku</button>
+            <Link to="/events">📅 Événements</Link>
+            <Link to="/webtv">📺 WebTV</Link>
+            <Link to="/play">🎮 Dojo Play</Link>
+            <Link to="/defis">⚔️ Défis</Link>
+            <Link to="/classement">🏅 Classement</Link>
+            <Link to="/communaute">👥 Communauté</Link>
+            <Link to="/store">🛒 Store</Link>
           </div>
         </div>
 

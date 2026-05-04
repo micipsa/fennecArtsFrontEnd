@@ -80,6 +80,7 @@ body {
   background: var(--couleur-fond);
   line-height: 1.6;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Liens : suppression du soulignement et héritage de la couleur */

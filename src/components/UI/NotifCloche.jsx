@@ -80,6 +80,12 @@ function NotifCloche() {
               ))
             )}
           </div>
+          <button
+            className={styles.voirTout}
+            onClick={() => { setOuvert(false); navigate("/notifications"); }}
+          >
+            Voir toutes les notifications →
+          </button>
         </div>
       )}
     </div>

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import api from "../../../services/api";
 import styles from "./QuizzGame.module.css";
 import { toast } from "react-hot-toast";
+import { useXPPopup } from "../../../components/UI/XPPopup";
 
 export default function QuizzGame({ quizz, onFinish }) {
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -9,6 +10,7 @@ export default function QuizzGame({ quizz, onFinish }) {
   const [timeLeft, setTimeLeft] = useState(15); // 15s par question
   const [finished, setFinished] = useState(false);
   const [sending, setSending] = useState(false);
+  const { showXP, XPPopupContainer } = useXPPopup();
   
   const questions = quizz.config.questions || [];
   const currentQuestion = questions[currentIdx];
@@ -45,6 +47,7 @@ export default function QuizzGame({ quizz, onFinish }) {
         reponses: { totalQuestions: questions.length, correct: score }
       });
       toast.success("Félicitations ! Tu as reçu tes récompenses.");
+      showXP(quizz.recompenseXP || 50, quizz.recompenseFM || 10);
       onFinish();
     } catch (err) {
       toast.error(err.response?.data?.message || "Erreur lors de la soumission.");
@@ -96,6 +99,7 @@ export default function QuizzGame({ quizz, onFinish }) {
           </button>
         ))}
       </div>
+      <XPPopupContainer />
     </div>
   );
 }

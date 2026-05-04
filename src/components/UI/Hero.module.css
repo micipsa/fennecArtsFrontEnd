@@ -270,22 +270,24 @@
   margin-top: 1rem;
 }
 
-.ctas button {
+.ctas a {
   padding: 0.5rem 1rem;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 6px;
   color: white;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-family: var(--font-titre);
   cursor: pointer;
   transition: all 0.2s;
+  text-decoration: none;
 }
 
-.ctas button:hover {
+.ctas a:hover {
   background: rgba(244, 162, 97, 0.15);
   border-color: var(--couleur-accent);
   box-shadow: 0 0 12px rgba(244, 162, 97, 0.2);
+  transform: translateY(-1px);
 }
 
 .imageSection {
@@ -311,7 +313,37 @@
 @media (max-width: 1024px) {
   .contenuHero {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
+  }
+
+  /* Image en premier sur mobile */
+  .imageSection {
+    order: -1;
+  }
+
+  .imageSection img {
+    max-width: 280px;
+  }
+
+  .texteSection {
+    text-align: center;
+    align-items: center;
+  }
+
+  .boutons {
+    justify-content: center;
+  }
+
+  .ctas {
+    justify-content: center;
+  }
+
+  .stats {
+    justify-content: center;
+  }
+
+  .badges {
+    justify-content: center;
   }
 
   .titre {
@@ -327,33 +359,56 @@
 
 @media (max-width: 640px) {
   .contenuHero {
-    padding: 1rem;
+    padding: 1rem 0.75rem;
+  }
+
+  .imageSection img {
+    max-width: 200px;
   }
 
   .badges {
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
 
   .badges span {
-    font-size: 0.7rem;
-    padding: 0.3rem 0.6rem;
+    font-size: 0.65rem;
+    padding: 0.25rem 0.5rem;
   }
 
   .stats {
-    gap: 2rem;
+    gap: 1.5rem;
+  }
+
+  .stats strong {
+    font-size: 1.2rem;
   }
 
   .ctas {
+    gap: 0.4rem;
+  }
+
+  .ctas a {
+    font-size: 0.72rem;
+    padding: 0.35rem 0.65rem;
+  }
+
+  .boutons {
+    flex-direction: column;
+    align-items: center;
     gap: 0.5rem;
   }
 
-  .ctas button {
-    font-size: 0.8rem;
-    padding: 0.4rem 0.8rem;
+  .description {
+    font-size: 0.85rem;
   }
 
   .grilleCyberpunk {
     opacity: 0.15;
+  }
+
+  .rejoindreBtn {
+    font-size: 0.8rem;
+    padding: 0.6rem 1.2rem;
   }
 }
 

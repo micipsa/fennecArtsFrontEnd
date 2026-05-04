@@ -60,6 +60,10 @@ import DefisPage from "./pages/DefisPage";
 import EnConstruction from "./pages/EnConstruction";
 import CodesPromoPage from "./pages/CodesPromoPage";
 import PlayPage from "./pages/Play/PlayPage";
+import CommunautePage from "./pages/CommunautePage";
+import NotificationsPage from "./pages/NotificationsPage";
+import MonActivitePage from "./pages/MonActivitePage";
+import SaisonsPage from "./pages/SaisonsPage";
 
 // ── Pages dashboard (admin) ──
 import DashboardAccueil from "./pages/DashboardAccueil";
@@ -115,10 +119,10 @@ function App() {
           <Route path="/store" element={<StorePage />} />
           <Route path="/inventaire" element={<RouteProtegee><InventairePage /></RouteProtegee>} />
           <Route path="/defis" element={<RouteProtegee><DefisPage /></RouteProtegee>} />
-          <Route path="/mon-activite" element={<RouteProtegee><EnConstruction titre="Mon activité" /></RouteProtegee>} />
-          <Route path="/notifications" element={<RouteProtegee><EnConstruction titre="Notifications" /></RouteProtegee>} />
-          <Route path="/communaute" element={<EnConstruction titre="Communauté" />} />
-          <Route path="/saisons" element={<EnConstruction titre="Saisons" />} />
+          <Route path="/mon-activite" element={<RouteProtegee><MonActivitePage /></RouteProtegee>} />
+          <Route path="/notifications" element={<RouteProtegee><NotificationsPage /></RouteProtegee>} />
+          <Route path="/communaute" element={<CommunautePage />} />
+          <Route path="/saisons" element={<SaisonsPage />} />
           <Route path="/codes" element={<RouteProtegee><CodesPromoPage /></RouteProtegee>} />
           <Route path="/play" element={<RouteProtegee><PlayPage /></RouteProtegee>} />
           {/* Route protégée : redirige vers /login si non connecté */}
