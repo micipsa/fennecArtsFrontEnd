@@ -21,7 +21,6 @@ import useAuth from "../hooks/useAuth";
 import Badge from "../components/UI/Badge";
 import Spinner from "../components/UI/Spinner";
 import { calculerRang } from "../utils/rangs";
-import { calculerProgressionNiveau } from "../utils/niveaux";
 import { getThemeUtilisateur } from "../utils/themesProfil";
 import PanneauQuetes from "../components/UI/PanneauQuetes";
 import OngletGaming from "./profil/OngletGaming";
@@ -239,41 +238,19 @@ function ProfilPage() {
           (() => {
             const points = profil?.points ?? 0;
             const rang = calculerRang(points);
-            const progNiveau = calculerProgressionNiveau(points);
-            
             return (
               <div className={styles.sectionXP}>
-                <h2 className={styles.sectionTitre}>Niveau & Rang</h2>
+                <h2 className={styles.sectionTitre}>Rang & Progression</h2>
                 
                 <div className={styles.progressionGrid}>
-                  {/* Bloc Niveau */}
-                  <div className={styles.rangBloc}>
-                    <div className={styles.rangNom}>
-                      Niveau {progNiveau.niveau}
-                    </div>
-                    <div className={styles.rangPoints}>{points} XP Total</div>
-                    <div className={styles.progressBar}>
-                      <div
-                        className={styles.progressFill}
-                        style={{
-                          width: `${progNiveau.pourcentage}%`,
-                          background: "#2ecc71",
-                        }}
-                      />
-                    </div>
-                    <p className={styles.progressLabel}>
-                      {progNiveau.xpProgression} / {progNiveau.xpRequis} XP avant le Lvl {progNiveau.niveau + 1}
-                    </p>
-                  </div>
-
-                  {/* Bloc Rang Compétitif */}
+                  {/* Bloc Rang Compétitif (seule jauge d'XP conservée) */}
                   <div className={styles.rangBloc}>
                     <div
                       className={styles.rangNom}
                       style={{ color: rang.couleur }}>
                       {rang.nom} {rang.division}
                     </div>
-                    <div className={styles.rangPoints}>Rang Compétitif</div>
+                    <div className={styles.rangPoints}>{points} XP Total</div>
                     <div className={styles.progressBar}>
                       <div
                         className={styles.progressFill}
@@ -285,7 +262,7 @@ function ProfilPage() {
                     </div>
                     {rang.pointsSuivant !== null ? (
                       <p className={styles.progressLabel}>
-                        {rang.pointsSuivant - points} XP avant {rang.nomSuivant}
+                        {rang.pointsSuivant - points} XP avant {rang.nomSuivant || "le prochain rang"}
                       </p>
                     ) : (
                       <p className={styles.progressLabel}>

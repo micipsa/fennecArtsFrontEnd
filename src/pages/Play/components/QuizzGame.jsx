@@ -42,13 +42,18 @@ export default function QuizzGame({ quizz, onFinish }) {
   const submitResults = async () => {
     setSending(true);
     try {
-      await api.post(`/api/animations/${quizz._id}/participer`, {
+      const res = await api.post(`/api/animations/${quizz._id}/participer`, {
         score,
         reponses: { totalQuestions: questions.length, correct: score }
       });
-      toast.success("Félicitations ! Tu as reçu tes récompenses.");
-      showXP(quizz.recompenseXP || 50, quizz.recompenseFM || 10);
-      onFinish();
+      const { gains } = res.data;
+      toast.success(`Félicitations ! Tu as gagné ${gains.xp} XP et ${gains.fm} FM.`);
+      showXP(gains.xp, gains.fm);
+      
+      // On laisse le temps à la popup de s'afficher avant de revenir à la liste
+      setTimeout(() => {
+        onFinish();
+      }, 2000);
     } catch (err) {
       toast.error(err.response?.data?.message || "Erreur lors de la soumission.");
     } finally {
@@ -64,6 +69,10 @@ export default function QuizzGame({ quizz, onFinish }) {
         <p className={styles.resultTexte}>
           {score === questions.length ? "Parfait ! Maîtrise totale." : "Pas mal ! Tu peux faire mieux la prochaine fois."}
         </p>
+        <div className={styles.recompensesAttendues}>
+          {quizz.recompenseXP > 0 && <span>+{quizz.recompenseXP} XP</span>}
+          {quizz.recompenseFM > 0 && <span>+{quizz.recompenseFM} FM</span>}
+        </div>
         <button 
           className={styles.btnTerminer} 
           onClick={submitResults}
@@ -71,6 +80,7 @@ export default function QuizzGame({ quizz, onFinish }) {
         >
           {sending ? "Envoi..." : "Récupérer mes récompenses"}
         </button>
+        <XPPopupContainer />
       </div>
     );
   }

@@ -104,8 +104,21 @@
 
 .resultTexte {
   color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
 }
+
+.recompensesAttendues {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  font-family: var(--font-titre);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.recompensesAttendues span:first-child { color: #2ecc71; }
+.recompensesAttendues span:last-child { color: #f1c40f; }
 
 .btnTerminer {
   background: var(--couleur-primaire);

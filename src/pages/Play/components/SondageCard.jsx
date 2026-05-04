@@ -11,12 +11,16 @@ export default function SondageCard({ sondage, onFinish }) {
   const voter = async (option) => {
     setLoading(true);
     try {
-      await api.post(`/api/animations/${sondage._id}/participer`, {
+      const res = await api.post(`/api/animations/${sondage._id}/participer`, {
         reponses: { choix: option }
       });
-      toast.success("Vote pris en compte ! Merci pour ton avis.");
-      showXP(sondage.recompenseXP || 50, sondage.recompenseFM || 10);
-      onFinish();
+      const { gains } = res.data;
+      toast.success(`Vote pris en compte ! Tu as gagné ${gains.xp} XP et ${gains.fm} FM.`);
+      showXP(gains.xp, gains.fm);
+      
+      setTimeout(() => {
+        onFinish();
+      }, 2000);
     } catch (err) {
       toast.error(err.response?.data?.message || "Erreur.");
     } finally {

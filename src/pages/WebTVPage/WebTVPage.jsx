@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
+import api from "../../services/api";
 import styles from "./WebTVPage.module.css";
 
 function WebTVPage() {
@@ -137,6 +138,7 @@ function WebTVPage() {
               key={video.id.videoId}
               className={styles.carte}
               onClick={() => {
+                try { api.post("/api/quetes/action", { action: "video_vue" }); } catch (e) {}
                 setVideoSelectionnee(video.id.videoId);
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}>

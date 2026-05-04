@@ -7,6 +7,7 @@
  */
 import { useState } from "react";
 import { useToast } from "./Toast";
+import api from "../../services/api";
 import styles from "./BoutonPartage.module.css";
 
 function BoutonPartage({ titre, url }) {
@@ -15,7 +16,8 @@ function BoutonPartage({ titre, url }) {
 
   const shareUrl = url || window.location.href;
 
-  const partagerFacebook = () => {
+  const partagerFacebook = async () => {
+    try { await api.post("/api/quetes/action", { action: "premier_partage_semaine" }); } catch (e) {}
     window.open(
       `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
       "_blank",
@@ -23,7 +25,8 @@ function BoutonPartage({ titre, url }) {
     );
   };
 
-  const partagerTwitter = () => {
+  const partagerTwitter = async () => {
+    try { await api.post("/api/quetes/action", { action: "premier_partage_semaine" }); } catch (e) {}
     window.open(
       `https://twitter.com/intent/tweet?text=${encodeURIComponent(titre)}&url=${encodeURIComponent(shareUrl)}`,
       "_blank",

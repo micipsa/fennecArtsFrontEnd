@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { calculerRang } from "../../utils/rangs";
-import { calculerProgressionNiveau } from "../../utils/niveaux";
 import styles from "./AvatarMenu.module.css";
 
 export default function AvatarMenu({ utilisateur, onDeconnexion }) {
@@ -16,7 +15,7 @@ export default function AvatarMenu({ utilisateur, onDeconnexion }) {
   }, []);
 
   const rang = calculerRang(utilisateur.points || 0);
-  const progNiveau = calculerProgressionNiveau(utilisateur.points || 0);
+  const points = utilisateur.points || 0;
   const initiale = utilisateur.nom?.[0]?.toUpperCase() || "?";
 
   const handleClick = (path) => { setOuvert(false); navigate(path); };
@@ -36,7 +35,6 @@ export default function AvatarMenu({ utilisateur, onDeconnexion }) {
             <div className={styles.infos}>
               <span className={styles.nom}>{utilisateur.nom}</span>
               <div className={styles.badgesInline}>
-                <span className={styles.niveauBadge}>Lvl {progNiveau.niveau}</span>
                 <span className={styles.rang} style={{ color: rang.couleur }}>{rang.affichage}</span>
               </div>
             </div>
@@ -44,13 +42,13 @@ export default function AvatarMenu({ utilisateur, onDeconnexion }) {
           <div className={styles.stats}>
             <div className={styles.xpBarContainer}>
               <div className={styles.xpBarHeader}>
-                <span className={styles.xpLabel}>XP</span>
-                <span className={styles.xpValeurs}>{progNiveau.xpProgression} / {progNiveau.xpRequis}</span>
+                <span className={styles.xpLabel}>XP Total</span>
+                <span className={styles.xpValeurs}>{points}</span>
               </div>
               <div className={styles.xpBarBackground}>
                 <div 
                   className={styles.xpBarFill} 
-                  style={{ width: `${progNiveau.pourcentage}%` }}
+                  style={{ width: `${rang.progression}%`, background: rang.couleur }}
                 />
               </div>
             </div>

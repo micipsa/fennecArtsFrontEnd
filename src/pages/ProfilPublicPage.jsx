@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { calculerRang } from "../utils/rangs";
-import { calculerProgressionNiveau } from "../utils/niveaux";
 import Spinner from "../components/UI/Spinner";
 import styles from "./ProfilPublicPage.module.css";
 
@@ -88,7 +87,6 @@ function ProfilPublicPage() {
             {membre.titreActif && <div className={styles.titreActif}>{membre.titreActif}</div>}
             
             <div className={styles.badgesInline}>
-              <span className={styles.niveauBadge}>Lvl {calculerProgressionNiveau(membre.points || 0).niveau}</span>
               <div className={styles.rangNom} style={{ color: rang.couleur }}>{rang.affichage}</div>
             </div>
 
