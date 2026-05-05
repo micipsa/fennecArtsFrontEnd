@@ -15,6 +15,7 @@ const COMMANDES = [
     { label: "Agenda", icone: "📆", path: "/agenda", keywords: "agenda calendrier" },
     { label: "Saisons", icone: "🗓️", path: "/saisons", keywords: "saisons" },
     { label: "Store", icone: "🛒", path: "/store", keywords: "boutique store fm" },
+    { label: "Lootbox", icone: "🎁", path: "/lootbox", keywords: "lootbox coffre gacha" },
     { label: "Défis", icone: "⚔️", path: "/defis", keywords: "defis 1v1" },
   ]},
   { groupe: "Mon compte", items: [

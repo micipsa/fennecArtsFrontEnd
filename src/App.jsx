@@ -64,6 +64,9 @@ import CommunautePage from "./pages/CommunautePage";
 import NotificationsPage from "./pages/NotificationsPage";
 import MonActivitePage from "./pages/MonActivitePage";
 import SaisonsPage from "./pages/SaisonsPage";
+import LootboxPage from "./pages/LootboxPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 // ── Pages dashboard (admin) ──
 import DashboardAccueil from "./pages/DashboardAccueil";
@@ -115,8 +118,11 @@ function App() {
           <Route path="membres/:id" element={<ProfilPublicPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
+          <Route path="forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="reset-password/:token" element={<ResetPasswordPage />} />
           <Route path="/webtv" element={<WebTVPage />} />
           <Route path="/store" element={<StorePage />} />
+          <Route path="/lootbox" element={<RouteProtegee><LootboxPage /></RouteProtegee>} />
           <Route path="/inventaire" element={<RouteProtegee><InventairePage /></RouteProtegee>} />
           <Route path="/defis" element={<RouteProtegee><DefisPage /></RouteProtegee>} />
           <Route path="/mon-activite" element={<RouteProtegee><MonActivitePage /></RouteProtegee>} />

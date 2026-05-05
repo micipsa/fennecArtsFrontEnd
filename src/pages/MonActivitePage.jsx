@@ -59,7 +59,7 @@ export default function MonActivitePage() {
             </div>
           </div>
           <div className={styles.statCard}>
-            <span className={styles.statIcone}>🪙</span>
+            <span className={styles.statIcone}>💰</span>
             <div className={styles.statInfo}>
               <span className={styles.statValeur}>{stats.fmSemaine}</span>
               <span className={styles.statLabel}>FM cette semaine</span>
@@ -97,7 +97,7 @@ export default function MonActivitePage() {
           </div>
           <div className={styles.compteur}>
             <span className={styles.compteurVal}>{stats.fmTotal}</span>
-            <span className={styles.compteurLabel}>🪙 FM total</span>
+            <span className={styles.compteurLabel}>💰 FM total</span>
           </div>
         </div>
 

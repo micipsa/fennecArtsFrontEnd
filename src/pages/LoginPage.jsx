@@ -30,6 +30,8 @@ function LoginPage() {
   const [erreur, setErreur] = useState(null);
   // State pour désactiver le bouton pendant l'envoi
   const [chargement, setChargement] = useState(false);
+  // State pour afficher/masquer le mot de passe
+  const [voirMdp, setVoirMdp] = useState(false);
 
   /**
    * Gestionnaire de changement des champs du formulaire.
@@ -120,16 +122,32 @@ function LoginPage() {
             <label className={styles.label} htmlFor="motDePasse">
               Mot de passe
             </label>
-            <input
-              className={styles.input}
-              type="password"
-              id="motDePasse"
-              name="motDePasse"
-              value={formData.motDePasse}
-              onChange={handleChange}
-              placeholder="••••••••"
-              required
-            />
+            <div className={styles.champMdpWrapper}>
+              <input
+                className={styles.input}
+                type={voirMdp ? "text" : "password"}
+                id="motDePasse"
+                name="motDePasse"
+                value={formData.motDePasse}
+                onChange={handleChange}
+                placeholder="••••••••"
+                required
+              />
+              <button
+                type="button"
+                className={styles.btnVoirMdp}
+                onClick={() => setVoirMdp(!voirMdp)}
+                tabIndex={-1}
+              >
+                {voirMdp ? "🙈" : "👁️"}
+              </button>
+            </div>
+          </div>
+          
+          <div style={{ textAlign: "right", marginTop: "-0.5rem" }}>
+            <Link to="/forgot-password" style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.8rem", textDecoration: "none" }}>
+              Mot de passe oublié ?
+            </Link>
           </div>
 
           {/* Bouton de soumission — désactivé pendant le chargement */}

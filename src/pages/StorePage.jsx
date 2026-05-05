@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import api from "../services/api";
 import useAuth from "../hooks/useAuth";
 import { useToast } from "../components/UI/Toast";
+import LevelUpAnimation from "../components/UI/LevelUpAnimation";
 import styles from "./StorePage.module.css";
 
 const CATEGORIES = [
@@ -15,11 +17,19 @@ const CATEGORIES = [
   { id: "goodies", label: "Goodies" }
 ];
 
+const COULEURS_RARETE = {
+  commun: { couleur: "#b0b0b0", label: "Commun", glow: "none" },
+  rare: { couleur: "#3498db", label: "Rare", glow: "0 0 8px rgba(52,152,219,0.5)" },
+  epique: { couleur: "#9b59b6", label: "Épique", glow: "0 0 12px rgba(155,89,182,0.6)" },
+  legendaire: { couleur: "#f39c12", label: "Légendaire", glow: "0 0 16px rgba(243,156,18,0.7)" },
+};
+
 export default function StorePage() {
   const { utilisateur } = useAuth();
   const [articles, setArticles] = useState([]);
   const [categorie, setCategorie] = useState("tous");
   const [loading, setLoading] = useState(true);
+  const [levelUpData, setLevelUpData] = useState(null);
   const { addToast } = useToast();
 
   useEffect(() => {
@@ -42,9 +52,15 @@ export default function StorePage() {
     
     if (confirm(`Acheter "${article.nom}" pour ${article.prix} FM ?`)) {
       try {
-        await api.post(`/api/store/${article._id}/acheter`);
-        addToast("Achat réussi ! Retrouvez-le dans votre inventaire.", "success");
-        // Simuler mise à jour FM locale
+        const res = await api.post(`/api/store/${article._id}/acheter`);
+        
+        if (res.data.levelUp) {
+          setLevelUpData(res.data.xpGagne);
+        } else {
+          addToast("Achat réussi ! Retrouvez-le dans votre inventaire.", "success");
+        }
+        
+        // Mettre à jour FM localement
         utilisateur.fm -= article.prix;
       } catch (err) {
         addToast(err.response?.data?.message || "Erreur lors de l'achat", "error");
@@ -74,7 +90,7 @@ export default function StorePage() {
         {utilisateur && (
           <div className={styles.solde}>
             <span>Solde actuel</span>
-            <strong>🪙 {utilisateur.fm} FM</strong>
+            <strong>💰 {utilisateur.fm} FM</strong>
           </div>
         )}
       </header>
@@ -90,6 +106,16 @@ export default function StorePage() {
           </button>
         ))}
       </nav>
+
+      {/* Bannière Lootbox */}
+      <Link to="/lootbox" className={styles.lootboxBanner}>
+        <span className={styles.lootboxIcone}>🎁</span>
+        <div>
+          <strong>LOOTBOX</strong>
+          <span>Tente ta chance pour 100 FM !</span>
+        </div>
+        <span className={styles.lootboxFleche}>→</span>
+      </Link>
 
       {loading ? (
         <div className={styles.loading}>Chargement de la boutique...</div>
@@ -114,10 +140,22 @@ export default function StorePage() {
                 </div>
                 <div className={styles.infoBox}>
                   <span className={styles.typeTag}>{CATEGORIES.find(c => c.id === article.type)?.label}</span>
-                  <h3>{article.nom}</h3>
+                  <h3 style={
+                    article.donnees?.rarete && COULEURS_RARETE[article.donnees.rarete]
+                      ? { color: COULEURS_RARETE[article.donnees.rarete].couleur, textShadow: COULEURS_RARETE[article.donnees.rarete].glow }
+                      : {}
+                  }>{article.nom}</h3>
+                  {article.donnees?.rarete && COULEURS_RARETE[article.donnees.rarete] && (
+                    <span
+                      className={styles.rareteBadge}
+                      style={{ color: COULEURS_RARETE[article.donnees.rarete].couleur, borderColor: COULEURS_RARETE[article.donnees.rarete].couleur }}
+                    >
+                      ✦ {COULEURS_RARETE[article.donnees.rarete].label.toUpperCase()}
+                    </span>
+                  )}
                   <p>{article.description}</p>
                   <div className={styles.footer}>
-                    <span className={styles.prix}>🪙 {article.prix} FM</span>
+                    <span className={styles.prix}>💰 {article.prix} FM</span>
                     <button 
                       className={styles.btnAcheter} 
                       onClick={() => handleAchat(article)}
@@ -131,6 +169,13 @@ export default function StorePage() {
             ))
           )}
         </div>
+      )}
+
+      {levelUpData && (
+        <LevelUpAnimation 
+          xpGagne={levelUpData} 
+          onClose={() => setLevelUpData(null)} 
+        />
       )}
       </div>
     </div>

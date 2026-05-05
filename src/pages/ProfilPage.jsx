@@ -283,7 +283,7 @@ function ProfilPage() {
               <div className={styles.sectionXP} style={{marginTop: '1rem', background: 'linear-gradient(145deg, #1f1f23, #151518)'}}>
                 <h2 className={styles.sectionTitre} style={{color: '#ffd700'}}>Fennekage Money (FM)</h2>
                 <div className={styles.rangBloc}>
-                  <div className={styles.rangPoints} style={{fontSize: '2rem', color: '#ffd700'}}>🪙 {fm} FM</div>
+                  <div className={styles.rangPoints} style={{fontSize: '2rem', color: '#ffd700'}}>💰 {fm} FM</div>
                   <p className={styles.progressLabel} style={{color: '#aaa', marginTop: '0.5rem'}}>
                     La monnaie officielle à dépenser dans la boutique (bientôt disponible).
                   </p>

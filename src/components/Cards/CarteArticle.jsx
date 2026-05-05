@@ -62,6 +62,7 @@ function CarteArticle({ article }) {
   };
 
   return (
+    <Link to={`/articles/${_id}`} className={styles.carteLink}>
     <article className={`${styles.carte} carte-article`}>
       {imageUrl && (
         <div className={styles.vignette}>
@@ -80,7 +81,9 @@ function CarteArticle({ article }) {
           <span className={styles.date}>{dateFormatee}</span>
         </div>
 
-        <h3 className={styles.titre}>{titre}</h3>
+        <h3 className={styles.titre}>
+          {titre}
+        </h3>
         <p className={styles.extrait}>{extraitContenu}</p>
 
         <div className={styles.pied}>
@@ -102,6 +105,7 @@ function CarteArticle({ article }) {
         </div>
       </div>
     </article>
+    </Link>
   );
 }
 

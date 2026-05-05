@@ -19,7 +19,7 @@ export function useXPPopup() {
       {popups.map(p => (
         <div key={p.id} className={styles.popup}>
           {p.xp > 0 && <span className={styles.xp}>+{p.xp} XP ⚡</span>}
-          {p.fm > 0 && <span className={styles.fm}>+{p.fm} FM 🪙</span>}
+          {p.fm > 0 && <span className={styles.fm}>+{p.fm} FM 💰</span>}
         </div>
       ))}
     </div>

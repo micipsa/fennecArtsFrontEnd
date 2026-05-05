@@ -1,3 +1,10 @@
+.carteLink {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
 .carte {
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(10px);

@@ -173,6 +173,34 @@
   box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.15);
 }
 
+.champMdpWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.champMdpWrapper .input {
+  width: 100%;
+  padding-right: 2.8rem;
+}
+
+.btnVoirMdp {
+  position: absolute;
+  right: 0.6rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0.3rem;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.btnVoirMdp:hover {
+  opacity: 1;
+}
+
 .boutonSoumettre {
   background: var(--couleur-primaire);
   color: var(--couleur-blanc);

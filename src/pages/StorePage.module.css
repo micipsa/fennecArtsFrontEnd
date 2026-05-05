@@ -286,6 +286,20 @@
 .infoBox h3 { margin: 0.8rem 0 0.5rem 0; font-family: var(--font-medieval); font-size: 1.3rem; color: #fff; }
 .infoBox p { color: rgba(255, 215, 0, 0.4); font-size: 0.85rem; line-height: 1.5; flex-grow: 1; font-family: var(--font-elegant); }
 
+.rareteBadge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.6rem;
+  font-family: var(--font-medieval);
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.4);
+  margin-bottom: 0.4rem;
+}
+
 .footer {
   display: flex;
   justify-content: space-between;
@@ -334,6 +348,47 @@
   cursor: not-allowed;
   box-shadow: none;
 }
+
+/* ── Bannière Lootbox ── */
+.lootboxBanner {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  background: linear-gradient(135deg, rgba(155,89,182,0.2), rgba(255,215,0,0.1));
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  border-radius: 8px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 2rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.lootboxBanner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,215,0,0.05), transparent);
+  animation: lootboxShimmer 3s ease-in-out infinite;
+}
+
+@keyframes lootboxShimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.lootboxBanner:hover {
+  border-color: #ffd700;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(155,89,182,0.3);
+}
+
+.lootboxIcone { font-size: 2.5rem; flex-shrink: 0; filter: drop-shadow(0 0 10px rgba(255,215,0,0.4)); }
+.lootboxBanner strong { display: block; font-family: var(--font-medieval); color: #ffd700; font-size: 1.2rem; letter-spacing: 0.1em; }
+.lootboxBanner div span { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
+.lootboxFleche { margin-left: auto; font-size: 1.5rem; color: rgba(255,215,0,0.5); transition: transform 0.2s; }
+.lootboxBanner:hover .lootboxFleche { transform: translateX(4px); color: #ffd700; }
 
 @media (max-width: 768px) {
   .header { flex-direction: column; align-items: flex-start; gap: 1.5rem; padding: 1.5rem; }

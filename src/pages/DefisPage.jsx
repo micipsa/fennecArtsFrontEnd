@@ -122,7 +122,7 @@ export default function DefisPage() {
                     </span>
                   </div>
                 </div>
-                {d.miseFM > 0 && <div className={styles.mise}>🪙 Mise : {d.miseFM} FM</div>}
+                {d.miseFM > 0 && <div className={styles.mise}>💰 Mise : {d.miseFM} FM</div>}
                 {d.description && <p className={styles.desc}>{d.description}</p>}
                 {d.vainqueur && <div className={styles.vainqueur}>🏆 Vainqueur : {d.vainqueur === d.challenger?._id ? d.challenger?.nom : d.defie?.nom}</div>}
 

@@ -81,9 +81,9 @@ function HomePage() {
                 <span className={styles.badgeVedette}>EN VEDETTE</span>
                 <h2 className={styles.vedetteTitre}>{articleVedette.titre}</h2>
                 <p className={styles.vedetteCategorie}>{articleVedette.categorie}</p>
-                <a href={`/articles/${articleVedette._id}`} className={styles.vedetteLien}>
+                <Link to={`/articles/${articleVedette._id}`} className={styles.vedetteLien}>
                   Lire l'article →
-                </a>
+                </Link>
               </div>
             </div>
           </div>

@@ -307,3 +307,75 @@
   text-transform: uppercase;
   font-family: var(--font-medieval);
 }
+
+/* ── Barre de catégories ── */
+.categories {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none;
+}
+.categories::-webkit-scrollbar { display: none; }
+
+.catBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(80, 200, 120, 0.2);
+  border-radius: 6px;
+  color: rgba(255,255,255,0.5);
+  font-family: var(--font-medieval);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.catBtn:hover {
+  border-color: rgba(80, 200, 120, 0.5);
+  color: #50C878;
+}
+
+.catBtnActive {
+  background: rgba(80, 200, 120, 0.15);
+  border-color: #50C878;
+  color: #50C878;
+  box-shadow: 0 0 10px rgba(80, 200, 120, 0.2);
+}
+
+.catIcone { font-size: 1rem; }
+.catLabel { font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+.catCount {
+  background: rgba(80, 200, 120, 0.15);
+  color: #50C878;
+  padding: 0.1rem 0.4rem;
+  border-radius: 8px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  min-width: 1.2rem;
+  text-align: center;
+}
+
+/* ── Badge Lootbox ── */
+.badgeLootbox {
+  position: absolute;
+  top: 0.3rem;
+  left: 0.3rem;
+  font-size: 0.75rem;
+  z-index: 2;
+  filter: drop-shadow(0 0 4px rgba(255,215,0,0.5));
+}
+
+/* ── Prévisualisation couleur ── */
+.couleurPreview {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.2);
+}
+

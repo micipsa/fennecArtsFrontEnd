@@ -23,7 +23,7 @@ export default function AvatarMenu({ utilisateur, onDeconnexion }) {
 
   return (
     <div className={styles.wrapper} ref={ref}>
-      <button className={styles.avatarBtn} onClick={() => setOuvert(!ouvert)} style={{ "--rang-couleur": rang.couleur }}>
+      <button className={styles.avatarBtn} onClick={() => setOuvert(!ouvert)}>
         <AvatarIcon avatarUrl={utilisateur.avatarActif} cadreStyle={utilisateur.cadreStyle} taille="sm" nom={utilisateur.nom} />
       </button>
       {ouvert && (
