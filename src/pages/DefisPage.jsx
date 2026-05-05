@@ -4,6 +4,7 @@ import useAuth from "../hooks/useAuth";
 import { useToast } from "../components/UI/Toast";
 import CreerDefiModal from "../components/UI/CreerDefiModal";
 import { Link } from "react-router-dom";
+import AvatarIcon from "../components/UI/AvatarIcon";
 import styles from "./DefisPage.module.css";
 
 const STATUT_LABELS = {
@@ -91,9 +92,35 @@ export default function DefisPage() {
                   <span className={styles.statut}>{STATUT_LABELS[d.statut]}</span>
                 </div>
                 <div className={styles.versus}>
-                  <span className={styles.joueur}>{d.challenger?.nom}</span>
+                  <div className={styles.joueurBloc}>
+                    <AvatarIcon
+                      avatarUrl={d.challenger?.avatarActif}
+                      cadreStyle={d.challenger?.cadreStyle}
+                      taille="sm"
+                      nom={d.challenger?.nom}
+                    />
+                    <span
+                      className={styles.joueur}
+                      style={d.challenger?.couleurPseudoActive ? { color: d.challenger.couleurPseudoActive } : {}}
+                    >
+                      {d.challenger?.nom}
+                    </span>
+                  </div>
                   <span className={styles.vs}>VS</span>
-                  <span className={styles.joueur}>{d.defie?.nom}</span>
+                  <div className={styles.joueurBloc}>
+                    <AvatarIcon
+                      avatarUrl={d.defie?.avatarActif}
+                      cadreStyle={d.defie?.cadreStyle}
+                      taille="sm"
+                      nom={d.defie?.nom}
+                    />
+                    <span
+                      className={styles.joueur}
+                      style={d.defie?.couleurPseudoActive ? { color: d.defie.couleurPseudoActive } : {}}
+                    >
+                      {d.defie?.nom}
+                    </span>
+                  </div>
                 </div>
                 {d.miseFM > 0 && <div className={styles.mise}>🪙 Mise : {d.miseFM} FM</div>}
                 {d.description && <p className={styles.desc}>{d.description}</p>}

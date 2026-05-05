@@ -1,0 +1,137 @@
+.avatarWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.avatarIcon {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+/* Taille par défaut : sm */
+.xs { width: 24px; height: 24px; }
+.sm { width: 36px; height: 36px; }
+.md { width: 48px; height: 48px; }
+.lg { width: 72px; height: 72px; }
+.xl { width: 120px; height: 120px; }
+
+/* ══════════════════════════════════
+   CADRES ANIMÉS CSS
+   ══════════════════════════════════ */
+
+/* ── Aucun cadre (défaut) ── */
+.cadreNone {
+  border: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ── CADRE FEU ── */
+.cadreFire {
+  border: 3px solid transparent;
+  background-image:
+    linear-gradient(var(--couleur-sombre), var(--couleur-sombre)),
+    linear-gradient(45deg, #ff4500, #ff8c00, #ff4500);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    0 0 8px rgba(255, 69, 0, 0.5),
+    0 0 20px rgba(255, 140, 0, 0.3);
+  animation: firePulse 2s ease-in-out infinite;
+}
+
+@keyframes firePulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(255, 69, 0, 0.5), 0 0 20px rgba(255, 140, 0, 0.3); }
+  50% { box-shadow: 0 0 16px rgba(255, 69, 0, 0.8), 0 0 35px rgba(255, 140, 0, 0.5); }
+}
+
+/* ── CADRE NEON ── */
+.cadreNeon {
+  border: 2px solid #00ffff;
+  box-shadow:
+    0 0 6px #00ffff,
+    0 0 15px rgba(0, 255, 255, 0.4),
+    inset 0 0 6px rgba(0, 255, 255, 0.1);
+  animation: neonFlicker 3s ease-in-out infinite;
+}
+
+@keyframes neonFlicker {
+  0%, 100% { box-shadow: 0 0 6px #00ffff, 0 0 15px rgba(0, 255, 255, 0.4); }
+  50% { box-shadow: 0 0 10px #00ffff, 0 0 30px rgba(0, 255, 255, 0.6), 0 0 50px rgba(0, 255, 255, 0.2); }
+  75% { box-shadow: 0 0 4px #00ffff, 0 0 10px rgba(0, 255, 255, 0.3); }
+}
+
+/* ── CADRE ELECTRIC ── */
+.cadreElectric {
+  border: 3px solid transparent;
+  background-image:
+    linear-gradient(var(--couleur-sombre), var(--couleur-sombre)),
+    conic-gradient(from var(--angle, 0deg), #7b2ff7, #00d4ff, #7b2ff7);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: electricSpin 3s linear infinite;
+  box-shadow: 0 0 12px rgba(123, 47, 247, 0.4);
+}
+
+@keyframes electricSpin {
+  to { --angle: 360deg; }
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* ── CADRE DIAMANT ── */
+.cadreDiamond {
+  border: 3px solid transparent;
+  background-image:
+    linear-gradient(var(--couleur-sombre), var(--couleur-sombre)),
+    linear-gradient(135deg, #ffd700, #fff, #ffd700, #fff, #ffd700);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    0 0 10px rgba(255, 215, 0, 0.4),
+    0 0 25px rgba(255, 215, 0, 0.15);
+  animation: diamondShimmer 4s ease-in-out infinite;
+}
+
+@keyframes diamondShimmer {
+  0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.4), 0 0 25px rgba(255, 215, 0, 0.15); }
+  50% { box-shadow: 0 0 18px rgba(255, 215, 0, 0.7), 0 0 40px rgba(255, 215, 0, 0.3); }
+}
+
+/* ── CADRE GLITCH ── */
+.cadreGlitch {
+  border: 2px solid #e63946;
+  box-shadow: 0 0 8px rgba(230, 57, 70, 0.4);
+  animation: glitchFrame 2.5s steps(1) infinite;
+}
+
+@keyframes glitchFrame {
+  0%, 100% { border-color: #e63946; box-shadow: 0 0 8px rgba(230, 57, 70, 0.4); transform: translate(0); }
+  10% { border-color: #00ffff; box-shadow: 0 0 8px rgba(0, 255, 255, 0.4); transform: translate(-1px, 1px); }
+  20% { border-color: #e63946; transform: translate(1px, -1px); }
+  30% { border-color: #ff00ff; box-shadow: 0 0 12px rgba(255, 0, 255, 0.4); transform: translate(0); }
+  40% { border-color: #e63946; transform: translate(0); }
+}
+
+/* ── CADRE SAKURA ── */
+.cadreSakura {
+  border: 2px solid #ffb7c5;
+  box-shadow: 0 0 10px rgba(255, 183, 197, 0.3), 0 0 20px rgba(255, 183, 197, 0.15);
+  animation: sakuraGlow 3s ease-in-out infinite;
+}
+
+@keyframes sakuraGlow {
+  0%, 100% { box-shadow: 0 0 10px rgba(255, 183, 197, 0.3), 0 0 20px rgba(255, 183, 197, 0.15); border-color: #ffb7c5; }
+  50% { box-shadow: 0 0 15px rgba(255, 183, 197, 0.5), 0 0 35px rgba(255, 183, 197, 0.25); border-color: #ff91a4; }
+}

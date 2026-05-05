@@ -6,6 +6,7 @@ import styles from "./StorePage.module.css";
 
 const CATEGORIES = [
   { id: "tous", label: "Tous les articles" },
+  { id: "avatar_icon", label: "Avatars" },
   { id: "cadre_profil", label: "Cadres Profil" },
   { id: "titre_custom", label: "Titres Custom" },
   { id: "couleur_pseudo", label: "Couleurs" },

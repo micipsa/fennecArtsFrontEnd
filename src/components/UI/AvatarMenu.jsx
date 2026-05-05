@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { calculerRang } from "../../utils/rangs";
+import AvatarIcon from "./AvatarIcon";
 import styles from "./AvatarMenu.module.css";
 
 export default function AvatarMenu({ utilisateur, onDeconnexion }) {
@@ -16,7 +17,6 @@ export default function AvatarMenu({ utilisateur, onDeconnexion }) {
 
   const rang = calculerRang(utilisateur.points || 0);
   const points = utilisateur.points || 0;
-  const initiale = utilisateur.nom?.[0]?.toUpperCase() || "?";
 
   const handleClick = (path) => { setOuvert(false); navigate(path); };
   const handleDecon = () => { setOuvert(false); onDeconnexion(); };
@@ -24,16 +24,19 @@ export default function AvatarMenu({ utilisateur, onDeconnexion }) {
   return (
     <div className={styles.wrapper} ref={ref}>
       <button className={styles.avatarBtn} onClick={() => setOuvert(!ouvert)} style={{ "--rang-couleur": rang.couleur }}>
-        <span className={styles.avatar}>{initiale}</span>
+        <AvatarIcon avatarUrl={utilisateur.avatarActif} cadreStyle={utilisateur.cadreStyle} taille="sm" nom={utilisateur.nom} />
       </button>
       {ouvert && (
         <div className={styles.dropdown}>
           <div className={styles.entete}>
-            <div className={styles.avatarLarge} style={{ "--rang-couleur": rang.couleur }}>
-              <span>{initiale}</span>
-            </div>
+            <AvatarIcon avatarUrl={utilisateur.avatarActif} cadreStyle={utilisateur.cadreStyle} taille="lg" nom={utilisateur.nom} />
             <div className={styles.infos}>
-              <span className={styles.nom}>{utilisateur.nom}</span>
+              <span
+                className={styles.nom}
+                style={utilisateur.couleurPseudoActive ? { color: utilisateur.couleurPseudoActive } : {}}
+              >
+                {utilisateur.nom}
+              </span>
               <div className={styles.badgesInline}>
                 <span className={styles.rang} style={{ color: rang.couleur }}>{rang.affichage}</span>
               </div>

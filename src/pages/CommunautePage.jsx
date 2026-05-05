@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import api from "../services/api";
 import { calculerRang } from "../utils/rangs";
 import Spinner from "../components/UI/Spinner";
+import AvatarIcon from "../components/UI/AvatarIcon";
 import styles from "./CommunautePage.module.css";
 
 const RANGS = [
@@ -151,7 +152,6 @@ export default function CommunautePage() {
           <div className={styles.grille}>
             {membres.map((m) => {
               const rang = calculerRang(m.points || 0);
-              const initiale = (m.nom || "?")[0].toUpperCase();
               const jeux = (m.jeuxPreferes || []).filter(j => j.jeu).slice(0, 3);
 
               return (
@@ -162,11 +162,14 @@ export default function CommunautePage() {
                     style={m.banniereUrl ? { backgroundImage: `url(${m.banniereUrl})` } : { background: `linear-gradient(135deg, ${rang.couleur}33, transparent)` }}
                   />
 
-                  <div className={styles.carteCorps}>
-                    <div className={styles.carteAvatar} style={{ background: rang.couleur }}>
-                      {initiale}
-                    </div>
-                    <h3 className={styles.carteNom}>{m.nom}</h3>
+                    <div className={styles.carteCorps}>
+                    <AvatarIcon avatarUrl={m.avatarActif} cadreStyle={m.cadreStyle} taille="md" nom={m.nom} />
+                    <h3
+                      className={styles.carteNom}
+                      style={m.couleurPseudoActive ? { color: m.couleurPseudoActive } : {}}
+                    >
+                      {m.nom}
+                    </h3>
                     <span className={styles.carteRang} style={{ color: rang.couleur }}>{rang.affichage}</span>
                     <span className={styles.carteXP}>{m.points || 0} XP</span>
 

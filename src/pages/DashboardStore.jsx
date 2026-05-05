@@ -4,6 +4,7 @@ import { useToast } from "../components/UI/Toast";
 import styles from "./DashboardStore.module.css";
 
 const TYPES_ARTICLE = [
+  { value: "avatar_icon", label: "Avatar (Icône)" },
   { value: "cadre_profil", label: "Cadre Profil" },
   { value: "titre_custom", label: "Titre Custom" },
   { value: "couleur_pseudo", label: "Couleur Pseudo" },

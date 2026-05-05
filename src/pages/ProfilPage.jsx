@@ -27,6 +27,7 @@ import OngletGaming from "./profil/OngletGaming";
 import OngletGeek from "./profil/OngletGeek";
 import OngletReseaux from "./profil/OngletReseaux";
 import OngletPersonnalisation from "./profil/OngletPersonnalisation";
+import AvatarIcon from "../components/UI/AvatarIcon";
 import styles from "./ProfilPage.module.css";
 
 function ProfilPage() {
@@ -193,9 +194,9 @@ function ProfilPage() {
           {/* Bandeau coloré en haut de la carte */}
           <div className={styles.carteBandeau} />
           <div className={styles.carteCorps}>
-            {/* Avatar avec l'initiale du nom */}
+            {/* Avatar avec icône personnalisable */}
             <div className={styles.avatarWrapper}>
-              <div className={styles.avatar}>{nom[0].toUpperCase()}</div>
+              <AvatarIcon avatarUrl={profil?.avatarActif} cadreStyle={profil?.cadreStyle} taille="xl" nom={nom} />
             </div>
 
             {/* Nom et rôle */}

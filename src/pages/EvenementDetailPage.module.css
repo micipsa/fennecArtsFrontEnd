@@ -90,6 +90,15 @@
   font-weight: 500;
 }
 
+.organisateurLien {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--couleur-texte);
+  font-weight: 500;
+}
+
 .separateur {
   width: 60px;
   height: 3px;

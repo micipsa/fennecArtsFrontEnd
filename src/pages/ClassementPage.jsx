@@ -4,6 +4,7 @@ import api from "../services/api";
 import { calculerRang } from "../utils/rangs";
 import Spinner from "../components/UI/Spinner";
 import ClassementFiltres from "../components/UI/ClassementFiltres";
+import AvatarIcon from "../components/UI/AvatarIcon";
 import styles from "./ClassementPage.module.css";
 
 const MEDAILLES = ["🥇", "🥈", "🥉"];
@@ -49,10 +50,11 @@ function ClassementPage() {
                 <tr>
                   <th>Rang</th>
                   <th>Joueur</th>
-                  <th>Rang LoL</th>
-                  <th>Points</th>
-                  <th>Tags</th>
+                  <th>Rang (Site)</th>
+                  <th>XP Total</th>
+                  <th>Points eSport</th>
                   <th>Tournois</th>
+                  <th>Tags</th>
                 </tr>
               </thead>
               <tbody>
@@ -75,7 +77,14 @@ function ClassementPage() {
                       <td className={styles.colNom}>
                         <Link
                           to={`/membres/${joueur._id}`}
-                          className={styles.nomLien}>
+                          className={styles.nomLien}
+                          style={joueur.couleurPseudoActive ? { color: joueur.couleurPseudoActive } : {}}>
+                          <AvatarIcon
+                            avatarUrl={joueur.avatarActif}
+                            cadreStyle={joueur.cadreStyle}
+                            taille="sm"
+                            nom={joueur.nom}
+                          />
                           {joueur.nom}
                         </Link>
                       </td>
@@ -88,6 +97,12 @@ function ClassementPage() {
                       </td>
                       <td className={styles.colPoints}>
                         {joueur.points ?? 0} pts
+                      </td>
+                      <td className={styles.colEsportPoints}>
+                        {filtreJeu === "global" ? (joueur.esportPoints ?? 0) : (joueur.jeuSpecifiquePoints ?? 0)} pts
+                      </td>
+                      <td className={styles.colTournois}>
+                        {joueur.participationsTournois?.length ?? 0}
                       </td>
                       <td className={styles.colTags}>
                         {joueur.tags?.length > 0 ? (
@@ -104,9 +119,6 @@ function ClassementPage() {
                         ) : (
                           <span className={styles.vide}>—</span>
                         )}
-                      </td>
-                      <td className={styles.colTournois}>
-                        {joueur.participationsTournois?.length ?? 0}
                       </td>
                     </tr>
                   );

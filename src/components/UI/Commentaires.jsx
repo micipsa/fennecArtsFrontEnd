@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../../services/api";
 import useAuth from "../../hooks/useAuth";
+import AvatarIcon from "./AvatarIcon";
 import styles from "./Commentaires.module.css";
 
 function Commentaires({ cibleId, typeCible }) {
@@ -107,7 +108,18 @@ function Commentaires({ cibleId, typeCible }) {
           <div key={c._id} className={styles.commentaire}>
             <div className={styles.commentaireEntete}>
               <Link to={`/membres/${c.auteur?._id}`} className={styles.auteurLien}>
-                <span className={styles.auteur}>{c.auteur?.nom ?? "Anonyme"}</span>
+                <AvatarIcon
+                  avatarUrl={c.auteur?.avatarActif}
+                  cadreStyle={c.auteur?.cadreStyle}
+                  taille="sm"
+                  nom={c.auteur?.nom}
+                />
+                <span
+                  className={styles.auteur}
+                  style={c.auteur?.couleurPseudoActive ? { color: c.auteur.couleurPseudoActive } : {}}
+                >
+                  {c.auteur?.nom ?? "Anonyme"}
+                </span>
               </Link>
               <span className={styles.date}>
                 {new Date(c.createdAt).toLocaleDateString("fr-FR")}
@@ -150,7 +162,18 @@ function Commentaires({ cibleId, typeCible }) {
               <div key={r._id} className={styles.reponse}>
                 <div className={styles.commentaireEntete}>
                   <Link to={`/membres/${r.auteur?._id}`} className={styles.auteurLien}>
-                    <span className={styles.auteur}>{r.auteur?.nom ?? "Anonyme"}</span>
+                    <AvatarIcon
+                      avatarUrl={r.auteur?.avatarActif}
+                      cadreStyle={r.auteur?.cadreStyle}
+                      taille="sm"
+                      nom={r.auteur?.nom}
+                    />
+                    <span
+                      className={styles.auteur}
+                      style={r.auteur?.couleurPseudoActive ? { color: r.auteur.couleurPseudoActive } : {}}
+                    >
+                      {r.auteur?.nom ?? "Anonyme"}
+                    </span>
                   </Link>
                   <span className={styles.date}>
                     {new Date(r.createdAt).toLocaleDateString("fr-FR")}

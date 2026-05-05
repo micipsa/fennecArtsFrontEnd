@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { calculerRang } from "../utils/rangs";
 import Spinner from "../components/UI/Spinner";
+import AvatarIcon from "../components/UI/AvatarIcon";
 import styles from "./ProfilPublicPage.module.css";
 
 function ProfilPublicPage() {
@@ -29,9 +30,7 @@ function ProfilPublicPage() {
         <div className={styles.page}>
           <button onClick={() => navigate(-1)} className={styles.retourBtn}>← Retour</button>
           <div className={styles.carte}>
-            <div className={styles.avatar} style={{ background: rang.couleur }}>
-              {(membre.nom || "?")[0].toUpperCase()}
-            </div>
+            <AvatarIcon avatarUrl={membre.avatarActif} cadreStyle={membre.cadreStyle} taille="lg" nom={membre.nom} />
             <h1 className={styles.nom}>{membre.nom}</h1>
             <div className={styles.prive}>🔒 Ce profil est privé</div>
           </div>
@@ -41,7 +40,7 @@ function ProfilPublicPage() {
   }
 
   const rang = calculerRang(membre.points || 0);
-  const initiale = (membre.nom || "?")[0].toUpperCase();
+
   const dateInscription = new Date(membre.createdAt).toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
   const badgesEquipes = membre.badgesEquipes || [];
   const jeuxPreferes = (membre.jeuxPreferes || []).filter(j => j.jeu || j.nomLibre);
@@ -75,9 +74,7 @@ function ProfilPublicPage() {
 
           <div className={styles.carteCorps}>
             <div className={styles.avatarWrapper}>
-              <div className={styles.avatar} style={{ background: rang.couleur, borderColor: rang.couleur }}>
-                {initiale}
-              </div>
+              <AvatarIcon avatarUrl={membre.avatarActif} cadreStyle={membre.cadreStyle} taille="xl" nom={membre.nom} />
             </div>
 
             {/* Nom + Titre + Statut */}

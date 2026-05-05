@@ -17,6 +17,7 @@ import Commentaires from "../components/UI/Commentaires";
 import Badge from "../components/UI/Badge";
 import Spinner from "../components/UI/Spinner";
 import MessageErreur from "../components/UI/MessageErreur";
+import AvatarIcon from "../components/UI/AvatarIcon";
 import styles from "./EvenementDetailPage.module.css";
 
 function EvenementDetailPage() {
@@ -177,8 +178,16 @@ function EvenementDetailPage() {
                 <span className={styles.infoIcone}>🎭</span>
                 <div className={styles.infoTexte}>
                   <span className={styles.infoLabel}>Organisateur</span>
-                  <span className={styles.infoValeur}>
-                    {evenement.organisateur.nom}
+                  <span className={styles.organisateurLien}>
+                    <AvatarIcon
+                      avatarUrl={evenement.organisateur?.avatarActif}
+                      cadreStyle={evenement.organisateur?.cadreStyle}
+                      taille="xs"
+                      nom={evenement.organisateur?.nom}
+                    />
+                    <span style={evenement.organisateur?.couleurPseudoActive ? { color: evenement.organisateur.couleurPseudoActive } : {}}>
+                      {evenement.organisateur?.nom}
+                    </span>
                   </span>
                 </div>
               </div>

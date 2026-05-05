@@ -8,6 +8,7 @@ import MessageErreur from "../components/UI/MessageErreur";
 import BracketVisuel from "../components/UI/BracketVisuel";
 import BracketDoubleElim from "../components/UI/BracketDoubleElim";
 import useAuth from "../hooks/useAuth";
+import AvatarIcon from "../components/UI/AvatarIcon";
 import styles from "./TournamentDetail.module.css";
 
 const FORMATS_EQUIPE = ["2v2", "4v4", "équipes"];
@@ -412,8 +413,16 @@ function TournamentDetail() {
                 <span className={styles.infoIcone}>🎭</span>
                 <div className={styles.infoTexte}>
                   <span className={styles.infoLabel}>Organisateur</span>
-                  <span className={styles.infoValeur}>
-                    {tournoi.organisateur.nom}
+                  <span className={styles.organisateurLien}>
+                    <AvatarIcon
+                      avatarUrl={tournoi.organisateur?.avatarActif}
+                      cadreStyle={tournoi.organisateur?.cadreStyle}
+                      taille="xs"
+                      nom={tournoi.organisateur?.nom}
+                    />
+                    <span style={tournoi.organisateur?.couleurPseudoActive ? { color: tournoi.organisateur.couleurPseudoActive } : {}}>
+                      {tournoi.organisateur?.nom}
+                    </span>
                   </span>
                 </div>
               </div>
@@ -680,10 +689,16 @@ function TournamentDetail() {
             <div className={styles.participantsGrille}>
               {tournoi.participants.map((p, i) => (
                 <div key={i} className={styles.participantCard}>
-                  <div className={styles.participantAvatar}>
-                    {(p.nomAffiche?.[0] ?? "?").toUpperCase()}
-                  </div>
-                  <span className={styles.participantNom}>
+                  <AvatarIcon
+                    avatarUrl={p.joueur?.avatarActif || p.capitaine?.avatarActif || p.avatarActif}
+                    cadreStyle={p.joueur?.cadreStyle || p.capitaine?.cadreStyle || p.cadreStyle}
+                    taille="sm"
+                    nom={p.nomAffiche}
+                  />
+                  <span
+                    className={styles.participantNom}
+                    style={(p.joueur?.couleurPseudoActive || p.capitaine?.couleurPseudoActive || p.couleurPseudoActive) ? { color: (p.joueur?.couleurPseudoActive || p.capitaine?.couleurPseudoActive || p.couleurPseudoActive) } : {}}
+                  >
                     {p.nomAffiche ?? "Participant"}
                   </span>
                 </div>

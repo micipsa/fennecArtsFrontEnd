@@ -21,6 +21,7 @@ import Badge from "../components/UI/Badge";
 import BoutonPartage from "../components/UI/BoutonPartage";
 import Spinner from "../components/UI/Spinner";
 import MessageErreur from "../components/UI/MessageErreur";
+import AvatarIcon from "../components/UI/AvatarIcon";
 import styles from "./ArticleDetailPage.module.css";
 
 function ArticleDetailPage() {
@@ -74,8 +75,7 @@ function ArticleDetailPage() {
     year: "numeric",
   });
 
-  // Initiale de l'auteur pour l'avatar
-  const initialeAuteur = (article.auteur?.nom ?? "A")[0].toUpperCase();
+
 
   return (
     <div className="container">
@@ -100,9 +100,17 @@ function ArticleDetailPage() {
 
           {/* Bloc auteur : avatar + nom + rôle */}
           <div className={styles.auteurBloc}>
-            <div className={styles.auteurAvatar}>{initialeAuteur}</div>
+            <AvatarIcon
+              avatarUrl={article.auteur?.avatarActif}
+              cadreStyle={article.auteur?.cadreStyle}
+              taille="md"
+              nom={article.auteur?.nom}
+            />
             <div className={styles.auteurInfo}>
-              <span className={styles.auteurNom}>
+              <span
+                className={styles.auteurNom}
+                style={article.auteur?.couleurPseudoActive ? { color: article.auteur.couleurPseudoActive } : {}}
+              >
                 {article.auteur?.nom ?? "Auteur inconnu"}
               </span>
               <span className={styles.auteurRole}>Rédacteur Fennec's Clan</span>

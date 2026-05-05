@@ -109,6 +109,13 @@
   margin-bottom: 0.4rem;
 }
 
+.auteurLien {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+}
+
 .auteur {
   font-weight: 600;
   font-size: 0.88rem;

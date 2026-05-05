@@ -11,6 +11,7 @@ export default function InventairePage() {
     cadre: null,
     titre: null,
     couleur: null,
+    avatar: null,
   });
   const [loading, setLoading] = useState(true);
   const { addToast } = useToast();
@@ -41,6 +42,7 @@ export default function InventairePage() {
         cadre: userMAJ.cadreProfilActif,
         titre: userMAJ.titreActif,
         couleur: userMAJ.couleurPseudoActive,
+        avatar: userMAJ.avatarActif,
       });
       // Optionnel: update auth context
       if (updateUtilisateurLocal) updateUtilisateurLocal(userMAJ);
@@ -57,6 +59,10 @@ export default function InventairePage() {
       return equipes.titre === achat.article.donnees?.titre;
     if (achat.article.type === "couleur_pseudo")
       return equipes.couleur === achat.article.donnees?.couleur;
+    if (achat.article.type === "avatar_icon") {
+      const avatarUrl = achat.article.donnees?.avatarUrl || achat.article.imageUrl;
+      return equipes.avatar === avatarUrl;
+    }
     return false;
   };
 
@@ -105,7 +111,7 @@ export default function InventairePage() {
                 <h3>{achat.article?.nom || "Article inconnu"}</h3>
                 <p>{achat.article?.description}</p>
                 <div className={styles.actions}>
-                  {["cadre_profil", "titre_custom", "couleur_pseudo"].includes(
+                  {["cadre_profil", "titre_custom", "couleur_pseudo", "avatar_icon"].includes(
                     achat.article?.type,
                   ) ? (
                     <button

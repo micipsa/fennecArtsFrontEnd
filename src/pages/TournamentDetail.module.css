@@ -99,6 +99,15 @@
   font-weight: 500;
 }
 
+.organisateurLien {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--couleur-texte);
+  font-weight: 500;
+}
+
 .progressionSection {
   background: var(--couleur-blanc);
   border-radius: var(--border-radius-lg);
