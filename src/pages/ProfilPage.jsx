@@ -28,6 +28,8 @@ import OngletGeek from "./profil/OngletGeek";
 import OngletReseaux from "./profil/OngletReseaux";
 import OngletPersonnalisation from "./profil/OngletPersonnalisation";
 import AvatarIcon from "../components/UI/AvatarIcon";
+import StatsVisuelles from "../components/UI/StatsVisuelles";
+import PlayerCard from "../components/UI/PlayerCard";
 import styles from "./ProfilPage.module.css";
 
 function ProfilPage() {
@@ -48,6 +50,7 @@ function ProfilPage() {
   const [successMdp, setSuccessMdp] = useState(null);
   const [envoiEnCours, setEnvoiEnCours] = useState(false);
   const [historique, setHistorique] = useState([]);
+  const [showPlayerCard, setShowPlayerCard] = useState(false);
 
   // ── Chargement du profil au montage ──
   useEffect(() => {
@@ -203,6 +206,15 @@ function ProfilPage() {
             <p className={styles.nomPrincipal}>{nom}</p>
             <Badge texte={role} variante={varianteRole[role] ?? "defaut"} />
 
+            {/* Streak de connexion */}
+            {profil?.streakConnexion > 0 && (
+              <div className={styles.streakBadge}>
+                <span className={styles.streakFlamme}>🔥</span>
+                <span className={styles.streakCount}>{profil.streakConnexion}</span>
+                <span className={styles.streakLabel}>jours de streak</span>
+              </div>
+            )}
+
             {/* Informations détaillées */}
             <div className={styles.infos}>
               <div className={styles.infoLigne}>
@@ -229,12 +241,25 @@ function ProfilPage() {
                 ))}
               </div>
             )}
+
+            {/* Bouton Carte de Joueur */}
+            <button className={styles.btnPlayerCard} onClick={() => setShowPlayerCard(true)}>
+              🃏 Ma Carte de Joueur
+            </button>
           </div>
         </div>
 
         {/* ══════════════════════════════════════════════
-            Section : Rang & Niveau
+            Section : Stats Visuelles (remplace les anciennes sections XP/FM)
             ══════════════════════════════════════════════ */}
+        {role !== "utilisateur" && (
+          <div className={styles.sectionXP}>
+            <h2 className={styles.sectionTitre}>📊 Statistiques & Progression</h2>
+            <StatsVisuelles profil={profil} historique={historique} />
+          </div>
+        )}
+
+        {/* Rang & Progression (conservé pour la jauge visuelle) */}
         {role !== "utilisateur" &&
           (() => {
             const points = profil?.points ?? 0;
@@ -244,7 +269,6 @@ function ProfilPage() {
                 <h2 className={styles.sectionTitre}>Rang & Progression</h2>
                 
                 <div className={styles.progressionGrid}>
-                  {/* Bloc Rang Compétitif (seule jauge d'XP conservée) */}
                   <div className={styles.rangBloc}>
                     <div
                       className={styles.rangNom}
@@ -271,22 +295,6 @@ function ProfilPage() {
                       </p>
                     )}
                   </div>
-                </div>
-              </div>
-            );
-          })()}
-
-        {role !== "utilisateur" &&
-          (() => {
-            const fm = profil?.fm ?? 0;
-            return (
-              <div className={styles.sectionXP} style={{marginTop: '1rem', background: 'linear-gradient(145deg, #1f1f23, #151518)'}}>
-                <h2 className={styles.sectionTitre} style={{color: '#ffd700'}}>Fennekage Money (FM)</h2>
-                <div className={styles.rangBloc}>
-                  <div className={styles.rangPoints} style={{fontSize: '2rem', color: '#ffd700'}}>💰 {fm} FM</div>
-                  <p className={styles.progressLabel} style={{color: '#aaa', marginTop: '0.5rem'}}>
-                    La monnaie officielle à dépenser dans la boutique (bientôt disponible).
-                  </p>
                 </div>
               </div>
             );
@@ -428,6 +436,11 @@ function ProfilPage() {
             </button>
           </form>
         </div>
+
+        {/* PlayerCard Modal */}
+        {showPlayerCard && (
+          <PlayerCard profil={profil} onClose={() => setShowPlayerCard(false)} />
+        )}
         </>)}
 
         {ongletActif === "securite" && (

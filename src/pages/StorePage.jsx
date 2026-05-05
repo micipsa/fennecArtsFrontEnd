@@ -30,20 +30,25 @@ export default function StorePage() {
   const [categorie, setCategorie] = useState("tous");
   const [loading, setLoading] = useState(true);
   const [levelUpData, setLevelUpData] = useState(null);
+  const [inventaire, setInventaire] = useState([]);
   const { addToast } = useToast();
 
   useEffect(() => {
-    const fetchArticles = async () => {
+    const fetchData = async () => {
       try {
-        const res = await api.get("/api/store");
-        setArticles(res.data.data);
+        const [storeRes, invRes] = await Promise.all([
+          api.get("/api/store"),
+          utilisateur ? api.get("/api/store/inventaire/me") : Promise.resolve({ data: { data: [] } }),
+        ]);
+        setArticles(storeRes.data.data);
+        setInventaire(invRes.data.data || []);
       } catch (err) {
         addToast("Erreur lors du chargement de la boutique", "error");
       } finally {
         setLoading(false);
       }
     };
-    fetchArticles();
+    fetchData();
   }, []);
 
   const handleAchat = async (article) => {
@@ -60,6 +65,8 @@ export default function StorePage() {
           addToast("Achat réussi ! Retrouvez-le dans votre inventaire.", "success");
         }
         
+        // Ajouter à l'inventaire local pour update l'affichage
+        setInventaire(prev => [...prev, { article: article._id }]);
         // Mettre à jour FM localement
         utilisateur.fm -= article.prix;
       } catch (err) {
@@ -71,6 +78,14 @@ export default function StorePage() {
   const filteredArticles = categorie === "tous" 
     ? articles 
     : articles.filter(a => a.type === categorie);
+
+  // Vérifier si un article est déjà possédé
+  const estPossede = (articleId) => {
+    return inventaire.some(inv => {
+      const id = inv.article?._id || inv.article;
+      return id === articleId;
+    });
+  };
 
   return (
     <div className={styles.pageWrapper}>
@@ -117,6 +132,26 @@ export default function StorePage() {
         <span className={styles.lootboxFleche}>→</span>
       </Link>
 
+      {/* Bannière Roue de la Fortune */}
+      <Link to="/fortune" className={styles.lootboxBanner}>
+        <span className={styles.lootboxIcone}>🎡</span>
+        <div>
+          <strong>ROUE DE LA FORTUNE</strong>
+          <span>1 spin gratuit par jour !</span>
+        </div>
+        <span className={styles.lootboxFleche}>→</span>
+      </Link>
+
+      {/* Bannière Classeur TCG */}
+      <Link to="/classeur" className={styles.lootboxBanner}>
+        <span className={styles.lootboxIcone}>🃏</span>
+        <div>
+          <strong>CLASSEUR DE CARTES</strong>
+          <span>Collectionne des cartes TCG exclusives !</span>
+        </div>
+        <span className={styles.lootboxFleche}>→</span>
+      </Link>
+
       {loading ? (
         <div className={styles.loading}>Chargement de la boutique...</div>
       ) : (
@@ -156,13 +191,19 @@ export default function StorePage() {
                   <p>{article.description}</p>
                   <div className={styles.footer}>
                     <span className={styles.prix}>💰 {article.prix} FM</span>
-                    <button 
-                      className={styles.btnAcheter} 
-                      onClick={() => handleAchat(article)}
-                      disabled={!utilisateur || utilisateur.fm < article.prix || (article.stock !== -1 && article.stock <= 0)}
-                    >
-                      Acheter
-                    </button>
+                    {estPossede(article._id) ? (
+                      <button className={styles.btnAcheter} disabled style={{ background: '#28a745', borderColor: '#28a745', color: '#fff', opacity: 1 }}>
+                        Possédé ✓
+                      </button>
+                    ) : (
+                      <button 
+                        className={styles.btnAcheter} 
+                        onClick={() => handleAchat(article)}
+                        disabled={!utilisateur || utilisateur.fm < article.prix || (article.stock !== -1 && article.stock <= 0)}
+                      >
+                        Acheter
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

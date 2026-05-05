@@ -1,0 +1,281 @@
+/* ═══════════════════════════════════════════
+   StreakPopup — Popup de streak quotidien
+   ═══════════════════════════════════════════ */
+
+/* ── Overlay ── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  transition: opacity 0.4s ease;
+  opacity: 0;
+}
+.overlay.enter { opacity: 0; }
+.overlay.show  { opacity: 1; }
+.overlay.exit  { opacity: 0; }
+
+/* ── Popup Card ── */
+.popup {
+  position: relative;
+  background: linear-gradient(160deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  border: 1px solid rgba(255, 165, 0, 0.3);
+  border-radius: 24px;
+  padding: 2.5rem 2rem 2rem;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  overflow: hidden;
+  box-shadow:
+    0 0 40px rgba(255, 100, 0, 0.2),
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  animation: popupSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.exit .popup {
+  animation: popupSlideOut 0.4s ease forwards;
+}
+
+@keyframes popupSlideIn {
+  from { transform: scale(0.7) translateY(40px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+@keyframes popupSlideOut {
+  from { transform: scale(1) translateY(0); opacity: 1; }
+  to   { transform: scale(0.7) translateY(40px); opacity: 0; }
+}
+
+/* ── Particules ── */
+.particules {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.particule {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffa500;
+  top: 50%;
+  left: 50%;
+  animation: particuleFloat 2s ease-out infinite;
+  animation-delay: calc(var(--i) * 0.15s);
+  opacity: 0;
+}
+@keyframes particuleFloat {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.9; }
+  100% { 
+    transform: translate(
+      calc(cos(calc(var(--i) * 30deg)) * 120px),
+      calc(sin(calc(var(--i) * 30deg)) * 120px)
+    ) scale(0);
+    opacity: 0;
+  }
+}
+
+/* ── Flamme ── */
+.flammeWrapper {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.flamme {
+  animation: flamePulse 1.5s ease-in-out infinite;
+}
+.flammeEmoji {
+  font-size: 4rem;
+  filter: drop-shadow(0 0 20px rgba(255, 100, 0, 0.6));
+  display: block;
+}
+.streakNombre {
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: linear-gradient(180deg, #ffa500, #ff4500);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-top: -0.5rem;
+  font-family: "font-manga", sans-serif;
+  text-shadow: 0 0 20px rgba(255, 165, 0, 0.4);
+}
+
+@keyframes flamePulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.15) rotate(3deg); }
+}
+
+/* ── Titre & Label ── */
+.titre {
+  font-family: "font-manga", sans-serif;
+  font-size: 1.6rem;
+  color: #fff;
+  margin: 0.5rem 0 0.25rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+.label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 1.2rem;
+}
+
+/* ── Récompense FM ── */
+.recompense {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 165, 0, 0.1));
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 16px;
+  padding: 0.8rem 1.5rem;
+  margin-bottom: 1.5rem;
+  animation: recompenseBounce 0.6s ease 0.5s both;
+}
+.fmIcone {
+  font-size: 1.8rem;
+}
+.fmMontant {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #ffd700;
+  font-family: "font-manga", sans-serif;
+}
+@keyframes recompenseBounce {
+  0%   { transform: scale(0); }
+  50%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* ── Barre de progression ── */
+.progressSection {
+  margin-bottom: 1.2rem;
+  padding: 0 0.5rem;
+}
+.progressLabel {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.4rem;
+}
+.progressReward {
+  color: #ffd700;
+  font-weight: 600;
+}
+.progressBar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff4500, #ffa500, #ffd700);
+  border-radius: 8px;
+  transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 0 8px rgba(255, 165, 0, 0.5);
+}
+.progressDays {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 0.3rem;
+}
+
+/* ── Calendrier (7 jours) ── */
+.calendrier {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+.jourCase {
+  width: 40px;
+  height: 48px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  transition: all 0.3s ease;
+}
+.jourActif {
+  background: linear-gradient(135deg, rgba(255, 100, 0, 0.2), rgba(255, 165, 0, 0.15));
+  border-color: rgba(255, 165, 0, 0.4);
+}
+.jourAujourdhui {
+  background: linear-gradient(135deg, rgba(255, 100, 0, 0.4), rgba(255, 165, 0, 0.3));
+  border-color: #ffa500;
+  box-shadow: 0 0 12px rgba(255, 165, 0, 0.3);
+  animation: todayGlow 2s ease-in-out infinite;
+}
+@keyframes todayGlow {
+  0%, 100% { box-shadow: 0 0 12px rgba(255, 165, 0, 0.3); }
+  50%      { box-shadow: 0 0 20px rgba(255, 165, 0, 0.5); }
+}
+.jourLabel {
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.jourActif .jourLabel {
+  color: rgba(255, 255, 255, 0.7);
+}
+.jourCheck {
+  font-size: 0.8rem;
+  color: #ffa500;
+}
+
+/* ── Bouton ── */
+.btnFermer {
+  width: 100%;
+  padding: 0.9rem;
+  background: linear-gradient(135deg, #ff4500, #ffa500);
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: "font-manga", sans-serif;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(255, 100, 0, 0.3);
+}
+.btnFermer:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 100, 0, 0.5);
+}
+.btnFermer:active {
+  transform: translateY(0);
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .popup {
+    padding: 1.5rem 1.2rem;
+  }
+  .flammeEmoji {
+    font-size: 3rem;
+  }
+  .streakNombre {
+    font-size: 2rem;
+  }
+  .titre {
+    font-size: 1.3rem;
+  }
+  .jourCase {
+    width: 34px;
+    height: 42px;
+  }
+}

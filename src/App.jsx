@@ -65,6 +65,8 @@ import NotificationsPage from "./pages/NotificationsPage";
 import MonActivitePage from "./pages/MonActivitePage";
 import SaisonsPage from "./pages/SaisonsPage";
 import LootboxPage from "./pages/LootboxPage";
+import FortunePage from "./pages/Fortune/FortunePage";
+import ClasseurPage from "./pages/Classeur/ClasseurPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 
@@ -123,6 +125,8 @@ function App() {
           <Route path="/webtv" element={<WebTVPage />} />
           <Route path="/store" element={<StorePage />} />
           <Route path="/lootbox" element={<RouteProtegee><LootboxPage /></RouteProtegee>} />
+          <Route path="/fortune" element={<RouteProtegee><FortunePage /></RouteProtegee>} />
+          <Route path="/classeur" element={<RouteProtegee><ClasseurPage /></RouteProtegee>} />
           <Route path="/inventaire" element={<RouteProtegee><InventairePage /></RouteProtegee>} />
           <Route path="/defis" element={<RouteProtegee><DefisPage /></RouteProtegee>} />
           <Route path="/mon-activite" element={<RouteProtegee><MonActivitePage /></RouteProtegee>} />

@@ -1,0 +1,414 @@
+/* ═══════════════════════════════════════════
+   ClasseurPage — Collection de cartes TCG
+   ═══════════════════════════════════════════ */
+
+.pageWrapper {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at center top, rgba(42, 42, 100, 0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at center bottom, rgba(155, 89, 182, 0.1) 0%, transparent 40%),
+    #0a0a1a;
+  position: relative;
+}
+
+.pageEntete {
+  text-align: center;
+  padding: 5rem 1rem 2rem;
+  position: relative;
+  z-index: 2;
+}
+.pageTitre {
+  font-family: var(--font-medieval);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #a8d8f0 0%, #9b59b6 50%, #e74c3c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+.pageSousTitre {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+  position: relative;
+  z-index: 2;
+}
+
+.loading, .empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1rem;
+}
+
+/* ── Completion Bar ── */
+.completionBar {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.completionInfo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+.completionPercent {
+  font-weight: 800;
+  font-family: var(--font-titre);
+  color: #9b59b6;
+}
+.completionTrack {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.completionFill {
+  height: 100%;
+  background: linear-gradient(90deg, #3498db, #9b59b6, #e74c3c);
+  border-radius: 8px;
+  transition: width 1s ease;
+}
+
+/* ── Onglets ── */
+.onglets {
+  display: flex;
+  gap: 0.3rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.onglet {
+  padding: 0.6rem 1.2rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: var(--font-titre);
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.onglet:hover { color: rgba(255, 255, 255, 0.7); }
+.ongletActif {
+  color: #9b59b6;
+  background: rgba(155, 89, 182, 0.1);
+  border-color: rgba(155, 89, 182, 0.3);
+}
+
+/* ── Grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.2rem;
+}
+
+/* ── Carte Item ── */
+.carteItem {
+  background: linear-gradient(160deg, rgba(20, 20, 40, 0.9), rgba(10, 10, 30, 0.9));
+  border: 2px solid var(--carte-border, rgba(255, 255, 255, 0.1));
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+.carteItem:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 40px var(--carte-glow, rgba(155, 89, 182, 0.3));
+  border-color: var(--carte-border, rgba(255, 255, 255, 0.3));
+}
+.carteNonPossedee {
+  opacity: 0.5;
+  cursor: default;
+}
+.carteNonPossedee:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.brillant::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(125deg, transparent 30%, rgba(255, 215, 0, 0.1) 50%, transparent 70%);
+  pointer-events: none;
+  animation: brillantShift 3s linear infinite;
+}
+@keyframes brillantShift {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.brillantBadge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 1.2rem;
+  z-index: 2;
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.6));
+}
+
+.carteImage {
+  height: 180px;
+  overflow: hidden;
+  position: relative;
+}
+.carteImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.carteItem:hover .carteImage img {
+  transform: scale(1.05);
+}
+.possedeCheck {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  background: #2ecc71;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: #fff;
+  font-weight: 900;
+}
+
+.carteInfo {
+  padding: 0.8rem;
+}
+.carteRarete {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: var(--font-titre);
+}
+.carteNom {
+  font-family: var(--font-titre);
+  font-size: 0.9rem;
+  color: #fff;
+  margin: 0.3rem 0 0.15rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.carteSerie {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Boutique footer ── */
+.boutiqueItem {
+  display: flex;
+  flex-direction: column;
+}
+.boutiqueFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0.8rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 0 0 14px 14px;
+  margin-top: -2px;
+}
+.boutiquePrix {
+  font-family: var(--font-medieval);
+  color: #ffd700;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.boutiqueBtn {
+  padding: 0.4rem 1rem;
+  background: linear-gradient(135deg, #9b59b6, #6a0dad);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.boutiqueBtn:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(155, 89, 182, 0.4);
+}
+.boutiqueBtn:disabled {
+  background: #333;
+  color: #888;
+  cursor: not-allowed;
+}
+
+/* ── Detail Modal ── */
+.detailOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.detailCard {
+  background: linear-gradient(160deg, #1a1a30, #0d0d20);
+  border: 2px solid var(--carte-border);
+  border-radius: 20px;
+  max-width: 400px;
+  width: 90%;
+  overflow: hidden;
+  box-shadow: 0 0 40px var(--carte-glow), 0 20px 60px rgba(0, 0, 0, 0.6);
+  animation: detailPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes detailPop {
+  from { transform: scale(0.8); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.detailBrillant {
+  text-align: center;
+  padding: 0.3rem;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+  color: #ffd700;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.detailImage {
+  height: 250px;
+  overflow: hidden;
+}
+.detailImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detailBody {
+  padding: 1.5rem;
+}
+.detailRarete {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-family: var(--font-titre);
+}
+.detailNom {
+  font-family: var(--font-titre);
+  font-size: 1.5rem;
+  color: #fff;
+  margin: 0.3rem 0 0.5rem;
+}
+.detailDesc {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.detailSerie {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+
+/* ── Stats bars ── */
+.statsGrid {
+  margin-top: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.statBar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+.statBar span:first-child {
+  width: 50px;
+  font-weight: 600;
+}
+.statBar span:last-child {
+  width: 30px;
+  text-align: right;
+  font-weight: 700;
+  color: #fff;
+}
+.barBg {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.barFill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.8s ease;
+}
+
+.editionBadge {
+  margin-top: 1rem;
+  text-align: center;
+  padding: 0.4rem;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 8px;
+  color: #ffd700;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.detailClose {
+  width: 100%;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.detailClose:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  .carteImage {
+    height: 130px;
+  }
+}

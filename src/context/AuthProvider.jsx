@@ -18,10 +18,12 @@
  *    données de l'utilisateur correspondant au token.
  * 3. Si le token est invalide ou expiré, on le supprime du localStorage.
  * 4. Le state `chargement` passe à false une fois la vérification terminée.
+ * 5. Si un streakReward est retourné (première visite du jour), le popup s'affiche.
  */
 import { useState, useEffect } from "react";
 import AuthContext from "./AuthContext";
 import api from "../services/api";
+import StreakPopup from "../components/UI/StreakPopup";
 
 function AuthProvider({ children }) {
   // State de l'utilisateur connecté (null = déconnecté)
@@ -33,6 +35,9 @@ function AuthProvider({ children }) {
     () => !!localStorage.getItem("token"),
   );
 
+  // State pour le popup de streak quotidien
+  const [streakReward, setStreakReward] = useState(null);
+
   // ── Vérification du token au montage de l'application ──
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -40,7 +45,13 @@ function AuthProvider({ children }) {
       // Appel API pour récupérer le profil lié au token stocké
       api
         .get("/api/auth/me")
-        .then((res) => setUtilisateur(res.data.user))
+        .then((res) => {
+          setUtilisateur(res.data.user);
+          // Si le backend retourne une récompense streak, l'afficher
+          if (res.data.streakReward) {
+            setStreakReward(res.data.streakReward);
+          }
+        })
         .catch(() => localStorage.removeItem("token")) // Token invalide → nettoyage
         .finally(() => setChargement(false));
     }
@@ -75,7 +86,19 @@ function AuthProvider({ children }) {
     deconnecter,
   };
 
-  return <AuthContext.Provider value={valeur}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={valeur}>
+      {children}
+      {/* Popup Streak — s'affiche une seule fois par jour au premier chargement */}
+      {streakReward && (
+        <StreakPopup
+          streakData={streakReward}
+          onClose={() => setStreakReward(null)}
+        />
+      )}
+    </AuthContext.Provider>
+  );
 }
 
 export default AuthProvider;
+
