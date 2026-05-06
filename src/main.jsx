@@ -21,17 +21,20 @@ import AuthProvider from "./context/AuthProvider";
 import { ToastProvider } from "./components/UI/Toast";
 import WebTVProvider from "./context/WebTVProvider";
 import GlobalRewardChecker from "./components/UI/GlobalRewardChecker";
+import { SocketProvider } from "./context/SocketContext";
 
 // createRoot() créé la racine React, render() lance le premier rendu.
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      <GlobalRewardChecker />
-      <ToastProvider>
-        <WebTVProvider>
-          <App />
-        </WebTVProvider>
-      </ToastProvider>
+      <SocketProvider>
+        <GlobalRewardChecker />
+        <ToastProvider>
+          <WebTVProvider>
+            <App />
+          </WebTVProvider>
+        </ToastProvider>
+      </SocketProvider>
     </AuthProvider>
   </StrictMode>,
 );

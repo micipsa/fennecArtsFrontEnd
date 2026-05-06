@@ -291,3 +291,137 @@
   .nom { font-size: 1.3rem; }
   .jeuxGrille, .setupGrille { grid-template-columns: 1fr; }
 }
+
+/* ═══ FONDS DE CARTE PROFIL ═══ */
+
+/* 🎮 Controller — motif manettes */
+.fondController {
+  position: relative;
+}
+.fondController::after {
+  content: "🎮 🕹️ 🎮 🕹️ 🎮 🕹️ 🎮 🕹️ 🎮 🕹️ 🎮 🕹️ 🎮 🕹️ 🎮 🕹️";
+  position: absolute;
+  inset: 0;
+  font-size: 1.8rem;
+  opacity: 0.04;
+  line-height: 2.5;
+  word-spacing: 1rem;
+  overflow: hidden;
+  pointer-events: none;
+  animation: fondScroll 20s linear infinite;
+  z-index: 0;
+}
+@keyframes fondScroll {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
+/* ⌨️ Code — lignes de code */
+.fondCode {
+  position: relative;
+}
+.fondCode::after {
+  content: "const f = () => { } if (x > 0) return true; for (let i=0; i<n; i++) { arr.push(i); } const data = await fetch(url); export default fn; import React from 'react'; useState(false); useEffect(() => {}); .then(r => r.json());";
+  position: absolute;
+  inset: 0;
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: #00ff00;
+  opacity: 0.06;
+  line-height: 2;
+  word-break: break-all;
+  overflow: hidden;
+  padding: 1rem;
+  pointer-events: none;
+  animation: fondCodeScroll 15s linear infinite;
+  z-index: 0;
+}
+@keyframes fondCodeScroll {
+  from { transform: translateY(0); }
+  to { transform: translateY(-30%); }
+}
+
+/* 🌅 Synthwave — grille rétro */
+.fondSynthwave {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255,100,200,0.06) 0%, transparent 40%),
+    rgba(255,255,255,0.03) !important;
+}
+.fondSynthwave::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,0,255,0.04) 0px, transparent 1px, transparent 40px),
+    repeating-linear-gradient(0deg, rgba(255,0,255,0.04) 0px, transparent 1px, transparent 40px);
+  transform: perspective(300px) rotateX(50deg);
+  transform-origin: bottom;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 🐉 Dragon — flammes */
+.fondDragon {
+  position: relative;
+}
+.fondDragon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(230,57,70,0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(255,140,0,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(255,69,0,0.06) 0%, transparent 60%);
+  pointer-events: none;
+  animation: fondDragonPulse 4s ease-in-out infinite alternate;
+  z-index: 0;
+}
+@keyframes fondDragonPulse {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+/* 🌸 Sakura — pétales */
+.fondSakura {
+  position: relative;
+}
+.fondSakura::after {
+  content: "🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸";
+  position: absolute;
+  inset: 0;
+  font-size: 1.2rem;
+  opacity: 0.06;
+  line-height: 3;
+  word-spacing: 2rem;
+  overflow: hidden;
+  pointer-events: none;
+  animation: fondSakuraFall 12s linear infinite;
+  z-index: 0;
+}
+@keyframes fondSakuraFall {
+  from { transform: translateY(-20%) rotate(-5deg); }
+  to { transform: translateY(30%) rotate(5deg); }
+}
+
+/* Z-index fix for fond content */
+.fondController .carteCorps,
+.fondCode .carteCorps,
+.fondSynthwave .carteCorps,
+.fondDragon .carteCorps,
+.fondSakura .carteCorps {
+  position: relative;
+  z-index: 1;
+}
+.fondController .banniere,
+.fondCode .banniere,
+.fondSynthwave .banniere,
+.fondDragon .banniere,
+.fondSakura .banniere {
+  position: relative;
+  z-index: 1;
+}
+

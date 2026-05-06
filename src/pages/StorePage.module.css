@@ -257,6 +257,60 @@
 .card:hover .imageBox img { opacity: 1; }
 .imagePlaceholder { font-size: 4rem; opacity: 0.2; filter: grayscale(100%); }
 
+/* ── Prévisualisation Fonds de Carte (Store) ── */
+.fondPreview {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  border-radius: 12px;
+  background-size: cover !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.fondPreview[data-fond="controller"] {
+  background: linear-gradient(135deg, rgba(230,57,70,0.1), rgba(155,89,182,0.1));
+}
+.fondPreview[data-fond="controller"]::after {
+  content: "🎮 🕹️";
+  position: absolute;
+  font-size: 1.5rem;
+  opacity: 0.1;
+  animation: scrollBg 5s linear infinite;
+}
+
+.fondPreview[data-fond="code"] {
+  background: rgba(0, 20, 0, 0.8);
+  color: #00ff00;
+}
+.fondPreview[data-fond="code"]::after {
+  content: "const x = 1;";
+  position: absolute;
+  font-family: monospace;
+  font-size: 0.8rem;
+  opacity: 0.3;
+}
+
+.fondPreview[data-fond="synthwave"] {
+  background: linear-gradient(180deg, #1a0b2e 0%, #ff00ff 100%);
+}
+
+.fondPreview[data-fond="dragon"] {
+  background: radial-gradient(circle, rgba(230,57,70,0.4) 0%, rgba(0,0,0,0.8) 100%);
+}
+
+.fondPreview[data-fond="sakura"] {
+  background: linear-gradient(135deg, rgba(255,183,197,0.2), rgba(0,0,0,0.8));
+}
+
+@keyframes scrollBg {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-20px); }
+}
+
 .stockBadge {
   position: absolute;
   top: 10px; right: 10px;

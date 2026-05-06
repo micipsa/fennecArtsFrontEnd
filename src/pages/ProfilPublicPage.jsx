@@ -58,13 +58,22 @@ function ProfilPublicPage() {
     { key: "facebook", icon: "👤", prefix: "https://facebook.com/" },
   ];
 
+  const FOND_CARTE_MAP = {
+    controller: styles.fondController,
+    code: styles.fondCode,
+    synthwave: styles.fondSynthwave,
+    dragon: styles.fondDragon,
+    sakura: styles.fondSakura,
+  };
+  const fondClass = membre.fondCarteActif ? FOND_CARTE_MAP[membre.fondCarteActif] || "" : "";
+
   return (
     <div className="container">
       <div className={styles.page}>
         <button onClick={() => navigate(-1)} className={styles.retourBtn}>← Retour</button>
 
         {/* ── Bannière + Avatar ── */}
-        <div className={styles.carte}>
+        <div className={`${styles.carte} ${fondClass}`}>
           <div
             className={styles.banniere}
             style={membre.banniereUrl ? { backgroundImage: `url(${membre.banniereUrl})` } : { background: `linear-gradient(135deg, ${rang.couleur}44, ${rang.couleur}11)` }}

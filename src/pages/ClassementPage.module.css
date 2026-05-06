@@ -153,3 +153,119 @@
   border-radius: 8px !important;
   margin-bottom: 2rem !important;
 }
+
+/* ── PODIUM TOP 3 ── */
+.podium {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  align-items: end;
+}
+
+.podiumCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 2rem 1.5rem;
+  border-radius: 16px;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+.podiumCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.podiumCard:hover {
+  transform: translateY(-8px) scale(1.03);
+}
+.podiumCard:hover::before {
+  opacity: 1;
+}
+
+.podiumGold {
+  background: linear-gradient(135deg, rgba(255,215,0,0.12), rgba(184,134,11,0.08));
+  border: 2px solid rgba(255,215,0,0.3);
+  box-shadow: 0 10px 40px rgba(255,215,0,0.15);
+  order: 2;
+  min-height: 280px;
+}
+.podiumGold::before {
+  box-shadow: inset 0 0 50px rgba(255,215,0,0.15);
+}
+
+.podiumSilver {
+  background: linear-gradient(135deg, rgba(192,192,192,0.1), rgba(150,150,150,0.06));
+  border: 2px solid rgba(192,192,192,0.25);
+  box-shadow: 0 8px 30px rgba(192,192,192,0.1);
+  order: 1;
+  min-height: 240px;
+}
+.podiumSilver::before {
+  box-shadow: inset 0 0 40px rgba(192,192,192,0.1);
+}
+
+.podiumBronze {
+  background: linear-gradient(135deg, rgba(205,127,50,0.12), rgba(150,80,20,0.06));
+  border: 2px solid rgba(205,127,50,0.25);
+  box-shadow: 0 8px 30px rgba(205,127,50,0.1);
+  order: 3;
+  min-height: 240px;
+}
+.podiumBronze::before {
+  box-shadow: inset 0 0 40px rgba(205,127,50,0.1);
+}
+
+.podiumMedaille {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.5));
+}
+.podiumGold .podiumMedaille { font-size: 3rem; }
+
+.podiumNom {
+  color: #fff;
+  font-family: var(--font-titre);
+  font-size: 1.1rem;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+.podiumGold .podiumNom { font-size: 1.3rem; color: #ffd700; text-shadow: 0 0 12px rgba(255,215,0,0.4); }
+.podiumSilver .podiumNom { color: #ddd; }
+.podiumBronze .podiumNom { color: #cd9b5a; }
+
+.podiumRang {
+  font-family: var(--font-medieval, var(--font-titre));
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+}
+
+.podiumStats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+}
+
+/* ── Responsive podium ── */
+@media (max-width: 768px) {
+  .podium {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .podiumGold, .podiumSilver, .podiumBronze {
+    order: unset;
+    min-height: auto;
+    padding: 1.2rem;
+  }
+}
+

@@ -92,6 +92,9 @@ import RedacteurLayout from "./layouts/RedacteurLayout";
 import RedacteurArticles from "./pages/RedacteurArticles";
 // ── Route WebTV ──
 import WebTVPage from "./pages/WebTVPage/WebTVPage";
+// ── Route Arcade ──
+import ArcadePage from "./pages/ArcadePage";
+import GamePlayPage from "./pages/GamePlayPage";
 import RouteOrganisateur from "./components/RoutesProtegees/RouteOrganisateur";
 import RouteAdherent from "./components/RoutesProtegees/RouteAdherent";
 
@@ -135,6 +138,8 @@ function App() {
           <Route path="/saisons" element={<SaisonsPage />} />
           <Route path="/codes" element={<RouteProtegee><CodesPromoPage /></RouteProtegee>} />
           <Route path="/play" element={<RouteProtegee><PlayPage /></RouteProtegee>} />
+          <Route path="/arcade" element={<ArcadePage />} />
+          <Route path="/arcade/:jeu/:sessionId" element={<GamePlayPage />} />
           {/* Route protégée : redirige vers /login si non connecté */}
           <Route
             path="profil"

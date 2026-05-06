@@ -59,7 +59,7 @@
 .tableauHeader,
 .tableauLigne {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 0.8fr 1.6fr;
+  grid-template-columns: 2fr 1fr 0.8fr 1fr 0.8fr 1.6fr;
   padding: 0.85rem 1.2rem;
   align-items: center;
   gap: 0.5rem;
@@ -495,6 +495,254 @@
   color: #555;
   font-size: 0.82rem;
   margin: -0.3rem 0;
+}
+
+/* ── Onglets détail ── */
+.detailTabs {
+  display: flex;
+  gap: 0.3rem;
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 0;
+}
+.detailTabBtn {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #888;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.detailTabBtn:hover {
+  color: #ccc;
+}
+.detailTabActif {
+  color: var(--couleur-primaire);
+  border-bottom-color: var(--couleur-primaire);
+}
+
+/* ── Boutons présence ── */
+.btnPresence {
+  border: none;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btnPresent {
+  background: rgba(52, 199, 89, 0.2);
+  color: #34c759;
+}
+.btnAbsent {
+  background: rgba(230, 57, 70, 0.12);
+  color: #888;
+}
+.btnPresence:hover {
+  opacity: 0.75;
+}
+
+/* ── Checklist ── */
+.checklistSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.checklistProgress {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.checklistProgressBar {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.checklistProgressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--couleur-primaire), #34c759);
+  border-radius: 8px;
+  transition: width 0.5s ease;
+}
+.checklistProgressLabel {
+  font-size: 0.8rem;
+  color: #888;
+  white-space: nowrap;
+}
+
+.checklistAdd,
+.materielAdd {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.checklistInput {
+  flex: 1;
+  min-width: 160px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #fff;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.85rem;
+  outline: none;
+}
+.checklistInput:focus {
+  border-color: var(--couleur-primaire);
+}
+.checklistInputSmall {
+  width: 120px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #fff;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.85rem;
+  outline: none;
+}
+.checklistSelect {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #fff;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.85rem;
+  outline: none;
+}
+.materielQte {
+  width: 65px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #fff;
+  padding: 0.5rem 0.5rem;
+  font-size: 0.85rem;
+  outline: none;
+  text-align: center;
+}
+
+.checklistItems {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.checklistItem {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0.8rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.2s;
+}
+.checklistItem:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+.checklistItemDone {
+  opacity: 0.5;
+}
+.checklistItemDone .checklistItemTexte {
+  text-decoration: line-through;
+}
+.checklistToggle {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #888;
+  line-height: 1;
+  padding: 0;
+}
+.checklistItemDone .checklistToggle {
+  color: #34c759;
+}
+.checklistItemBody {
+  flex: 1;
+}
+.checklistItemTexte {
+  color: #ddd;
+  font-size: 0.9rem;
+}
+.checklistItemMeta {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.2rem;
+  font-size: 0.72rem;
+  color: #888;
+}
+.prioriteBadge {
+  padding: 0.1rem 0.4rem;
+  border-radius: 10px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.priorite_basse {
+  background: rgba(150, 150, 150, 0.15);
+  color: #999;
+}
+.priorite_normale {
+  background: rgba(52, 152, 219, 0.15);
+  color: #3498db;
+}
+.priorite_urgente {
+  background: rgba(230, 57, 70, 0.2);
+  color: var(--couleur-primaire);
+}
+
+/* ── Matériel ── */
+.materielSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.materielResume {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+  color: #aaa;
+  padding: 0.6rem 0;
+}
+.materielStatutSelect {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #fff;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.78rem;
+  outline: none;
+  cursor: pointer;
+}
+.mat_a_fournir {
+  border-color: rgba(244, 162, 97, 0.3);
+  color: #f4a261;
+}
+.mat_confirme {
+  border-color: rgba(52, 199, 89, 0.3);
+  color: #34c759;
+}
+.mat_sur_place {
+  border-color: rgba(52, 152, 219, 0.3);
+  color: #3498db;
+}
+.mat_rendu {
+  border-color: rgba(150, 150, 150, 0.3);
+  color: #999;
+}
+
+.cellRecompense {
+  font-size: 0.8rem;
+  color: #aaa;
 }
 
 /* ══════════════════════════════════════════════

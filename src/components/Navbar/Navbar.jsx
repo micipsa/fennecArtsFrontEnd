@@ -52,6 +52,11 @@ function Navbar() {
             <li><NavLink to="/events" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>Événements</NavLink></li>
             <li><NavLink to="/tournaments" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>Tournois</NavLink></li>
             <li>
+              <NavLink to="/arcade" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>
+                🕹️ Arcade
+              </NavLink>
+            </li>
+            <li>
               <NavLink to="/play" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>
                 🎮 Dojo Play
               </NavLink>
@@ -99,6 +104,7 @@ function Navbar() {
             
             <div className={styles.separateur} />
             
+            <NavLink to="/arcade" onClick={() => setMenuMobile(false)}>🕹️ Arcade</NavLink>
             <NavLink to="/defis" onClick={() => setMenuMobile(false)}>⚔️ Défis</NavLink>
             <NavLink to="/play" onClick={() => setMenuMobile(false)}>🎮 Dojo Play</NavLink>
             

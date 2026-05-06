@@ -44,6 +44,31 @@ function ClassementPage() {
         {chargement ? (
           <Spinner />
         ) : (
+          <>
+          {/* ── Podium Top 3 ── */}
+          {joueurs.length >= 3 && (
+            <div className={styles.podium}>
+              {[1, 0, 2].map((podIdx) => {
+                const j = joueurs[podIdx];
+                if (!j) return null;
+                const rang = calculerRang(j.points ?? 0);
+                const podClass = podIdx === 0 ? styles.podiumGold : podIdx === 1 ? styles.podiumSilver : styles.podiumBronze;
+                return (
+                  <Link key={j._id} to={`/membres/${j._id}`} className={`${styles.podiumCard} ${podClass}`}>
+                    <div className={styles.podiumMedaille}>{MEDAILLES[podIdx]}</div>
+                    <AvatarIcon avatarUrl={j.avatarActif} cadreStyle={j.cadreStyle} taille={podIdx === 0 ? "lg" : "md"} nom={j.nom} />
+                    <h3 className={styles.podiumNom} style={j.couleurPseudoActive ? { color: j.couleurPseudoActive } : {}}>{j.nom}</h3>
+                    <span className={styles.podiumRang} style={{ color: rang.couleur }}>{rang.affichage}</span>
+                    <div className={styles.podiumStats}>
+                      <span>⚡ {j.points ?? 0}</span>
+                      <span>⚔️ {j.participationsTournois?.length ?? 0}</span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+
           <div className={styles.tableWrapper}>
             <table className={styles.table}>
               <thead>
@@ -133,6 +158,7 @@ function ClassementPage() {
               </tbody>
             </table>
           </div>
+          </>
         )}
       </div>
     </div>

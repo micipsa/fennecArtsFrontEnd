@@ -11,6 +11,7 @@ const CATEGORIES = [
   { id: "couleur_pseudo", label: "Couleurs", icone: "🎨" },
   { id: "avatar_icon", label: "Avatars", icone: "🦊" },
   { id: "titre_custom", label: "Titres", icone: "🏷️" },
+  { id: "fond_carte", label: "Fonds", icone: "🎴" },
   { id: "autres", label: "Autres", icone: "📜" },
 ];
 
@@ -23,6 +24,7 @@ export default function InventairePage() {
     titre: null,
     couleur: null,
     avatar: null,
+    fondCarte: null,
   });
   const [loading, setLoading] = useState(true);
   const { addToast } = useToast();
@@ -53,6 +55,7 @@ export default function InventairePage() {
         titre: userMAJ.titreActif,
         couleur: userMAJ.couleurPseudoActive,
         avatar: userMAJ.avatarActif,
+        fondCarte: userMAJ.fondCarteActif,
       });
       if (updateUtilisateurLocal) updateUtilisateurLocal(userMAJ);
     } catch (err) {
@@ -72,11 +75,13 @@ export default function InventairePage() {
       const avatarUrl = achat.article.donnees?.avatarUrl || achat.article.imageUrl;
       return equipes.avatar === avatarUrl;
     }
+    if (achat.article.type === "fond_carte")
+      return equipes.fondCarte === achat.article.donnees?.style;
     return false;
   };
 
   // Filtrage par catégorie
-  const TYPES_PRINCIPAUX = ["cadre_profil", "couleur_pseudo", "avatar_icon", "titre_custom"];
+  const TYPES_PRINCIPAUX = ["cadre_profil", "couleur_pseudo", "avatar_icon", "titre_custom", "fond_carte"];
   const filteredAchats = achats.filter((a) => {
     if (!a.article) return false;
     if (categorie === "tous") return true;
@@ -91,6 +96,7 @@ export default function InventairePage() {
     couleur_pseudo: achats.filter(a => a.article?.type === "couleur_pseudo").length,
     avatar_icon: achats.filter(a => a.article?.type === "avatar_icon").length,
     titre_custom: achats.filter(a => a.article?.type === "titre_custom").length,
+    fond_carte: achats.filter(a => a.article?.type === "fond_carte").length,
     autres: achats.filter(a => a.article && !TYPES_PRINCIPAUX.includes(a.article.type)).length,
   };
 
@@ -164,7 +170,7 @@ export default function InventairePage() {
                 <div className={styles.infoBox}>
                   <h3>{achat.article?.nom || "Article inconnu"}</h3>
                   <div className={styles.actions}>
-                    {["cadre_profil", "titre_custom", "couleur_pseudo", "avatar_icon"].includes(
+                    {["cadre_profil", "titre_custom", "couleur_pseudo", "avatar_icon", "fond_carte"].includes(
                       achat.article?.type,
                     ) ? (
                       <button

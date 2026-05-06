@@ -135,3 +135,77 @@
   0%, 100% { box-shadow: 0 0 10px rgba(255, 183, 197, 0.3), 0 0 20px rgba(255, 183, 197, 0.15); border-color: #ffb7c5; }
   50% { box-shadow: 0 0 15px rgba(255, 183, 197, 0.5), 0 0 35px rgba(255, 183, 197, 0.25); border-color: #ff91a4; }
 }
+
+/* ── CADRE HOLOGRAMME ── */
+.cadreHologram {
+  border: 2px solid rgba(0, 255, 255, 0.5);
+  box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.3), 0 0 10px rgba(0, 255, 255, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+.cadreHologram::before {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(to bottom, rgba(0, 255, 255, 0), rgba(0, 255, 255, 0.4), rgba(0, 255, 255, 0));
+  animation: hologramScan 3s linear infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+@keyframes hologramScan {
+  0% { top: -50%; }
+  100% { top: 150%; }
+}
+
+/* ── CADRE MATRIX ── */
+.cadreMatrix {
+  border: 2px dashed #00ff00;
+  box-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+  animation: matrixPulse 1.5s step-end infinite;
+}
+@keyframes matrixPulse {
+  0%, 100% { border-color: #00ff00; box-shadow: 0 0 8px rgba(0, 255, 0, 0.5); }
+  50% { border-color: #00cc00; box-shadow: 0 0 15px rgba(0, 255, 0, 0.8); }
+}
+
+/* ── CADRE COSMIC ── */
+.cadreCosmic {
+  border: 3px solid transparent;
+  background-image:
+    linear-gradient(var(--couleur-sombre), var(--couleur-sombre)),
+    linear-gradient(45deg, #4b0082, #00008b, #8a2be2);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: 0 0 15px rgba(138, 43, 226, 0.6);
+  animation: cosmicBreathe 4s ease-in-out infinite alternate;
+}
+@keyframes cosmicBreathe {
+  0% { box-shadow: 0 0 10px rgba(75, 0, 130, 0.5); }
+  100% { box-shadow: 0 0 25px rgba(138, 43, 226, 0.8); }
+}
+
+/* ── CADRE RAINBOW ── */
+.cadreRainbow {
+  border: 3px solid transparent;
+  background-image:
+    linear-gradient(var(--couleur-sombre), var(--couleur-sombre)),
+    conic-gradient(from var(--angle, 0deg), red, yellow, lime, aqua, blue, magenta, red);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: electricSpin 2s linear infinite;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* ── CADRE FROST ── */
+.cadreFrost {
+  border: 2px solid #a0e0ff;
+  box-shadow: 0 0 10px rgba(160, 224, 255, 0.5), inset 0 0 8px rgba(160, 224, 255, 0.4);
+  animation: frostGlow 3s ease-in-out infinite;
+}
+@keyframes frostGlow {
+  0%, 100% { box-shadow: 0 0 10px rgba(160, 224, 255, 0.5), inset 0 0 8px rgba(160, 224, 255, 0.4); border-color: #a0e0ff; }
+  50% { box-shadow: 0 0 20px rgba(160, 224, 255, 0.8), inset 0 0 15px rgba(160, 224, 255, 0.6); border-color: #ffffff; }
+}

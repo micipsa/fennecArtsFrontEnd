@@ -247,3 +247,93 @@
   0%, 100% { transform: translate(0, 0); }
   50% { transform: translate(30px, -30px); }
 }
+
+/* ── ARCADE BANNER ── */
+.arcadeBanner {
+  background: linear-gradient(135deg, rgba(230,57,70,0.08), rgba(155,89,182,0.06));
+  border: 1px solid rgba(230,57,70,0.2);
+  border-radius: 16px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.arcadeBanner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(230,57,70,0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.arcadeJeux {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+  z-index: 1;
+}
+
+.arcadeJeuMini {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1rem 0.5rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  transition: all 0.3s;
+  cursor: default;
+}
+.arcadeJeuMini:hover {
+  background: rgba(230,57,70,0.1);
+  border-color: rgba(230,57,70,0.3);
+  transform: translateY(-3px);
+}
+.arcadeJeuMini span:first-child {
+  font-size: 1.8rem;
+}
+.arcadeJeuMini span:last-child {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.5);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.arcadeCta {
+  display: inline-block;
+  padding: 0.8rem 2.5rem;
+  background: linear-gradient(135deg, var(--couleur-primaire), #9b59b6);
+  color: #fff;
+  border-radius: 12px;
+  font-family: var(--font-titre);
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(230,57,70,0.3);
+  position: relative;
+  z-index: 1;
+}
+.arcadeCta:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 30px rgba(230,57,70,0.5);
+}
+
+@media (max-width: 768px) {
+  .arcadeJeux {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .arcadeBanner {
+    padding: 1.5rem;
+  }
+}
+

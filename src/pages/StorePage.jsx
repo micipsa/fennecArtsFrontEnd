@@ -10,6 +10,7 @@ const CATEGORIES = [
   { id: "tous", label: "Tous les articles" },
   { id: "avatar_icon", label: "Avatars" },
   { id: "cadre_profil", label: "Cadres Profil" },
+  { id: "fond_carte", label: "Fonds de Carte" },
   { id: "titre_custom", label: "Titres Custom" },
   { id: "couleur_pseudo", label: "Couleurs" },
   { id: "boost_xp", label: "Boosts XP" },
@@ -162,7 +163,15 @@ export default function StorePage() {
             filteredArticles.map(article => (
               <div key={article._id} className={styles.card}>
                 <div className={styles.imageBox}>
-                  {article.imageUrl ? (
+                  {article.type === "fond_carte" && article.donnees?.style ? (
+                    <div className={styles.fondPreview} data-fond={article.donnees.style}>
+                      {article.donnees.style === "controller" && "🎮"}
+                      {article.donnees.style === "code" && "⌨️"}
+                      {article.donnees.style === "synthwave" && "🌅"}
+                      {article.donnees.style === "dragon" && "🐉"}
+                      {article.donnees.style === "sakura" && "🌸"}
+                    </div>
+                  ) : article.imageUrl ? (
                     <img src={article.imageUrl} alt={article.nom} />
                   ) : (
                     <div className={styles.imagePlaceholder}>🛒</div>

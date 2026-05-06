@@ -17,6 +17,11 @@ const CADRE_MAP = {
   diamond: styles.cadreDiamond,
   glitch: styles.cadreGlitch,
   sakura: styles.cadreSakura,
+  hologram: styles.cadreHologram,
+  matrix: styles.cadreMatrix,
+  cosmic: styles.cadreCosmic,
+  rainbow: styles.cadreRainbow,
+  frost: styles.cadreFrost,
 };
 
 export default function AvatarIcon({

@@ -1,0 +1,66 @@
+.typingBoard {
+  max-width: 750px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+.typingHeader {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.8rem 1.5rem; background: rgba(255,255,255,0.04);
+  border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);
+}
+.typingPlayer {
+  display: flex; align-items: center; gap: 0.5rem;
+  color: rgba(255,255,255,0.7); font-family: var(--font-titre); transition: opacity 0.3s;
+}
+.typingPlayer small { color: rgba(255,255,255,0.4); font-size: 0.75rem; margin-left: 0.3rem; }
+.typingInfo { font-family: var(--font-titre); color: var(--couleur-accent); font-weight: 700; font-size: 0.9rem; }
+
+.typingReady {
+  text-align: center; min-height: 300px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem;
+}
+.typingReady h2 { font-family: var(--font-manga); color: #fff; font-size: 2rem; margin: 0; }
+.typingPreview {
+  color: rgba(255,255,255,0.4); font-size: 1.1rem;
+  padding: 1rem 2rem; background: rgba(255,255,255,0.03);
+  border-radius: 12px; border: 1px dashed rgba(255,255,255,0.1);
+}
+.typingStartBtn {
+  padding: 0.8rem 3rem; background: linear-gradient(135deg, #2ecc71, #27ae60);
+  color: #fff; border: none; border-radius: 12px;
+  font-family: var(--font-titre); font-weight: 700; font-size: 1.2rem;
+  cursor: pointer; transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(46,204,113,0.3);
+}
+.typingStartBtn:hover { transform: scale(1.05); box-shadow: 0 6px 30px rgba(46,204,113,0.5); }
+
+.typingZone {
+  display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+}
+.typingPhrase {
+  font-size: 1.4rem; line-height: 2; letter-spacing: 0.5px;
+  padding: 1.5rem 2rem; background: rgba(255,255,255,0.03);
+  border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);
+  text-align: center; font-family: monospace;
+}
+
+.charPending { color: rgba(255,255,255,0.3); }
+.charCorrect { color: #2ecc71; }
+.charWrong { color: #e74c3c; background: rgba(231,76,60,0.15); border-radius: 2px; }
+.charCurrent {
+  color: #fff; border-bottom: 2px solid var(--couleur-accent);
+  animation: blink 0.8s infinite;
+}
+@keyframes blink { 0%, 100% { border-color: var(--couleur-accent); } 50% { border-color: transparent; } }
+
+.typingInput {
+  width: 100%; max-width: 600px; padding: 1rem 1.5rem;
+  background: rgba(255,255,255,0.06); border: 2px solid rgba(255,255,255,0.15);
+  border-radius: 12px; color: #fff; font-size: 1.1rem;
+  font-family: monospace; outline: none; text-align: center;
+}
+.typingInput:focus { border-color: var(--couleur-accent); box-shadow: 0 0 20px rgba(244,162,97,0.2); }
+
+.typingTimer {
+  font-family: var(--font-pixel, monospace); color: var(--couleur-accent);
+  font-size: 1.5rem; font-weight: 700;
+}

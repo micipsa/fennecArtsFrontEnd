@@ -1,0 +1,173 @@
+.pageWrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+  padding: 3rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.pageWrapper::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(230,57,70,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(244,162,97,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.titre {
+  font-family: var(--font-manga);
+  font-size: 3.5rem;
+  color: #fff;
+  text-shadow: 0 0 30px rgba(230,57,70,0.5), 0 0 60px rgba(230,57,70,0.2);
+  margin: 0 0 0.5rem;
+  letter-spacing: 2px;
+}
+
+.sousTitre {
+  color: rgba(255,255,255,0.5);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.loading {
+  text-align: center;
+  color: #fff;
+  padding: 5rem;
+  font-family: var(--font-titre);
+  font-size: 1.2rem;
+}
+
+/* ── Grille de jeux ── */
+.jeuxGrille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.jeuCard {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+.jeuCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  box-shadow: inset 0 0 40px var(--card-glow, rgba(230,57,70,0.2));
+  pointer-events: none;
+}
+.jeuCard:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(255,255,255,0.15);
+}
+.jeuCard:hover::before {
+  opacity: 1;
+}
+
+.jeuIconeWrapper {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.jeuIcone {
+  font-size: 2rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.jeuNom {
+  font-family: var(--font-titre);
+  color: #fff;
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.jeuDesc {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.85rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.jeuMeta {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.jeuTag {
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.jeuStats {
+  display: flex;
+  gap: 0.8rem;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.5);
+}
+
+.btnJouer {
+  width: 100%;
+  padding: 0.7rem 1.5rem;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--font-titre);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  margin-top: auto;
+}
+.btnJouer:hover {
+  box-shadow: 0 6px 25px rgba(230,57,70,0.4);
+  transform: scale(1.03);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .titre { font-size: 2.2rem; }
+  .jeuxGrille { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .jeuCard { padding: 1.2rem 1rem; }
+  .jeuIconeWrapper { width: 55px; height: 55px; }
+  .jeuIcone { font-size: 1.5rem; }
+}
+@media (max-width: 480px) {
+  .jeuxGrille { grid-template-columns: 1fr; }
+}

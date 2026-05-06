@@ -54,6 +54,17 @@ export default function DashboardMissions() {
   });
   const [affectLoading, setAffectLoading] = useState(false);
 
+  // Checklist
+  const [nouvelleTache, setNouvelleTache] = useState("");
+  const [tachePriorite, setTachePriorite] = useState("normale");
+  const [tacheResponsable, setTacheResponsable] = useState("");
+
+  // Matériel
+  const [nouveauMateriel, setNouveauMateriel] = useState({ nom: "", quantite: 1, categorie: "autre", responsableNom: "" });
+
+  // Onglet actif du détail
+  const [detailTab, setDetailTab] = useState("postes"); // postes | checklist | materiel
+
   // ── Chargement des missions ─────────────────────────────────────────────────
   const chargerMissions = async () => {
     try {
@@ -218,6 +229,86 @@ export default function DashboardMissions() {
     }
   };
 
+  // ── Checklist : ajouter ──────────────────────────────────────────────────────
+  const ajouterTache = async (missionId) => {
+    if (!nouvelleTache.trim()) return;
+    try {
+      await api.post(`/api/missions/${missionId}/taches`, {
+        texte: nouvelleTache,
+        priorite: tachePriorite,
+        responsableNom: tacheResponsable || null,
+      });
+      setNouvelleTache("");
+      setTacheResponsable("");
+      setTachePriorite("normale");
+      ouvrirDetail(missionId);
+    } catch (err) {
+      alert(err.response?.data?.message || "Erreur");
+    }
+  };
+
+  // ── Checklist : toggle ──────────────────────────────────────────────────────
+  const toggleTache = async (missionId, tacheId, fait) => {
+    try {
+      await api.patch(`/api/missions/${missionId}/taches/${tacheId}`, { fait: !fait });
+      ouvrirDetail(missionId);
+    } catch (err) {
+      alert(err.response?.data?.message || "Erreur");
+    }
+  };
+
+  // ── Checklist : supprimer ───────────────────────────────────────────────────
+  const supprimerTache = async (missionId, tacheId) => {
+    try {
+      await api.delete(`/api/missions/${missionId}/taches/${tacheId}`);
+      ouvrirDetail(missionId);
+    } catch (err) {
+      alert(err.response?.data?.message || "Erreur");
+    }
+  };
+
+  // ── Matériel : ajouter ──────────────────────────────────────────────────────
+  const ajouterMateriel = async (missionId) => {
+    if (!nouveauMateriel.nom.trim()) return;
+    try {
+      await api.post(`/api/missions/${missionId}/materiel`, nouveauMateriel);
+      setNouveauMateriel({ nom: "", quantite: 1, categorie: "autre", responsableNom: "" });
+      ouvrirDetail(missionId);
+    } catch (err) {
+      alert(err.response?.data?.message || "Erreur");
+    }
+  };
+
+  // ── Matériel : changer statut ───────────────────────────────────────────────
+  const changerStatutMateriel = async (missionId, materielId, statut) => {
+    try {
+      await api.patch(`/api/missions/${missionId}/materiel/${materielId}`, { statut });
+      ouvrirDetail(missionId);
+    } catch (err) {
+      alert(err.response?.data?.message || "Erreur");
+    }
+  };
+
+  // ── Matériel : supprimer ────────────────────────────────────────────────────
+  const supprimerMateriel = async (missionId, materielId) => {
+    try {
+      await api.delete(`/api/missions/${missionId}/materiel/${materielId}`);
+      ouvrirDetail(missionId);
+    } catch (err) {
+      alert(err.response?.data?.message || "Erreur");
+    }
+  };
+
+  // ── Pointage : toggle présence ──────────────────────────────────────────────
+  const togglePresence = async (missionId, posteId, inscriptionId) => {
+    try {
+      await api.patch(`/api/missions/${missionId}/postes/${posteId}/inscriptions/${inscriptionId}/pointer`);
+      ouvrirDetail(missionId);
+    } catch (err) {
+      alert(err.response?.data?.message || "Erreur");
+    }
+  };
+
   // ── Rendu ───────────────────────────────────────────────────────────────────
   if (loading) return <div className={styles.loading}>Chargement...</div>;
   if (erreur) return <div className={styles.erreur}>{erreur}</div>;
@@ -313,9 +404,27 @@ export default function DashboardMissions() {
             </span>
           </div>
 
+          {/* Onglets du détail */}
+          <div className={styles.detailTabs}>
+            {[
+              { id: "postes", label: "🧩 Postes" },
+              { id: "checklist", label: `📋 Checklist (${detailMission.taches?.length || 0})` },
+              { id: "materiel", label: `🎒 Matériel (${detailMission.materiel?.length || 0})` },
+            ].map(tab => (
+              <button
+                key={tab.id}
+                className={`${styles.detailTabBtn} ${detailTab === tab.id ? styles.detailTabActif : ""}`}
+                onClick={() => setDetailTab(tab.id)}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
           {detailLoading ? (
             <p>Chargement...</p>
-          ) : (
+          ) : detailTab === "postes" ? (
+            /* ── Onglet Postes ── */
             detailMission.postes.map((poste) => (
               <div key={poste._id} className={styles.posteCard}>
                 <div className={styles.posteCardHeader}>
@@ -343,8 +452,8 @@ export default function DashboardMissions() {
                         <th>Nom</th>
                         <th>Créneau</th>
                         <th>Place</th>
-                        <th>Date</th>
-                        <th></th>
+                        <th>Présent</th>
+                        <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -369,9 +478,12 @@ export default function DashboardMissions() {
                           </td>
                           <td>#{ins.numeroPlace}</td>
                           <td>
-                            {new Date(ins.dateInscription).toLocaleDateString(
-                              "fr-FR",
-                            )}
+                            <button
+                              className={`${styles.btnPresence} ${ins.present ? styles.btnPresent : styles.btnAbsent}`}
+                              onClick={() => togglePresence(detailMission._id, poste._id, ins._id)}
+                            >
+                              {ins.present ? "✓ Présent" : "✗ Absent"}
+                            </button>
                           </td>
                           <td>
                             <button
@@ -393,7 +505,169 @@ export default function DashboardMissions() {
                 )}
               </div>
             ))
-          )}
+          ) : detailTab === "checklist" ? (
+            /* ── Onglet Checklist ── */
+            <div className={styles.checklistSection}>
+              {/* Barre de progression */}
+              {(detailMission.taches?.length > 0) && (
+                <div className={styles.checklistProgress}>
+                  <div className={styles.checklistProgressBar}>
+                    <div
+                      className={styles.checklistProgressFill}
+                      style={{ width: `${Math.round((detailMission.taches.filter(t => t.fait).length / detailMission.taches.length) * 100)}%` }}
+                    />
+                  </div>
+                  <span className={styles.checklistProgressLabel}>
+                    {detailMission.taches.filter(t => t.fait).length}/{detailMission.taches.length} terminées
+                  </span>
+                </div>
+              )}
+
+              {/* Formulaire ajout */}
+              <div className={styles.checklistAdd}>
+                <input
+                  placeholder="Nouvelle tâche..."
+                  value={nouvelleTache}
+                  onChange={e => setNouvelleTache(e.target.value)}
+                  onKeyDown={e => e.key === "Enter" && ajouterTache(detailMission._id)}
+                  className={styles.checklistInput}
+                />
+                <input
+                  placeholder="Responsable"
+                  value={tacheResponsable}
+                  onChange={e => setTacheResponsable(e.target.value)}
+                  className={styles.checklistInputSmall}
+                />
+                <select value={tachePriorite} onChange={e => setTachePriorite(e.target.value)} className={styles.checklistSelect}>
+                  <option value="basse">Basse</option>
+                  <option value="normale">Normale</option>
+                  <option value="urgente">Urgente</option>
+                </select>
+                <button className={styles.btnAffecter} onClick={() => ajouterTache(detailMission._id)}>+ Ajouter</button>
+              </div>
+
+              {/* Liste des tâches */}
+              {(detailMission.taches || []).length === 0 ? (
+                <p className={styles.aucuneInscription}>Aucune tâche pour l'instant.</p>
+              ) : (
+                <div className={styles.checklistItems}>
+                  {detailMission.taches.map(tache => (
+                    <div key={tache._id} className={`${styles.checklistItem} ${tache.fait ? styles.checklistItemDone : ""}`}>
+                      <button
+                        className={styles.checklistToggle}
+                        onClick={() => toggleTache(detailMission._id, tache._id, tache.fait)}
+                      >
+                        {tache.fait ? "☑" : "☐"}
+                      </button>
+                      <div className={styles.checklistItemBody}>
+                        <span className={styles.checklistItemTexte}>{tache.texte}</span>
+                        <div className={styles.checklistItemMeta}>
+                          {tache.responsableNom && <span>👤 {tache.responsableNom}</span>}
+                          <span className={`${styles.prioriteBadge} ${styles[`priorite_${tache.priorite}`]}`}>
+                            {tache.priorite}
+                          </span>
+                        </div>
+                      </div>
+                      <button className={styles.btnRetirer} onClick={() => supprimerTache(detailMission._id, tache._id)}>✕</button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ) : detailTab === "materiel" ? (
+            /* ── Onglet Matériel ── */
+            <div className={styles.materielSection}>
+              {/* Résumé */}
+              {(detailMission.materiel?.length > 0) && (
+                <div className={styles.materielResume}>
+                  <span>✅ {detailMission.materiel.filter(m => m.statut === "confirme" || m.statut === "sur_place" || m.statut === "rendu").length} confirmés</span>
+                  <span>⏳ {detailMission.materiel.filter(m => m.statut === "a_fournir").length} en attente</span>
+                  <span>📦 {detailMission.materiel.reduce((acc, m) => acc + m.quantite, 0)} items total</span>
+                </div>
+              )}
+
+              {/* Formulaire ajout */}
+              <div className={styles.materielAdd}>
+                <input
+                  placeholder="Nom du matériel..."
+                  value={nouveauMateriel.nom}
+                  onChange={e => setNouveauMateriel(m => ({ ...m, nom: e.target.value }))}
+                  className={styles.checklistInput}
+                />
+                <input
+                  type="number" min="1"
+                  value={nouveauMateriel.quantite}
+                  onChange={e => setNouveauMateriel(m => ({ ...m, quantite: parseInt(e.target.value) || 1 }))}
+                  className={styles.materielQte}
+                />
+                <select
+                  value={nouveauMateriel.categorie}
+                  onChange={e => setNouveauMateriel(m => ({ ...m, categorie: e.target.value }))}
+                  className={styles.checklistSelect}
+                >
+                  <option value="tech">🖥️ Tech</option>
+                  <option value="logistique">📦 Logistique</option>
+                  <option value="decoration">🎨 Déco</option>
+                  <option value="nourriture">🍕 Nourriture</option>
+                  <option value="autre">🔧 Autre</option>
+                </select>
+                <input
+                  placeholder="Responsable"
+                  value={nouveauMateriel.responsableNom}
+                  onChange={e => setNouveauMateriel(m => ({ ...m, responsableNom: e.target.value }))}
+                  className={styles.checklistInputSmall}
+                />
+                <button className={styles.btnAffecter} onClick={() => ajouterMateriel(detailMission._id)}>+ Ajouter</button>
+              </div>
+
+              {/* Liste matériel */}
+              {(detailMission.materiel || []).length === 0 ? (
+                <p className={styles.aucuneInscription}>Aucun matériel listé.</p>
+              ) : (
+                <table className={styles.inscriptionsTable}>
+                  <thead>
+                    <tr>
+                      <th>Matériel</th>
+                      <th>Qté</th>
+                      <th>Catégorie</th>
+                      <th>Responsable</th>
+                      <th>Statut</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {detailMission.materiel.map(item => (
+                      <tr key={item._id}>
+                        <td><strong>{item.nom}</strong></td>
+                        <td>{item.quantite}</td>
+                        <td>
+                          <span className={styles.tagCreneau}>
+                            {{tech: "🖥️", logistique: "📦", decoration: "🎨", nourriture: "🍕", autre: "🔧"}[item.categorie] || "🔧"} {item.categorie}
+                          </span>
+                        </td>
+                        <td>{item.responsableNom || "—"}</td>
+                        <td>
+                          <select
+                            value={item.statut}
+                            onChange={e => changerStatutMateriel(detailMission._id, item._id, e.target.value)}
+                            className={`${styles.materielStatutSelect} ${styles[`mat_${item.statut}`]}`}
+                          >
+                            <option value="a_fournir">⏳ À fournir</option>
+                            <option value="confirme">✅ Confirmé</option>
+                            <option value="sur_place">📍 Sur place</option>
+                            <option value="rendu">↩️ Rendu</option>
+                          </select>
+                        </td>
+                        <td>
+                          <button className={styles.btnRetirer} onClick={() => supprimerMateriel(detailMission._id, item._id)}>✕</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          ) : null}
         </div>
       )}
 

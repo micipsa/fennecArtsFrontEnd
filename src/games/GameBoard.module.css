@@ -1,0 +1,188 @@
+.gameBoard {
+  max-width: 850px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.gameHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  padding: 0.8rem 1.5rem;
+  background: rgba(255,255,255,0.04);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.playerLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255,255,255,0.7);
+  font-family: var(--font-titre);
+  font-size: 0.95rem;
+}
+.playerLabel strong {
+  color: #fff;
+  font-size: 1.3rem;
+}
+
+.playerDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.timer {
+  font-family: var(--font-pixel, monospace);
+  color: var(--couleur-accent);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.canvas {
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.1);
+  box-shadow: 0 0 30px rgba(230,57,70,0.15);
+  max-width: 100%;
+  height: auto;
+}
+
+.controls {
+  color: rgba(255,255,255,0.4);
+  font-size: 0.8rem;
+  text-align: center;
+}
+.controls kbd {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.7);
+  font-family: var(--font-titre);
+  font-size: 0.75rem;
+}
+
+/* ── Écran de résultat ── */
+.resultOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; } to { opacity: 1; }
+}
+
+.resultCard {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border: 2px solid rgba(244,162,97,0.3);
+  border-radius: 20px;
+  padding: 3rem;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 0 60px rgba(230,57,70,0.2);
+}
+
+.resultEmoji {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.resultTitle {
+  font-family: var(--font-manga);
+  font-size: 2rem;
+  color: #fff;
+  margin: 0 0 0.5rem;
+}
+
+.resultScore {
+  color: rgba(255,255,255,0.6);
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem;
+}
+
+.resultGains {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 1rem 0;
+  font-size: 0.95rem;
+  color: var(--couleur-accent);
+  font-weight: 600;
+}
+
+.resultActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.btnRejouer, .btnRetour {
+  padding: 0.7rem 1.5rem;
+  border-radius: 10px;
+  border: none;
+  font-family: var(--font-titre);
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+.btnRejouer {
+  background: linear-gradient(135deg, var(--couleur-primaire), #ff6b6b);
+  color: #fff;
+}
+.btnRetour {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.btnRejouer:hover, .btnRetour:hover {
+  transform: scale(1.05);
+}
+
+/* ── Salle d'attente ── */
+.waitingRoom {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.waitingTitle {
+  font-family: var(--font-manga);
+  font-size: 2rem;
+  color: #fff;
+}
+
+.waitingSpinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(255,255,255,0.1);
+  border-top-color: var(--couleur-primaire);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.waitingText {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.95rem;
+}

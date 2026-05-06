@@ -1,0 +1,73 @@
+.memBoard {
+  max-width: 700px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+.memHeader {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.8rem 1.5rem; background: rgba(255,255,255,0.04);
+  border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);
+}
+.memPlayer {
+  display: flex; align-items: center; gap: 0.5rem;
+  color: rgba(255,255,255,0.7); font-family: var(--font-titre); transition: opacity 0.3s;
+}
+.memPlayer strong { color: #fff; font-size: 1.3rem; }
+.memInfo { font-family: var(--font-titre); color: var(--couleur-accent); font-weight: 700; font-size: 0.9rem; }
+
+.memGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8rem;
+  perspective: 1000px;
+}
+
+.memCard {
+  aspect-ratio: 1;
+  cursor: pointer;
+  position: relative;
+}
+
+.memCardInner {
+  width: 100%; height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.memFlipped .memCardInner { transform: rotateY(180deg); }
+
+.memCardFront, .memCardBack {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 12px; backface-visibility: hidden;
+  font-size: 2rem;
+}
+
+.memCardFront {
+  background: linear-gradient(135deg, rgba(230,57,70,0.15), rgba(155,89,182,0.1));
+  border: 2px solid rgba(255,255,255,0.1);
+  transition: all 0.3s;
+}
+.memCard:hover .memCardFront {
+  border-color: rgba(230,57,70,0.4);
+  box-shadow: 0 0 15px rgba(230,57,70,0.2);
+}
+
+.memCardBack {
+  background: rgba(255,255,255,0.06);
+  border: 2px solid rgba(255,255,255,0.15);
+  transform: rotateY(180deg);
+  font-size: 2.5rem;
+}
+
+.memFound .memCardBack {
+  border-color: rgba(46,204,113,0.5);
+  background: rgba(46,204,113,0.1);
+  box-shadow: 0 0 20px rgba(46,204,113,0.2);
+}
+
+@media (max-width: 500px) {
+  .memGrid { grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+  .memCardFront, .memCardBack { font-size: 1.5rem; }
+  .memCardBack { font-size: 1.8rem; }
+}

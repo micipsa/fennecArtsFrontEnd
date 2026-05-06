@@ -154,6 +154,46 @@ function HomePage() {
 
       <div className={`${styles.sectionTransition} ${styles.versRouge}`} />
 
+      {/* Section Arcade */}
+      <section className={`${styles.section} ${styles.sectionFlottants}`}>
+        <span className={`${styles.kanjiDecor} ${styles.droite}`}>遊</span>
+        <div className="container">
+          <div className={styles.sectionEntete}>
+            <div>
+              <h2 className={`${styles.sectionTitre} ${styles.sectionEnteteAnimee}`}>🕹️ Arcade Fennec</h2>
+              <p className={styles.sectionSousTitre}>
+                6 mini-jeux compétitifs — affronte tes potes et gagne des XP !
+              </p>
+            </div>
+            <Link to="/arcade" className={styles.voirTout}>
+              Jouer →
+            </Link>
+          </div>
+          <div className={styles.arcadeBanner}>
+            <div className={styles.arcadeJeux}>
+              {[
+                { icone: "🏓", nom: "Pong" },
+                { icone: "🐍", nom: "Snake" },
+                { icone: "🎮", nom: "Quiz" },
+                { icone: "✂️", nom: "RPS" },
+                { icone: "⌨️", nom: "Typing" },
+                { icone: "🎴", nom: "Memory" },
+              ].map(j => (
+                <div key={j.nom} className={styles.arcadeJeuMini}>
+                  <span>{j.icone}</span>
+                  <span>{j.nom}</span>
+                </div>
+              ))}
+            </div>
+            <Link to="/arcade" className={styles.arcadeCta}>
+              🕹️ Entrer dans l'Arcade
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <div className={`${styles.sectionTransition} ${styles.versRouge}`} />
+
       {/* Section 3 : Événements à venir */}
       <section className={`${styles.section} ${styles.sectionFlottants}`}>
         <span className={`${styles.kanjiDecor} ${styles.gauche}`}>祭</span>

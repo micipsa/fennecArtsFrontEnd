@@ -17,6 +17,7 @@ const COMMANDES = [
     { label: "Store", icone: "🛒", path: "/store", keywords: "boutique store fm" },
     { label: "Lootbox", icone: "🎁", path: "/lootbox", keywords: "lootbox coffre gacha" },
     { label: "Défis", icone: "⚔️", path: "/defis", keywords: "defis 1v1" },
+    { label: "Arcade", icone: "🕹️", path: "/arcade", keywords: "arcade jeux pong snake quiz memory" },
   ]},
   { groupe: "Mon compte", items: [
     { label: "Mon profil", icone: "👤", path: "/profil", keywords: "profil compte" },
