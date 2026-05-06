@@ -1,18 +1,59 @@
 .pageWrapper {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
+  background: linear-gradient(135deg, #0a0410 0%, #150030 50%, #050015 100%);
   padding: 3rem 1.5rem;
   position: relative;
   overflow: hidden;
 }
+
+/* Grille Rétro (Synthwave Grid) */
 .pageWrapper::before {
   content: "";
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(230,57,70,0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(244,162,97,0.06) 0%, transparent 50%);
+  top: 50%; left: -50%; right: -50%; bottom: -50%;
+  background-image: 
+    linear-gradient(rgba(230, 57, 70, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(230, 57, 70, 0.4) 1px, transparent 1px);
+  background-size: 50px 50px;
+  transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+  animation: gridMove 3s linear infinite;
   pointer-events: none;
+  z-index: 0;
+}
+
+/* Alien en CSS pur (Space Invader) en fond */
+.pageWrapper::after {
+  content: "";
+  position: absolute;
+  top: -100px; left: 10%;
+  width: 10px; height: 10px; /* Taille d'un "pixel" */
+  /* Box-shadow mapping pour un alien Space Invader (11x8 pixels) */
+  box-shadow: 
+    30px 0 0 rgba(230,57,70,0.15), 90px 0 0 rgba(230,57,70,0.15),
+    40px 10px 0 rgba(230,57,70,0.15), 80px 10px 0 rgba(230,57,70,0.15),
+    30px 20px 0 rgba(230,57,70,0.15), 40px 20px 0 rgba(230,57,70,0.15), 50px 20px 0 rgba(230,57,70,0.15), 60px 20px 0 rgba(230,57,70,0.15), 70px 20px 0 rgba(230,57,70,0.15), 80px 20px 0 rgba(230,57,70,0.15), 90px 20px 0 rgba(230,57,70,0.15),
+    10px 30px 0 rgba(230,57,70,0.15), 20px 30px 0 rgba(230,57,70,0.15), 40px 30px 0 rgba(230,57,70,0.15), 50px 30px 0 rgba(230,57,70,0.15), 60px 30px 0 rgba(230,57,70,0.15), 70px 30px 0 rgba(230,57,70,0.15), 80px 30px 0 rgba(230,57,70,0.15), 100px 30px 0 rgba(230,57,70,0.15), 110px 30px 0 rgba(230,57,70,0.15),
+    10px 40px 0 rgba(230,57,70,0.15), 20px 40px 0 rgba(230,57,70,0.15), 30px 40px 0 rgba(230,57,70,0.15), 40px 40px 0 rgba(230,57,70,0.15), 50px 40px 0 rgba(230,57,70,0.15), 60px 40px 0 rgba(230,57,70,0.15), 70px 40px 0 rgba(230,57,70,0.15), 80px 40px 0 rgba(230,57,70,0.15), 90px 40px 0 rgba(230,57,70,0.15), 100px 40px 0 rgba(230,57,70,0.15), 110px 40px 0 rgba(230,57,70,0.15),
+    10px 50px 0 rgba(230,57,70,0.15), 30px 50px 0 rgba(230,57,70,0.15), 90px 50px 0 rgba(230,57,70,0.15), 110px 50px 0 rgba(230,57,70,0.15),
+    40px 60px 0 rgba(230,57,70,0.15), 80px 60px 0 rgba(230,57,70,0.15),
+    20px 70px 0 rgba(230,57,70,0.15), 30px 70px 0 rgba(230,57,70,0.15), 90px 70px 0 rgba(230,57,70,0.15), 100px 70px 0 rgba(230,57,70,0.15);
+  animation: floatAlien 20s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+  transform: scale(3);
+}
+
+@keyframes gridMove {
+  0% { transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px); }
+  100% { transform: perspective(500px) rotateX(60deg) translateY(50px) translateZ(-200px); }
+}
+
+@keyframes floatAlien {
+  0% { top: -20%; left: 10%; transform: scale(3) rotate(5deg); opacity: 0; }
+  10% { opacity: 1; }
+  50% { left: 80%; transform: scale(3) rotate(-5deg); }
+  90% { opacity: 1; }
+  100% { top: 120%; left: 30%; transform: scale(3) rotate(15deg); opacity: 0; }
 }
 
 .header {
@@ -24,11 +65,28 @@
 
 .titre {
   font-family: var(--font-manga);
-  font-size: 3.5rem;
+  font-size: 4rem;
   color: #fff;
-  text-shadow: 0 0 30px rgba(230,57,70,0.5), 0 0 60px rgba(230,57,70,0.2);
+  text-shadow: 
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 20px #e63946,
+    0 0 40px #e63946,
+    0 0 80px #e63946,
+    0 0 90px #e63946;
   margin: 0 0 0.5rem;
-  letter-spacing: 2px;
+  letter-spacing: 4px;
+  animation: neonFlicker 1.5s infinite alternate;
+}
+
+@keyframes neonFlicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow: 
+      0 0 5px #fff, 0 0 10px #fff, 0 0 20px #e63946, 0 0 40px #e63946, 0 0 80px #e63946, 0 0 90px #e63946;
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+  }
 }
 
 .sousTitre {

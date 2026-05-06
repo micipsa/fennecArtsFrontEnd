@@ -10,6 +10,7 @@ const JEUX_ICONS_BG = {
   rps:    { bg: "linear-gradient(135deg, #f39c12, #e67e22)", glow: "rgba(243,156,18,0.4)" },
   typing: { bg: "linear-gradient(135deg, #3498db, #2980b9)", glow: "rgba(52,152,219,0.4)" },
   memory: { bg: "linear-gradient(135deg, #1abc9c, #16a085)", glow: "rgba(26,188,156,0.4)" },
+  wordle: { bg: "linear-gradient(135deg, #538d4e, #3a5a40)", glow: "rgba(83,141,78,0.4)" },
 };
 
 export default function ArcadePage() {
@@ -45,7 +46,7 @@ export default function ArcadePage() {
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.header}>
-        <h1 className={styles.titre}>🎮 ARCADE FENNEC</h1>
+        <h1 className={styles.titre}>🕹️ SALLE D'ARCADE</h1>
         <p className={styles.sousTitre}>
           Affronte un autre joueur — le vainqueur reste, le perdant laisse sa place
         </p>
@@ -78,20 +79,33 @@ export default function ArcadePage() {
                 </div>
               )}
               <div style={{ display: "flex", gap: "0.5rem", marginTop: "1rem" }}>
-                <button
-                  className={styles.btnJouer}
-                  style={{ background: config.bg, flex: 2, padding: "0.6rem" }}
-                  onClick={() => navigate(`/arcade/${jeu.id}/online`)}
-                >
-                  🌐 EN LIGNE
-                </button>
-                <button
-                  className={styles.btnJouer}
-                  style={{ background: "rgba(255,255,255,0.1)", flex: 1, padding: "0.6rem", border: "1px solid rgba(255,255,255,0.2)" }}
-                  onClick={() => navigate(`/arcade/${jeu.id}/local`)}
-                >
-                  👥 LOCAL
-                </button>
+                {jeu.id !== "wordle" && (
+                  <button
+                    className={styles.btnJouer}
+                    style={{ background: config.bg, flex: 2, padding: "0.6rem" }}
+                    onClick={() => navigate(`/arcade/${jeu.id}/online`)}
+                  >
+                    🌐 EN LIGNE (5 FM)
+                  </button>
+                )}
+                
+                {jeu.id === "wordle" || jeu.id === "quiz" ? (
+                  <button
+                    className={styles.btnJouer}
+                    style={{ background: jeu.id === "wordle" ? config.bg : "rgba(255,255,255,0.1)", flex: jeu.id === "wordle" ? 1 : 1, padding: "0.6rem", border: jeu.id === "wordle" ? "none" : "1px solid rgba(255,255,255,0.2)" }}
+                    onClick={() => navigate(`/arcade/${jeu.id}/solo`)}
+                  >
+                    👤 SOLO
+                  </button>
+                ) : (
+                  <button
+                    className={styles.btnJouer}
+                    style={{ background: "rgba(255,255,255,0.1)", flex: 1, padding: "0.6rem", border: "1px solid rgba(255,255,255,0.2)" }}
+                    onClick={() => navigate(`/arcade/${jeu.id}/local`)}
+                  >
+                    👥 LOCAL
+                  </button>
+                )}
               </div>
             </div>
           );

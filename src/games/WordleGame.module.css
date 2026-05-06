@@ -1,0 +1,145 @@
+.wordleBoard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  gap: 20px;
+  padding: 10px;
+}
+
+.grid {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  gap: 5px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+
+.cell {
+  width: 60px;
+  height: 60px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: 'Inter', sans-serif;
+  color: white;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.2);
+  transition: transform 0.6s, background-color 0.6s;
+  transform-style: preserve-3d;
+}
+
+.cell.active {
+  border-color: rgba(255, 255, 255, 0.6);
+  animation: popIn 0.1s ease-in-out;
+}
+
+.cell.flip.correct {
+  background-color: #538d4e;
+  border-color: #538d4e;
+}
+
+.cell.flip.present {
+  background-color: #b59f3b;
+  border-color: #b59f3b;
+}
+
+.cell.flip.absent {
+  background-color: #3a3a3c;
+  border-color: #3a3a3c;
+}
+
+.row.shake {
+  animation: shake 0.5s;
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.keyboardRow {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.key {
+  background-color: #818384;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 15px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  flex: 1;
+  max-width: 40px;
+  min-width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s;
+  user-select: none;
+}
+
+.key.wide {
+  flex: 1.5;
+  max-width: 65px;
+  font-size: 0.8rem;
+}
+
+.key:hover {
+  filter: brightness(1.2);
+}
+
+.key.correct {
+  background-color: #538d4e;
+}
+
+.key.present {
+  background-color: #b59f3b;
+}
+
+.key.absent {
+  background-color: #3a3a3c;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.8); }
+  40% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+/* Animations de flip individuelles avec décalage */
+.cell.flip {
+  animation: flipCard 0.6s ease-in forwards;
+}
+
+@keyframes flipCard {
+  0% { transform: rotateX(0deg); }
+  50% { transform: rotateX(-90deg); }
+  100% { transform: rotateX(0deg); }
+}
+
+/* On utilise le délai inline dans le JSX pour le cascading flip */

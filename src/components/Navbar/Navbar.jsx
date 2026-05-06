@@ -53,7 +53,7 @@ function Navbar() {
             <li><NavLink to="/tournaments" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>Tournois</NavLink></li>
             <li>
               <NavLink to="/arcade" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>
-                🕹️ Arcade
+                🕹️ Salle d'arcade
               </NavLink>
             </li>
             <li>
@@ -104,7 +104,7 @@ function Navbar() {
             
             <div className={styles.separateur} />
             
-            <NavLink to="/arcade" onClick={() => setMenuMobile(false)}>🕹️ Arcade</NavLink>
+            <NavLink to="/arcade" onClick={() => setMenuMobile(false)}>🕹️ Salle d'arcade</NavLink>
             <NavLink to="/defis" onClick={() => setMenuMobile(false)}>⚔️ Défis</NavLink>
             <NavLink to="/play" onClick={() => setMenuMobile(false)}>🎮 Dojo Play</NavLink>
             

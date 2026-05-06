@@ -9,6 +9,7 @@ import QuizGame from "../games/QuizGame";
 import RPSGame from "../games/RPSGame";
 import TypingGame from "../games/TypingGame";
 import MemoryGame from "../games/MemoryGame";
+import WordleGame from "../games/WordleGame";
 import styles from "../games/GameBoard.module.css";
 
 const GAINS = {
@@ -18,6 +19,7 @@ const GAINS = {
   rps:    { xpWin: 10, fmWin: 2, xpLose: 1 },
   typing: { xpWin: 20, fmWin: 4, xpLose: 2 },
   memory: { xpWin: 20, fmWin: 5, xpLose: 3 },
+  wordle: { xpWin: 30, fmWin: 10, xpLose: 5 },
 };
 
 const JEUX_COMPOSANTS = {
@@ -27,11 +29,12 @@ const JEUX_COMPOSANTS = {
   rps: RPSGame,
   typing: TypingGame,
   memory: MemoryGame,
+  wordle: WordleGame,
 };
 
 const JEUX_NOMS = {
   pong: "Pong", snake: "Snake", quiz: "Quiz Gaming",
-  rps: "RPS Anime", typing: "Typing Race", memory: "Memory Geek",
+  rps: "JAN KEN", typing: "Typing Race", memory: "Memory Geek", wordle: "Fennec Word",
 };
 
 export default function GamePlayPage() {
@@ -56,28 +59,44 @@ export default function GamePlayPage() {
       setTimeout(() => setMatchStatus("playing"), 2000); // Animation "Match Found" pendant 2s
     });
 
+    socket.on("notEnoughFM", (data) => {
+      alert("❌ Fonds insuffisants ! Jouer en ligne coûte 5 FM.");
+      navigate("/arcade");
+    });
+
     return () => {
       socket.emit("leaveQueue", { jeu, userId: utilisateur?._id });
       socket.off("matchFound");
+      socket.off("notEnoughFM");
     };
   }, [sessionId, socket, jeu, utilisateur]);
 
-  const handleGameEnd = useCallback(async (scoreJ1, scoreJ2) => {
+  const handleGameEnd = useCallback(async (scoreJ1, scoreJ2, extras = {}) => {
     const gains = GAINS[jeu];
-    const isJ1Win = scoreJ1 > scoreJ2;
+    const isJ1Win = scoreJ1 > scoreJ2 || scoreJ1 === 1; // Wordle renvoie 1 pour win
 
     if (sessionId && sessionId !== "solo") {
       try {
-        await api.post(`/api/arcade/terminer-partie/${sessionId}`, { scoreJ1, scoreJ2 });
+        await api.post(`/api/arcade/terminer-partie/${sessionId}`, { scoreJ1, scoreJ2, temps: extras.temps });
+      } catch {}
+    } else if (sessionId === "local" || sessionId === "solo") {
+      // Pour les jeux solo comme Fennec Word, on envoie le score au leaderboard
+      try {
+        await api.post(`/api/arcade/terminer-solo`, { 
+          jeu, 
+          isWin: isJ1Win,
+          temps: extras.temps 
+        });
       } catch {}
     }
 
     setResultat({
       scoreJ1,
       scoreJ2,
-      gagnant: isJ1Win ? "Joueur 1" : "Joueur 2",
+      gagnant: isJ1Win ? "Joueur 1" : (jeu === "wordle" ? "Perdu..." : "Joueur 2"),
       xp: isJ1Win ? gains.xpWin : gains.xpLose,
       fm: isJ1Win ? gains.fmWin : 0,
+      ...extras // Contient potentiellement { temps, motDuJour, edition, langue }
     });
   }, [jeu, sessionId]);
 
@@ -165,19 +184,33 @@ export default function GamePlayPage() {
               {resultat.gagnant === "Joueur 1" ? "🏆" : "💀"}
             </span>
             <h2 className={styles.resultTitle}>
-              {resultat.gagnant} gagne !
+              {jeu === "wordle" ? (resultat.scoreJ1 === 1 ? "Félicitations !" : "Perdu...") : `${resultat.gagnant} gagne !`}
             </h2>
-            <p className={styles.resultScore}>
-              {resultat.scoreJ1} — {resultat.scoreJ2}
-            </p>
+            
+            {jeu === "wordle" ? (
+              <div style={{ margin: "1.5rem 0", background: "rgba(0,0,0,0.3)", padding: "1rem", borderRadius: "8px" }}>
+                <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "0.5rem" }}>Mot du jour ({resultat.langue === "FR" ? "🇫🇷" : "🇬🇧"})</p>
+                <h3 style={{ fontFamily: "var(--font-manga)", fontSize: "2rem", letterSpacing: "5px", color: resultat.scoreJ1 === 1 ? "#538d4e" : "#e63946" }}>
+                  {resultat.motDuJour}
+                </h3>
+                {resultat.temps > 0 && <p style={{ marginTop: "0.5rem", color: "#f39c12" }}>⏱ Temps: {resultat.temps}s</p>}
+              </div>
+            ) : (
+              <p className={styles.resultScore}>
+                {resultat.scoreJ1} — {resultat.scoreJ2}
+              </p>
+            )}
+
             <div className={styles.resultGains}>
               <span>⚡ +{resultat.xp} XP</span>
               {resultat.fm > 0 && <span>💰 +{resultat.fm} FM</span>}
             </div>
             <div className={styles.resultActions}>
-              <button className={styles.btnRejouer} onClick={rejouer}>
-                🔄 Rejouer
-              </button>
+              {jeu !== "wordle" && (
+                <button className={styles.btnRejouer} onClick={rejouer}>
+                  🔄 Rejouer
+                </button>
+              )}
               <button className={styles.btnRetour} onClick={() => navigate("/arcade")}>
                 ← Arcade
               </button>

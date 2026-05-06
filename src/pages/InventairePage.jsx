@@ -16,7 +16,7 @@ const CATEGORIES = [
 ];
 
 export default function InventairePage() {
-  const { utilisateur, updateUtilisateurLocal } = useAuth();
+  const { utilisateur, setUtilisateur } = useAuth();
   const [achats, setAchats] = useState([]);
   const [categorie, setCategorie] = useState("tous");
   const [equipes, setEquipes] = useState({
@@ -57,7 +57,7 @@ export default function InventairePage() {
         avatar: userMAJ.avatarActif,
         fondCarte: userMAJ.fondCarteActif,
       });
-      if (updateUtilisateurLocal) updateUtilisateurLocal(userMAJ);
+      if (setUtilisateur) setUtilisateur(userMAJ);
     } catch (err) {
       addToast("Erreur lors de l'équipement", "error");
     }

@@ -81,6 +81,7 @@ function AuthProvider({ children }) {
   // Objet de valeur fourni à tous les composants enfants via le Context
   const valeur = {
     utilisateur,
+    setUtilisateur,
     chargement,
     connecter,
     deconnecter,
