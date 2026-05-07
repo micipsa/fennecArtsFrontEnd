@@ -35,36 +35,90 @@ function Navbar() {
     <>
       <nav className={styles.navbar}>
         <div className={styles.inner}>
-
-          <Link to="/" className={styles.logo} onClick={() => setMenuMobile(false)}>
-            <img src="/fennekagelogo.png" alt="Fennec's Clan" className={styles.logoImg} />
+          <Link
+            to="/"
+            className={styles.logo}
+            onClick={() => setMenuMobile(false)}>
+            <img
+              src="/fennekagelogo.png"
+              alt="Fennec's Clan"
+              className={styles.logoImg}
+            />
             <span className={styles.brandName}>Fennec's Clan</span>
           </Link>
 
           <ul className={styles.nav}>
-            <li><NavLink to="/" end className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>Accueil</NavLink></li>
-            <li><NavLink to="/articles" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>Articles</NavLink></li>
             <li>
-              <NavLink to="/webtv" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>
+              <NavLink
+                to="/"
+                end
+                className={({ isActive }) =>
+                  `${styles.navLink} ${isActive ? styles.active : ""}`
+                }>
+                Accueil
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/articles"
+                className={({ isActive }) =>
+                  `${styles.navLink} ${isActive ? styles.active : ""}`
+                }>
+                Articles
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/webtv"
+                className={({ isActive }) =>
+                  `${styles.navLink} ${isActive ? styles.active : ""}`
+                }>
                 WebTV {estEnLive && <span className={styles.badgeLive} />}
               </NavLink>
             </li>
-            <li><NavLink to="/events" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>Événements</NavLink></li>
-            <li><NavLink to="/tournaments" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>Tournois</NavLink></li>
             <li>
-              <NavLink to="/arcade" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>
+              <NavLink
+                to="/events"
+                className={({ isActive }) =>
+                  `${styles.navLink} ${isActive ? styles.active : ""}`
+                }>
+                Événements
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/tournaments"
+                className={({ isActive }) =>
+                  `${styles.navLink} ${isActive ? styles.active : ""}`
+                }>
+                Tournois
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/arcade"
+                className={({ isActive }) =>
+                  `${styles.navLink} ${isActive ? styles.active : ""}`
+                }>
                 🕹️ Salle d'arcade
               </NavLink>
             </li>
             <li>
-              <NavLink to="/play" className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ""}`}>
+              <NavLink
+                to="/play"
+                className={({ isActive }) =>
+                  `${styles.navLink} ${isActive ? styles.active : ""}`
+                }>
                 🎮 Dojo Play
               </NavLink>
             </li>
           </ul>
 
           <div className={styles.actions}>
-            <button className={styles.iconBtn} onClick={() => setPaletteOuverte(true)} aria-label="Recherche / Commandes">
+            <button
+              className={styles.iconBtn}
+              onClick={() => setPaletteOuverte(true)}
+              aria-label="Recherche / Commandes">
               <span className={styles.iconLoupe}>🔍</span>
               <span className={styles.kbdHint}>⌘K</span>
             </button>
@@ -72,13 +126,21 @@ function Navbar() {
             {utilisateur ? (
               <>
                 <NotifCloche />
-                <AvatarMenu utilisateur={utilisateur} onDeconnexion={handleDeconnexion} />
+                <AvatarMenu
+                  utilisateur={utilisateur}
+                  onDeconnexion={handleDeconnexion}
+                />
               </>
             ) : (
-              <Link to="/login" className={styles.btnConnexion}>Connexion</Link>
+              <Link to="/login" className={styles.btnConnexion}>
+                Connexion
+              </Link>
             )}
 
-            <button className={styles.burger} onClick={() => setMenuMobile(!menuMobile)} aria-label="Menu">
+            <button
+              className={styles.burger}
+              onClick={() => setMenuMobile(!menuMobile)}
+              aria-label="Menu">
               <span className={menuMobile ? styles.b1 : ""} />
               <span className={menuMobile ? styles.b2 : ""} />
               <span className={menuMobile ? styles.b3 : ""} />
@@ -87,47 +149,87 @@ function Navbar() {
         </div>
 
         {/* Overlay pour fermer le menu */}
-        {menuMobile && <div className={styles.overlay} onClick={() => setMenuMobile(false)} />}
+        {menuMobile && (
+          <div
+            className={styles.overlay}
+            onClick={() => setMenuMobile(false)}
+          />
+        )}
 
         {/* Drawer Menu (Menu Latéral) */}
-        <div className={`${styles.drawer} ${menuMobile ? styles.drawerOuvert : ""}`}>
+        <div
+          className={`${styles.drawer} ${menuMobile ? styles.drawerOuvert : ""}`}>
           <div className={styles.drawerHeader}>
             <span className={styles.drawerTitre}>Menu</span>
-            <button className={styles.btnFermer} onClick={() => setMenuMobile(false)}>✕</button>
+            <button
+              className={styles.btnFermer}
+              onClick={() => setMenuMobile(false)}>
+              ✕
+            </button>
           </div>
           <div className={styles.drawerLinks}>
-            <NavLink to="/" end onClick={() => setMenuMobile(false)}>🏠 Accueil</NavLink>
-            <NavLink to="/articles" onClick={() => setMenuMobile(false)}>📰 Articles</NavLink>
-            <NavLink to="/webtv" onClick={() => setMenuMobile(false)}>📺 WebTV</NavLink>
-            <NavLink to="/events" onClick={() => setMenuMobile(false)}>📅 Événements</NavLink>
-            <NavLink to="/tournaments" onClick={() => setMenuMobile(false)}>🏆 Tournois</NavLink>
-            
+            <NavLink to="/" end onClick={() => setMenuMobile(false)}>
+              🏠 Accueil
+            </NavLink>
+            <NavLink to="/articles" onClick={() => setMenuMobile(false)}>
+              📰 Articles
+            </NavLink>
+            <NavLink to="/webtv" onClick={() => setMenuMobile(false)}>
+              📺 WebTV
+            </NavLink>
+            <NavLink to="/events" onClick={() => setMenuMobile(false)}>
+              📅 Événements
+            </NavLink>
+            <NavLink to="/tournaments" onClick={() => setMenuMobile(false)}>
+              🏆 Tournois
+            </NavLink>
+            <NavLink to="/agenda" onClick={() => setMenuMobile(false)}>
+              📆 Agenda
+            </NavLink>
+
             <div className={styles.separateur} />
-            
-            <NavLink to="/arcade" onClick={() => setMenuMobile(false)}>🕹️ Salle d'arcade</NavLink>
-            <NavLink to="/defis" onClick={() => setMenuMobile(false)}>⚔️ Défis</NavLink>
-            <NavLink to="/play" onClick={() => setMenuMobile(false)}>🎮 Dojo Play</NavLink>
-            
+
+            <NavLink to="/arcade" onClick={() => setMenuMobile(false)}>
+              🕹️ Salle d'arcade
+            </NavLink>
+            <NavLink to="/defis" onClick={() => setMenuMobile(false)}>
+              ⚔️ Défis
+            </NavLink>
+            <NavLink to="/play" onClick={() => setMenuMobile(false)}>
+              🎮 Dojo Play
+            </NavLink>
+
             <div className={styles.separateur} />
-            
-            <NavLink to="/classement" onClick={() => setMenuMobile(false)}>🏅 Classement</NavLink>
-            <NavLink to="/communaute" onClick={() => setMenuMobile(false)}>👥 Communauté</NavLink>
-            
+
+            <NavLink to="/classement" onClick={() => setMenuMobile(false)}>
+              🏅 Classement
+            </NavLink>
+            <NavLink to="/communaute" onClick={() => setMenuMobile(false)}>
+              👥 Communauté
+            </NavLink>
+
             <div className={styles.separateur} />
-            
-            <NavLink to="/store" onClick={() => setMenuMobile(false)}>🛒 Store</NavLink>
-            
+
+            <NavLink to="/store" onClick={() => setMenuMobile(false)}>
+              🛒 Store
+            </NavLink>
+
             {!utilisateur && (
               <>
                 <div className={styles.separateur} />
-                <Link to="/login" onClick={() => setMenuMobile(false)}>🔑 Connexion / Inscription</Link>
+                <Link to="/login" onClick={() => setMenuMobile(false)}>
+                  🔑 Connexion / Inscription
+                </Link>
               </>
             )}
           </div>
         </div>
       </nav>
 
-      <CommandPalette ouvert={paletteOuverte} onFermer={() => setPaletteOuverte(false)} />
+      <CommandPalette
+        ouvert={paletteOuverte}
+        onFermer={() => setPaletteOuverte(false)}
+      />
     </>
   );
 }

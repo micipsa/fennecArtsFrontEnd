@@ -133,12 +133,12 @@ export default function StorePage() {
         <span className={styles.lootboxFleche}>→</span>
       </Link>
 
-      {/* Bannière Roue de la Fortune */}
+      {/* Bannière Ticket à Gratter */}
       <Link to="/fortune" className={styles.lootboxBanner}>
-        <span className={styles.lootboxIcone}>🎡</span>
+        <span className={styles.lootboxIcone}>🎫</span>
         <div>
-          <strong>ROUE DE LA FORTUNE</strong>
-          <span>1 spin gratuit par jour !</span>
+          <strong>TICKET À GRATTER</strong>
+          <span>1 ticket gratuit par jour !</span>
         </div>
         <span className={styles.lootboxFleche}>→</span>
       </Link>

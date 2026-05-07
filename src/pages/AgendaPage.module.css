@@ -174,11 +174,7 @@
   overflow-x: auto;
 }
 
-@media (max-width: 768px) {
-  .grille {
-    min-width: 600px;
-  }
-}
+
 
 .enteteJour {
   background: #06110f;
@@ -318,5 +314,11 @@
 
 @media (max-width: 768px) {
   .legende { flex-direction: column; gap: 0.5rem; }
-  .cellule { min-height: 80px; }
+  .cellule { padding: 0.2rem; }
+  .enteteJour { font-size: 0.75rem; padding: 0.5rem 0; }
+  .numJour { font-size: 0.9rem; }
+  .dots { gap: 0.15rem; }
+  .dotEvent, .dotTournoi { width: 6px; height: 6px; }
+  .panneauJour { padding: 1.5rem; }
+  .panneauTitre { font-size: 1.2rem; }
 }
