@@ -19,9 +19,7 @@ export default function MemoryGame({ onGameEnd }) {
   });
   const [retournees, setRetournees] = useState([]);
   const [trouvees, setTrouvees] = useState([]);
-  const [score1, setScore1] = useState(0);
-  const [score2, setScore2] = useState(0);
-  const [tour, setTour] = useState(1);
+  const [essais, setEssais] = useState(0);
   const [bloquee, setBloquee] = useState(false);
 
   const totalPaires = 8;
@@ -34,43 +32,40 @@ export default function MemoryGame({ onGameEnd }) {
 
     if (newRetournees.length === 2) {
       setBloquee(true);
+      setEssais(e => e + 1);
       const [a, b] = newRetournees;
       if (cartes[a].emoji === cartes[b].emoji) {
         const newTrouvees = [...trouvees, a, b];
         setTrouvees(newTrouvees);
-        if (tour === 1) setScore1(s => s + 1);
-        else setScore2(s => s + 1);
 
         setTimeout(() => {
           setRetournees([]);
           setBloquee(false);
           if (newTrouvees.length >= cartes.length) {
-            const finalS1 = tour === 1 ? score1 + 1 : score1;
-            const finalS2 = tour === 2 ? score2 + 1 : score2;
-            onGameEnd(finalS1, finalS2);
+            // Calcul du score : max 1000, diminue de 50 par erreur (essais > 8)
+            const nbEssaisFinal = essais + 1;
+            let finalScore = 1000 - (nbEssaisFinal - totalPaires) * 50;
+            if (finalScore < 100) finalScore = 100;
+            onGameEnd(finalScore, 0);
           }
         }, 600);
       } else {
         setTimeout(() => {
           setRetournees([]);
           setBloquee(false);
-          setTour(t => t === 1 ? 2 : 1);
         }, 1000);
       }
     }
-  }, [bloquee, retournees, trouvees, cartes, tour, score1, score2, onGameEnd]);
+  }, [bloquee, retournees, trouvees, cartes, essais, onGameEnd]);
 
   return (
     <div className={styles.memBoard}>
       <div className={styles.memHeader}>
-        <div className={styles.memPlayer} style={{ opacity: tour === 1 ? 1 : 0.4 }}>
-          <span style={{ color: "#e63946" }}>●</span> J1: <strong>{score1}</strong>
+        <div className={styles.memPlayer}>
+          <span style={{ color: "#e63946" }}>●</span> MOI
         </div>
         <div className={styles.memInfo}>
-          Tour J{tour} — {trouvees.length / 2}/{totalPaires} paires
-        </div>
-        <div className={styles.memPlayer} style={{ opacity: tour === 2 ? 1 : 0.4 }}>
-          <span style={{ color: "#3498db" }}>●</span> J2: <strong>{score2}</strong>
+          SOLO — {trouvees.length / 2}/{totalPaires} paires | {essais} essai(s)
         </div>
       </div>
 

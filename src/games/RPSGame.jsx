@@ -7,7 +7,7 @@ const CHOIX = [
   { id: "ciseaux", emoji: "✂️", nom: "Ciseaux", bat: "papier" },
 ];
 
-export default function RPSGame({ onGameEnd }) {
+export default function RPSGame({ onGameEnd, isOnline }) {
   const [score1, setScore1] = useState(0);
   const [score2, setScore2] = useState(0);
   const [round, setRound] = useState(1);
@@ -17,38 +17,48 @@ export default function RPSGame({ onGameEnd }) {
   const [resultatRound, setResultatRound] = useState(null);
   const maxRounds = 5;
 
+  const resolveRound = useCallback((c1Id, c2Id) => {
+    const c1 = CHOIX.find(c => c.id === c1Id);
+    const c2 = CHOIX.find(c => c.id === c2Id);
+    let gagnant = null;
+    if (c1.bat === c2.id) gagnant = "j1";
+    else if (c2.bat === c1.id) gagnant = "j2";
+
+    let newS1 = score1, newS2 = score2;
+    if (gagnant === "j1") { newS1++; setScore1(newS1); }
+    if (gagnant === "j2") { newS2++; setScore2(newS2); }
+    setResultatRound(gagnant);
+
+    setTimeout(() => {
+      if (round >= maxRounds || newS1 >= 3 || newS2 >= 3) {
+        onGameEnd(newS1, newS2);
+      } else {
+        setRound(r => r + 1);
+        setChoix1(null);
+        setChoix2(null);
+        setResultatRound(null);
+        setPhase("j1");
+      }
+    }, 2000);
+  }, [score1, score2, round, maxRounds, onGameEnd]);
+
   const jouer = useCallback((choixId) => {
     if (phase === "j1") {
       setChoix1(choixId);
-      setPhase("j2");
-    } else if (phase === "j2") {
+      if (!isOnline) {
+        const cpuChoice = CHOIX[Math.floor(Math.random() * CHOIX.length)].id;
+        setChoix2(cpuChoice);
+        setPhase("reveal");
+        resolveRound(choixId, cpuChoice);
+      } else {
+        setPhase("j2");
+      }
+    } else if (phase === "j2" && isOnline) {
       setChoix2(choixId);
       setPhase("reveal");
-
-      const c1 = CHOIX.find(c => c.id === choix1);
-      const c2 = CHOIX.find(c => c.id === choixId);
-      let gagnant = null;
-      if (c1.bat === c2.id) gagnant = "j1";
-      else if (c2.bat === c1.id) gagnant = "j2";
-
-      let newS1 = score1, newS2 = score2;
-      if (gagnant === "j1") { newS1++; setScore1(newS1); }
-      if (gagnant === "j2") { newS2++; setScore2(newS2); }
-      setResultatRound(gagnant);
-
-      setTimeout(() => {
-        if (round >= maxRounds || newS1 >= 3 || newS2 >= 3) {
-          onGameEnd(newS1, newS2);
-        } else {
-          setRound(r => r + 1);
-          setChoix1(null);
-          setChoix2(null);
-          setResultatRound(null);
-          setPhase("j1");
-        }
-      }, 2000);
+      resolveRound(choix1, choixId);
     }
-  }, [phase, choix1, score1, score2, round, onGameEnd]);
+  }, [phase, choix1, isOnline, resolveRound]);
 
   const joueurActif = phase === "j1" ? "Joueur 1" : phase === "j2" ? "Joueur 2" : "";
 
@@ -62,7 +72,7 @@ export default function RPSGame({ onGameEnd }) {
         <div className={styles.rpsRound}>Round {round}/{maxRounds}</div>
         <div className={styles.rpsPlayer}>
           <span className={styles.rpsDot} style={{ background: "#3498db" }} />
-          J2: <strong>{score2}</strong>
+          {isOnline ? "J2" : "CPU"}: <strong>{score2}</strong>
         </div>
       </div>
 
@@ -77,7 +87,7 @@ export default function RPSGame({ onGameEnd }) {
           </div>
           <div className={styles.rpsRevealCard}>
             <span className={styles.rpsRevealEmoji}>{CHOIX.find(c => c.id === choix2)?.emoji}</span>
-            <span>J2</span>
+            <span>{isOnline ? "J2" : "CPU"}</span>
           </div>
         </div>
       ) : (

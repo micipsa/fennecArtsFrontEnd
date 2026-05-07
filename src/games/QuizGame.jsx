@@ -1,23 +1,13 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import styles from "./QuizGame.module.css";
 
-const QUESTIONS = [
-  { q: "Quel est le vrai nom de Mario ?", opts: ["Mario Mario", "Jumpman", "Mario Bros", "Luigi Mario"], correct: 0 },
-  { q: "Combien de générations Pokémon existe-t-il (2024) ?", opts: ["7", "8", "9", "10"], correct: 2 },
-  { q: "Quel studio a créé The Witcher 3 ?", opts: ["Bethesda", "CD Projekt Red", "Ubisoft", "BioWare"], correct: 1 },
-  { q: "Quel est le nom du héros de Zelda ?", opts: ["Zelda", "Link", "Ganon", "Epona"], correct: 1 },
-  { q: "Quel jeu a popularisé le Battle Royale ?", opts: ["PUBG", "Fortnite", "H1Z1", "Apex Legends"], correct: 0 },
-  { q: "Dans quel anime trouve-t-on le Sharingan ?", opts: ["Bleach", "One Piece", "Naruto", "Dragon Ball"], correct: 2 },
-  { q: "Quel est le jeu le plus vendu de tous les temps ?", opts: ["GTA V", "Tetris", "Minecraft", "Wii Sports"], correct: 2 },
-  { q: "Combien de champions a League of Legends (env.) ?", opts: ["120", "140", "160", "180"], correct: 2 },
-  { q: "Quel est le rang le plus haut sur Valorant ?", opts: ["Immortel", "Radiant", "Champion", "Diamant"], correct: 1 },
-  { q: "Qui est le créateur de Metal Gear Solid ?", opts: ["Miyamoto", "Kojima", "Sakurai", "Kamiya"], correct: 1 },
-  { q: "Dans quel jeu combat-on Sephiroth ?", opts: ["Final Fantasy VII", "Kingdom Hearts", "Les deux", "Aucun"], correct: 2 },
-  { q: "Quel Pokémon porte le numéro 25 ?", opts: ["Évoli", "Pikachu", "Rondoudou", "Salamèche"], correct: 1 },
-  { q: "Quel est le fruit du diable de Luffy ?", opts: ["Gomu Gomu", "Mera Mera", "Hito Hito Nika", "Bara Bara"], correct: 2 },
-  { q: "Combien de pierres d'infinité y a-t-il ?", opts: ["4", "5", "6", "7"], correct: 2 },
-  { q: "Quel est le vrai nom d'Asta (Black Clover) ?", opts: ["On ne sait pas", "Asta Yuno", "Asta Silva", "Asta Clover"], correct: 0 },
-];
+import quizData from "../data/quizQuestions.json";
+
+const QUESTIONS = quizData.map(q => ({
+  q: q.question,
+  opts: q.reponses,
+  correct: q.bonneReponseIndex
+}));
 
 function shuffle(arr) {
   const a = [...arr];
@@ -25,7 +15,7 @@ function shuffle(arr) {
   return a;
 }
 
-export default function QuizGame({ onGameEnd, isOnline, socket, roomId, isHost }) {
+export default function QuizGame({ onGameEnd, isOnline, socket, roomId, isHost, userId }) {
   // ─── ETAT LOCAL ───
   // Si on est en ligne et Client (isHost = false), on lit l'état envoyé par l'Hôte.
   // Si on est Solo ou Hôte, on gère l'état localement.
@@ -41,6 +31,21 @@ export default function QuizGame({ onGameEnd, isOnline, socket, roomId, isHost }
     j2HasAnswered: false,
     isFinished: false,
   });
+
+  const [hasPlayedToday, setHasPlayedToday] = useState(false);
+
+  useEffect(() => {
+    if (!isOnline && userId) {
+      const storageKey = `lastLocalQuizDate_${userId}`;
+      const lastPlayed = localStorage.getItem(storageKey);
+      const today = new Date().toDateString();
+      if (lastPlayed === today) {
+        setHasPlayedToday(true);
+      } else {
+        localStorage.setItem(storageKey, today);
+      }
+    }
+  }, [isOnline, userId]);
 
   // Réf. mutable pour l'Hôte afin de vérifier les réponses
   const stateRef = useRef(gameState);
@@ -199,6 +204,17 @@ export default function QuizGame({ onGameEnd, isOnline, socket, roomId, isHost }
   }, [isOnline, isHost, gameState.feedback, gameState.j1HasAnswered, gameState.j2HasAnswered, updateState, resolveRound, socket, roomId]);
 
   // ─── RENDU ───
+  if (hasPlayedToday) {
+    return (
+      <div className={styles.quizBoard} style={{ textAlign: "center", padding: "3rem" }}>
+        <h2 style={{ color: "#fff", fontFamily: "var(--font-manga)", fontSize: "2rem" }}>Quiz Quotidien Terminé</h2>
+        <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "1.2rem", marginTop: "1rem" }}>
+          Tu as déjà joué à ton quiz local aujourd'hui !<br/>Reviens demain pour de nouvelles questions.
+        </p>
+      </div>
+    );
+  }
+
   if (!gameState.questions || gameState.questions.length === 0) return <div style={{ color: "white" }}>Chargement...</div>;
   if (gameState.isFinished) return null; // Le GamePlayPage va afficher les résultats
 

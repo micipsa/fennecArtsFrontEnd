@@ -23,11 +23,10 @@ function shuffle(arr) {
 export default function TypingGame({ onGameEnd }) {
   const [phrases] = useState(() => shuffle(PHRASES).slice(0, 5));
   const [currentPhrase, setCurrentPhrase] = useState(0);
-  const [tour, setTour] = useState(1);
   const [input, setInput] = useState("");
   const [temps1, setTemps1] = useState([]);
-  const [temps2, setTemps2] = useState([]);
   const [startTime, setStartTime] = useState(null);
+  const [now, setNow] = useState(null);
   const [phase, setPhase] = useState("ready");
   const inputRef = useRef(null);
   const gameOverRef = useRef(false);
@@ -36,11 +35,9 @@ export default function TypingGame({ onGameEnd }) {
     if (gameOverRef.current) return;
     gameOverRef.current = true;
     const avg1 = temps1.reduce((a, b) => a + b, 0) / (temps1.length || 1);
-    const avg2 = temps2.reduce((a, b) => a + b, 0) / (temps2.length || 1);
     const score1 = Math.round(1000 / Math.max(avg1, 0.1));
-    const score2 = Math.round(1000 / Math.max(avg2, 0.1));
-    onGameEnd(score1, score2);
-  }, [temps1, temps2, onGameEnd]);
+    onGameEnd(score1, 0);
+  }, [temps1, onGameEnd]);
 
   const startPhrase = useCallback(() => {
     setInput("");
@@ -51,39 +48,33 @@ export default function TypingGame({ onGameEnd }) {
 
   useEffect(() => {
     if (phase !== "typing" || !startTime) return;
+    
+    const interval = setInterval(() => setNow(Date.now()), 100);
+    return () => clearInterval(interval);
+  }, [phase, startTime]);
+
+  useEffect(() => {
+    if (phase !== "typing" || !startTime) return;
     const phrase = phrases[currentPhrase];
     if (input === phrase) {
       const elapsed = (Date.now() - startTime) / 1000;
-      if (tour === 1) {
-        const newTemps = [...temps1, elapsed];
-        setTemps1(newTemps);
-        if (currentPhrase + 1 >= phrases.length) {
-          setTour(2);
-          setCurrentPhrase(0);
-          setPhase("ready");
-        } else {
-          setCurrentPhrase(p => p + 1);
-          setPhase("ready");
-        }
+      const newTemps = [...temps1, elapsed];
+      setTemps1(newTemps);
+      
+      if (currentPhrase + 1 >= phrases.length) {
+        setPhase("ready");
+        setTimeout(() => {
+          const avg1 = newTemps.reduce((a, b) => a + b, 0) / (newTemps.length || 1);
+          const s1 = Math.round(1000 / Math.max(avg1, 0.1));
+          onGameEnd(s1, 0); // J2 n'existe plus
+        }, 500);
       } else {
-        const newTemps = [...temps2, elapsed];
-        setTemps2(newTemps);
-        if (currentPhrase + 1 >= phrases.length) {
-          setTimeout(() => {
-            const avg1 = temps1.reduce((a, b) => a + b, 0) / (temps1.length || 1);
-            const avg2 = newTemps.reduce((a, b) => a + b, 0) / (newTemps.length || 1);
-            const s1 = Math.round(1000 / Math.max(avg1, 0.1));
-            const s2 = Math.round(1000 / Math.max(avg2, 0.1));
-            onGameEnd(s1, s2);
-          }, 500);
-        } else {
-          setCurrentPhrase(p => p + 1);
-          setPhase("ready");
-        }
+        setCurrentPhrase(p => p + 1);
+        setPhase("ready");
       }
       setInput("");
     }
-  }, [input, phase, startTime, currentPhrase, phrases, tour, temps1, temps2, onGameEnd, handleEnd]);
+  }, [input, phase, startTime, currentPhrase, phrases, temps1, onGameEnd]);
 
   const phrase = phrases[currentPhrase] || "";
   const chars = phrase.split("");
@@ -91,22 +82,18 @@ export default function TypingGame({ onGameEnd }) {
   return (
     <div className={styles.typingBoard}>
       <div className={styles.typingHeader}>
-        <div className={styles.typingPlayer} style={{ opacity: tour === 1 ? 1 : 0.4 }}>
-          <span style={{ color: "#e63946" }}>●</span> J1
+        <div className={styles.typingPlayer}>
+          <span style={{ color: "#e63946" }}>●</span> MOI
           {temps1.length > 0 && <small>{(temps1.reduce((a,b) => a+b, 0) / temps1.length).toFixed(1)}s moy</small>}
         </div>
         <div className={styles.typingInfo}>
-          Phrase {currentPhrase + 1}/{phrases.length} — Tour J{tour}
-        </div>
-        <div className={styles.typingPlayer} style={{ opacity: tour === 2 ? 1 : 0.4 }}>
-          <span style={{ color: "#3498db" }}>●</span> J2
-          {temps2.length > 0 && <small>{(temps2.reduce((a,b) => a+b, 0) / temps2.length).toFixed(1)}s moy</small>}
+          Phrase {currentPhrase + 1}/{phrases.length} — SOLO
         </div>
       </div>
 
       {phase === "ready" ? (
         <div className={styles.typingReady}>
-          <h2>Joueur {tour}, prêt ?</h2>
+          <h2>Prêt ?</h2>
           <p className={styles.typingPreview}>{phrase}</p>
           <button className={styles.typingStartBtn} onClick={startPhrase}>
             ▶ GO !
@@ -136,7 +123,7 @@ export default function TypingGame({ onGameEnd }) {
           />
           {startTime && (
             <div className={styles.typingTimer}>
-              {((Date.now() - startTime) / 1000).toFixed(1)}s
+              {Math.max(0, (((now || Date.now()) - startTime) / 1000)).toFixed(1)}s
             </div>
           )}
         </div>

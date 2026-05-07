@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import styles from "./GameBoard.module.css";
 
-export default function SnakeGame({ onGameEnd }) {
+export default function SnakeGame({ onGameEnd, isOnline }) {
   const canvasRef = useRef(null);
   const [scores, setScores] = useState({ j1: 0, j2: 0 });
   const [temps, setTemps] = useState(0);
@@ -41,18 +41,47 @@ export default function SnakeGame({ onGameEnd }) {
     const keys = {};
     const onKD = (e) => { keys[e.key] = true; e.preventDefault(); };
     const onKU = (e) => { keys[e.key] = false; };
-    window.addEventListener("keydown", onKD);
     window.addEventListener("keyup", onKU);
 
     function updateDirection() {
-      if (keys["w"] && d1.y !== 1) d1 = { x: 0, y: -1 };
-      if (keys["s"] && d1.y !== -1) d1 = { x: 0, y: 1 };
-      if (keys["a"] && d1.x !== 1) d1 = { x: -1, y: 0 };
-      if (keys["d"] && d1.x !== -1) d1 = { x: 1, y: 0 };
-      if (keys["ArrowUp"] && d2.y !== 1) d2 = { x: 0, y: -1 };
-      if (keys["ArrowDown"] && d2.y !== -1) d2 = { x: 0, y: 1 };
-      if (keys["ArrowLeft"] && d2.x !== 1) d2 = { x: -1, y: 0 };
-      if (keys["ArrowRight"] && d2.x !== -1) d2 = { x: 1, y: 0 };
+      // J1 (Human)
+      if (keys["ArrowUp"] && d1.y !== 1) d1 = { x: 0, y: -1 };
+      if (keys["ArrowDown"] && d1.y !== -1) d1 = { x: 0, y: 1 };
+      if (keys["ArrowLeft"] && d1.x !== 1) d1 = { x: -1, y: 0 };
+      if (keys["ArrowRight"] && d1.x !== -1) d1 = { x: 1, y: 0 };
+
+      // J2 (Human if Online, otherwise CPU)
+      if (isOnline) {
+        if (keys["ArrowUp"] && d2.y !== 1) d2 = { x: 0, y: -1 };
+        if (keys["ArrowDown"] && d2.y !== -1) d2 = { x: 0, y: 1 };
+        if (keys["ArrowLeft"] && d2.x !== 1) d2 = { x: -1, y: 0 };
+        if (keys["ArrowRight"] && d2.x !== -1) d2 = { x: 1, y: 0 };
+      } else {
+        // CPU logic (very basic heuristic)
+        let possibleDirs = [
+          { x: 0, y: -1 }, { x: 0, y: 1 }, { x: -1, y: 0 }, { x: 1, y: 0 }
+        ].filter(dir => !(dir.x === -d2.x && dir.y === -d2.y));
+
+        const h2 = s2[0];
+        let bestDir = d2;
+        let bestDist = Infinity;
+
+        possibleDirs.forEach(dir => {
+          const nextH = { x: (h2.x + dir.x + cols) % cols, y: (h2.y + dir.y + rows) % rows };
+          const collisionSelf = collides(nextH, s2);
+          const collisionOpponent = s1.some(s => s.x === nextH.x && s.y === nextH.y);
+          
+          if (!collisionSelf && !collisionOpponent) {
+            // Calculate Manhattan distance to food
+            const dist = Math.abs(nextH.x - food.x) + Math.abs(nextH.y - food.y);
+            if (dist < bestDist) {
+              bestDist = dist;
+              bestDir = dir;
+            }
+          }
+        });
+        d2 = bestDir;
+      }
     }
 
     function tick() {
@@ -132,11 +161,13 @@ export default function SnakeGame({ onGameEnd }) {
         <div className={styles.timer}>⏱ {temps}s</div>
         <div className={styles.playerLabel}>
           <span className={styles.playerDot} style={{ background: "#3498db" }} />
-          J2 : <strong>{scores.j2}</strong>
+          {isOnline ? "J2" : "CPU"} : <strong>{scores.j2}</strong>
         </div>
       </div>
       <canvas ref={canvasRef} className={styles.canvas} />
-      <p className={styles.controls}>J1: <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> | J2: <kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> | Mange pour scorer !</p>
+      <p className={styles.controls}>
+        J1: <kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> | {isOnline ? "J2: Flèches" : "J2: CPU"} | Mange pour scorer !
+      </p>
     </div>
   );
 }

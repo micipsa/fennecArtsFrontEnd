@@ -41,6 +41,16 @@
   padding: 1.5rem 2rem; background: rgba(255,255,255,0.03);
   border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);
   text-align: center; font-family: monospace;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 600px) {
+  .typingPhrase {
+    font-size: 1rem;
+    padding: 1rem;
+    line-height: 1.5;
+  }
 }
 
 .charPending { color: rgba(255,255,255,0.3); }

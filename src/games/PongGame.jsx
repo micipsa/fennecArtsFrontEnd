@@ -5,6 +5,7 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
   const canvasRef = useRef(null);
   const [scores, setScores] = useState({ j1: 0, j2: 0 });
   const [temps, setTemps] = useState(0);
+  const [goalAnim, setGoalAnim] = useState(false);
   const gameOverRef = useRef(false);
 
   const isOnline = sessionId === "online" && socket && roomData;
@@ -74,16 +75,29 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
       ballVY = (Math.random() - 0.5) * 6;
     };
 
+    let isPaused = false;
+    const triggerGoal = (direction) => {
+      isPaused = true;
+      setGoalAnim(true);
+      setTimeout(() => {
+        setGoalAnim(false);
+        resetBall(direction);
+        isPaused = false;
+        animId = requestAnimationFrame(gameLoop);
+      }, 1000);
+    };
+
     const gameLoop = () => {
-      if (gameOverRef.current) return;
+      if (gameOverRef.current || isPaused) return;
 
       // Déplacement local (Host ou Guest)
       let oldJ1Y = j1Y;
       let oldJ2Y = j2Y;
 
       if (!isOnline || isJ1) {
-        if (keys["w"] && j1Y > 0) j1Y -= 7;
-        if (keys["s"] && j1Y < h - paddleH) j1Y += 7;
+        // En local, on permet à J1 d'utiliser WASD OU les flèches pour plus de confort
+        if ((keys["w"] || (!isOnline && keys["ArrowUp"])) && j1Y > 0) j1Y -= 7;
+        if ((keys["s"] || (!isOnline && keys["ArrowDown"])) && j1Y < h - paddleH) j1Y += 7;
         
         if (isOnline && j1Y !== oldJ1Y) {
           socket.emit("playerAction", { roomId: roomData.roomId, action: "movePaddle", data: { y: j1Y } });
@@ -91,11 +105,22 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
       }
       
       if (!isOnline || !isJ1) {
-        if (keys["ArrowUp"] && j2Y > 0) j2Y -= 7;
-        if (keys["ArrowDown"] && j2Y < h - paddleH) j2Y += 7;
+        if (!isOnline) {
+          // CPU Logic for Local Mode
+          const paddleCenter = j2Y + paddleH / 2;
+          if (ballY < paddleCenter - 15 && j2Y > 0) {
+            j2Y -= 5; // Slower than human (7) to make it beatable
+          } else if (ballY > paddleCenter + 15 && j2Y < h - paddleH) {
+            j2Y += 5;
+          }
+        } else {
+          // Human J2 Online
+          if (keys["ArrowUp"] && j2Y > 0) j2Y -= 7;
+          if (keys["ArrowDown"] && j2Y < h - paddleH) j2Y += 7;
 
-        if (isOnline && j2Y !== oldJ2Y) {
-          socket.emit("playerAction", { roomId: roomData.roomId, action: "movePaddle", data: { y: j2Y } });
+          if (isOnline && j2Y !== oldJ2Y) {
+            socket.emit("playerAction", { roomId: roomData.roomId, action: "movePaddle", data: { y: j2Y } });
+          }
         }
       }
 
@@ -119,8 +144,8 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
           ballVY = hitPos * 8;
         }
 
-        if (ballX < 0) { j2Score++; resetBall(1); }
-        if (ballX > w) { j1Score++; resetBall(-1); }
+        if (ballX < 0) { j2Score++; triggerGoal(1); return; }
+        if (ballX > w) { j1Score++; triggerGoal(-1); return; }
 
         // Sync état aux autres joueurs tous les 2 frames pour fluidité
         if (isOnline && frameCount % 2 === 0) {
@@ -210,14 +235,17 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
         <div className={styles.timer}>⏱ {temps}s</div>
         <div className={styles.playerLabel}>
           <span className={styles.playerDot} style={{ background: "#3498db" }} />
-          {isOnline ? roomData.j2.pseudo : "Joueur 2"} : <strong>{scores.j2}</strong>
+          {isOnline ? roomData.j2.pseudo : "CPU"} : <strong>{scores.j2}</strong>
         </div>
       </div>
-      <canvas ref={canvasRef} className={styles.canvas} />
+      <div className={`${styles.canvasContainer} ${goalAnim ? styles.shake : ""}`}>
+        {goalAnim && <div className={styles.goalOverlay}>GOOOOOL !</div>}
+        <canvas ref={canvasRef} className={styles.canvas} />
+      </div>
       <p className={styles.controls}>
         {isOnline 
           ? (isJ1 ? "Vos contrôles: W / S" : "Vos contrôles: Flèches Haut / Bas") 
-          : "J1: W/S | J2: ↑/↓"} | Premier à 5 gagne
+          : "Vos contrôles: W / S ou Flèches"} | Premier à 5 gagne
       </p>
     </div>
   );
