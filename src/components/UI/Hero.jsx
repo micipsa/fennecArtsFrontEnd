@@ -75,8 +75,8 @@ function Hero() {
           <img src="/fennekage.png" alt="Fennekage" />
           
           {utilisateur ? (
-            <Link to="/defis" className={styles.rejoindreBtn}>
-              ⚔️ Accomplis tes quêtes
+            <Link to="/arcade" className={styles.rejoindreBtn}>
+              ⚔️ Entre à la salle d'arcade
             </Link>
           ) : (
             <Link to="/register" className={styles.rejoindreBtn}>
