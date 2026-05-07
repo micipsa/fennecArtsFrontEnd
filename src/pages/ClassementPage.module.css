@@ -30,7 +30,7 @@
 
 .pageTitre {
   font-family: var(--font-medieval);
-  font-size: clamp(3rem, 6vw, 5rem);
+  font-size: clamp(1.8rem, 6vw, 5rem);
   font-weight: 900;
   background: linear-gradient(180deg, #fff5cc 0%, #ffd700 40%, #b8860b 100%);
   -webkit-background-clip: text;
@@ -264,9 +264,11 @@
     gap: 1rem;
   }
   .podiumGold, .podiumSilver, .podiumBronze {
-    order: unset;
     min-height: auto;
     padding: 1.2rem;
   }
+  .podiumGold { order: 1; }
+  .podiumSilver { order: 2; }
+  .podiumBronze { order: 3; }
 }
 

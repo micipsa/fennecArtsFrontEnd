@@ -41,6 +41,7 @@ export default function SnakeGame({ onGameEnd, isOnline }) {
     const keys = {};
     const onKD = (e) => { keys[e.key] = true; e.preventDefault(); };
     const onKU = (e) => { keys[e.key] = false; };
+    window.addEventListener("keydown", onKD);
     window.addEventListener("keyup", onKU);
 
     function updateDirection() {
