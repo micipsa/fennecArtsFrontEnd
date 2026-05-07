@@ -64,43 +64,60 @@
   gap: 2rem;
 }
 
-.wheelContainer {
+/* ── Ticket Initial ── */
+.ticketInitial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px dashed rgba(255, 215, 0, 0.3);
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  width: 320px;
+}
+
+.ticketVisual {
+  font-size: 5rem;
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+  animation: floatTicket 3s ease-in-out infinite;
+}
+
+@keyframes floatTicket {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ── Scratch Area ── */
+.scratchContainer {
   position: relative;
-  width: 350px;
-  height: 350px;
+  width: 300px;
+  height: 150px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(255, 215, 0, 0.5);
+  background: #1a1a2e; /* Base background for the result */
 }
 
-@media (max-width: 480px) {
-  .wheelContainer {
-    width: 280px;
-    height: 280px;
-  }
-}
-
-/* ── Arrow ── */
-.arrow {
+.scratchResult {
   position: absolute;
-  top: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2rem;
-  color: #ffd700;
-  z-index: 10;
-  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
-  animation: arrowBounce 1s ease-in-out infinite;
-}
-@keyframes arrowBounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%      { transform: translateX(-50%) translateY(5px); }
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle, #2a2a4e, #1a1a2e);
+  z-index: 1; /* Under canvas */
+  pointer-events: none;
+  user-select: none;
 }
 
-/* ── Wheel SVG ── */
-.wheel {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  filter: drop-shadow(0 0 30px rgba(155, 89, 182, 0.4));
-  will-change: transform;
+.scratchCanvas {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 2; /* Over result */
+  cursor: crosshair;
+  touch-action: none; /* Prevent scroll on mobile while scratching */
 }
 
 /* ── Bouton Spin ── */

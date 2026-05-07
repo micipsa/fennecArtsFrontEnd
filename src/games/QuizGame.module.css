@@ -71,3 +71,14 @@
 @media (max-width: 600px) {
   .quizOptions { grid-template-columns: 1fr; }
 }
+
+.quizOppWrong {
+  border-color: #3498db !important; background: rgba(52, 152, 219, 0.15) !important;
+  box-shadow: 0 0 20px rgba(52, 152, 219, 0.3);
+}
+
+.quizDisabled {
+  opacity: 0.6;
+  pointer-events: none;
+  transform: scale(0.98);
+}

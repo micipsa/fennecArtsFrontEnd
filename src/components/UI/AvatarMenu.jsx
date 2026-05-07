@@ -15,6 +15,8 @@ export default function AvatarMenu({ utilisateur, onDeconnexion }) {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  console.log("DEBUG AvatarMenu utilisateur:", utilisateur);
+
   const rang = calculerRang(utilisateur.points || 0);
   const points = utilisateur.points || 0;
 

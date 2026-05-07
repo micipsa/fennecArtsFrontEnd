@@ -1,8 +1,8 @@
 /**
- * FortunePage — Page de la Roue de la Fortune.
- * Spin gratuit quotidien avec animation de rotation CSS.
+ * FortunePage — Page du Ticket à Gratter (remplace la Roue).
+ * Un ticket gratuit quotidien.
  */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
@@ -10,34 +10,18 @@ import useAuth from "../../hooks/useAuth";
 import { useToast } from "../../components/UI/Toast";
 import styles from "./FortunePage.module.css";
 
-// 12 segments fixes pour l'affichage de la roue
-const SEGMENTS_DISPLAY = [
-  { label: "+10 XP",  couleur: "#2c3e50", icone: "⚡" },
-  { label: "+50 FM",  couleur: "#d35400", icone: "💎" },
-  { label: "+20 XP",  couleur: "#34495e", icone: "⚡" },
-  { label: "+75 XP",  couleur: "#2980b9", icone: "✨" },
-  { label: "+10 FM",  couleur: "#f39c12", icone: "💰" },
-  { label: "+30 XP",  couleur: "#7f8c8d", icone: "⚡" },
-  { label: "🎨 Couleur",couleur: "#e74c3c", icone: "🎨" },
-  { label: "+50 XP",  couleur: "#3498db", icone: "✨" },
-  { label: "+25 FM",  couleur: "#e67e22", icone: "💰" },
-  { label: "+100 XP", couleur: "#9b59b6", icone: "🌟" },
-  { label: "+200 XP", couleur: "#8e44ad", icone: "💫" },
-  { label: "💠 Cadre", couleur: "#00ff88", icone: "💠" },
-];
-
-const SEGMENT_COUNT = SEGMENTS_DISPLAY.length;
-const SEGMENT_ANGLE = 360 / SEGMENT_COUNT;
-
 export default function FortunePage() {
   const { utilisateur } = useAuth();
   const { addToast } = useToast();
   const navigate = useNavigate();
-  const [spinning, setSpinning] = useState(false);
+  
   const [disponible, setDisponible] = useState(true);
-  const [rotation, setRotation] = useState(0);
   const [resultat, setResultat] = useState(null);
   const [showResult, setShowResult] = useState(false);
+  const [ticketState, setTicketState] = useState("initial"); // initial, scratching, revealed
+  
+  const canvasRef = useRef(null);
+  const [isDrawing, setIsDrawing] = useState(false);
 
   useEffect(() => {
     if (utilisateur) {
@@ -47,124 +31,179 @@ export default function FortunePage() {
     }
   }, [utilisateur]);
 
-  const handleSpin = async () => {
-    if (spinning || !disponible) return;
-    setSpinning(true);
-    setShowResult(false);
-    setResultat(null);
+  const handleGetTicket = async () => {
+    if (!disponible || ticketState !== "initial") return;
 
     try {
+      // On conserve l'API "/api/fortune/spin"
       const res = await api.post("/api/fortune/spin");
-      const { recompense, slotIndex } = res.data.data;
-
-      // Calculer l'angle de destination
-      // On mappe slotIndex aux 12 segments visuels
-      const segmentDestination = slotIndex % SEGMENT_COUNT;
-      const angleSegment = segmentDestination * SEGMENT_ANGLE;
-      // 5 tours complets + arrêt au bon segment
-      const totalRotation = rotation + 1800 + (360 - angleSegment) + (SEGMENT_ANGLE / 2);
+      setResultat(res.data.data.recompense);
+      setTicketState("scratching");
+      setDisponible(false);
       
-      setRotation(totalRotation);
-      setResultat(recompense);
-
-      // Attendre la fin de l'animation (4s)
-      setTimeout(() => {
-        setShowResult(true);
-        setDisponible(false);
-        setSpinning(false);
-      }, 4500);
-
+      // Initialize Canvas after render
+      setTimeout(initCanvas, 100);
     } catch (err) {
-      addToast(err.response?.data?.message || "Erreur lors du spin", "error");
-      setSpinning(false);
+      addToast(err.response?.data?.message || "Erreur lors de l'obtention du ticket", "error");
+    }
+  };
+
+  const initCanvas = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const width = canvas.width;
+    const height = canvas.height;
+
+    // Fill with silver gradient
+    const gradient = ctx.createLinearGradient(0, 0, width, height);
+    gradient.addColorStop(0, "#8e9eab");
+    gradient.addColorStop(0.5, "#eef2f3");
+    gradient.addColorStop(1, "#8e9eab");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+
+    // Add pattern or text
+    ctx.font = "bold 22px var(--font-manga)";
+    ctx.fillStyle = "#555";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("GRATTEZ ICI", width / 2, height / 2);
+  };
+
+  const getPointerPos = (e) => {
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    let clientX, clientY;
+
+    if (e.touches && e.touches.length > 0) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+
+    // Calculer les coordonnées relatives au canvas (en tenant compte de son redimensionnement CSS)
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    return {
+      x: (clientX - rect.left) * scaleX,
+      y: (clientY - rect.top) * scaleY
+    };
+  };
+
+  const startScratch = (e) => {
+    if (ticketState !== "scratching") return;
+    setIsDrawing(true);
+    handleScratch(e);
+  };
+
+  const stopScratch = () => {
+    setIsDrawing(false);
+    checkReveal();
+  };
+
+  const scratchMove = (e) => {
+    if (!isDrawing || ticketState !== "scratching") return;
+    handleScratch(e);
+  };
+
+  const handleScratch = (e) => {
+    // Prevent default scrolling on touch
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+    
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const pos = getPointerPos(e);
+
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, 25, 0, 2 * Math.PI); // Radius 25
+    ctx.fill();
+  };
+
+  const checkReveal = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    
+    const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    let transparent = 0;
+    // On vérifie le canal alpha
+    for (let i = 3; i < data.length; i += 4) {
+      if (data[i] === 0) transparent++;
+    }
+    
+    const percent = transparent / (canvas.width * canvas.height);
+    if (percent > 0.5) {
+      setTicketState("revealed");
+      setShowResult(true);
     }
   };
 
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.pageEntete}>
-        <h1 className={styles.pageTitre}>ROUE DE LA FORTUNE</h1>
-        <p className={styles.pageSousTitre}>Tente ta chance gratuitement, 1 fois par jour !</p>
+        <h1 className={styles.pageTitre}>TICKET À GRATTER</h1>
+        <p className={styles.pageSousTitre}>Gagne des récompenses gratuitement, 1 fois par jour !</p>
       </div>
 
       <div className={styles.container}>
-        {/* La Roue */}
         <div className={styles.wheelSection}>
-          <div className={styles.wheelContainer}>
-            {/* Indicateur/flèche */}
-            <div className={styles.arrow}>▼</div>
-            
-            {/* La roue SVG */}
-            <svg
-              viewBox="0 0 400 400"
-              className={styles.wheel}
-              style={{
-                transform: `rotate(${rotation}deg)`,
-                transition: spinning ? "transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)" : "none",
-              }}
-            >
-              {SEGMENTS_DISPLAY.map((seg, i) => {
-                const startAngle = i * SEGMENT_ANGLE;
-                const endAngle = (i + 1) * SEGMENT_ANGLE;
-                const startRad = (startAngle * Math.PI) / 180;
-                const endRad = (endAngle * Math.PI) / 180;
-                const x1 = 200 + 190 * Math.cos(startRad);
-                const y1 = 200 + 190 * Math.sin(startRad);
-                const x2 = 200 + 190 * Math.cos(endRad);
-                const y2 = 200 + 190 * Math.sin(endRad);
-                const midAngle = ((startAngle + endAngle) / 2) * Math.PI / 180;
-                const textX = 200 + 130 * Math.cos(midAngle);
-                const textY = 200 + 130 * Math.sin(midAngle);
-                const textRotation = (startAngle + endAngle) / 2;
+          
+          {ticketState === "initial" && (
+            <div className={styles.ticketInitial}>
+              <div className={styles.ticketVisual}>🎫</div>
+              <button
+                className={`${styles.btnSpin} ${!disponible ? styles.btnDisabled : ""}`}
+                onClick={handleGetTicket}
+                disabled={!disponible || !utilisateur}
+              >
+                {!utilisateur ? "Connecte-toi pour jouer" :
+                 !disponible ? "Reviens demain ! ⏰" :
+                 "OBTENIR MON TICKET"}
+              </button>
+            </div>
+          )}
 
-                return (
-                  <g key={i}>
-                    <path
-                      d={`M200,200 L${x1},${y1} A190,190 0 0,1 ${x2},${y2} Z`}
-                      fill={seg.couleur}
-                      stroke="rgba(255,255,255,0.1)"
-                      strokeWidth="1"
-                    />
-                    <text
-                      x={textX}
-                      y={textY}
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                      fill="#fff"
-                      fontSize="10"
-                      fontWeight="700"
-                      transform={`rotate(${textRotation}, ${textX}, ${textY})`}
-                    >
-                      {seg.icone} {seg.label}
-                    </text>
-                  </g>
-                );
-              })}
-              {/* Centre */}
-              <circle cx="200" cy="200" r="30" fill="#1a1a2e" stroke="rgba(255,215,0,0.5)" strokeWidth="3" />
-              <text x="200" y="200" textAnchor="middle" dominantBaseline="middle" fill="#ffd700" fontSize="16" fontWeight="900">🎡</text>
-            </svg>
-          </div>
-
-          {/* Bouton Spin */}
-          <button
-            className={`${styles.btnSpin} ${spinning ? styles.btnSpinning : ""} ${!disponible ? styles.btnDisabled : ""}`}
-            onClick={handleSpin}
-            disabled={spinning || !disponible || !utilisateur}
-          >
-            {!utilisateur ? "Connecte-toi pour jouer" :
-             !disponible ? "Reviens demain ! ⏰" :
-             spinning ? "La roue tourne..." :
-             "🎡 TOURNER LA ROUE"}
-          </button>
+          {ticketState !== "initial" && resultat && (
+            <div className={styles.scratchContainer}>
+              <div className={styles.scratchResult} style={{ color: resultat.couleur || "#fff" }}>
+                <div style={{ fontSize: "3rem", marginBottom: "0.5rem" }}>{resultat.icone}</div>
+                <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{resultat.label}</div>
+              </div>
+              
+              {ticketState === "scratching" && (
+                <canvas
+                  ref={canvasRef}
+                  width={300}
+                  height={150}
+                  className={styles.scratchCanvas}
+                  onMouseDown={startScratch}
+                  onMouseUp={stopScratch}
+                  onMouseLeave={stopScratch}
+                  onMouseMove={scratchMove}
+                  onTouchStart={startScratch}
+                  onTouchEnd={stopScratch}
+                  onTouchCancel={stopScratch}
+                  onTouchMove={scratchMove}
+                />
+              )}
+            </div>
+          )}
 
           {/* Bouton retour */}
-          <button className={styles.btnBack} onClick={() => navigate("/store")}>
+          <button className={styles.btnBack} onClick={() => navigate("/store")} style={{ marginTop: "2rem" }}>
             ← Retour à la boutique
           </button>
         </div>
 
-        {/* Résultat */}
+        {/* Résultat (Modale) */}
         {showResult && resultat && createPortal(
           <div className={styles.resultOverlay} onClick={() => setShowResult(false)}>
             <div className={styles.resultCard} onClick={e => e.stopPropagation()}>

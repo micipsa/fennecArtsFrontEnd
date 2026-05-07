@@ -33,8 +33,9 @@
 .dropdown {
   position: absolute;
   top: calc(100% + 8px);
-  right: 0;
+  right: -10px; /* Aligned slightly off the exact edge to account for padding */
   width: 320px;
+  max-width: calc(100vw - 2rem);
   max-height: 400px;
   background: var(--couleur-sombre);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -43,6 +44,12 @@
   z-index: 200;
   overflow: hidden;
   animation: slideDown 0.2s ease;
+}
+
+@media (max-width: 480px) {
+  .dropdown {
+    right: -20px;
+  }
 }
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-8px); }

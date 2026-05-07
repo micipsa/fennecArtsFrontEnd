@@ -10,6 +10,7 @@ import RPSGame from "../games/RPSGame";
 import TypingGame from "../games/TypingGame";
 import MemoryGame from "../games/MemoryGame";
 import WordleGame from "../games/WordleGame";
+import MobileControls from "../components/UI/MobileControls";
 import styles from "../games/GameBoard.module.css";
 
 const GAINS = {
@@ -169,12 +170,17 @@ export default function GamePlayPage() {
       )}
 
       {matchStatus === "playing" && !resultat && (
-        <GameComponent 
-          sessionId={sessionId} 
-          onGameEnd={handleGameEnd} 
-          roomData={roomData}
-          socket={socket}
-        />
+        <>
+          <GameComponent 
+            sessionId={sessionId} 
+            onGameEnd={handleGameEnd} 
+            roomData={roomData}
+            socket={socket}
+            isOnline={sessionId === "online"}
+            isHost={roomData ? roomData.j1.userId === utilisateur?._id : true}
+          />
+          {(jeu === "pong" || jeu === "snake" || jeu === "pacman") && <MobileControls />}
+        </>
       )}
 
       {resultat && (
