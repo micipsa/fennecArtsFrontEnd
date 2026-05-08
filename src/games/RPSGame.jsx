@@ -9,6 +9,7 @@ const CHOIX = [
 
 export default function RPSGame({ onGameEnd, socket, roomData, isOnline }) {
   const isJ1 = isOnline ? roomData.j1.socketId === socket.id : true;
+  const isBotMatch = isOnline && (roomData?.j2?.isBot || roomData?.j1?.isBot);
   const [score1, setScore1] = useState(0);
   const [score2, setScore2] = useState(0);
   const [round, setRound] = useState(1);
@@ -67,6 +68,14 @@ export default function RPSGame({ onGameEnd, socket, roomData, isOnline }) {
       if (isJ1) {
         if (choix1) return; // Déjà joué
         setChoix1(choixId);
+        
+        // Si c'est un match contre un bot, le bot choisit immédiatement
+        if (isBotMatch) {
+          setTimeout(() => {
+            const botChoice = CHOIX[Math.floor(Math.random() * CHOIX.length)].id;
+            setChoix2(botChoice);
+          }, 500);
+        }
       } else {
         if (choix2) return; // Déjà joué
         setChoix2(choixId);

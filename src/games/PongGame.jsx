@@ -10,6 +10,7 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
 
   const isOnline = sessionId === "online" && socket && roomData;
   const isJ1 = isOnline ? roomData.j1.socketId === socket.id : true;
+  const isBotMatch = isOnline && (roomData?.j2?.isBot || roomData?.j1?.isBot);
 
   const handleEnd = useCallback((s1, s2) => {
     if (!gameOverRef.current) {
@@ -105,8 +106,8 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
       }
       
       if (!isOnline || !isJ1) {
-        if (!isOnline) {
-          // CPU Logic for Local Mode
+        if (!isOnline || isBotMatch) {
+          // CPU Logic for Local Mode or Bot Match
           const paddleCenter = j2Y + paddleH / 2;
           if (ballY < paddleCenter - 15 && j2Y > 0) {
             j2Y -= 5; // Slower than human (7) to make it beatable

@@ -38,6 +38,45 @@ const JEUX_NOMS = {
   rps: "JAN KEN", typing: "Typing Race", memory: "Memory Geek", wordle: "Fennec Word",
 };
 
+function SearchingScreen({ navigate }) {
+  const [countdown, setCountdown] = useState(15);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div style={{ textAlign: "center", padding: "4rem", color: "#fff", fontFamily: "var(--font-titre)" }}>
+      <div style={{ fontSize: "3rem", marginBottom: "1rem", animation: "spin 2s linear infinite" }}>⏳</div>
+      <h3>Recherche d'un adversaire...</h3>
+      <p style={{ marginTop: "1rem", color: "rgba(255,255,255,0.5)", fontSize: "0.9rem" }}>
+        {countdown > 0 
+          ? `Un bot sera assigné dans ${countdown}s si personne ne rejoint`
+          : "🤖 Attribution d'un bot en cours..."
+        }
+      </p>
+      <div style={{ marginTop: "1.5rem", width: "200px", height: "4px", background: "rgba(255,255,255,0.1)", borderRadius: "99px", margin: "1.5rem auto" }}>
+        <div style={{ height: "100%", width: `${((15 - countdown) / 15) * 100}%`, background: "linear-gradient(90deg, #e63946, #f4a261)", borderRadius: "99px", transition: "width 1s linear" }} />
+      </div>
+      <button 
+        onClick={() => navigate("/arcade")} 
+        style={{ marginTop: "1rem", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", padding: "0.5rem 1.5rem", color: "#fff", borderRadius: "8px", cursor: "pointer" }}
+      >
+        Annuler
+      </button>
+    </div>
+  );
+}
+
 export default function GamePlayPage() {
   const { jeu, sessionId } = useParams();
   const navigate = useNavigate();
@@ -65,10 +104,15 @@ export default function GamePlayPage() {
       navigate("/arcade");
     });
 
+    socket.on("queueStatus", (data) => {
+      console.log("[Queue]", data.message);
+    });
+
     return () => {
       socket.emit("leaveQueue", { jeu, userId: utilisateur?._id });
       socket.off("matchFound");
       socket.off("notEnoughFM");
+      socket.off("queueStatus");
     };
   }, [sessionId, socket, jeu, utilisateur]);
 
@@ -139,16 +183,7 @@ export default function GamePlayPage() {
       </div>
 
       {matchStatus === "searching" && (
-        <div style={{ textAlign: "center", padding: "4rem", color: "#fff", fontFamily: "var(--font-titre)" }}>
-          <div className={styles.spinner} style={{ fontSize: "3rem", marginBottom: "1rem", animation: "spin 2s linear infinite" }}>⏳</div>
-          <h3>Recherche d'un adversaire...</h3>
-          <button 
-            onClick={() => navigate("/arcade")} 
-            style={{ marginTop: "2rem", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", padding: "0.5rem 1.5rem", color: "#fff", borderRadius: "8px", cursor: "pointer" }}
-          >
-            Annuler
-          </button>
-        </div>
+        <SearchingScreen navigate={navigate} />
       )}
 
       {matchStatus === "found" && roomData && (

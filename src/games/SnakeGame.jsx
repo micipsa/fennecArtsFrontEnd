@@ -4,6 +4,7 @@ import styles from "./GameBoard.module.css";
 export default function SnakeGame({ onGameEnd, socket, roomData, isOnline }) {
   const canvasRef = useRef(null);
   const isJ1 = isOnline ? roomData.j1.socketId === socket.id : true;
+  const isBotMatch = isOnline && (roomData?.j2?.isBot || roomData?.j1?.isBot);
   const [scores, setScores] = useState({ j1: 0, j2: 0 });
   const [temps, setTemps] = useState(0);
   const gameOverRef = useRef(false);
@@ -72,13 +73,10 @@ export default function SnakeGame({ onGameEnd, socket, roomData, isOnline }) {
       if (keys["ArrowRight"] && d1.x !== -1) d1 = { x: 1, y: 0 };
 
       // J2 (Human if Online, otherwise CPU)
-      if (isOnline) {
+      if (isOnline && !isBotMatch) {
         let oldDir = isJ1 ? d1 : d2;
         if (isJ1) {
-          if (keys["ArrowUp"] && d1.y !== 1) d1 = { x: 0, y: -1 };
-          if (keys["ArrowDown"] && d1.y !== -1) d1 = { x: 0, y: 1 };
-          if (keys["ArrowLeft"] && d1.x !== 1) d1 = { x: -1, y: 0 };
-          if (keys["ArrowRight"] && d1.x !== -1) d1 = { x: 1, y: 0 };
+          // J1 controls already handled above
         } else {
           if (keys["ArrowUp"] && d2.y !== 1) d2 = { x: 0, y: -1 };
           if (keys["ArrowDown"] && d2.y !== -1) d2 = { x: 0, y: 1 };

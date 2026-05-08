@@ -16,6 +16,7 @@ function shuffle(arr) {
 }
 
 export default function QuizGame({ onGameEnd, isOnline, socket, roomData, isHost, userId }) {
+  const isBotMatch = isOnline && (roomData?.j2?.isBot || roomData?.j1?.isBot);
   // ─── ETAT LOCAL ───
   // Si on est en ligne et Client (isHost = false), on lit l'état envoyé par l'Hôte.
   // Si on est Solo ou Hôte, on gère l'état localement.
@@ -150,6 +151,35 @@ export default function QuizGame({ onGameEnd, isOnline, socket, roomData, isHost
     }, 1000);
     return () => clearInterval(t);
   }, [isOnline, isHost, gameState.feedback, gameState.isFinished, updateState, resolveRound]);
+
+  // ─── GESTION DU BOT (Hôte / Solo) ───
+  useEffect(() => {
+    if (isOnline && isHost && isBotMatch && !gameState.j2HasAnswered && !gameState.feedback && !gameState.isFinished) {
+      const delay = 3000 + Math.random() * 4000; // Le bot répond entre 3 et 7 secondes
+      const t = setTimeout(() => {
+        const currentQ = gameState.questions[gameState.indexQ];
+        if (!currentQ) return;
+        
+        // Le bot a 70% de chances de donner la bonne réponse
+        const random = Math.random();
+        let botChoice;
+        if (random < 0.7) {
+          botChoice = currentQ.correct;
+        } else {
+          botChoice = Math.floor(Math.random() * currentQ.opts.length);
+        }
+
+        updateState((prev) => {
+          const next = { ...prev, j2HasAnswered: true, j2Choice: botChoice };
+          if (next.j1HasAnswered) {
+            setTimeout(resolveRound, 100);
+          }
+          return next;
+        });
+      }, delay);
+      return () => clearTimeout(t);
+    }
+  }, [isOnline, isHost, isBotMatch, gameState, updateState, resolveRound]);
 
   // ─── GESTION DES ACTIONS ADVERSAIRE ───
   useEffect(() => {
