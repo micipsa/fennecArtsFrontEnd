@@ -111,6 +111,15 @@
 
 .carteCorps {
   padding: 0 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 480px) {
+  .carteCorps {
+    padding: 0 1rem 1.5rem;
+    align-items: center;
+  }
 }
 
 .avatarWrapper {
@@ -140,12 +149,26 @@
   box-shadow: var(--ombre);
 }
 
+@media (max-width: 480px) {
+  .avatarWrapper {
+    display: flex;
+    justify-content: center;
+  }
+}
+
 .nomPrincipal {
   font-size: 1.4rem;
   font-weight: 700;
   color: var(--couleur-texte);
   font-family: var(--font-titre);
   margin-bottom: 0.25rem;
+}
+
+@media (max-width: 480px) {
+  .nomPrincipal {
+    text-align: center;
+    width: 100%;
+  }
 }
 
 .infos {
@@ -156,6 +179,7 @@
   border: 1px solid var(--couleur-bordure);
   border-radius: var(--border-radius);
   overflow: hidden;
+  width: 100%;
 }
 
 .infoLigne {
@@ -165,6 +189,16 @@
   padding: 0.9rem 1.25rem;
   border-bottom: 1px solid var(--couleur-bordure);
   transition: var(--transition);
+  gap: 1rem;
+}
+
+@media (max-width: 480px) {
+  .infoLigne {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    padding: 1rem;
+  }
 }
 
 .infoLigne:last-child {
@@ -187,6 +221,16 @@
   font-size: 0.92rem;
   color: var(--couleur-texte);
   font-weight: 500;
+  word-break: break-all;
+  text-align: right;
+}
+
+@media (max-width: 480px) {
+  .infoValeur {
+    text-align: left;
+    font-size: 0.88rem;
+    width: 100%;
+  }
 }
 .sectionMdp {
   margin-top: 2rem;
