@@ -30,7 +30,7 @@ export default function PlayPage() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1 className={styles.titre}>Dojo Play 🎮</h1>
+        <h1 className={styles.titre}>Quest Board 📜</h1>
         <p className={styles.description}>
           Participe aux activités de la semaine pour gagner des XP et FM !
         </p>
@@ -42,9 +42,21 @@ export default function PlayPage() {
             ← Retour aux jeux
           </button>
           {selectedAnim.type === "quizz" ? (
-            <QuizzGame quizz={selectedAnim} onFinish={fetchAnims} />
+            <QuizzGame 
+              quizz={selectedAnim} 
+              onFinish={() => {
+                fetchAnims();
+                setSelectedAnim(null);
+              }} 
+            />
           ) : (
-            <SondageCard sondage={selectedAnim} onFinish={fetchAnims} />
+            <SondageCard 
+              sondage={selectedAnim} 
+              onFinish={() => {
+                fetchAnims();
+                setSelectedAnim(null);
+              }} 
+            />
           )}
         </div>
       ) : (

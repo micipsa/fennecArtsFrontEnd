@@ -109,7 +109,7 @@ function Navbar() {
                 className={({ isActive }) =>
                   `${styles.navLink} ${isActive ? styles.active : ""}`
                 }>
-                🎮 Dojo Play
+                📜 Quest Board
               </NavLink>
             </li>
           </ul>
@@ -196,7 +196,7 @@ function Navbar() {
               ⚔️ Défis
             </NavLink>
             <NavLink to="/play" onClick={() => setMenuMobile(false)}>
-              🎮 Dojo Play
+              📜 Quest Board
             </NavLink>
 
             <div className={styles.separateur} />

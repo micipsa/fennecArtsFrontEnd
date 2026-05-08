@@ -10,6 +10,7 @@ export default function QuizzGame({ quizz, onFinish }) {
   const [timeLeft, setTimeLeft] = useState(15); // 15s par question
   const [finished, setFinished] = useState(false);
   const [sending, setSending] = useState(false);
+  const [claimed, setClaimed] = useState(false);
   const { showXP, XPPopupContainer } = useXPPopup();
   
   const questions = quizz.config.questions || [];
@@ -47,19 +48,32 @@ export default function QuizzGame({ quizz, onFinish }) {
         reponses: { totalQuestions: questions.length, correct: score }
       });
       const { gains } = res.data;
-      toast.success(`Félicitations ! Tu as gagné ${gains.xp} XP et ${gains.fm} FM.`);
+      toast.success(`Récompenses récupérées !`);
       showXP(gains.xp, gains.fm);
+      setClaimed(true);
       
       // On laisse le temps à la popup de s'afficher avant de revenir à la liste
       setTimeout(() => {
         onFinish();
-      }, 2000);
+      }, 3000);
     } catch (err) {
       toast.error(err.response?.data?.message || "Erreur lors de la soumission.");
     } finally {
       setSending(false);
     }
   };
+
+  if (claimed) {
+    return (
+      <div className={styles.merciBox}>
+        <div className={styles.merciIcon}>🎉</div>
+        <h2>Quête Accomplie !</h2>
+        <p>Merci pour ta participation au Quizz.</p>
+        <p className={styles.redirect}>Retour au Quest Board...</p>
+        <XPPopupContainer />
+      </div>
+    );
+  }
 
   if (finished) {
     return (

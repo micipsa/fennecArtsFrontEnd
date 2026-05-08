@@ -159,6 +159,15 @@ function ProfilPage() {
   const rangCalculeProfil = calculerRang(profil?.points || 0);
   const themeActif = getThemeUtilisateur({ ...profil, rangCalcule: rangCalculeProfil });
 
+  const FOND_CARTE_MAP = {
+    controller: styles.fondController,
+    code: styles.fondCode,
+    synthwave: styles.fondSynthwave,
+    dragon: styles.fondDragon,
+    sakura: styles.fondSakura,
+  };
+  const fondClass = profil?.fondCarteActif ? FOND_CARTE_MAP[profil.fondCarteActif] || "" : "";
+
   return (
     <div
       className={styles.pageWrapper}
@@ -193,7 +202,7 @@ function ProfilPage() {
         {ongletActif === "apercu" && (<>
 
         {/* ── Carte de profil ── */}
-        <div className={styles.carte}>
+        <div className={`${styles.carte} ${fondClass}`}>
           {/* Bandeau coloré en haut de la carte */}
           <div className={styles.carteBandeau} />
           <div className={styles.carteCorps}>

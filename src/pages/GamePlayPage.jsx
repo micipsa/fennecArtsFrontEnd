@@ -177,7 +177,7 @@ export default function GamePlayPage() {
             roomData={roomData}
             socket={socket}
             isOnline={sessionId === "online"}
-            isHost={roomData ? roomData.j1.userId === utilisateur?._id : true}
+            isHost={roomData ? roomData.j1.socketId === socket.id : true}
             userId={utilisateur?._id}
           />
           {(jeu === "pong" || jeu === "snake" || jeu === "pacman") && <MobileControls />}

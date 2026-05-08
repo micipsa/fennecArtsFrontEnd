@@ -239,7 +239,7 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
         </div>
       </div>
       <div className={`${styles.canvasContainer} ${goalAnim ? styles.shake : ""}`}>
-        {goalAnim && <div className={styles.goalOverlay}>GOOOOOL !</div>}
+        {goalAnim && <div className={styles.goalOverlay}>GOAAAALLL !!!!</div>}
         <canvas ref={canvasRef} className={styles.canvas} />
       </div>
       <p className={styles.controls}>

@@ -6,6 +6,7 @@ import { useXPPopup } from "../../../components/UI/XPPopup";
 
 export default function SondageCard({ sondage, onFinish }) {
   const [loading, setLoading] = useState(false);
+  const [voted, setVoted] = useState(false);
   const { showXP, XPPopupContainer } = useXPPopup();
 
   const voter = async (option) => {
@@ -15,18 +16,31 @@ export default function SondageCard({ sondage, onFinish }) {
         reponses: { choix: option }
       });
       const { gains } = res.data;
-      toast.success(`Vote pris en compte ! Tu as gagné ${gains.xp} XP et ${gains.fm} FM.`);
+      toast.success(`Vote pris en compte !`);
       showXP(gains.xp, gains.fm);
+      setVoted(true);
       
       setTimeout(() => {
         onFinish();
-      }, 2000);
+      }, 3000);
     } catch (err) {
       toast.error(err.response?.data?.message || "Erreur.");
     } finally {
       setLoading(false);
     }
   };
+
+  if (voted) {
+    return (
+      <div className={styles.merciBox}>
+        <div className={styles.merciIcon}>📬</div>
+        <h2>Merci d'avoir participé !</h2>
+        <p>Tes récompenses ont été ajoutées à ton compte.</p>
+        <p className={styles.redirect}>Redirection vers le tableau des quêtes...</p>
+        <XPPopupContainer />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.sondage}>

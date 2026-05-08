@@ -35,6 +35,23 @@ export default function PlayerCard({ profil, onClose }) {
   const tournois = profil?.participationsTournois?.length || 0;
   const badges = profil?.badges?.length || 0;
 
+  const FOND_CARTE_MAP = {
+    controller: styles.fondController,
+    code: styles.fondCode,
+    synthwave: styles.fondSynthwave,
+    dragon: styles.fondDragon,
+    sakura: styles.fondSakura,
+  };
+  const fondClass = profil?.fondCarteActif ? FOND_CARTE_MAP[profil.fondCarteActif] || "" : "";
+
+  const EFFET_CARTE_MAP = {
+    eclairs: styles.effetEclairs,
+    glitch: styles.effetGlitch,
+    feu: styles.effetFeu,
+    retro: styles.effetRetro,
+  };
+  const effetClass = profil?.effetCarteActif ? EFFET_CARTE_MAP[profil.effetCarteActif] || "" : "";
+
   // Export en image via Canvas API natif (pas de dépendance externe)
   const handleExport = async () => {
     setExporting(true);
@@ -162,7 +179,10 @@ export default function PlayerCard({ profil, onClose }) {
           onClick={() => setFlipped(!flipped)}
         >
           {/* ── Face avant ── */}
-          <div className={styles.front}>
+          <div className={`${styles.front} ${fondClass}`}>
+            {/* Effet superposé dynamique */}
+            {effetClass && <div className={effetClass} />}
+
             {/* Holographic overlay */}
             <div className={styles.holoOverlay} />
             
@@ -241,12 +261,14 @@ export default function PlayerCard({ profil, onClose }) {
           </div>
 
           {/* ── Face arrière ── */}
-          <div className={styles.back}>
+          <div className={`${styles.back} ${fondClass}`}>
+            {/* Effet superposé dynamique */}
+            {effetClass && <div className={effetClass} />}
+            
+            {/* Design de fond standard (Pattern TCG) */}
+            <div className={styles.backDecoration} />
+
             <div className={styles.backContent}>
-              <div className={styles.backLogo}>🦊</div>
-              <h3 className={styles.backTitle}>FENNEC ARTS</h3>
-              <p className={styles.backSubtitle}>Esports & Gaming Community</p>
-              <div className={styles.backPattern} />
               {profil?.bio && <p className={styles.backBio}>"{profil.bio}"</p>}
               {profil?.citation && <p className={styles.backCitation}>« {profil.citation} »</p>}
             </div>
