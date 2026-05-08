@@ -11,6 +11,7 @@ const CATEGORIES = [
   { id: "avatar_icon", label: "Avatars" },
   { id: "cadre_profil", label: "Cadres Profil" },
   { id: "fond_carte", label: "Fonds de Carte" },
+  { id: "effet_carte", label: "Auras de Carte" },
   { id: "titre_custom", label: "Titres Custom" },
   { id: "couleur_pseudo", label: "Couleurs" },
   { id: "boost_xp", label: "Boosts XP" },

@@ -12,7 +12,7 @@ const CATEGORIES = [
   { id: "avatar_icon", label: "Avatars", icone: "🦊" },
   { id: "titre_custom", label: "Titres", icone: "🏷️" },
   { id: "fond_carte", label: "Fonds", icone: "🎴" },
-  { id: "effet_carte", label: "Effets", icone: "⚡" },
+  { id: "effet_carte", label: "Auras", icone: "✨" },
   { id: "autres", label: "Autres", icone: "📜" },
 ];
 

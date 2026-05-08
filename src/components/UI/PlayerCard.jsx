@@ -45,10 +45,11 @@ export default function PlayerCard({ profil, onClose }) {
   const fondClass = profil?.fondCarteActif ? FOND_CARTE_MAP[profil.fondCarteActif] || "" : "";
 
   const EFFET_CARTE_MAP = {
-    eclairs: styles.effetEclairs,
-    glitch: styles.effetGlitch,
-    feu: styles.effetFeu,
-    retro: styles.effetRetro,
+    "orage_electrique": styles.effetEclairs,
+    "cyber_glitch": styles.effetGlitch,
+    "aura_de_feu": styles.effetFeu,
+    "camera_retro": styles.effetRetro,
+    "aura_de_glace": styles.effetGlace,
   };
   const effetClass = profil?.effetCarteActif ? EFFET_CARTE_MAP[profil.effetCarteActif] || "" : "";
 
@@ -178,11 +179,11 @@ export default function PlayerCard({ profil, onClose }) {
           }}
           onClick={() => setFlipped(!flipped)}
         >
+          {/* ── Aura / Effet Spécial (Débordant) ── */}
+          {effetClass && <div className={`${styles.auraLayer} ${effetClass}`} />}
+
           {/* ── Face avant ── */}
           <div className={`${styles.front} ${fondClass}`}>
-            {/* Effet superposé dynamique */}
-            {effetClass && <div className={effetClass} />}
-
             {/* Holographic overlay */}
             <div className={styles.holoOverlay} />
             
@@ -262,9 +263,6 @@ export default function PlayerCard({ profil, onClose }) {
 
           {/* ── Face arrière ── */}
           <div className={`${styles.back} ${fondClass}`}>
-            {/* Effet superposé dynamique */}
-            {effetClass && <div className={effetClass} />}
-            
             {/* Design de fond standard (Pattern TCG) */}
             <div className={styles.backDecoration} />
 
