@@ -15,10 +15,11 @@ function shuffle(arr) {
   return a;
 }
 
-export default function QuizGame({ onGameEnd, isOnline, socket, roomId, isHost, userId }) {
+export default function QuizGame({ onGameEnd, isOnline, socket, roomData, isHost, userId }) {
   // ─── ETAT LOCAL ───
   // Si on est en ligne et Client (isHost = false), on lit l'état envoyé par l'Hôte.
   // Si on est Solo ou Hôte, on gère l'état localement.
+  const roomId = roomData?.roomId;
   
   const [gameState, setGameState] = useState({
     questions: isHost || !isOnline ? shuffle(QUESTIONS).slice(0, 10) : [],

@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import styles from "./GameBoard.module.css";
 
-export default function SnakeGame({ onGameEnd, isOnline }) {
+export default function SnakeGame({ onGameEnd, socket, roomData, isOnline }) {
   const canvasRef = useRef(null);
+  const isJ1 = isOnline ? roomData.j1.socketId === socket.id : true;
   const [scores, setScores] = useState({ j1: 0, j2: 0 });
   const [temps, setTemps] = useState(0);
   const gameOverRef = useRef(false);
@@ -43,6 +44,25 @@ export default function SnakeGame({ onGameEnd, isOnline }) {
     const onKU = (e) => { keys[e.key] = false; };
     window.addEventListener("keydown", onKD);
     window.addEventListener("keyup", onKU);
+    
+    // Écouteurs Multijoueur
+    if (isOnline) {
+      socket.on("opponentAction", ({ action, data }) => {
+        if (action === "move") {
+          if (isJ1) d2 = data.dir; else d1 = data.dir;
+        }
+      });
+      
+      socket.on("gameStateUpdated", (state) => {
+        if (!isJ1) {
+          food = state.food;
+          s1 = state.s1;
+          s2 = state.s2;
+          score1 = state.score1;
+          score2 = state.score2;
+        }
+      });
+    }
 
     function updateDirection() {
       // J1 (Human)
@@ -53,10 +73,23 @@ export default function SnakeGame({ onGameEnd, isOnline }) {
 
       // J2 (Human if Online, otherwise CPU)
       if (isOnline) {
-        if (keys["ArrowUp"] && d2.y !== 1) d2 = { x: 0, y: -1 };
-        if (keys["ArrowDown"] && d2.y !== -1) d2 = { x: 0, y: 1 };
-        if (keys["ArrowLeft"] && d2.x !== 1) d2 = { x: -1, y: 0 };
-        if (keys["ArrowRight"] && d2.x !== -1) d2 = { x: 1, y: 0 };
+        let oldDir = isJ1 ? d1 : d2;
+        if (isJ1) {
+          if (keys["ArrowUp"] && d1.y !== 1) d1 = { x: 0, y: -1 };
+          if (keys["ArrowDown"] && d1.y !== -1) d1 = { x: 0, y: 1 };
+          if (keys["ArrowLeft"] && d1.x !== 1) d1 = { x: -1, y: 0 };
+          if (keys["ArrowRight"] && d1.x !== -1) d1 = { x: 1, y: 0 };
+        } else {
+          if (keys["ArrowUp"] && d2.y !== 1) d2 = { x: 0, y: -1 };
+          if (keys["ArrowDown"] && d2.y !== -1) d2 = { x: 0, y: 1 };
+          if (keys["ArrowLeft"] && d2.x !== 1) d2 = { x: -1, y: 0 };
+          if (keys["ArrowRight"] && d2.x !== -1) d2 = { x: 1, y: 0 };
+        }
+        
+        let newDir = isJ1 ? d1 : d2;
+        if (newDir.x !== oldDir.x || newDir.y !== oldDir.y) {
+          socket.emit("playerAction", { roomId: roomData.roomId, action: "move", data: { dir: newDir } });
+        }
       } else {
         // CPU logic (very basic heuristic)
         let possibleDirs = [
@@ -102,7 +135,15 @@ export default function SnakeGame({ onGameEnd, isOnline }) {
       const dead1 = collides(h1, s1) || s2.some(s => s.x === h1.x && s.y === h1.y);
       const dead2 = collides(h2, s2) || s1.some(s => s.x === h2.x && s.y === h2.y);
 
-      if (dead1 || dead2 || frameCount > 600) {
+      // Sync État (Seulement J1 est source de vérité)
+      if (isOnline && isJ1 && frameCount % 2 === 0) {
+        socket.emit("updateGameState", {
+          roomId: roomData.roomId,
+          state: { food, s1, s2, score1, score2 }
+        });
+      }
+
+      if (dead1 || dead2 || frameCount > 2000) {
         handleEnd(score1, score2);
         return;
       }
@@ -149,20 +190,24 @@ export default function SnakeGame({ onGameEnd, isOnline }) {
       clearInterval(interval);
       window.removeEventListener("keydown", onKD);
       window.removeEventListener("keyup", onKU);
+      if (isOnline) {
+        socket.off("opponentAction");
+        socket.off("gameStateUpdated");
+      }
     };
-  }, [handleEnd]);
+  }, [handleEnd, isOnline, isJ1, socket, roomData]);
 
   return (
     <div className={styles.gameBoard}>
       <div className={styles.gameHeader}>
         <div className={styles.playerLabel}>
           <span className={styles.playerDot} style={{ background: "#e63946" }} />
-          J1 : <strong>{scores.j1}</strong>
+          {isOnline ? roomData.j1.pseudo : "J1"} : <strong>{scores.j1}</strong>
         </div>
         <div className={styles.timer}>⏱ {temps}s</div>
         <div className={styles.playerLabel}>
           <span className={styles.playerDot} style={{ background: "#3498db" }} />
-          {isOnline ? "J2" : "CPU"} : <strong>{scores.j2}</strong>
+          {isOnline ? roomData.j2.pseudo : "CPU"} : <strong>{scores.j2}</strong>
         </div>
       </div>
       <canvas ref={canvasRef} className={styles.canvas} />

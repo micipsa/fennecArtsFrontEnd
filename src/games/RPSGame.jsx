@@ -7,7 +7,8 @@ const CHOIX = [
   { id: "ciseaux", emoji: "✂️", nom: "Ciseaux", bat: "papier" },
 ];
 
-export default function RPSGame({ onGameEnd, isOnline }) {
+export default function RPSGame({ onGameEnd, socket, roomData, isOnline }) {
+  const isJ1 = isOnline ? roomData.j1.socketId === socket.id : true;
   const [score1, setScore1] = useState(0);
   const [score2, setScore2] = useState(0);
   const [round, setRound] = useState(1);
@@ -42,23 +43,45 @@ export default function RPSGame({ onGameEnd, isOnline }) {
     }, 2000);
   }, [score1, score2, round, maxRounds, onGameEnd]);
 
+  useEffect(() => {
+    if (isOnline) {
+      socket.on("opponentAction", ({ action, data }) => {
+        if (action === "choix") {
+          if (isJ1) setChoix2(data.id); else setChoix1(data.id);
+        }
+      });
+    }
+    return () => { if (isOnline) socket.off("opponentAction"); };
+  }, [isOnline, isJ1, socket]);
+
+  // Vérification de résolution automatique en ligne
+  useEffect(() => {
+    if (isOnline && choix1 && choix2 && phase !== "reveal") {
+      setPhase("reveal");
+      resolveRound(choix1, choix2);
+    }
+  }, [choix1, choix2, phase, isOnline, resolveRound]);
+
   const jouer = useCallback((choixId) => {
-    if (phase === "j1") {
-      setChoix1(choixId);
-      if (!isOnline) {
+    if (isOnline) {
+      if (isJ1) {
+        if (choix1) return; // Déjà joué
+        setChoix1(choixId);
+      } else {
+        if (choix2) return; // Déjà joué
+        setChoix2(choixId);
+      }
+      socket.emit("playerAction", { roomId: roomData.roomId, action: "choix", data: { id: choixId } });
+    } else {
+      if (phase === "j1") {
+        setChoix1(choixId);
         const cpuChoice = CHOIX[Math.floor(Math.random() * CHOIX.length)].id;
         setChoix2(cpuChoice);
         setPhase("reveal");
         resolveRound(choixId, cpuChoice);
-      } else {
-        setPhase("j2");
       }
-    } else if (phase === "j2" && isOnline) {
-      setChoix2(choixId);
-      setPhase("reveal");
-      resolveRound(choix1, choixId);
     }
-  }, [phase, choix1, isOnline, resolveRound]);
+  }, [phase, choix1, choix2, isOnline, isJ1, socket, roomData, resolveRound]);
 
   const joueurActif = phase === "j1" ? "Joueur 1" : phase === "j2" ? "Joueur 2" : "";
 
@@ -72,8 +95,26 @@ export default function RPSGame({ onGameEnd, isOnline }) {
         <div className={styles.rpsRound}>Round {round}/{maxRounds}</div>
         <div className={styles.rpsPlayer}>
           <span className={styles.rpsDot} style={{ background: "#3498db" }} />
-          {isOnline ? "J2" : "CPU"}: <strong>{score2}</strong>
+          {isOnline ? roomData.j2.pseudo : "CPU"}: <strong>{score2}</strong>
         </div>
+      </div>
+
+      <div style={{ textAlign: "center", marginBottom: "1rem" }}>
+        {isOnline && (
+          <div className={styles.onlineStatus}>
+            {isJ1 ? (
+              choix1 ? "✅ Tu as joué" : "⏳ En attente de ton choix..."
+            ) : (
+              choix2 ? "✅ Tu as joué" : "⏳ En attente de ton choix..."
+            )}
+            <br />
+            {isJ1 ? (
+              choix2 ? "✅ L'adversaire a joué" : "⏳ L'adversaire réfléchit..."
+            ) : (
+              choix1 ? "✅ L'adversaire a joué" : "⏳ L'adversaire réfléchit..."
+            )}
+          </div>
+        )}
       </div>
 
       {phase === "reveal" ? (
@@ -93,7 +134,7 @@ export default function RPSGame({ onGameEnd, isOnline }) {
       ) : (
         <div className={styles.rpsChoixSection}>
           <h2 className={styles.rpsTour}>
-            {joueurActif}, choisis ! {phase === "j2" && <small>(J1 ne regarde pas 👀)</small>}
+            {isOnline ? "À toi de jouer !" : (phase === "j1" ? "Joueur 1, choisis !" : "")}
           </h2>
           <div className={styles.rpsChoix}>
             {CHOIX.map(c => (
