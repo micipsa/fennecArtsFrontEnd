@@ -63,47 +63,48 @@
   color: #fff;
 }
 
-.section {
-  padding: 4rem 0;
+.dashboardSection {
+  padding: 4rem 0 6rem;
+  background-color: var(--couleur-sombre-2);
 }
 
-.sectionSombre {
-  background: var(--couleur-sombre-2);
+.bentoContainer {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  align-items: start;
 }
 
-.sectionSombre .sectionTitre {
-  color: var(--couleur-blanc);
+@media (max-width: 1024px) {
+  .bentoContainer {
+    grid-template-columns: 1fr;
+  }
 }
 
-.sectionSombre .sectionSousTitre {
-  color: rgba(255, 255, 255, 0.6);
+/* ── Colonnes ── */
+.bentoCol {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
-.sectionSombre .voirTout {
-  color: var(--couleur-accent);
-  border-color: rgba(244, 162, 97, 0.4);
-}
-
-.sectionSombre .voirTout:hover {
-  background: rgba(244, 162, 97, 0.1);
-}
-
+/* ── Entêtes ── */
 .sectionEntete {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .sectionTitre {
   font-size: 1.6rem;
   font-weight: 700;
-  color: var(--couleur-texte);
+  color: var(--couleur-blanc);
   margin-bottom: 0.25rem;
 }
 
 .sectionSousTitre {
-  color: var(--couleur-texte-clair);
+  color: rgba(255, 255, 255, 0.6);
   font-size: 0.9rem;
 }
 
@@ -113,227 +114,165 @@
   color: var(--couleur-primaire);
   padding: 0.4rem 1rem;
   border-radius: 999px;
-  border: 1.5px solid rgba(230, 57, 70, 0.3);
+  border: 1px solid rgba(230, 57, 70, 0.3);
   transition: var(--transition);
   white-space: nowrap;
 }
 
 .voirTout:hover {
-  background: rgba(230, 57, 70, 0.08);
+  background: rgba(230, 57, 70, 0.1);
+  color: #fff;
 }
 
-.grille {
+.lienDiscret {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.lienDiscret:hover {
+  color: var(--couleur-accent);
+}
+
+/* ── Grille Articles ── */
+.articlesGrille {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
+}
+
+/* ── Bento Cards (Tournois, Events) ── */
+.eventsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.bentoCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardHeader {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.cardHeader h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.cardBody {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tournoisListe,
+.eventsListe {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ── Bannière Arcade Fennec ── */
+.arcadeBento {
+  background: linear-gradient(145deg, #0f0f13, #15151a);
+  border: 1px solid rgba(230, 57, 70, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.arcadeBento:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(230, 57, 70, 0.15);
+  border-color: rgba(230, 57, 70, 0.4);
+}
+
+.arcadeBento::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--couleur-primaire), var(--couleur-accent));
+}
+
+.arcadeBentoContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.arcadeBentoHeader h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.arcadeBentoHeader p {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.arcadeBentoIcons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.arcadeBentoIcons span {
+  background: rgba(255,255,255,0.05);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.arcadeBtn {
+  display: inline-block;
+  text-align: center;
+  padding: 0.8rem 1.5rem;
+  background: var(--couleur-primaire);
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.arcadeBtn:hover {
+  background: #d92d3b;
+  box-shadow: 0 4px 15px rgba(230,57,70,0.3);
 }
 
 .vide {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.9rem;
   text-align: center;
-  padding: 2rem 0;
-}
-
-@media (max-width: 768px) {
-  .section {
-    padding: 2.5rem 0;
-  }
-
-  .sectionEntete {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .grille {
-    grid-template-columns: 1fr;
-  }
-}
-
-.sectionTransition {
-  position: relative;
-  height: 80px;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.sectionTransition::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent, var(--couleur-sombre-2));
-}
-
-.sectionTransition.versRouge::before {
-  background: linear-gradient(180deg, transparent, rgba(230, 57, 70, 0.1), var(--couleur-sombre));
-}
-
-.sectionTransition.versAccent::before {
-  background: linear-gradient(180deg, transparent, rgba(244, 162, 97, 0.08), var(--couleur-sombre-2));
-}
-
-.sectionDecor {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.kanjiDecor {
-  position: absolute;
-  font-family: serif;
-  color: rgba(230, 57, 70, 0.04);
-  font-size: 18rem;
-  pointer-events: none;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.kanjiDecor.gauche { left: -3rem; }
-.kanjiDecor.droite { right: -3rem; }
-
-.sectionEnteteAnimee {
-  display: inline-block;
-  position: relative;
-  padding-bottom: 0.6rem;
-}
-
-.sectionEnteteAnimee::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 50px;
-  height: 3px;
-  background: linear-gradient(90deg, var(--couleur-primaire), var(--couleur-accent));
-  border-radius: 99px;
-  animation: barreGlow 2s ease-in-out infinite alternate;
-}
-
-@keyframes barreGlow {
-  0% { width: 50px; box-shadow: 0 0 10px rgba(230, 57, 70, 0.3); }
-  100% { width: 80px; box-shadow: 0 0 20px rgba(230, 57, 70, 0.6); }
-}
-
-.sectionFlottants {
-  position: relative;
-}
-
-.sectionFlottants::before,
-.sectionFlottants::after {
-  content: "";
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(230, 57, 70, 0.06), transparent 70%);
-  filter: blur(40px);
-  pointer-events: none;
-  animation: flottementBg 8s ease-in-out infinite;
-}
-
-.sectionFlottants::before {
-  top: 20%;
-  left: 5%;
-}
-
-.sectionFlottants::after {
-  bottom: 20%;
-  right: 5%;
-  animation-delay: -4s;
-}
-
-@keyframes flottementBg {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(30px, -30px); }
-}
-
-/* ── ARCADE BANNER ── */
-.arcadeBanner {
-  background: linear-gradient(135deg, rgba(230,57,70,0.08), rgba(155,89,182,0.06));
-  border: 1px solid rgba(230,57,70,0.2);
-  border-radius: 16px;
-  padding: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-  position: relative;
-  overflow: hidden;
-}
-.arcadeBanner::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 0%, rgba(230,57,70,0.12) 0%, transparent 60%);
-  pointer-events: none;
-}
-
-.arcadeJeux {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 1rem;
-  width: 100%;
-  max-width: 600px;
-  position: relative;
-  z-index: 1;
-}
-
-.arcadeJeuMini {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 1rem 0.5rem;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
-  transition: all 0.3s;
-  cursor: default;
-}
-.arcadeJeuMini:hover {
-  background: rgba(230,57,70,0.1);
-  border-color: rgba(230,57,70,0.3);
-  transform: translateY(-3px);
-}
-.arcadeJeuMini span:first-child {
-  font-size: 1.8rem;
-}
-.arcadeJeuMini span:last-child {
-  font-size: 0.7rem;
-  color: rgba(255,255,255,0.5);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.arcadeCta {
-  display: inline-block;
-  padding: 0.8rem 2.5rem;
-  background: linear-gradient(135deg, var(--couleur-primaire), #9b59b6);
-  color: #fff;
-  border-radius: 12px;
-  font-family: var(--font-titre);
-  font-weight: 700;
-  font-size: 1rem;
-  text-decoration: none;
-  letter-spacing: 0.5px;
-  transition: all 0.3s;
-  box-shadow: 0 4px 20px rgba(230,57,70,0.3);
-  position: relative;
-  z-index: 1;
-}
-.arcadeCta:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 30px rgba(230,57,70,0.5);
-}
-
-@media (max-width: 768px) {
-  .arcadeJeux {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .arcadeBanner {
-    padding: 1.5rem;
-  }
+  padding: 1rem 0;
 }
 

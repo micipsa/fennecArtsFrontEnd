@@ -15,8 +15,10 @@ export const SocketProvider = ({ children }) => {
   useEffect(() => {
     // Ne se connecter que si l'utilisateur est authentifié
     if (utilisateur) {
-      // Remplacer l'URL par l'URL du backend en production (process.env.VITE_API_URL)
-      const socketUrl = import.meta.env.VITE_API_URL || "http://localhost:8080";
+      let socketUrl = import.meta.env.VITE_API_URL || "http://localhost:8080";
+      if (socketUrl.includes("localhost") && window.location.hostname !== "localhost") {
+        socketUrl = socketUrl.replace("localhost", window.location.hostname);
+      }
       
       const newSocket = io(socketUrl, {
         reconnectionAttempts: 5,

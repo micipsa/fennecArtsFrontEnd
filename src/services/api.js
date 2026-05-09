@@ -15,8 +15,13 @@ import toast from "react-hot-toast";
 // Création de l'instance Axios avec la baseURL lue depuis le fichier .env.
 // En développement : http://localhost:5000 (typiquement).
 // En production   : l'URL du backend déployé.
+let apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8080";
+if (apiUrl.includes("localhost") && window.location.hostname !== "localhost") {
+  apiUrl = apiUrl.replace("localhost", window.location.hostname);
+}
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: apiUrl,
 });
 
 /**
