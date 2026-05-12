@@ -26,8 +26,17 @@
  *
  * 3. Route catch-all  → page 404 (NotFoundPage)
  */
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 // ── Layouts ──
 import MainLayout from "./layouts/MainLayout";
@@ -102,6 +111,7 @@ function App() {
   return (
     // BrowserRouter utilise l'API History du navigateur pour gérer les URL.
     <BrowserRouter>
+      <ScrollToTop />
       <Toaster position="top-right" reverseOrder={false} />
       <Routes>
         {/* ════════════════════════════════════════════

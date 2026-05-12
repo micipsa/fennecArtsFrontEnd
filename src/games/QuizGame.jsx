@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./QuizGame.module.css";
 
 import quizData from "../data/quizQuestions.json";
@@ -16,6 +17,7 @@ function shuffle(arr) {
 }
 
 export default function QuizGame({ onGameEnd, isOnline, socket, roomData, isHost, userId }) {
+  const navigate = useNavigate();
   const isBotMatch = isOnline && (roomData?.j2?.isBot || roomData?.j1?.isBot);
   // ─── ETAT LOCAL ───
   // Si on est en ligne et Client (isHost = false), on lit l'état envoyé par l'Hôte.
@@ -242,6 +244,11 @@ export default function QuizGame({ onGameEnd, isOnline, socket, roomData, isHost
         <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "1.2rem", marginTop: "1rem" }}>
           Tu as déjà joué à ton quiz local aujourd'hui !<br/>Reviens demain pour de nouvelles questions.
         </p>
+        <button 
+          onClick={() => navigate('/arcade')}
+          style={{ marginTop: "2rem", padding: "1rem 2rem", fontSize: "1.2rem", background: "#3498db", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontWeight: "bold" }}>
+          Retour à l'Arcade
+        </button>
       </div>
     );
   }

@@ -8,8 +8,26 @@ export const DICTIONNAIRE_EN = ["WHICH","THERE","THEIR","ABOUT","WOULD","THESE",
 // Graine fixe pour le Fennec Word
 const EPOCH_DATE = new Date("2026-01-01T00:00:00Z");
 
+export const DAILY_WORDS_FR = [
+  "PIXEL", "MARIO", "ZELDA", "MANGA", "ANIME", "OTAKU", "NINJA", "TITAN",
+  "RETRO", "MAGIC", "VADOR", "ROBOT", "MECHA", "ALIEN", "SONIC", "COMIC",
+  "CYBER", "CLOUD", "MAGIE", "QUETE", "ARENE", "GEEKS", "NOOBS", "MAGES",
+  "ELFES", "ORQUE", "GOULE", "LOOTS", "EPEES", "SABRE", "KAIJU"
+];
+
+export const DAILY_WORDS_EN = [
+  "PIXEL", "MARIO", "ZELDA", "MANGA", "ANIME", "OTAKU", "NINJA", "TITAN",
+  "RETRO", "MAGIC", "VADER", "ROBOT", "MECHA", "ALIEN", "SONIC", "COMIC",
+  "CYBER", "CLOUD", "SPELL", "QUEST", "ARENA", "GEEKS", "NOOBS", "MAGES",
+  "ELVES", "DEMON", "GHOUL", "LOOTS", "SWORD", "ROGUE", "KAIJU"
+];
+
+// Ajout des mots geeks au dictionnaire principal pour qu'ils soient acceptés comme essais valides
+DAILY_WORDS_FR.forEach(w => { if (!DICTIONNAIRE_FR.includes(w)) DICTIONNAIRE_FR.push(w); });
+DAILY_WORDS_EN.forEach(w => { if (!DICTIONNAIRE_EN.includes(w)) DICTIONNAIRE_EN.push(w); });
+
 export const getDailyWordInfo = (language = "FR") => {
-  const dict = language === "FR" ? DICTIONNAIRE_FR : DICTIONNAIRE_EN;
+  const dict = language === "FR" ? DAILY_WORDS_FR : DAILY_WORDS_EN;
   
   // Date du jour UTC pour que tout le monde ait le même mot
   const now = new Date();
@@ -21,8 +39,6 @@ export const getDailyWordInfo = (language = "FR") => {
   const editionNumber = diffDays + 1; // "Fennec Word #1" le 1er Janvier 2026
 
   // PRNG simple basé sur l'index de jour pour sélectionner le mot de façon déterministe
-  // On utilise un multiplicateur premier pour s'assurer d'une distribution pseudo-aléatoire
-  // Différent pour FR et EN pour ne pas avoir des mots du même index
   const offset = language === "FR" ? 17 : 43;
   const index = (diffDays * 9301 + 49297 + offset) % dict.length;
   

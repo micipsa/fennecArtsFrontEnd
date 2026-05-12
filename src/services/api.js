@@ -11,6 +11,7 @@
  */
 import axios from "axios";
 import toast from "react-hot-toast";
+import { createElement } from "react";
 
 // Création de l'instance Axios avec la baseURL lue depuis le fichier .env.
 // En développement : http://localhost:5000 (typiquement).
@@ -50,16 +51,28 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use((response) => {
   const data = response.data;
 
-  // Notification Gain d'XP
+// Notification Gain d'XP
   if (data.pointsGagnes) {
-    toast.success(`+${data.pointsGagnes} XP : ${data.raison || "Activité"}`, {
-      icon: "✨",
-      style: {
-        borderRadius: "10px",
-        background: "#333",
-        color: "#fff",
-      },
-    });
+    toast.success(
+      createElement(
+        "div",
+        { 
+          onClick: () => { window.location.href = "/profil"; },
+          style: { cursor: "pointer", display: "flex", flexDirection: "column" }
+        },
+        createElement("strong", null, `+${data.pointsGagnes} XP : ${data.raison || "Activité"}`),
+        createElement("small", { style: { textDecoration: "underline", opacity: 0.8, marginTop: "4px" } }, "Cliquez pour voir vos récompenses")
+      ),
+      {
+        icon: "✨",
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+        duration: 5000
+      }
+    );
   }
 
   // Notification Nouveau Badge

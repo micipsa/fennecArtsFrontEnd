@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './WordleGame.module.css';
 import { getDailyWordInfo, DICTIONNAIRE_FR, DICTIONNAIRE_EN } from './dictionnaireWordle';
 import useAuth from '../hooks/useAuth';
@@ -12,6 +13,7 @@ const CLAVIER_LIGNES = [
 ];
 
 export default function WordleGame({ onGameEnd }) {
+  const navigate = useNavigate();
   const [langue, setLangue] = useState(null); // 'FR' ou 'EN', si null affiche menu
   const [dailyInfo, setDailyInfo] = useState(null);
   const [grille, setGrille] = useState(Array(LIGNES).fill(''));
@@ -192,6 +194,11 @@ export default function WordleGame({ onGameEnd }) {
         <h2 style={{ fontFamily: "var(--font-manga)", fontSize: "2.5rem", marginBottom: "1rem", color: "#f39c12" }}>DÉJÀ JOUÉ</h2>
         <p style={{ opacity: 0.8, fontSize: "1.2rem", marginBottom: "2rem" }}>Tu as complété les deux Fennec Words du jour (FR & EN) !</p>
         <p style={{ opacity: 0.6, fontStyle: "italic" }}>Reviens demain pour de nouveaux mots.</p>
+        <button 
+          onClick={() => navigate('/arcade')}
+          style={{ marginTop: "2rem", padding: "1rem 2rem", fontSize: "1.2rem", background: "#3498db", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontWeight: "bold" }}>
+          Retour à l'Arcade
+        </button>
       </div>
     );
   }

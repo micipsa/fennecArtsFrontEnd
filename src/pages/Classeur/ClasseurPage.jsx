@@ -87,6 +87,12 @@ function CarteDetail({ carte, brillant, onClose }) {
               {carte.edition === "limitee" ? "⭐ ÉDITION LIMITÉE" : "🌟 UNIQUE"}
             </div>
           )}
+          
+          {carte.artisteNom && (
+            <div className={styles.artisteText}>
+              Illustration by {carte.artisteNom}
+            </div>
+          )}
         </div>
         <button className={styles.detailClose} onClick={onClose}>Fermer</button>
       </div>
