@@ -24,6 +24,7 @@ function RegisterPage() {
   // State du formulaire (controlled inputs)
   const [formData, setFormData] = useState({
     nom: "",
+    pseudo: "",
     email: "",
     motDePasse: "",
   });
@@ -50,6 +51,7 @@ function RegisterPage() {
       // Envoi des données d'inscription au backend
       const res = await api.post("/api/auth/register", {
         nom: formData.nom,
+        pseudo: formData.pseudo,
         email: formData.email,
         password: formData.motDePasse,
       });
@@ -112,7 +114,26 @@ function RegisterPage() {
             />
           </div>
 
-          {/* Champ email */}
+          {/* Champ pseudo */}
+          <div className={styles.champ}>
+            <label className={styles.label} htmlFor="pseudo">
+              Pseudo ✨ <span style={{ fontWeight: 400, fontSize: "0.8em", opacity: 0.7 }}>(affiché publiquement)</span>
+            </label>
+            <input
+              className={styles.input}
+              type="text"
+              id="pseudo"
+              name="pseudo"
+              value={formData.pseudo}
+              onChange={handleChange}
+              placeholder="ex: ShadowFox42"
+              required
+              minLength={3}
+              maxLength={20}
+              pattern="[a-zA-Z0-9_\-\.]+"
+              title="Lettres, chiffres, _, - ou . uniquement"
+            />
+          </div>
           <div className={styles.champ}>
             <label className={styles.label} htmlFor="email">
               Adresse email

@@ -52,6 +52,12 @@ function ProfilPage() {
   const [historique, setHistorique] = useState([]);
   const [showPlayerCard, setShowPlayerCard] = useState(false);
 
+  // States pour le changement de pseudo
+  const [nouveauPseudo, setNouveauPseudo] = useState("");
+  const [erreurPseudo, setErreurPseudo] = useState(null);
+  const [successPseudo, setSuccessPseudo] = useState(null);
+  const [pseudoEnCours, setPseudoEnCours] = useState(false);
+
   // ── Chargement du profil au montage ──
   useEffect(() => {
     const chargerProfil = async () => {
@@ -128,6 +134,28 @@ function ProfilPage() {
   const [ongletActif, setOngletActif] = useState("apercu");
   const rechargerProfil = () => {
     api.get("/api/auth/me").then(res => setProfil(res.data.user)).catch(() => {});
+  };
+
+  // Gestionnaire de changement de pseudo
+  const handleSoumettreNouveauPseudo = async (e) => {
+    e.preventDefault();
+    setErreurPseudo(null);
+    setSuccessPseudo(null);
+    if (nouveauPseudo.trim().length < 3) {
+      setErreurPseudo("Le pseudo doit faire au moins 3 caractères.");
+      return;
+    }
+    setPseudoEnCours(true);
+    try {
+      await api.put("/api/auth/pseudo", { pseudo: nouveauPseudo.trim() });
+      setSuccessPseudo(`Pseudo changé en "${nouveauPseudo.trim()}" avec succès !`);
+      setNouveauPseudo("");
+      rechargerProfil();
+    } catch (err) {
+      setErreurPseudo(err.response?.data?.message || "Erreur lors du changement.");
+    } finally {
+      setPseudoEnCours(false);
+    }
   };
 
   const ONGLETS = [
@@ -212,7 +240,14 @@ function ProfilPage() {
             </div>
 
             {/* Nom et rôle */}
-            <p className={styles.nomPrincipal}>{nom}</p>
+            <p className={styles.nomPrincipal}>
+              {profil?.pseudo || nom}
+            </p>
+            {profil?.pseudo && (
+              <p style={{ color: "var(--couleur-texte-secondaire, #aaa)", fontSize: "0.85em", marginTop: "-0.3rem", marginBottom: "0.3rem" }}>
+                {nom}
+              </p>
+            )}
             <Badge texte={role} variante={varianteRole[role] ?? "defaut"} />
 
             {/* Streak de connexion */}
@@ -455,7 +490,7 @@ function ProfilPage() {
         {ongletActif === "securite" && (
         <div className={styles.sectionMdp}>
           <h2 className={styles.sectionTitre}>Changer le mot de passe</h2>
-          <form onSubmit={handleSubmitMdp} className={styles.formMdp}>
+          <form onSubmit={handleSoumettreNewMdp} className={styles.formMdp}>
             <div className={styles.champ}>
               <label className={styles.label}>Ancien mot de passe</label>
               <input className={styles.input} type="password" name="ancien" value={formMdp.ancien} onChange={handleChangeMdp} placeholder="••••••••" required />
@@ -470,6 +505,40 @@ function ProfilPage() {
             </div>
             <button type="submit" className={styles.btnMdp} disabled={envoiEnCours}>
               {envoiEnCours ? "Modification..." : "Changer le mot de passe"}
+            </button>
+          </form>
+
+          {/* ── Changement de pseudo ── */}
+          <h2 className={styles.sectionTitre} style={{ marginTop: "2.5rem" }}>Changer mon pseudo</h2>
+          <p style={{ color: "var(--couleur-texte-secondaire, #aaa)", fontSize: "0.9em", marginBottom: "1rem" }}>
+            Pseudo actuel&nbsp;:{" "}
+            <strong style={{ color: "var(--theme-primaire, #fff)" }}>
+              {profil?.pseudo || <em>non défini</em>}
+            </strong>
+          </p>
+          {erreurPseudo && <div className={styles.erreur}>{erreurPseudo}</div>}
+          {successPseudo && <div className={styles.succes}>{successPseudo}</div>}
+          <form onSubmit={handleSoumettreNouveauPseudo} className={styles.formMdp}>
+            <div className={styles.champ}>
+              <label className={styles.label}>Nouveau pseudo</label>
+              <input
+                className={styles.input}
+                type="text"
+                value={nouveauPseudo}
+                onChange={e => setNouveauPseudo(e.target.value)}
+                placeholder="ex: ShadowFox42"
+                minLength={3}
+                maxLength={20}
+                pattern="[a-zA-Z0-9_\-\.]+"
+                title="Lettres, chiffres, _, - ou . uniquement"
+                required
+              />
+              <small style={{ color: "#888", marginTop: "0.3rem", display: "block" }}>
+                3–20 caractères — lettres, chiffres, _, - ou . uniquement
+              </small>
+            </div>
+            <button type="submit" className={styles.btnMdp} disabled={pseudoEnCours}>
+              {pseudoEnCours ? "Vérification..." : "Changer le pseudo"}
             </button>
           </form>
         </div>
