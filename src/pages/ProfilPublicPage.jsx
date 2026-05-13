@@ -31,7 +31,7 @@ function ProfilPublicPage() {
           <button onClick={() => navigate(-1)} className={styles.retourBtn}>← Retour</button>
           <div className={styles.carte}>
             <AvatarIcon avatarUrl={membre.avatarActif} cadreStyle={membre.cadreStyle} taille="lg" nom={membre.nom} />
-            <h1 className={styles.nom}>{membre.nom}</h1>
+            <h1 className={styles.nom}>{membre.pseudo || membre.nom}</h1>
             <div className={styles.prive}>🔒 Ce profil est privé</div>
           </div>
         </div>
@@ -88,8 +88,13 @@ function ProfilPublicPage() {
 
             {/* Nom + Titre + Statut */}
             <h1 className={styles.nom} style={membre.couleurPseudoActive ? { color: membre.couleurPseudoActive } : {}}>
-              {membre.nom}
+              {membre.pseudo || membre.nom}
             </h1>
+            {membre.pseudo && (
+              <p style={{ color: "var(--couleur-texte-secondaire, #aaa)", fontSize: "0.85em", marginTop: "-0.5rem", marginBottom: "0.5rem", textAlign: "center" }}>
+                {membre.nom}
+              </p>
+            )}
             {membre.titreActif && <div className={styles.titreActif}>{membre.titreActif}</div>}
             
             <div className={styles.badgesInline}>

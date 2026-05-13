@@ -118,7 +118,7 @@ function Commentaires({ cibleId, typeCible }) {
                   className={styles.auteur}
                   style={c.auteur?.couleurPseudoActive ? { color: c.auteur.couleurPseudoActive } : {}}
                 >
-                  {c.auteur?.nom ?? "Anonyme"}
+                  {c.auteur?.pseudo || c.auteur?.nom || "Anonyme"}
                 </span>
               </Link>
               <span className={styles.date}>
@@ -172,7 +172,7 @@ function Commentaires({ cibleId, typeCible }) {
                       className={styles.auteur}
                       style={r.auteur?.couleurPseudoActive ? { color: r.auteur.couleurPseudoActive } : {}}
                     >
-                      {r.auteur?.nom ?? "Anonyme"}
+                      {r.auteur?.pseudo || r.auteur?.nom || "Anonyme"}
                     </span>
                   </Link>
                   <span className={styles.date}>

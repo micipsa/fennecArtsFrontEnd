@@ -110,7 +110,7 @@ export default function PlayerCard({ profil, onClose }) {
       // Nom
       ctx.font = "bold 36px sans-serif";
       ctx.fillStyle = profil?.couleurPseudoActive || "#fff";
-      ctx.fillText(profil?.nom || "Joueur", w / 2, 310);
+      ctx.fillText(profil?.pseudo || profil?.nom || "Joueur", w / 2, 310);
 
       // Titre
       if (profil?.titreActif) {
@@ -213,7 +213,7 @@ export default function PlayerCard({ profil, onClose }) {
                 className={styles.playerName}
                 style={profil?.couleurPseudoActive ? { color: profil.couleurPseudoActive } : {}}
               >
-                {profil?.nom || "Joueur"}
+                {profil?.pseudo || profil?.nom || "Joueur"}
               </h2>
               {profil?.titreActif && (
                 <div className={styles.playerTitle}>{profil.titreActif}</div>

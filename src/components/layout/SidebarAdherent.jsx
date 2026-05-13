@@ -10,9 +10,9 @@ export default function SidebarAdherent() {
     <aside className={styles.sidebar}>
       <div className={styles.profil}>
         <div className={styles.avatar}>
-          {utilisateur?.nom?.charAt(0).toUpperCase() || "U"}
+          {utilisateur?.pseudo?.charAt(0).toUpperCase() || utilisateur?.nom?.charAt(0).toUpperCase() || "U"}
         </div>
-        <span className={styles.nom}>{utilisateur?.nom || "Adhérent"}</span>
+        <span className={styles.nom}>{utilisateur?.pseudo || utilisateur?.nom || "Adhérent"}</span>
         <span className={styles.role}>{utilisateur?.role}</span>
       </div>
 

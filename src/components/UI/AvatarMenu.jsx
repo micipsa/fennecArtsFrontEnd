@@ -37,7 +37,7 @@ export default function AvatarMenu({ utilisateur, onDeconnexion }) {
                 className={styles.nom}
                 style={utilisateur.couleurPseudoActive ? { color: utilisateur.couleurPseudoActive } : {}}
               >
-                {utilisateur.nom}
+                {utilisateur.pseudo || utilisateur.nom}
               </span>
               <div className={styles.badgesInline}>
                 <span className={styles.rang} style={{ color: rang.couleur }}>{rang.affichage}</span>

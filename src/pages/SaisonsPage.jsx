@@ -105,13 +105,13 @@ export default function SaisonsPage() {
                 {classementActuel.map((entry, i) => {
                   const rang = calculerRang(entry.utilisateur.points || 0);
                   const medaille = i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${entry.position}`;
-                  const initiale = (entry.utilisateur.nom || "?")[0].toUpperCase();
+                  const initiale = (entry.utilisateur.pseudo || entry.utilisateur.nom || "?")[0].toUpperCase();
                   return (
                     <Link to={`/membres/${entry.utilisateur._id}`} key={entry.utilisateur._id} className={`${styles.classementItem} ${i < 3 ? styles.classementTop : ""}`}>
                       <span className={`${styles.classementPos} ${i < 3 ? styles.posTop : ""}`}>{medaille}</span>
                       <div className={styles.classementAvatar} style={{ background: rang.couleur }}>{initiale}</div>
                       <div className={styles.classementInfo}>
-                        <span className={styles.classementNom}>{entry.utilisateur.nom}</span>
+                        <span className={styles.classementNom}>{entry.utilisateur.pseudo || entry.utilisateur.nom}</span>
                         <span className={styles.classementRang} style={{ color: rang.couleur }}>{rang.nom}</span>
                       </div>
                       <div className={styles.classementStats}>
@@ -151,7 +151,7 @@ export default function SaisonsPage() {
                         <div className={styles.saisonCardPodium}>
                           {s.classementFinal.slice(0, 3).map((e, i) => (
                             <span key={i} className={styles.podiumItem}>
-                              {i === 0 ? "🥇" : i === 1 ? "🥈" : "🥉"} {e.utilisateur?.nom || "?"}
+                              {i === 0 ? "🥇" : i === 1 ? "🥈" : "🥉"} {e.utilisateur?.pseudo || e.utilisateur?.nom || "?"}
                             </span>
                           ))}
                         </div>
