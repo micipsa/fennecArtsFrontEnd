@@ -13,7 +13,7 @@ const COULEURS_RARETE = {
 };
 
 export default function LootboxPage() {
-  const { utilisateur } = useAuth();
+  const { utilisateur, setUtilisateur } = useAuth();
   const { addToast } = useToast();
   const [phase, setPhase] = useState("idle"); // idle | shaking | opening | reveal
   const [recompense, setRecompense] = useState(null);
@@ -38,7 +38,7 @@ export default function LootboxPage() {
         setTimeout(() => {
           setRecompense(data.recompense);
           setSoldeFM(data.nouveauSoldeFM);
-          if (utilisateur) utilisateur.fm = data.nouveauSoldeFM;
+          setUtilisateur(prev => ({ ...prev, fm: data.nouveauSoldeFM }));
           setPhase("reveal");
         }, 1000);
       }, 1500);

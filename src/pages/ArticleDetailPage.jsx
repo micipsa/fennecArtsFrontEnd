@@ -15,6 +15,7 @@
  */
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import DOMPurify from "dompurify";
 import api from "../services/api";
 import Commentaires from "../components/UI/Commentaires";
 import Badge from "../components/UI/Badge";
@@ -133,7 +134,7 @@ function ArticleDetailPage() {
         {/* ── Contenu complet de l'article ── */}
         <div
           className={styles.contenu}
-          dangerouslySetInnerHTML={{ __html: article.contenu }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(article.contenu) }}
         />
         {article.videoUrl && (
           <div className={styles.videoWrapper}>

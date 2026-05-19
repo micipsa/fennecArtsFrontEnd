@@ -9,7 +9,7 @@
  * Le filtrage est simple (pas de useMemo) car il s'agit d'une comparaison
  * directe entre le statut du tournoi et le filtre sélectionné.
  */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import api from "../services/api";
 import CarteTournoi from "../components/Cards/CarteTournoi";
 import Spinner from "../components/UI/Spinner";
@@ -30,22 +30,20 @@ function TournamentsPage() {
   const [erreur, setErreur] = useState(null);
   const [statut, setStatut] = useState("tous"); // Filtre actif
 
-  // ── Chargement de tous les tournois au montage ──
-  useEffect(() => {
-    const charger = async () => {
-      try {
-        setChargement(true);
-        setErreur(null);
-        const res = await api.get("/api/tournaments");
-        setTournois(res.data.data);
-      } catch (err) {
-        setErreur("Impossible de charger les tournois.");
-      } finally {
-        setChargement(false);
-      }
-    };
-    charger();
+  const charger = useCallback(async () => {
+    try {
+      setChargement(true);
+      setErreur(null);
+      const res = await api.get("/api/tournaments");
+      setTournois(res.data.data);
+    } catch {
+      setErreur("Impossible de charger les tournois.");
+    } finally {
+      setChargement(false);
+    }
   }, []);
+
+  useEffect(() => { charger(); }, [charger]);
 
   // Filtrage côté client : si "tous" → tous les tournois, sinon on filtre par statut
   const tournoisFiltres =
@@ -75,7 +73,7 @@ function TournamentsPage() {
         {erreur && (
           <MessageErreur
             message={erreur}
-            onReessayer={() => window.location.reload()}
+            onReessayer={charger}
           />
         )}
 

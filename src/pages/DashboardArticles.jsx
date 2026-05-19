@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import EditeurTexte from "../components/UI/EditeurTexte";
 import UploadImage from "../components/UI/UploadImage";
 import api from "../services/api";
@@ -166,8 +167,9 @@ function DashboardArticles() {
     try {
       await api.delete(`/api/articles/${id}`);
       setArticles((prev) => prev.filter((a) => a._id !== id));
-    } catch (err) {
-      alert("Erreur lors de la suppression.");
+      toast.success("Article supprimé.");
+    } catch {
+      toast.error("Erreur lors de la suppression.");
     }
   };
 
@@ -177,8 +179,8 @@ function DashboardArticles() {
       setArticles((prev) =>
         prev.map((a) => (a._id === id ? { ...a, published: res.data.data.published } : a)),
       );
-    } catch (err) {
-      alert("Erreur lors de la modification.");
+    } catch {
+      toast.error("Erreur lors de la modification.");
     }
   };
 
@@ -188,8 +190,8 @@ function DashboardArticles() {
       setArticles((prev) =>
         prev.map((a) => (a._id === id ? { ...a, enVedette: res.data.data.enVedette } : a)),
       );
-    } catch (err) {
-      alert("Erreur lors de la mise en vedette.");
+    } catch {
+      toast.error("Erreur lors de la mise en vedette.");
     }
   };
 

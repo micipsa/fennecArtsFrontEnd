@@ -33,25 +33,27 @@ function HomePage() {
   useEffect(() => {
     const charger = async () => {
       try {
-        const [resArticles, resEvents, resTournois, resVedette] = await Promise.all([
+        const [resArticles, resEvents, resTournois, resVedette] = await Promise.allSettled([
           api.get("/api/articles?limit=4&page=1"),
           api.get("/api/events"),
           api.get("/api/tournaments"),
           api.get("/api/articles?enVedette=true&limit=1"),
         ]);
-        setArticleVedette(resVedette.data.data?.[0] || null);
 
-        setArticles(resArticles.data.data);
+        const getData = (r) => (r.status === "fulfilled" ? r.value.data.data : []);
+
+        setArticleVedette(getData(resVedette)?.[0] || null);
+        setArticles(getData(resArticles));
 
         const maintenant = new Date();
         setEvenements(
-          resEvents.data.data
+          getData(resEvents)
             .filter((ev) => new Date(ev.dateDebut) > maintenant)
             .slice(0, 3),
         );
 
         setTournois(
-          resTournois.data.data
+          getData(resTournois)
             .filter((t) => t.statut === "ouvert")
             .slice(0, 3),
         );

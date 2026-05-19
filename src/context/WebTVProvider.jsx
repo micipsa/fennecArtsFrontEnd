@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../services/api";
 import WebTVContext from "./WebTVContext";
 
 function WebTVProvider({ children }) {
@@ -7,7 +7,7 @@ function WebTVProvider({ children }) {
 
   const verifierLive = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/webtv`);
+      const res = await api.get("/api/webtv");
       setEstEnLive(res.data.estEnLive);
     } catch {
       // silencieux — pas d'erreur affichée

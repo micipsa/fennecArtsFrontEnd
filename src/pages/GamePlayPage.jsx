@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
+import toast from "react-hot-toast";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { useSocket } from "../context/SocketContext";
@@ -89,6 +90,11 @@ export default function GamePlayPage() {
   const [roomData, setRoomData] = useState(null);
 
   useEffect(() => {
+    if (sessionId === "online" && !utilisateur) {
+      toast.error("Connecte-toi pour jouer en ligne.");
+      navigate("/login");
+      return;
+    }
     if (sessionId !== "online" || !socket || !utilisateur) return;
 
     socket.emit("joinQueue", { jeu, userId: utilisateur._id });
@@ -99,8 +105,8 @@ export default function GamePlayPage() {
       setTimeout(() => setMatchStatus("playing"), 2000); // Animation "Match Found" pendant 2s
     });
 
-    socket.on("notEnoughFM", (data) => {
-      alert("❌ Fonds insuffisants ! Jouer en ligne coûte 5 FM.");
+    socket.on("notEnoughFM", () => {
+      toast.error("Fonds insuffisants — jouer en ligne coûte 5 FM.");
       navigate("/arcade");
     });
 
@@ -120,17 +126,18 @@ export default function GamePlayPage() {
     const gains = GAINS[jeu];
     const isJ1Win = scoreJ1 > scoreJ2 || scoreJ1 === 1; // Wordle renvoie 1 pour win
 
-    if (sessionId && sessionId !== "solo") {
-      try {
-        await api.post(`/api/arcade/terminer-partie/${sessionId}`, { scoreJ1, scoreJ2, temps: extras.temps });
-      } catch {}
+    if (sessionId === "online") {
+      if (roomData?.roomId) {
+        try {
+          await api.post(`/api/arcade/terminer-partie/${roomData.roomId}`, { scoreJ1, scoreJ2, temps: extras.temps });
+        } catch {}
+      }
     } else if (sessionId === "local" || sessionId === "solo") {
-      // Pour les jeux solo comme Fennec Word, on envoie le score au leaderboard
       try {
-        await api.post(`/api/arcade/terminer-solo`, { 
-          jeu, 
+        await api.post(`/api/arcade/terminer-solo`, {
+          jeu,
           isWin: isJ1Win,
-          temps: extras.temps 
+          temps: extras.temps,
         });
       } catch {}
     }

@@ -27,7 +27,7 @@ const COULEURS_RARETE = {
 };
 
 export default function StorePage() {
-  const { utilisateur } = useAuth();
+  const { utilisateur, setUtilisateur } = useAuth();
   const [articles, setArticles] = useState([]);
   const [categorie, setCategorie] = useState("tous");
   const [loading, setLoading] = useState(true);
@@ -69,8 +69,7 @@ export default function StorePage() {
         
         // Ajouter à l'inventaire local pour update l'affichage
         setInventaire(prev => [...prev, { article: article._id }]);
-        // Mettre à jour FM localement
-        utilisateur.fm -= article.prix;
+        setUtilisateur(prev => ({ ...prev, fm: (prev?.fm ?? 0) - article.prix }));
       } catch (err) {
         addToast(err.response?.data?.message || "Erreur lors de l'achat", "error");
       }
