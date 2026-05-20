@@ -80,11 +80,14 @@ export default function StorePage() {
     ? articles 
     : articles.filter(a => a.type === categorie);
 
-  // Vérifier si un article est déjà possédé
-  const estPossede = (articleId) => {
+  const TYPES_UNIQUES = ["cadre_profil", "titre_custom", "couleur_pseudo", "avatar_icon", "fond_carte", "effet_carte"];
+
+  // Vérifier si un article est déjà possédé (réservé aux cosmétiques uniques)
+  const estPossede = (article) => {
+    if (!TYPES_UNIQUES.includes(article.type)) return false;
     return inventaire.some(inv => {
       const id = inv.article?._id || inv.article;
-      return id === articleId;
+      return id === article._id;
     });
   };
 
@@ -200,7 +203,7 @@ export default function StorePage() {
                   <p>{article.description}</p>
                   <div className={styles.footer}>
                     <span className={styles.prix}>💰 {article.prix} FM</span>
-                    {estPossede(article._id) ? (
+                    {estPossede(article) ? (
                       <button className={styles.btnAcheter} disabled style={{ background: '#28a745', borderColor: '#28a745', color: '#fff', opacity: 1 }}>
                         Possédé ✓
                       </button>

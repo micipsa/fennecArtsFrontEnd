@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo } from "react";
-import axios from "axios";
 import api from "../../services/api";
 import styles from "./WebTVPage.module.css";
 
@@ -12,7 +11,7 @@ function WebTVPage() {
 
   const charger = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/webtv`);
+      const res = await api.get("/api/webtv");
       setData(res.data);
     } catch (e) {
       setErreur("Impossible de charger la WebTV.");

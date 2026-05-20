@@ -240,6 +240,21 @@ function TournamentDetail() {
   const handleUploadImage = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
+
+    // Validation du type de fichier
+    const formatsAcceptes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+    if (!formatsAcceptes.includes(file.type)) {
+      alert("Format d'image non supporté. Formats acceptés : JPEG, PNG, WEBP.");
+      return;
+    }
+
+    // Validation de la taille de fichier (2 Mo max)
+    const tailleMax = 2 * 1024 * 1024;
+    if (file.size > tailleMax) {
+      alert("L'image est trop volumineuse. Taille maximale autorisée : 2 Mo.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("image", file);
     setUploadingImage(true);

@@ -31,12 +31,8 @@ function RouteAdmin({ children }) {
     return <Navigate to="/login" replace />;
   }
 
-  // Si l'utilisateur n'est ni admin, ni organisateur (rôle ou flag) → redirection vers l'accueil
-  if (
-    utilisateur.role !== "admin" &&
-    utilisateur.role !== "organisateur" &&
-    !utilisateur.estOrganisateur
-  ) {
+  // Si l'utilisateur n'est pas admin → redirection vers l'accueil
+  if (utilisateur.role !== "admin") {
     return <Navigate to="/" replace />;
   }
 

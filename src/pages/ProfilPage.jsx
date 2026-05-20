@@ -417,69 +417,6 @@ function ProfilPage() {
           </div>
         )}
 
-        {/* ══════════════════════════════════════════════
-            Section : Changement de mot de passe
-            ══════════════════════════════════════════════ */}
-        <div className={styles.sectionMdp}>
-          <h2 className={styles.sectionMdpTitre}>Changer le mot de passe</h2>
-
-          {/* Messages d'erreur ou de succès */}
-          {erreurMdp && <div className={styles.erreur}>{erreurMdp}</div>}
-          {successMdp && <div className={styles.succes}>{successMdp}</div>}
-
-          <form
-            className={styles.formulaireMdp}
-            onSubmit={handleSoumettreNewMdp}>
-            {/* Champ : ancien mot de passe */}
-            <div className={styles.champ}>
-              <label className={styles.label}>Ancien mot de passe</label>
-              <input
-                className={styles.input}
-                type="password"
-                name="ancien"
-                value={formMdp.ancien}
-                onChange={handleChangeMdp}
-                placeholder="••••••••"
-                required
-              />
-            </div>
-            {/* Champ : nouveau mot de passe */}
-            <div className={styles.champ}>
-              <label className={styles.label}>Nouveau mot de passe</label>
-              <input
-                className={styles.input}
-                type="password"
-                name="nouveau"
-                value={formMdp.nouveau}
-                onChange={handleChangeMdp}
-                placeholder="••••••••"
-                required
-              />
-            </div>
-            {/* Champ : confirmation du nouveau mot de passe */}
-            <div className={styles.champ}>
-              <label className={styles.label}>
-                Confirmer le nouveau mot de passe
-              </label>
-              <input
-                className={styles.input}
-                type="password"
-                name="confirmation"
-                value={formMdp.confirmation}
-                onChange={handleChangeMdp}
-                placeholder="••••••••"
-                required
-              />
-            </div>
-            {/* Bouton de soumission */}
-            <button
-              type="submit"
-              className={styles.btnMdp}
-              disabled={envoiEnCours}>
-              {envoiEnCours ? "Modification..." : "Changer le mot de passe"}
-            </button>
-          </form>
-        </div>
 
         {/* PlayerCard Modal */}
         {showPlayerCard && (

@@ -66,12 +66,14 @@ export default function MissionsAdherent() {
   };
 
   // ── Vérifier si l'adhérent est déjà inscrit sur un poste ───────────────────
-  const estInscrit = (poste) =>
-    poste.inscriptions.some(
+  const estInscrit = (poste) => {
+    const userId = utilisateur?.id || utilisateur?._id;
+    if (!userId) return false;
+    return poste.inscriptions.some(
       (i) =>
-        i.utilisateur?._id === utilisateur?.id ||
-        i.utilisateur === utilisateur?.id,
+        (i.utilisateur?._id || i.utilisateur) === userId
     );
+  };
 
   // ── S'inscrire sur un poste ─────────────────────────────────────────────────
   const sInscrire = async (posteId, creneau) => {
