@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../services/api";
@@ -89,7 +89,7 @@ export default function GamePlayPage() {
   // États Multijoueur
   const [matchStatus, setMatchStatus] = useState(() => {
     if (sessionId === "online") return "searching";
-    if (sessionId === "local" || sessionId === "solo") return "paying";
+    if ((sessionId === "local" || sessionId === "solo") && jeu !== "pong") return "paying";
     return "playing";
   });
   const [roomData, setRoomData] = useState(null);
@@ -114,6 +114,29 @@ export default function GamePlayPage() {
     chargerLeaderboard();
   }, [chargerLeaderboard]);
 
+  const paymentInProgress = useRef(false);
+
+  const handleSoloPayment = useCallback(async () => {
+    if (!utilisateur) {
+      toast.error("Connecte-toi pour participer au classement (2 FM).");
+      navigate("/login");
+      return false;
+    }
+    if (paymentInProgress.current) return false;
+    paymentInProgress.current = true;
+    try {
+      await api.post("/api/arcade/payer-solo", { jeu });
+      toast.success("Ticket Arcade validé : -2 FM 🪙");
+      return true;
+    } catch (err) {
+      const errMsg = err.response?.data?.message || "Fonds insuffisants ou erreur de ticket.";
+      toast.error(errMsg);
+      return false;
+    } finally {
+      paymentInProgress.current = false;
+    }
+  }, [jeu, utilisateur, navigate]);
+
   useEffect(() => {
     if ((sessionId === "local" || sessionId === "solo") && matchStatus === "paying") {
       if (!utilisateur) {
@@ -121,6 +144,9 @@ export default function GamePlayPage() {
         navigate("/login");
         return;
       }
+      
+      if (paymentInProgress.current) return;
+      paymentInProgress.current = true;
       
       api.post("/api/arcade/payer-solo", { jeu })
         .then(() => {
@@ -131,6 +157,9 @@ export default function GamePlayPage() {
           const errMsg = err.response?.data?.message || "Fonds insuffisants ou erreur de ticket.";
           toast.error(errMsg);
           navigate("/arcade");
+        })
+        .finally(() => {
+          paymentInProgress.current = false;
         });
     }
   }, [sessionId, matchStatus, jeu, utilisateur, navigate]);
@@ -207,7 +236,11 @@ export default function GamePlayPage() {
   const rejouer = () => {
     setResultat(null);
     if (sessionId === "local" || sessionId === "solo") {
-      setMatchStatus("paying");
+      if (jeu === "pong") {
+        setMatchStatus("playing");
+      } else {
+        setMatchStatus("paying");
+      }
     }
   };
 
@@ -331,6 +364,7 @@ export default function GamePlayPage() {
             isOnline={sessionId === "online"}
             isHost={roomData ? roomData.j1.socketId === socket.id : true}
             userId={utilisateur?._id}
+            onPaySolo={handleSoloPayment}
           />
           {(jeu === "pong" || jeu === "snake" || jeu === "pacman") && <MobileControls />}
         </>

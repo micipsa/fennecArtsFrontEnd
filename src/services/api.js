@@ -53,6 +53,8 @@ api.interceptors.response.use((response) => {
 
 // Notification Gain d'XP
   if (data.pointsGagnes) {
+    const xpText = `+${data.pointsGagnes} XP`;
+    const fmText = data.fmGagnes ? ` · +${data.fmGagnes} FM` : "";
     toast.success(
       createElement(
         "div",
@@ -60,7 +62,7 @@ api.interceptors.response.use((response) => {
           onClick: () => { window.location.href = "/profil"; },
           style: { cursor: "pointer", display: "flex", flexDirection: "column" }
         },
-        createElement("strong", null, `+${data.pointsGagnes} XP : ${data.raison || "Activité"}`),
+        createElement("strong", null, `${xpText}${fmText} : ${data.raison || "Activité"}`),
         createElement("small", { style: { textDecoration: "underline", opacity: 0.8, marginTop: "4px" } }, "Cliquez pour voir vos récompenses")
       ),
       {

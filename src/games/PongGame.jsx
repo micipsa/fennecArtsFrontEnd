@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import styles from "./GameBoard.module.css";
 
-export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
+export default function PongGame({ onGameEnd, socket, roomData, sessionId, onPaySolo }) {
   const canvasRef = useRef(null);
   const isOnline = sessionId === "online" && socket && roomData;
   const isJ1 = isOnline ? roomData.j1.socketId === socket.id : true;
@@ -12,6 +12,19 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
   const [temps, setTemps] = useState(0);
   const [goalAnim, setGoalAnim] = useState(false);
   const gameOverRef = useRef(false);
+  const [payingInProgress, setPayingInProgress] = useState(false);
+
+  const selectMode = async (mode) => {
+    if (sessionId === "local" || sessionId === "solo") {
+      if (onPaySolo) {
+        setPayingInProgress(true);
+        const success = await onPaySolo();
+        setPayingInProgress(false);
+        if (!success) return;
+      }
+    }
+    setGameMode(mode);
+  };
 
   const handleEnd = useCallback((s1, s2, survivalTime = 0) => {
     if (!gameOverRef.current) {
@@ -345,31 +358,37 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
           {/* Mode Survie */}
           <button
-            onClick={() => setGameMode("survival")}
+            onClick={() => !payingInProgress && selectMode("survival")}
+            disabled={payingInProgress}
             style={{
               background: "linear-gradient(135deg, rgba(230, 57, 70, 0.15), rgba(244, 162, 97, 0.15))",
               border: "1px solid rgba(230, 57, 70, 0.4)",
               borderRadius: "12px",
               padding: "1.5rem",
-              cursor: "pointer",
+              cursor: payingInProgress ? "not-allowed" : "pointer",
+              opacity: payingInProgress ? 0.6 : 1,
               transition: "all 0.3s ease",
               textAlign: "left",
               color: "#fff",
               position: "relative"
             }}
             onMouseOver={(e) => {
+              if (payingInProgress) return;
               e.currentTarget.style.transform = "translateY(-3px)";
               e.currentTarget.style.borderColor = "var(--couleur-primaire, #e63946)";
               e.currentTarget.style.boxShadow = "0 5px 15px rgba(230, 57, 70, 0.25)";
             }}
             onMouseOut={(e) => {
+              if (payingInProgress) return;
               e.currentTarget.style.transform = "translateY(0)";
               e.currentTarget.style.borderColor = "rgba(230, 57, 70, 0.4)";
               e.currentTarget.style.boxShadow = "none";
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-              <span style={{ fontSize: "1.2rem", fontWeight: "bold", fontFamily: "var(--font-manga)" }}>💀 MODE SURVIE</span>
+              <span style={{ fontSize: "1.2rem", fontWeight: "bold", fontFamily: "var(--font-manga)" }}>
+                {payingInProgress ? "⏳ VALIDATION TICKET..." : "💀 MODE SURVIE"}
+              </span>
               <span style={{ fontSize: "0.8rem", background: "#e63946", padding: "2px 8px", borderRadius: "4px", fontWeight: "bold" }}>CLASSEMENT</span>
             </div>
             <p style={{ fontSize: "0.85rem", color: "rgba(255, 255, 255, 0.7)", margin: 0, lineHeight: "1.4" }}>
@@ -379,30 +398,36 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
 
           {/* Mode Local 2J */}
           <button
-            onClick={() => setGameMode("local_2p")}
+            onClick={() => !payingInProgress && selectMode("local_2p")}
+            disabled={payingInProgress}
             style={{
               background: "linear-gradient(135deg, rgba(52, 152, 219, 0.15), rgba(46, 204, 113, 0.15))",
               border: "1px solid rgba(52, 152, 219, 0.4)",
               borderRadius: "12px",
               padding: "1.5rem",
-              cursor: "pointer",
+              cursor: payingInProgress ? "not-allowed" : "pointer",
+              opacity: payingInProgress ? 0.6 : 1,
               transition: "all 0.3s ease",
               textAlign: "left",
               color: "#fff"
             }}
             onMouseOver={(e) => {
+              if (payingInProgress) return;
               e.currentTarget.style.transform = "translateY(-3px)";
               e.currentTarget.style.borderColor = "#3498db";
               e.currentTarget.style.boxShadow = "0 5px 15px rgba(52, 152, 219, 0.25)";
             }}
             onMouseOut={(e) => {
+              if (payingInProgress) return;
               e.currentTarget.style.transform = "translateY(0)";
               e.currentTarget.style.borderColor = "rgba(52, 152, 219, 0.4)";
               e.currentTarget.style.boxShadow = "none";
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-              <span style={{ fontSize: "1.2rem", fontWeight: "bold", fontFamily: "var(--font-manga)" }}>⚔️ LOCAL 2 JOUEURS</span>
+              <span style={{ fontSize: "1.2rem", fontWeight: "bold", fontFamily: "var(--font-manga)" }}>
+                {payingInProgress ? "⏳ VALIDATION TICKET..." : "⚔️ LOCAL 2 JOUEURS"}
+              </span>
               <span style={{ fontSize: "0.8rem", background: "#3498db", padding: "2px 8px", borderRadius: "4px", fontWeight: "bold" }}>FUN</span>
             </div>
             <p style={{ fontSize: "0.85rem", color: "rgba(255, 255, 255, 0.7)", margin: 0, lineHeight: "1.4" }}>

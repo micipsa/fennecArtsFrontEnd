@@ -19,8 +19,7 @@ export default function PanneauQuetes() {
 
   const reclamer = async (queteId) => {
     try {
-      const res = await api.post(`/api/quetes/${queteId}/reclamer`);
-      addToast(res.data.message, "xp");
+      await api.post(`/api/quetes/${queteId}/reclamer`);
       charger();
     } catch (err) {
       addToast(err.response?.data?.message || "Erreur", "error");
