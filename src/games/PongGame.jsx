@@ -91,8 +91,10 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
       ballVX = baseSpeed * direction;
       ballVY = (Math.random() - 0.5) * 6 * (gameMode === "survival" ? speedMultiplier : 1.0);
     };
-
+    let lastTime = performance.now();
+    let accumulatedTime = 0;
     let isPaused = false;
+
     const triggerGoal = (direction) => {
       isPaused = true;
       setGoalAnim(true);
@@ -105,6 +107,7 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
         setGoalAnim(false);
         resetBall(direction);
         isPaused = false;
+        lastTime = performance.now();
         animId = requestAnimationFrame(gameLoop);
       }, 1000);
     };
@@ -112,20 +115,29 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
     const gameLoop = () => {
       if (gameOverRef.current || isPaused) return;
 
+      const now = performance.now();
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+
+      // Cap the frame step to prevent massive jumps (e.g. if tab is inactive or huge lag spike)
+      const scale = Math.min(dt * 60, 3.0);
+
+      accumulatedTime += dt;
+
       // Déplacement local (Host ou Guest)
       let oldJ1Y = j1Y;
       let oldJ2Y = j2Y;
 
       // Logique mouvement J1
       if (gameMode === "local_2p") {
-        if (keys["w"] && j1Y > 0) j1Y -= 7;
-        if (keys["s"] && j1Y < h - paddleH) j1Y += 7;
+        if (keys["w"] && j1Y > 0) j1Y -= 7 * scale;
+        if (keys["s"] && j1Y < h - paddleH) j1Y += 7 * scale;
       } else if (gameMode === "survival") {
-        if ((keys["w"] || keys["ArrowUp"]) && j1Y > 0) j1Y -= 7;
-        if ((keys["s"] || keys["ArrowDown"]) && j1Y < h - paddleH) j1Y += 7;
+        if ((keys["w"] || keys["ArrowUp"]) && j1Y > 0) j1Y -= 7 * scale;
+        if ((keys["s"] || keys["ArrowDown"]) && j1Y < h - paddleH) j1Y += 7 * scale;
       } else if (!isOnline || isJ1) {
-        if (keys["w"] && j1Y > 0) j1Y -= 7;
-        if (keys["s"] && j1Y < h - paddleH) j1Y += 7;
+        if (keys["w"] && j1Y > 0) j1Y -= 7 * scale;
+        if (keys["s"] && j1Y < h - paddleH) j1Y += 7 * scale;
         
         if (isOnline && j1Y !== oldJ1Y) {
           socket.emit("playerAction", { roomId: roomData.roomId, action: "movePaddle", data: { y: j1Y } });
@@ -134,28 +146,28 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
       
       // Logique mouvement J2 / Bot
       if (gameMode === "local_2p") {
-        if (keys["ArrowUp"] && j2Y > 0) j2Y -= 7;
-        if (keys["ArrowDown"] && j2Y < h - paddleH) j2Y += 7;
+        if (keys["ArrowUp"] && j2Y > 0) j2Y -= 7 * scale;
+        if (keys["ArrowDown"] && j2Y < h - paddleH) j2Y += 7 * scale;
       } else if (gameMode === "survival") {
         const paddleCenter = j2Y + paddleH / 2;
         if (ballY < paddleCenter - 15 && j2Y > 0) {
-          j2Y -= botSpeed;
+          j2Y -= botSpeed * scale;
         } else if (ballY > paddleCenter + 15 && j2Y < h - paddleH) {
-          j2Y += botSpeed;
+          j2Y += botSpeed * scale;
         }
       } else if (!isOnline || !isJ1 || (isOnline && isBotMatch)) {
         if (!isOnline || isBotMatch) {
           // CPU Standard Logic
           const paddleCenter = j2Y + paddleH / 2;
           if (ballY < paddleCenter - 15 && j2Y > 0) {
-            j2Y -= 5;
+            j2Y -= 5 * scale;
           } else if (ballY > paddleCenter + 15 && j2Y < h - paddleH) {
-            j2Y += 5;
+            j2Y += 5 * scale;
           }
         } else {
           // Human J2 Online
-          if (keys["ArrowUp"] && j2Y > 0) j2Y -= 7;
-          if (keys["ArrowDown"] && j2Y < h - paddleH) j2Y += 7;
+          if (keys["ArrowUp"] && j2Y > 0) j2Y -= 7 * scale;
+          if (keys["ArrowDown"] && j2Y < h - paddleH) j2Y += 7 * scale;
 
           if (isOnline && j2Y !== oldJ2Y) {
             socket.emit("playerAction", { roomId: roomData.roomId, action: "movePaddle", data: { y: j2Y } });
@@ -165,8 +177,8 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
 
       // Physique de la balle (Calculé uniquement en local ou par J1)
       if (!isOnline || isJ1) {
-        ballX += ballVX;
-        ballY += ballVY;
+        ballX += ballVX * scale;
+        ballY += ballVY * scale;
 
         if (ballY <= 0 || ballY >= h) ballVY *= -1;
 
@@ -191,7 +203,7 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
 
         if (ballX < 0) {
           if (gameMode === "survival") {
-            handleEnd(survivalScore, 0, Math.floor(frameCount / 60));
+            handleEnd(survivalScore, 0, Math.floor(accumulatedTime));
             return;
           } else {
             j2Score++;
@@ -270,7 +282,7 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
 
       frameCount++;
       if (frameCount % 30 === 0) {
-        setTemps(Math.floor(frameCount / 60));
+        setTemps(Math.floor(accumulatedTime));
         if (gameMode === "survival") {
           setScores({ j1: survivalScore, j2: Math.round(botSpeed * 10) / 10 });
         } else {
@@ -280,7 +292,7 @@ export default function PongGame({ onGameEnd, socket, roomData, sessionId }) {
 
       if (gameMode !== "survival") {
         if (j1Score >= maxScore || j2Score >= maxScore) {
-          handleEnd(j1Score, j2Score);
+          handleEnd(j1Score, j2Score, Math.floor(accumulatedTime));
           return;
         }
       }
