@@ -218,6 +218,29 @@
   transform: scale(1.03);
 }
 
+.btnLeaderboard {
+  width: 100%;
+  padding: 0.6rem 1.2rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  font-family: var(--font-titre);
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  text-transform: uppercase;
+}
+
+.btnLeaderboard:hover {
+  border-color: var(--couleur-primaire);
+  background: rgba(230, 57, 70, 0.1);
+  box-shadow: 0 0 12px rgba(230, 57, 70, 0.25);
+  transform: scale(1.02);
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .titre { font-size: 2.2rem; }

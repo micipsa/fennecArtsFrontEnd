@@ -78,34 +78,43 @@ export default function ArcadePage() {
                   <span>{stat.tauxVictoire}%</span>
                 </div>
               )}
-              <div style={{ display: "flex", gap: "0.5rem", marginTop: "1rem" }}>
-                {jeu.id !== "wordle" && (
-                  <button
-                    className={styles.btnJouer}
-                    style={{ background: config.bg, flex: 2, padding: "0.6rem" }}
-                    onClick={() => navigate(`/arcade/${jeu.id}/online`)}
-                  >
-                    🌐 EN LIGNE (5 FM)
-                  </button>
-                )}
-                
-                {jeu.id === "wordle" || jeu.id === "quiz" ? (
-                  <button
-                    className={styles.btnJouer}
-                    style={{ background: jeu.id === "wordle" ? config.bg : "rgba(255,255,255,0.1)", flex: jeu.id === "wordle" ? 1 : 1, padding: "0.6rem", border: jeu.id === "wordle" ? "none" : "1px solid rgba(255,255,255,0.2)" }}
-                    onClick={() => navigate(`/arcade/${jeu.id}/solo`)}
-                  >
-                    👤 SOLO
-                  </button>
-                ) : (
-                  <button
-                    className={styles.btnJouer}
-                    style={{ background: "rgba(255,255,255,0.1)", flex: 1, padding: "0.6rem", border: "1px solid rgba(255,255,255,0.2)" }}
-                    onClick={() => navigate(`/arcade/${jeu.id}/local`)}
-                  >
-                    👥 LOCAL
-                  </button>
-                )}
+              <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: "0.5rem", marginTop: "1rem" }}>
+                <div style={{ display: "flex", gap: "0.5rem", width: "100%" }}>
+                  {jeu.id !== "wordle" && (
+                    <button
+                      className={styles.btnJouer}
+                      style={{ background: config.bg, flex: 2, padding: "0.6rem" }}
+                      onClick={() => navigate(`/arcade/${jeu.id}/online`)}
+                    >
+                      🌐 EN LIGNE (5 FM)
+                    </button>
+                  )}
+                  
+                  {jeu.id === "wordle" || jeu.id === "quiz" ? (
+                    <button
+                      className={styles.btnJouer}
+                      style={{ background: jeu.id === "wordle" ? config.bg : "rgba(255,255,255,0.1)", flex: 1, padding: "0.6rem", border: jeu.id === "wordle" ? "none" : "1px solid rgba(255,255,255,0.2)" }}
+                      onClick={() => navigate(`/arcade/${jeu.id}/solo`)}
+                    >
+                      👤 SOLO
+                    </button>
+                  ) : (
+                    <button
+                      className={styles.btnJouer}
+                      style={{ background: "rgba(255,255,255,0.1)", flex: 1, padding: "0.6rem", border: "1px solid rgba(255,255,255,0.2)" }}
+                      onClick={() => navigate(`/arcade/${jeu.id}/local`)}
+                    >
+                      👥 LOCAL
+                    </button>
+                  )}
+                </div>
+
+                <button
+                  className={styles.btnLeaderboard}
+                  onClick={() => navigate(`/arcade/${jeu.id}/leaderboard`)}
+                >
+                  🏆 CLASSEMENT
+                </button>
               </div>
             </div>
           );

@@ -243,7 +243,7 @@ function ProfilPage() {
             <p className={styles.nomPrincipal}>
               {profil?.pseudo || nom}
             </p>
-            {profil?.pseudo && (
+            {profil?.pseudo && nom !== profil.pseudo && (
               <p style={{ color: "var(--couleur-texte-secondaire, #aaa)", fontSize: "0.85em", marginTop: "-0.3rem", marginBottom: "0.3rem" }}>
                 {nom}
               </p>

@@ -42,7 +42,7 @@
   height: 72px;
   display: flex;
   flex-direction: column;
-  background: var(--couleur-blanc);
+  background: var(--couleur-sombre-2);
   border: 1px solid var(--couleur-bordure);
   border-radius: var(--border-radius);
   overflow: hidden;
@@ -57,7 +57,7 @@
 }
 
 .matchCliquable:hover {
-  background: rgba(230, 57, 70, 0.04);
+  background: rgba(230, 57, 70, 0.12);
   transform: translateY(-1px);
 }
 

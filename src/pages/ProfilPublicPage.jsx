@@ -90,7 +90,7 @@ function ProfilPublicPage() {
             <h1 className={styles.nom} style={membre.couleurPseudoActive ? { color: membre.couleurPseudoActive } : {}}>
               {membre.pseudo || membre.nom}
             </h1>
-            {membre.pseudo && (
+            {membre.pseudo && membre.nom !== membre.pseudo && (
               <p style={{ color: "var(--couleur-texte-secondaire, #aaa)", fontSize: "0.85em", marginTop: "-0.5rem", marginBottom: "0.5rem", textAlign: "center" }}>
                 {membre.nom}
               </p>

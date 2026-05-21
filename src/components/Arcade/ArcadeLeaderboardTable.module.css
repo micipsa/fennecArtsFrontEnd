@@ -1,0 +1,267 @@
+.leaderboardContainer {
+  max-width: 850px;
+  margin: 3rem auto 1rem;
+  background: rgba(10, 10, 26, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2px solid rgba(230, 57, 70, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(230, 57, 70, 0.1);
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Retro arcade scanlines background effect */
+.leaderboardContainer::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+}
+
+.retroHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid rgba(244, 162, 97, 0.3);
+  padding-bottom: 1rem;
+}
+
+.neonTitle {
+  font-family: 'Oxanium', 'Inter', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(244, 162, 97, 0.6), 0 0 20px rgba(244, 162, 97, 0.3);
+  text-transform: uppercase;
+}
+
+.btnRafraichir {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.85);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: 'Oxanium', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s;
+}
+
+.btnRafraichir:hover:not(:disabled) {
+  background: rgba(244, 162, 97, 0.15);
+  border-color: rgba(244, 162, 97, 0.4);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(244, 162, 97, 0.2);
+}
+
+.btnRafraichir:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.loading, .noScores {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--couleur-primaire, #e63946);
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+}
+
+.retroTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.retroTable th {
+  padding: 1rem;
+  font-family: 'Oxanium', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.retroTable td {
+  padding: 0.85rem 1rem;
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.row {
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.row:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Stylings for Top 3 */
+.top1 {
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0) 100%);
+  border-left: 3px solid #d4af37;
+}
+.top1:hover {
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.03) 100%) !important;
+}
+.top1 .valueCell {
+  color: #ffd700;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
+.top2 {
+  background: linear-gradient(90deg, rgba(192, 192, 192, 0.06) 0%, rgba(192, 192, 192, 0) 100%);
+  border-left: 3px solid #c0c0c0;
+}
+.top2:hover {
+  background: linear-gradient(90deg, rgba(192, 192, 192, 0.12) 0%, rgba(192, 192, 192, 0.02) 100%) !important;
+}
+.top2 .valueCell {
+  color: #e0e0e0;
+  font-weight: 700;
+}
+
+.top3 {
+  background: linear-gradient(90deg, rgba(205, 127, 50, 0.05) 0%, rgba(205, 127, 50, 0) 100%);
+  border-left: 3px solid #cd7f32;
+}
+.top3:hover {
+  background: linear-gradient(90deg, rgba(205, 127, 50, 0.1) 0%, rgba(205, 127, 50, 0.02) 100%) !important;
+}
+.top3 .valueCell {
+  color: #e5a975;
+  font-weight: 700;
+}
+
+.rankCell {
+  width: 70px;
+}
+
+.medal {
+  font-size: 1.4rem;
+  display: inline-block;
+  animation: bounce 2s infinite ease-in-out;
+}
+
+.rankNumber {
+  font-family: 'Oxanium', monospace;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 700;
+  padding-left: 0.2rem;
+}
+
+.playerCell {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.avatarContainer {
+  flex-shrink: 0;
+}
+
+.playerInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.playerName {
+  font-weight: 600;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.playerTitle {
+  font-size: 0.75rem;
+  color: #f4a261;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 0.1rem;
+}
+
+.valueCell {
+  font-family: 'Oxanium', monospace;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.statsCell {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+}
+
+.ratio {
+  display: block;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.partiesCount {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.dateCell {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8rem;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .leaderboardContainer {
+    padding: 1rem;
+  }
+  .dateCol, .dateCell {
+    display: none;
+  }
+  .statsCol, .statsCell {
+    display: none;
+  }
+  .neonTitle {
+    font-size: 1.5rem;
+  }
+}

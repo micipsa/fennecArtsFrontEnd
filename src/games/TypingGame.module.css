@@ -1,76 +1,275 @@
-.typingBoard {
-  max-width: 750px; margin: 0 auto;
-  display: flex; flex-direction: column; gap: 1.5rem;
+.lobbyScreen {
+  max-width: 650px;
+  margin: 2rem auto;
+  padding: 3rem;
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(244, 162, 97, 0.2);
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.4s ease;
 }
-.typingHeader {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 0.8rem 1.5rem; background: rgba(255,255,255,0.04);
-  border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);
-}
-.typingPlayer {
-  display: flex; align-items: center; gap: 0.5rem;
-  color: rgba(255,255,255,0.7); font-family: var(--font-titre); transition: opacity 0.3s;
-}
-.typingPlayer small { color: rgba(255,255,255,0.4); font-size: 0.75rem; margin-left: 0.3rem; }
-.typingInfo { font-family: var(--font-titre); color: var(--couleur-accent); font-weight: 700; font-size: 0.9rem; }
 
-.typingReady {
-  text-align: center; min-height: 300px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-.typingReady h2 { font-family: var(--font-manga); color: #fff; font-size: 2rem; margin: 0; }
-.typingPreview {
-  color: rgba(255,255,255,0.4); font-size: 1.1rem;
-  padding: 1rem 2rem; background: rgba(255,255,255,0.03);
-  border-radius: 12px; border: 1px dashed rgba(255,255,255,0.1);
-}
-.typingStartBtn {
-  padding: 0.8rem 3rem; background: linear-gradient(135deg, #2ecc71, #27ae60);
-  color: #fff; border: none; border-radius: 12px;
-  font-family: var(--font-titre); font-weight: 700; font-size: 1.2rem;
-  cursor: pointer; transition: all 0.3s;
-  box-shadow: 0 4px 20px rgba(46,204,113,0.3);
-}
-.typingStartBtn:hover { transform: scale(1.05); box-shadow: 0 6px 30px rgba(46,204,113,0.5); }
 
-.typingZone {
-  display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+.retroLogo {
+  font-family: 'Oxanium', 'Inter', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 2px;
+  text-shadow: 0 0 15px rgba(244, 162, 97, 0.6);
+  margin-bottom: 1.5rem;
 }
-.typingPhrase {
-  font-size: 1.4rem; line-height: 2; letter-spacing: 0.5px;
-  padding: 1.5rem 2rem; background: rgba(255,255,255,0.03);
-  border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);
-  text-align: center; font-family: monospace;
+
+.tagline {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+}
+
+.langSelectorTitle {
+  font-family: 'Oxanium', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #f4a261;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.langButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.langBtn {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.08));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 1rem 2rem;
+  color: #fff;
+  font-size: 1.2rem;
+  font-family: 'Oxanium', sans-serif;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: all 0.3s;
+}
+
+.langBtn:hover {
+  transform: translateY(-3px);
+  border-color: #f4a261;
+  background: rgba(244, 162, 97, 0.15);
+  box-shadow: 0 6px 20px rgba(244, 162, 97, 0.25);
+}
+
+.flag {
+  font-size: 1.4rem;
+}
+
+/* Gameplay Section */
+.typingGameWrapper {
+  max-width: 850px;
+  margin: 1.5rem auto;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Stats Bar */
+.statsBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.statBox {
+  display: flex;
+  flex-direction: column;
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statValue {
+  font-family: 'Oxanium', monospace;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #f4a261;
+}
+
+.controlButtons {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.iconBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.2s;
+}
+
+.iconBtn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.1);
+}
+
+/* Typing Container (MonkeyType Look) */
+.typingContainer {
+  position: relative;
+  background: rgba(10, 10, 26, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 2.5rem;
+  min-height: 200px;
+  cursor: text;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+
+.typingContainer:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.typingContainer.unfocused {
+  border-color: rgba(230, 57, 70, 0.3);
+}
+
+/* Blur overlay when unfocused */
+.focusOverlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(10, 10, 26, 0.85);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  animation: fadeIn 0.2s ease;
+}
+
+.focusOverlayText {
+  color: #fff;
+  font-family: 'Oxanium', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 10px rgba(230, 57, 70, 0.6);
+  pointer-events: none;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.03); }
+}
+
+.textToType {
+  font-family: 'Fira Code', 'Courier New', Courier, monospace;
+  font-size: 1.45rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.25); /* Muted untyped characters */
+  word-spacing: 0.1em;
   word-wrap: break-word;
   white-space: pre-wrap;
+  user-select: none;
 }
 
-@media (max-width: 600px) {
-  .typingPhrase {
-    font-size: 1rem;
-    padding: 1rem;
-    line-height: 1.5;
+.char {
+  position: relative;
+  transition: color 0.1s;
+}
+
+.correct {
+  color: #e2b714; /* White-gold for correctly typed letters */
+}
+
+.incorrect {
+  color: #ca4754; /* Crimson for mistakes */
+  border-bottom: 2px solid #ca4754;
+}
+
+/* Blinking Caret style mimicking MonkeyType */
+.current::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10%;
+  height: 80%;
+  width: 2.5px;
+  background-color: #e63946; /* Caret color */
+  box-shadow: 0 0 8px #e63946;
+  animation: caretBlink 1s infinite steps(2, start);
+}
+
+@keyframes caretBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.hiddenInput {
+  position: absolute;
+  opacity: 0;
+  z-index: -999;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+/* Completion Banner */
+.completionBanner {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(46, 204, 113, 0.1);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+  border-radius: 12px;
+  text-align: center;
+  color: #2ecc71;
+  font-family: 'Oxanium', sans-serif;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .textToType {
+    font-size: 1.15rem;
+    line-height: 1.6;
   }
-}
-
-.charPending { color: rgba(255,255,255,0.3); }
-.charCorrect { color: #2ecc71; }
-.charWrong { color: #e74c3c; background: rgba(231,76,60,0.15); border-radius: 2px; }
-.charCurrent {
-  color: #fff; border-bottom: 2px solid var(--couleur-accent);
-  animation: blink 0.8s infinite;
-}
-@keyframes blink { 0%, 100% { border-color: var(--couleur-accent); } 50% { border-color: transparent; } }
-
-.typingInput {
-  width: 100%; max-width: 600px; padding: 1rem 1.5rem;
-  background: rgba(255,255,255,0.06); border: 2px solid rgba(255,255,255,0.15);
-  border-radius: 12px; color: #fff; font-size: 1.1rem;
-  font-family: monospace; outline: none; text-align: center;
-}
-.typingInput:focus { border-color: var(--couleur-accent); box-shadow: 0 0 20px rgba(244,162,97,0.2); }
-
-.typingTimer {
-  font-family: var(--font-pixel, monospace); color: var(--couleur-accent);
-  font-size: 1.5rem; font-weight: 700;
+  .typingContainer {
+    padding: 1.5rem;
+  }
+  .lobbyScreen {
+    padding: 2rem 1.5rem;
+  }
 }

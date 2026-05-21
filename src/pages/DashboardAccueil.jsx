@@ -21,7 +21,7 @@ function DashboardAccueil() {
         setStats({
           articles: resArticles.data.total ?? 0,
           events: resEvents.data.total ?? resEvents.data.count ?? 0,
-          users: resUsers.data.data?.length ?? 0,
+          users: resUsers.data.total ?? resUsers.data.data?.length ?? 0,
           tournois: resTournois.data.total ?? resTournois.data.count ?? 0,
         });
       } catch (err) {

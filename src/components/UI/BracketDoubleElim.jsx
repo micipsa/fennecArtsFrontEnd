@@ -205,7 +205,7 @@ const css = `
   .team-name {
     font-size: 0.88rem;
     font-weight: 600;
-    color: #6b7280;
+    color: #9ca3af;
     flex: 1;
     white-space: nowrap;
     overflow: hidden;
@@ -218,13 +218,13 @@ const css = `
     font-weight: 700;
     min-width: 1.4rem;
     text-align: center;
-    color: #3a3a5a;
+    color: #6b7280;
   }
-  .team-row.winner .team-name  { color: #e8e8f0; }
+  .team-row.winner .team-name  { color: #ffffff; }
   .team-row.winner .team-score { color: #e63946; }
-  .team-row.loser  .team-name  { color: #2e2e4a; text-decoration: line-through; }
-  .team-row.loser  .team-score { color: #2e2e4a; }
-  .tbd { font-style: italic; color: #2e2e4a !important; }
+  .team-row.loser  .team-name  { color: #4b5563; text-decoration: line-through; }
+  .team-row.loser  .team-score { color: #4b5563; }
+  .tbd { font-style: italic; color: #6b7280 !important; }
 
   /* ── Grande Finale ── */
   .gf-row { display: flex; gap: 2rem; flex-wrap: wrap; }

@@ -53,23 +53,53 @@ function DashboardUtilisateurs() {
   const [envoiTags, setEnvoiTags] = useState(false);
   const [envoiBonus, setEnvoiBonus] = useState(false);
 
+  // Nouveaux états pour la recherche et la pagination
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalUtilisateurs, setTotalUtilisateurs] = useState(0);
+  const [recherche, setRecherche] = useState("");
+  const [rechercheDebounced, setRechercheDebounced] = useState("");
+
+  // Debounce de la recherche
   useEffect(() => {
-    const charger = async () => {
+    const timer = setTimeout(() => {
+      setRechercheDebounced(recherche);
+      setPage(1); // Retour à la première page lors d'une nouvelle recherche
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [recherche]);
+
+  // Charger les utilisateurs paginés et filtrés
+  useEffect(() => {
+    const chargerUsers = async () => {
       try {
         setChargement(true);
-        const [resUsers, resTags] = await Promise.all([
-          api.get("/api/users"),
-          api.get("/api/tags"),
-        ]);
-        setUtilisateurs(resUsers.data.data);
-        setTagsDisponibles(resTags.data.data || []);
+        const res = await api.get("/api/users", {
+          params: { page, limit: 20, search: rechercheDebounced },
+        });
+        setUtilisateurs(res.data.data || []);
+        setTotalPages(res.data.pages || 1);
+        setTotalUtilisateurs(res.data.total || 0);
       } catch (err) {
         setErreur("Impossible de charger les utilisateurs.");
       } finally {
         setChargement(false);
       }
     };
-    charger();
+    chargerUsers();
+  }, [page, rechercheDebounced]);
+
+  // Charger les tags disponibles une seule fois
+  useEffect(() => {
+    const chargerTags = async () => {
+      try {
+        const resTags = await api.get("/api/tags");
+        setTagsDisponibles(resTags.data.data || []);
+      } catch (err) {
+        console.error("Impossible de charger les tags", err);
+      }
+    };
+    chargerTags();
   }, []);
 
   /**
@@ -170,7 +200,7 @@ function DashboardUtilisateurs() {
     }
   };
 
-  if (chargement) return <Spinner />;
+  if (chargement && utilisateurs.length === 0) return <Spinner />;
   if (erreur) return <MessageErreur message={erreur} />;
 
   return (
@@ -180,9 +210,25 @@ function DashboardUtilisateurs() {
         <div>
           <h1 className={styles.titre}>Gestion des utilisateurs</h1>
           <p className={styles.sousTitre}>
-            {utilisateurs.length} utilisateur(s) au total
+            {totalUtilisateurs} utilisateur(s) au total
           </p>
         </div>
+      </div>
+
+      {/* ── Recherche ── */}
+      <div className={styles.rechercheConteneur}>
+        <input
+          type="text"
+          className={styles.rechercheInput}
+          placeholder="Rechercher par pseudo ou email..."
+          value={recherche}
+          onChange={(e) => setRecherche(e.target.value)}
+        />
+        {recherche && (
+          <button className={styles.rechercheEffacer} onClick={() => setRecherche("")}>
+            ✕ Effacer
+          </button>
+        )}
       </div>
 
       {/* ── Tableau des utilisateurs ── */}
@@ -246,6 +292,27 @@ function DashboardUtilisateurs() {
           </div>
         ))}
       </div>
+
+      {/* ── Pagination ── */}
+      {totalPages > 1 && (
+        <div className={styles.pagination}>
+          <button
+            className={styles.btnPage}
+            disabled={page === 1}
+            onClick={() => setPage((prev) => Math.max(1, prev - 1))}>
+            Précédent
+          </button>
+          <span className={styles.infoPage}>
+            Page {page} sur {totalPages}
+          </span>
+          <button
+            className={styles.btnPage}
+            disabled={page === totalPages}
+            onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}>
+            Suivant
+          </button>
+        </div>
+      )}
 
       {/* ── Modale gestion adhérent ── */}
       {modaleGestion && (

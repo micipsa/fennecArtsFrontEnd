@@ -51,10 +51,12 @@
 @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
 .rpsRevealCard {
+  position: relative;
   display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
   padding: 2rem; background: rgba(255,255,255,0.05);
   border: 2px solid rgba(255,255,255,0.1); border-radius: 20px;
   color: rgba(255,255,255,0.6); font-family: var(--font-titre);
+  transition: all 0.3s ease;
 }
 .rpsRevealEmoji { font-size: 4rem; }
 
@@ -63,9 +65,191 @@
   text-align: center; min-width: 150px;
 }
 
+.rpsBtn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+.rpsDecks {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.rpsDeck {
+  flex: 1;
+  background: rgba(10, 10, 26, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.2rem;
+  text-align: center;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.rpsDeckTitle {
+  font-family: var(--font-titre);
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.rpsDeckCards {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.rpsDeckCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.8rem 1.2rem;
+  min-width: 70px;
+  transition: all 0.3s ease;
+}
+
+.rpsDeckCard span {
+  font-size: 1.8rem;
+}
+
+.rpsDeckCard strong {
+  font-family: var(--font-titre);
+  font-size: 1.1rem;
+  color: var(--couleur-accent);
+}
+
+.rpsDeckCard.empty {
+  opacity: 0.25;
+  border-style: dashed;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.rpsDeckCard.empty strong {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.onlineStatus {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background: rgba(230, 57, 70, 0.08);
+  border: 1px solid rgba(230, 57, 70, 0.2);
+  border-radius: 30px;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-titre);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(230, 57, 70, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); }
+}
+
 @media (max-width: 600px) {
+  .rpsDecks { flex-direction: column; }
   .rpsChoix { flex-direction: column; align-items: center; }
   .rpsBtn { padding: 1.2rem 2rem; flex-direction: row; }
   .rpsBtnEmoji { font-size: 2.5rem; }
   .rpsReveal { flex-direction: column; }
+}
+
+/* ── RPG 2D Slash Effect & Winner Animations ── */
+.winningCard {
+  animation: winnerBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.losingCard {
+  animation: shakeCard 0.4s ease-in-out 0.15s forwards;
+}
+
+.slashOverlay {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.slashOverlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  animation: flashEffect 0.3s ease-out 0.15s forwards;
+}
+
+.slashLine {
+  position: absolute;
+  top: -50%;
+  left: -150%;
+  width: 300%;
+  height: 8px;
+  background: #fff;
+  box-shadow: 0 0 10px #ff3366, 0 0 20px #ff3366, 0 0 40px #ff3366;
+  transform: rotate(-30deg);
+  opacity: 0;
+  animation: slashSweep 0.4s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+@keyframes winnerBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); box-shadow: 0 0 30px rgba(46, 204, 113, 0.6); border-color: #2ecc71; }
+  100% { transform: scale(1.1); box-shadow: 0 0 20px rgba(46, 204, 113, 0.4); border-color: #2ecc71; }
+}
+
+@keyframes shakeCard {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  15% { transform: translate(-5px, 3px) rotate(-2deg); }
+  30% { transform: translate(5px, -3px) rotate(2deg); }
+  45% { transform: translate(-5px, -3px) rotate(-2deg); }
+  60% { transform: translate(5px, 3px) rotate(2deg); }
+  75% { transform: translate(-2px, 1px) rotate(0deg); }
+  90% { transform: translate(2px, -1px) rotate(0deg); }
+  100% { transform: translate(0, 0) rotate(0deg) scale(0.9); opacity: 0.5; border-color: #e63946; }
+}
+
+@keyframes slashSweep {
+  0% {
+    left: -150%;
+    top: -50%;
+    opacity: 0;
+    height: 4px;
+  }
+  20% {
+    opacity: 1;
+    height: 12px;
+  }
+  60% {
+    opacity: 1;
+    height: 8px;
+  }
+  100% {
+    left: 50%;
+    top: 150%;
+    opacity: 0;
+    height: 2px;
+  }
+}
+
+@keyframes flashEffect {
+  0% { opacity: 0; }
+  15% { opacity: 0.7; }
+  100% { opacity: 0; }
 }
