@@ -111,7 +111,17 @@ export default function GamePlayPage() {
   }, [jeu]);
 
   useEffect(() => {
-    chargerLeaderboard();
+    let actif = true;
+    const run = async () => {
+      await Promise.resolve();
+      if (actif) {
+        chargerLeaderboard();
+      }
+    };
+    run();
+    return () => {
+      actif = false;
+    };
   }, [chargerLeaderboard]);
 
   const paymentInProgress = useRef(false);
@@ -205,7 +215,9 @@ export default function GamePlayPage() {
       if (roomData?.roomId) {
         try {
           await api.post(`/api/arcade/terminer-partie/${roomData.roomId}`, { scoreJ1, scoreJ2, temps: extras.temps });
-        } catch {}
+        } catch (e) {
+          console.error("Échec de l'enregistrement de la partie en ligne", e);
+        }
       }
     } else if (sessionId === "local" || sessionId === "solo") {
       try {
@@ -215,7 +227,9 @@ export default function GamePlayPage() {
           temps: extras.temps,
           score: (jeu === "pong" && extras.mode !== "survival") ? 0 : scoreJ1,
         });
-      } catch {}
+      } catch (e) {
+        console.error("Échec de l'enregistrement de la partie solo/locale", e);
+      }
     }
 
     setResultat({

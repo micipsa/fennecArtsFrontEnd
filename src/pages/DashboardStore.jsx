@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import api from "../services/api";
 import { useToast } from "../components/UI/Toast";
 import styles from "./DashboardStore.module.css";
@@ -21,11 +21,7 @@ export default function DashboardStore() {
   const [form, setForm] = useState({ nom: "", description: "", type: "cadre_profil", prix: 0, stock: -1, imageUrl: "", donnees: {} });
   const [isEditing, setIsEditing] = useState(null);
 
-  useEffect(() => {
-    fetchArticles();
-  }, []);
-
-  const fetchArticles = async () => {
+  const fetchArticles = useCallback(async () => {
     try {
       setLoading(true);
       const res = await api.get("/api/store");
@@ -35,7 +31,22 @@ export default function DashboardStore() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [addToast]);
+
+  useEffect(() => {
+    let actif = true;
+    const run = async () => {
+      await Promise.resolve();
+      if (actif) {
+        fetchArticles();
+      }
+    };
+    run();
+    return () => {
+      actif = false;
+    };
+  }, [fetchArticles]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

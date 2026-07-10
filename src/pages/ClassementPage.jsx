@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import api from "../services/api";
 import { calculerRang } from "../utils/rangs";
@@ -14,7 +14,7 @@ function ClassementPage() {
   const [chargement, setChargement] = useState(true);
   const [filtreJeu, setFiltreJeu] = useState("global");
 
-  const chargerClassement = (jeuId) => {
+  const chargerClassement = useCallback((jeuId, actif = { current: true }) => {
     setChargement(true);
     const url =
       jeuId === "global"
@@ -22,14 +22,30 @@ function ClassementPage() {
         : `/api/users/classement?jeu=${jeuId}`;
     api
       .get(url)
-      .then((res) => setJoueurs(res.data.data))
-      .catch(() => setJoueurs([]))
-      .finally(() => setChargement(false));
-  };
+      .then((res) => {
+        if (actif.current) setJoueurs(res.data.data);
+      })
+      .catch(() => {
+        if (actif.current) setJoueurs([]);
+      })
+      .finally(() => {
+        if (actif.current) setChargement(false);
+      });
+  }, []);
 
   useEffect(() => {
-    chargerClassement(filtreJeu);
-  }, [filtreJeu]);
+    const actif = { current: true };
+    const run = async () => {
+      await Promise.resolve();
+      if (actif.current) {
+        chargerClassement(filtreJeu, actif);
+      }
+    };
+    run();
+    return () => {
+      actif.current = false;
+    };
+  }, [filtreJeu, chargerClassement]);
 
   return (
     <div className={styles.pageWrapper}>

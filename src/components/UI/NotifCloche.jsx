@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import styles from "./NotifCloche.module.css";
@@ -6,23 +6,52 @@ import styles from "./NotifCloche.module.css";
 function NotifCloche() {
   const [notifs, setNotifs] = useState([]);
   const [ouvert, setOuvert] = useState(false);
+  const [vibrerCloche, setVibrerCloche] = useState(false);
   const ref = useRef(null);
   const navigate = useNavigate();
 
   const nonLues = notifs.filter((n) => !n.lu).length;
 
-  const charger = async () => {
+  const charger = useCallback(async () => {
     try {
       const res = await api.get("/api/notifications");
-      setNotifs(res.data.data);
-    } catch {}
-  };
+      const nouvelles = res.data.data;
+      setNotifs((prev) => {
+        const ancMissions = prev.filter((n) => n.type === "mission" && !n.lu).map((n) => n._id);
+        const nouvelleMission = nouvelles.some((n) => n.type === "mission" && !n.lu && !ancMissions.includes(n._id));
+        if (nouvelleMission) {
+          if (navigator.vibrate) {
+            navigator.vibrate([200, 100, 200]);
+          }
+          setVibrerCloche(true);
+          setTimeout(() => setVibrerCloche(false), 1500);
+        }
+        return nouvelles;
+      });
+    } catch (e) {
+      console.error("Erreur lors de la récupération des notifications", e);
+    }
+  }, []);
 
   useEffect(() => {
-    charger();
-    const interval = setInterval(charger, 60000);
-    return () => clearInterval(interval);
-  }, []);
+    let actif = true;
+    const run = async () => {
+      await Promise.resolve();
+      if (actif) {
+        charger();
+      }
+    };
+    run();
+    const interval = setInterval(() => {
+      if (actif) {
+        charger();
+      }
+    }, 60000);
+    return () => {
+      actif = false;
+      clearInterval(interval);
+    };
+  }, [charger]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -50,7 +79,7 @@ function NotifCloche() {
 
   return (
     <div className={styles.wrapper} ref={ref}>
-      <button className={styles.cloche} onClick={() => setOuvert((v) => !v)} aria-label="Notifications">
+      <button className={`${styles.cloche} ${vibrerCloche ? styles.clocheVibrer : ""}`} onClick={() => setOuvert((v) => !v)} aria-label="Notifications">
         🔔
         {nonLues > 0 && <span className={styles.badge}>{nonLues}</span>}
       </button>
@@ -69,7 +98,7 @@ function NotifCloche() {
               notifs.slice(0, 10).map((n) => (
                 <div
                   key={n._id}
-                  className={`${styles.item} ${!n.lu ? styles.nonLu : ""}`}
+                  className={`${styles.item} ${!n.lu ? styles.nonLu : ""} ${!n.lu && n.type === "mission" ? styles.missionNonLu : ""}`}
                   onClick={() => clicNotif(n)}>
                   <span className={styles.icone}>{ICONES[n.type] || "📌"}</span>
                   <div className={styles.contenu}>

@@ -11,14 +11,43 @@ export default function CreerDefiModal({ onClose, onCreated }) {
   const [envoi, setEnvoi] = useState(false);
   const { addToast } = useToast();
 
-  useEffect(() => { api.get("/api/jeux").then(r => setJeux(r.data.data || [])); }, []);
+  useEffect(() => {
+    let actif = true;
+    api.get("/api/jeux")
+      .then(r => {
+        if (actif) setJeux(r.data.data || []);
+      })
+      .catch(() => {});
+    return () => {
+      actif = false;
+    };
+  }, []);
 
   useEffect(() => {
-    if (recherche.length < 2) { setResultats([]); return; }
+    let actif = true;
+    if (recherche.length < 2) {
+      const run = async () => {
+        await Promise.resolve();
+        if (actif) {
+          setResultats([]);
+        }
+      };
+      run();
+      return () => {
+        actif = false;
+      };
+    }
     const t = setTimeout(() => {
-      api.get(`/api/users/classement?search=${recherche}`).then(r => setResultats(r.data.data?.slice(0, 5) || [])).catch(() => {});
+      api.get(`/api/users/classement?search=${recherche}`)
+        .then(r => {
+          if (actif) setResultats(r.data.data?.slice(0, 5) || []);
+        })
+        .catch(() => {});
     }, 300);
-    return () => clearTimeout(t);
+    return () => {
+      actif = false;
+      clearTimeout(t);
+    };
   }, [recherche]);
 
   const selectionnerJoueur = (j) => {

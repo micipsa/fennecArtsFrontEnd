@@ -13,12 +13,8 @@ export default function QuizzGame({ quizz, onFinish }) {
   const [claimed, setClaimed] = useState(false);
   const { showXP, XPPopupContainer } = useXPPopup();
   
-  const questions = quizz.config.questions || [];
+  const questions = quizz.config?.questions || [];
   const currentQuestion = questions[currentIdx];
-
-  if (!currentQuestion) {
-    return <div className={styles.game}>Ce quizz est vide ou mal configuré.</div>;
-  }
 
   const handleNext = useCallback((correct = false) => {
     if (correct) setScore(s => s + 1);
@@ -33,12 +29,18 @@ export default function QuizzGame({ quizz, onFinish }) {
 
   useEffect(() => {
     if (finished || timeLeft <= 0) {
-      if (timeLeft === 0) handleNext(false);
+      if (timeLeft === 0) {
+        Promise.resolve().then(() => handleNext(false));
+      }
       return;
     }
     const timer = setInterval(() => setTimeLeft(t => t - 1), 1000);
     return () => clearInterval(timer);
   }, [timeLeft, finished, handleNext]);
+
+  if (!currentQuestion) {
+    return <div className={styles.game}>Ce quizz est vide ou mal configuré.</div>;
+  }
 
   const submitResults = async () => {
     setSending(true);

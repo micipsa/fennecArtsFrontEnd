@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import api from "../services/api";
 import Spinner from "../components/UI/Spinner";
 import MessageErreur from "../components/UI/MessageErreur";
@@ -26,11 +26,7 @@ function DashboardChaines() {
   const [chaineBlacklist, setChaineBlacklist] = useState(null);
   const [videoIdInput, setVideoIdInput] = useState("");
 
-  useEffect(() => {
-    charger();
-  }, []);
-
-  const charger = async () => {
+  const charger = useCallback(async () => {
     try {
       setChargement(true);
       const res = await api.get("/api/chaines/admin");
@@ -40,7 +36,21 @@ function DashboardChaines() {
     } finally {
       setChargement(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    let actif = true;
+    const run = async () => {
+      await Promise.resolve();
+      if (actif) {
+        charger();
+      }
+    };
+    run();
+    return () => {
+      actif = false;
+    };
+  }, [charger]);
 
   const handleChange = (e) => {
     const value =

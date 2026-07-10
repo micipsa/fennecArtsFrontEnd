@@ -43,7 +43,19 @@ function TournamentsPage() {
     }
   }, []);
 
-  useEffect(() => { charger(); }, [charger]);
+  useEffect(() => {
+    let actif = true;
+    const run = async () => {
+      await Promise.resolve();
+      if (actif) {
+        charger();
+      }
+    };
+    run();
+    return () => {
+      actif = false;
+    };
+  }, [charger]);
 
   // Filtrage côté client : si "tous" → tous les tournois, sinon on filtre par statut
   const tournoisFiltres =

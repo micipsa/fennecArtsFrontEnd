@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import api from "../../services/api";
 import styles from "./PlayPage.module.css";
 import QuizzGame from "./components/QuizzGame";
@@ -10,11 +10,7 @@ export default function PlayPage() {
   const [chargement, setChargement] = useState(true);
   const [selectedAnim, setSelectedAnim] = useState(null);
 
-  useEffect(() => {
-    fetchAnims();
-  }, []);
-
-  const fetchAnims = async () => {
+  const fetchAnims = useCallback(async () => {
     try {
       const res = await api.get("/api/animations");
       setAnimations(res.data.data);
@@ -23,7 +19,21 @@ export default function PlayPage() {
     } finally {
       setChargement(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    let actif = true;
+    const run = async () => {
+      await Promise.resolve();
+      if (actif) {
+        fetchAnims();
+      }
+    };
+    run();
+    return () => {
+      actif = false;
+    };
+  }, [fetchAnims]);
 
   if (chargement) return <Spinner />;
 

@@ -10,7 +10,7 @@ export default function LevelUpAnimation({ xpGagne, onClose }) {
       const audio = new Audio("/sounds/levelup.mp3");
       audio.volume = 0.5;
       audio.play().catch(e => console.log("Audio play failed:", e));
-    } catch (e) {}
+    } catch { /* audio optionnel : best-effort si le fichier/API est indisponible */ }
 
     // Séquence d'animation
     const t1 = setTimeout(() => setEtape("show"), 100);

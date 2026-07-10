@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import api from "../services/api";
 import { calculerRang } from "../utils/rangs";
@@ -31,7 +31,15 @@ export default function CommunautePage() {
   const [jeuxDispo, setJeuxDispo] = useState([]);
   const [tagsDispo, setTagsDispo] = useState([]);
 
-  const charger = async (p = 1) => {
+  const isMounted = useRef(true);
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  const charger = useCallback(async (p = 1) => {
     setChargement(true);
     try {
       const params = new URLSearchParams();
@@ -43,6 +51,7 @@ export default function CommunautePage() {
       if (filtreRang) params.set("rang", filtreRang);
 
       const res = await api.get(`/api/users/communaute?${params.toString()}`);
+      if (!isMounted.current) return;
       setMembres(res.data.data);
       setTotal(res.data.total);
       setPage(res.data.page);
@@ -53,13 +62,25 @@ export default function CommunautePage() {
         setTagsDispo(res.data.filtres.tags || []);
       }
     } catch (err) {
-      console.error(err);
+      if (isMounted.current) console.error(err);
     } finally {
-      setChargement(false);
+      if (isMounted.current) setChargement(false);
     }
-  };
+  }, [recherche, filtreJeu, filtreTag, filtreRang]);
 
-  useEffect(() => { charger(1); }, [filtreJeu, filtreTag, filtreRang]);
+  useEffect(() => {
+    let active = true;
+    const init = async () => {
+      await Promise.resolve();
+      if (active) {
+        charger(1);
+      }
+    };
+    init();
+    return () => {
+      active = false;
+    };
+  }, [filtreJeu, filtreTag, filtreRang, charger]);
 
   const handleSearch = (e) => {
     e.preventDefault();

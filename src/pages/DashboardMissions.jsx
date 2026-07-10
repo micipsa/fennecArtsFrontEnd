@@ -161,6 +161,15 @@ export default function DashboardMissions() {
         ...form,
         imageUrl: form.imageUrl || null,
         lieu: form.lieu || null,
+        // Les <input type="number"> renvoient des chaînes ("" quand on vide le
+        // champ). On force la conversion en nombre pour éviter les erreurs de
+        // validation Joi ("… doit être un nombre").
+        pointsRecompense: Number(form.pointsRecompense) || 0,
+        fmRecompense: Number(form.fmRecompense) || 0,
+        postes: (form.postes || []).map((p) => ({
+          ...p,
+          nombrePlaces: Number(p.nombrePlaces) || 1,
+        })),
       };
       if (editId) {
         await api.put(`/api/missions/${editId}`, payload);
@@ -800,11 +809,7 @@ export default function DashboardMissions() {
                       placeholder="Nb places"
                       value={poste.nombrePlaces}
                       onChange={(e) =>
-                        modifierPoste(
-                          index,
-                          "nombrePlaces",
-                          parseInt(e.target.value),
-                        )
+                        modifierPoste(index, "nombrePlaces", e.target.value)
                       }
                       required
                     />

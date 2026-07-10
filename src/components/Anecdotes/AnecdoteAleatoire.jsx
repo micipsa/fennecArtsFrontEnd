@@ -16,9 +16,21 @@ function AnecdoteAleatoire() {
   };
 
   useEffect(() => {
-    changerAnecdote();
-    const intervalle = setInterval(changerAnecdote, 12000);
-    return () => clearInterval(intervalle);
+    let actif = true;
+    const run = async () => {
+      await Promise.resolve();
+      if (actif) {
+        changerAnecdote();
+      }
+    };
+    run();
+    const intervalle = setInterval(() => {
+      if (actif) changerAnecdote();
+    }, 12000);
+    return () => {
+      actif = false;
+      clearInterval(intervalle);
+    };
   }, []);
 
   if (!anecdote) return null;

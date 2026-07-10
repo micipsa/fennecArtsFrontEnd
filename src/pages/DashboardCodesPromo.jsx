@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import api from "../services/api";
 import styles from "./DashboardCodesPromo.module.css";
 
@@ -17,14 +17,42 @@ export default function DashboardCodesPromo() {
   });
   const [formMasse, setFormMasse] = useState({ quantite: 10, prefix: "FNK", type: "xp", description: "", recompenseXP: 50, recompenseFM: 0 });
 
-  const charger = async () => {
+  const isMounted = useRef(true);
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  const charger = useCallback(async () => {
     try {
       const res = await api.get("/api/codes");
-      setCodes(res.data.data || []);
-    } catch (e) {} finally { setChargement(false); }
-  };
+      if (isMounted.current) {
+        setCodes(res.data.data || []);
+      }
+    } catch (e) {
+      console.error("Erreur lors du chargement des codes promo", e);
+    } finally {
+      if (isMounted.current) {
+        setChargement(false);
+      }
+    }
+  }, []);
 
-  useEffect(() => { charger(); }, []);
+  useEffect(() => {
+    let active = true;
+    const init = async () => {
+      await Promise.resolve();
+      if (active) {
+        charger();
+      }
+    };
+    init();
+    return () => {
+      active = false;
+    };
+  }, [charger]);
 
   const creer = async () => {
     try {

@@ -17,7 +17,7 @@ function BoutonPartage({ titre, url }) {
   const shareUrl = url || window.location.href;
 
   const partagerFacebook = async () => {
-    try { await api.post("/api/quetes/action", { action: "premier_partage_semaine" }); } catch (e) {}
+    try { await api.post("/api/quetes/action", { action: "premier_partage_semaine" }); } catch { /* quête best-effort : un échec réseau ne doit pas bloquer le partage */ }
     window.open(
       `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
       "_blank",
@@ -26,7 +26,7 @@ function BoutonPartage({ titre, url }) {
   };
 
   const partagerTwitter = async () => {
-    try { await api.post("/api/quetes/action", { action: "premier_partage_semaine" }); } catch (e) {}
+    try { await api.post("/api/quetes/action", { action: "premier_partage_semaine" }); } catch { /* quête best-effort : un échec réseau ne doit pas bloquer le partage */ }
     window.open(
       `https://twitter.com/intent/tweet?text=${encodeURIComponent(titre)}&url=${encodeURIComponent(shareUrl)}`,
       "_blank",

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import api from "../services/api";
 import useAuth from "../hooks/useAuth";
 import { useToast } from "../components/UI/Toast";
@@ -24,16 +24,35 @@ export default function DefisPage() {
   const [modalOuvert, setModalOuvert] = useState(false);
   const { addToast } = useToast();
 
-  const charger = async () => {
-    setLoading(true);
+  const charger = useCallback(async (actif = { current: true }) => {
     try {
       const res = await api.get("/api/defis");
+      if (!actif.current) return;
       setDefis(res.data.data);
-    } catch (err) { addToast("Erreur chargement défis", "error"); }
-    finally { setLoading(false); }
-  };
+    } catch (err) {
+      if (!actif.current) return;
+      addToast("Erreur chargement défis", "error");
+    } finally {
+      if (actif.current) setLoading(false);
+    }
+  }, [addToast]);
 
-  useEffect(() => { charger(); }, []);
+  useEffect(() => {
+    const actif = { current: true };
+    const run = async () => {
+      await Promise.resolve();
+      if (actif.current) {
+        setLoading(true);
+        charger(actif);
+      }
+    };
+    run();
+    return () => {
+      actif.current = false;
+    };
+  }, [charger]);
+
+
 
   const accepter = async (id) => {
     try { await api.patch(`/api/defis/${id}/accepter`); addToast("Défi accepté !", "success"); charger(); }

@@ -55,10 +55,21 @@ function ArticlesPage() {
   const [tagsDisponibles, setTagsDisponibles] = useState([]);
 
   useEffect(() => {
-    setTagActif(urlTag);
+    let actif = true;
+    const run = async () => {
+      await Promise.resolve();
+      if (actif) {
+        setTagActif(urlTag);
+      }
+    };
+    run();
+    return () => {
+      actif = false;
+    };
   }, [urlTag]);
 
   useEffect(() => {
+    let actif = true;
     const chargerArticles = async () => {
       try {
         setChargement(true);
@@ -69,17 +80,32 @@ function ArticlesPage() {
         if (categorie !== "Toutes") params.append("categorie", categorie);
         if (tagActif) params.append("tag", tagActif);
         const res = await api.get(`/api/articles?${params.toString()}`);
-        setArticles(res.data.data);
-        setTotalPages(res.data.pagination?.totalPages || 1);
-        const tags = [...new Set(res.data.data.flatMap((a) => a.tags || []))];
-        setTagsDisponibles(tags);
+        if (actif) {
+          setArticles(res.data.data);
+          setTotalPages(res.data.pagination?.totalPages || 1);
+          const tags = [...new Set(res.data.data.flatMap((a) => a.tags || []))];
+          setTagsDisponibles(tags);
+        }
       } catch (err) {
-        setErreur(err.response?.data?.message || "Impossible de charger les articles.");
+        if (actif) {
+          setErreur(err.response?.data?.message || "Impossible de charger les articles.");
+        }
       } finally {
-        setChargement(false);
+        if (actif) {
+          setChargement(false);
+        }
       }
     };
-    chargerArticles();
+    const run = async () => {
+      await Promise.resolve();
+      if (actif) {
+        chargerArticles();
+      }
+    };
+    run();
+    return () => {
+      actif = false;
+    };
   }, [page, categorie, tagActif]);
 
   const handleCategorie = (nouvelleCategorie) => {

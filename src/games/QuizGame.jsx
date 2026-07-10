@@ -39,16 +39,26 @@ export default function QuizGame({ onGameEnd, isOnline, socket, roomData, isHost
   const [hasPlayedToday, setHasPlayedToday] = useState(false);
 
   useEffect(() => {
+    let actif = true;
     if (!isOnline && userId) {
       const storageKey = `lastLocalQuizDate_${userId}`;
       const lastPlayed = localStorage.getItem(storageKey);
       const today = new Date().toDateString();
       if (lastPlayed === today) {
-        setHasPlayedToday(true);
+        const run = async () => {
+          await Promise.resolve();
+          if (actif) {
+            setHasPlayedToday(true);
+          }
+        };
+        run();
       } else {
         localStorage.setItem(storageKey, today);
       }
     }
+    return () => {
+      actif = false;
+    };
   }, [isOnline, userId]);
 
   // Réf. mutable pour l'Hôte afin de vérifier les réponses

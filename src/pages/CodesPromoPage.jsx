@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import api from "../services/api";
 import styles from "./CodesPromoPage.module.css";
@@ -11,12 +11,7 @@ export default function CodesPromoPage() {
   const [erreur, setErreur] = useState(null);
   const [historique, setHistorique] = useState([]);
 
-  useEffect(() => {
-    api.get("/api/codes/mes-codes").then(r => setHistorique(r.data.data || [])).catch(() => {});
-    if (params.get("code")) utiliser(params.get("code"));
-  }, []);
-
-  const utiliser = async (codeAUtiliser = null) => {
+  const utiliser = useCallback(async (codeAUtiliser = null) => {
     const codeFinal = codeAUtiliser || code;
     if (!codeFinal.trim()) return;
     setChargement(true);
@@ -33,7 +28,29 @@ export default function CodesPromoPage() {
     } finally {
       setChargement(false);
     }
-  };
+  }, [code]);
+
+  useEffect(() => {
+    let actif = true;
+    const run = async () => {
+      await Promise.resolve();
+      if (actif) {
+        api.get("/api/codes/mes-codes")
+          .then(r => {
+            if (actif) setHistorique(r.data.data || []);
+          })
+          .catch(() => {});
+        const promoCode = params.get("code");
+        if (promoCode) {
+          utiliser(promoCode);
+        }
+      }
+    };
+    run();
+    return () => {
+      actif = false;
+    };
+  }, [params, utiliser]);
 
   return (
     <div className={styles.pageWrapper}>

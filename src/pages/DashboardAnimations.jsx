@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import api from "../services/api";
 import styles from "./DashboardCodesPromo.module.css";
 import qStyles from "./DashboardAnimations.module.css";
@@ -20,15 +20,27 @@ export default function DashboardAnimations() {
   });
   const [questions, setQuestions] = useState([{ ...QUESTION_VIDE }]);
 
-  useEffect(() => { fetchAnims(); }, []);
-
-  const fetchAnims = async () => {
+  const fetchAnims = useCallback(async () => {
     try {
       const res = await api.get("/api/animations");
       setAnimations(res.data.data);
     } catch (err) { console.error(err); }
     finally { setLoading(false); }
-  };
+  }, []);
+
+  useEffect(() => {
+    let actif = true;
+    const run = async () => {
+      await Promise.resolve();
+      if (actif) {
+        fetchAnims();
+      }
+    };
+    run();
+    return () => {
+      actif = false;
+    };
+  }, [fetchAnims]);
 
   const resetForm = () => {
     setFormData({
@@ -76,7 +88,6 @@ export default function DashboardAnimations() {
   const handleCreate = async (e) => {
     e.preventDefault();
 
-    let config = {};
     if (formData.type === "quizz") {
       // Validation des questions
       for (let i = 0; i < questions.length; i++) {
@@ -86,19 +97,20 @@ export default function DashboardAnimations() {
         if (filledOpts.length < 2) return toast.error(`Question ${i + 1} : au moins 2 options.`);
         if (!q.options[q.correctIndex]?.trim()) return toast.error(`Question ${i + 1} : la bonne réponse est vide.`);
       }
-      config = {
-        questions: questions.map(q => ({
-          text: q.text.trim(),
-          options: q.options.filter(o => o.trim()),
-          correctIndex: q.correctIndex
-        }))
-      };
-    } else {
-      config = {
-        question: formData.config.question,
-        options: formData.config.options.split(",").map(o => o.trim()).filter(Boolean)
-      };
     }
+
+    const config = formData.type === "quizz"
+      ? {
+          questions: questions.map(q => ({
+            text: q.text.trim(),
+            options: q.options.filter(o => o.trim()),
+            correctIndex: q.correctIndex
+          }))
+        }
+      : {
+          question: formData.config.question,
+          options: formData.config.options.split(",").map(o => o.trim()).filter(Boolean)
+        };
 
     try {
       await api.post("/api/animations", { ...formData, config });

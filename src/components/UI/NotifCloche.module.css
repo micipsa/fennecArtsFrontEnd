@@ -145,3 +145,26 @@
 .voirTout:hover {
   background: rgba(230, 57, 70, 0.08);
 }
+
+.clocheVibrer {
+  animation: clocheVibration 0.15s linear infinite;
+}
+
+@keyframes clocheVibration {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(15deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-15deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.missionNonLu {
+  background: rgba(244, 162, 97, 0.12) !important;
+  border-left: 3px solid var(--couleur-accent) !important;
+  animation: pulseMission 2s infinite alternate;
+}
+
+@keyframes pulseMission {
+  0% { box-shadow: inset 0 0 4px rgba(244, 162, 97, 0.2); }
+  100% { box-shadow: inset 0 0 12px rgba(244, 162, 97, 0.6); }
+}

@@ -44,14 +44,14 @@ export default function StorePage() {
         ]);
         setArticles(storeRes.data.data);
         setInventaire(invRes.data.data || []);
-      } catch (err) {
+      } catch {
         addToast("Erreur lors du chargement de la boutique", "error");
       } finally {
         setLoading(false);
       }
     };
     fetchData();
-  }, []);
+  }, [addToast, utilisateur]);
 
   const handleAchat = async (article) => {
     if (!utilisateur) return addToast("Vous devez être connecté", "error");

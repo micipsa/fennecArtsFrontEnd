@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import api from "../../services/api";
 import styles from "./WebTVPage.module.css";
 
@@ -8,22 +8,35 @@ function WebTVPage() {
   const [erreur, setErreur] = useState(null);
   const [videoSelectionnee, setVideoSelectionnee] = useState(null);
   const [chaineSelectionnee, setChaineSelectionnee] = useState("toutes");
+  const monte = useRef(true);
 
   const charger = async () => {
     try {
       const res = await api.get("/api/webtv");
-      setData(res.data);
-    } catch (e) {
-      setErreur("Impossible de charger la WebTV.");
+      if (monte.current) setData(res.data);
+    } catch {
+      if (monte.current) setErreur("Impossible de charger la WebTV.");
     } finally {
-      setChargement(false);
+      if (monte.current) setChargement(false);
     }
   };
 
   useEffect(() => {
-    charger();
-    const intervalle = setInterval(charger, 5 * 60 * 1000);
-    return () => clearInterval(intervalle);
+    monte.current = true;
+    const run = async () => {
+      await Promise.resolve();
+      if (monte.current) {
+        charger();
+      }
+    };
+    run();
+    const intervalle = setInterval(() => {
+      if (monte.current) charger();
+    }, 5 * 60 * 1000);
+    return () => {
+      monte.current = false;
+      clearInterval(intervalle);
+    };
   }, []);
 
   // Extrait les noms de chaînes uniques depuis les vidéos
@@ -137,7 +150,7 @@ function WebTVPage() {
               key={video.id.videoId}
               className={styles.carte}
               onClick={() => {
-                try { api.post("/api/quetes/action", { action: "video_vue" }); } catch (e) {}
+                api.post("/api/quetes/action", { action: "video_vue" }).catch(() => {});
                 setVideoSelectionnee(video.id.videoId);
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}>

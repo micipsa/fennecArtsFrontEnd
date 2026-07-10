@@ -36,8 +36,21 @@ export default function CommandPalette({ ouvert, onFermer }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (ouvert && inputRef.current) inputRef.current.focus();
-    if (!ouvert) { setRecherche(""); setIndexActif(0); }
+    let actif = true;
+    const run = async () => {
+      await Promise.resolve();
+      if (actif) {
+        if (ouvert && inputRef.current) inputRef.current.focus();
+        if (!ouvert) {
+          setRecherche("");
+          setIndexActif(0);
+        }
+      }
+    };
+    run();
+    return () => {
+      actif = false;
+    };
   }, [ouvert]);
 
   const itemsFiltres = COMMANDES.flatMap(g =>

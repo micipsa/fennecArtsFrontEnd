@@ -14,19 +14,35 @@ function RechercheGlobale() {
 
   useEffect(() => {
     if (!q.trim()) return;
-    setChargement(true);
-    Promise.all([
-      api.get(`/api/articles?search=${encodeURIComponent(q)}&limit=5`),
-      api.get(`/api/events?search=${encodeURIComponent(q)}&limit=5`),
-      api.get(`/api/tournaments?search=${encodeURIComponent(q)}&limit=5`),
-    ])
-      .then(([resA, resE, resT]) => {
+    let actif = true;
+
+    const fetchData = async () => {
+      await Promise.resolve();
+      if (!actif) return;
+      setChargement(true);
+
+      try {
+        const [resA, resE, resT] = await Promise.all([
+          api.get(`/api/articles?search=${encodeURIComponent(q)}&limit=5`),
+          api.get(`/api/events?search=${encodeURIComponent(q)}&limit=5`),
+          api.get(`/api/tournaments?search=${encodeURIComponent(q)}&limit=5`),
+        ]);
+        if (!actif) return;
         setArticles(resA.data.data || []);
         setEvenements(resE.data.data || []);
         setTournois(resT.data.data || []);
-      })
-      .catch(() => {})
-      .finally(() => setChargement(false));
+      } catch {
+        // Ignorer l'erreur
+      } finally {
+        if (actif) setChargement(false);
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      actif = false;
+    };
   }, [q]);
 
   const total = articles.length + evenements.length + tournois.length;

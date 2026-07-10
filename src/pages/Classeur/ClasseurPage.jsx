@@ -7,7 +7,6 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import api from "../../services/api";
-import useAuth from "../../hooks/useAuth";
 import styles from "./ClasseurPage.module.css";
 
 const RARETE_CONFIG = {
@@ -102,7 +101,6 @@ function CarteDetail({ carte, brillant, onClose }) {
 }
 
 export default function ClasseurPage() {
-  const { utilisateur } = useAuth();
   const [onglet, setOnglet] = useState("collection"); // collection | boutique | catalogue
   const [collection, setCollection] = useState([]);
   const [stats, setStats] = useState(null);
@@ -111,10 +109,6 @@ export default function ClasseurPage() {
   const [carteSelectionnee, setCarteSelectionnee] = useState(null);
   const [loading, setLoading] = useState(true);
   const [achatEnCours, setAchatEnCours] = useState(false);
-
-  useEffect(() => {
-    chargerDonnees();
-  }, []);
 
   const chargerDonnees = async () => {
     setLoading(true);
@@ -133,6 +127,20 @@ export default function ClasseurPage() {
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    let actif = true;
+    const run = async () => {
+      await Promise.resolve();
+      if (actif) {
+        chargerDonnees();
+      }
+    };
+    run();
+    return () => {
+      actif = false;
+    };
+  }, []);
 
   const acheterCarte = async (carteId) => {
     if (achatEnCours) return;

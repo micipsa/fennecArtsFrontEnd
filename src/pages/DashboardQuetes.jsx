@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import api from "../services/api";
 import { useToast } from "../components/UI/Toast";
 import styles from "./DashboardQuetes.module.css";
@@ -28,9 +28,7 @@ export default function DashboardQuetes() {
   const [filtreType, setFiltreType] = useState("tous");
   const { addToast } = useToast();
 
-  useEffect(() => { fetchQuetes(); }, []);
-
-  const fetchQuetes = async () => {
+  const fetchQuetes = useCallback(async () => {
     try {
       setLoading(true);
       const res = await api.get("/api/quetes");
@@ -38,7 +36,22 @@ export default function DashboardQuetes() {
     } catch (err) {
       addToast("Erreur chargement quêtes", "error");
     } finally { setLoading(false); }
-  };
+  }, [addToast]);
+
+  useEffect(() => {
+    let actif = true;
+    const run = async () => {
+      await Promise.resolve();
+      if (actif) {
+        fetchQuetes();
+      }
+    };
+    run();
+    return () => {
+      actif = false;
+    };
+  }, [fetchQuetes]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

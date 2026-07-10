@@ -29,6 +29,7 @@ export default function WordleGame({ onGameEnd }) {
 
   // Vérifier si le joueur a déjà joué aujourd'hui au chargement
   useEffect(() => {
+    let actif = true;
     if (!utilisateur) return;
     const todayEdition = getDailyWordInfo("FR").editionNumber;
     
@@ -36,11 +37,20 @@ export default function WordleGame({ onGameEnd }) {
     if (localStorage.getItem(`fennecWordCompleted_FR_${utilisateur._id}`) === todayEdition.toString()) completed.push("FR");
     if (localStorage.getItem(`fennecWordCompleted_EN_${utilisateur._id}`) === todayEdition.toString()) completed.push("EN");
     
-    if (completed.length === 2) {
-      setLangue("ALREADY_PLAYED");
-    } else {
-      setCompletedLangs(completed);
-    }
+    const run = async () => {
+      await Promise.resolve();
+      if (actif) {
+        if (completed.length === 2) {
+          setLangue("ALREADY_PLAYED");
+        } else {
+          setCompletedLangs(completed);
+        }
+      }
+    };
+    run();
+    return () => {
+      actif = false;
+    };
   }, [utilisateur]);
 
   const startDailyGame = (selectedLang) => {

@@ -16,9 +16,21 @@ function CitationAleatoire() {
   };
 
   useEffect(() => {
-    changerCitation();
-    const intervalle = setInterval(changerCitation, 10000);
-    return () => clearInterval(intervalle);
+    let actif = true;
+    const run = async () => {
+      await Promise.resolve();
+      if (actif) {
+        changerCitation();
+      }
+    };
+    run();
+    const intervalle = setInterval(() => {
+      if (actif) changerCitation();
+    }, 10000);
+    return () => {
+      actif = false;
+      clearInterval(intervalle);
+    };
   }, []);
 
   if (!citation) return null;

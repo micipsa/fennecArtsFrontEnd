@@ -100,12 +100,21 @@ export default function RPSGame({ onGameEnd, socket, roomData, isOnline }) {
     return () => { if (isOnline) socket.off("opponentAction"); };
   }, [isOnline, isJ1, socket]);
 
-  // Déclenchement automatique de la résolution de round dès que les deux choix sont faits
   useEffect(() => {
+    let actif = true;
     if (choix1 && choix2 && phase !== "reveal") {
-      setPhase("reveal");
-      resolveRound(choix1, choix2);
+      const run = async () => {
+        await Promise.resolve();
+        if (actif) {
+          setPhase("reveal");
+          resolveRound(choix1, choix2);
+        }
+      };
+      run();
     }
+    return () => {
+      actif = false;
+    };
   }, [choix1, choix2, phase, resolveRound]);
 
   const jouer = useCallback((choixId) => {

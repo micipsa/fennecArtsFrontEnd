@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import api from "../services/api";
 import Spinner from "../components/UI/Spinner";
@@ -20,15 +20,27 @@ export default function NotificationsPage() {
   const [chargement, setChargement] = useState(true);
   const [filtre, setFiltre] = useState("toutes"); // toutes | non_lues
 
-  useEffect(() => { charger(); }, []);
-
-  const charger = async () => {
+  const charger = useCallback(async () => {
     try {
       const res = await api.get("/api/notifications");
       setNotifs(res.data.data);
     } catch (err) { console.error(err); }
     finally { setChargement(false); }
-  };
+  }, []);
+
+  useEffect(() => {
+    let actif = true;
+    const run = async () => {
+      await Promise.resolve();
+      if (actif) {
+        charger();
+      }
+    };
+    run();
+    return () => {
+      actif = false;
+    };
+  }, [charger]);
 
   const marquerLu = async (id) => {
     try {
@@ -106,7 +118,7 @@ export default function NotificationsPage() {
               return (
                 <div
                   key={n._id}
-                  className={`${styles.notif} ${!n.lu ? styles.nonLue : ""}`}
+                  className={`${styles.notif} ${!n.lu ? styles.nonLue : ""} ${!n.lu && n.type === "mission" ? styles.missionNonLue : ""}`}
                   onClick={() => !n.lu && marquerLu(n._id)}
                 >
                   <div className={styles.notifIcone} style={{ background: `${cfg.color}22`, color: cfg.color }}>
